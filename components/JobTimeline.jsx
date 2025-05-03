@@ -57,8 +57,10 @@ export default function JobTimeline({ jobId, onClose }) {
         return 'timeline-dot-applied';
       case 'interviewing':
         return 'timeline-dot-interviewing';
-      case 'completed':
-        return 'timeline-dot-completed';
+      case 'offer':
+        return 'bg-green-500 border-4 border-white shadow';
+      case 'rejected':
+        return 'bg-red-500 border-4 border-white shadow';
       default:
         return 'bg-gray-500 border-4 border-white shadow';
     }
@@ -119,7 +121,14 @@ export default function JobTimeline({ jobId, onClose }) {
                           
                           {/* Timeline content */}
                           <div className="timeline-content">
-                            <div className="timeline-title">{COLUMN_NAMES[entry.status]}</div>
+                            <div className="timeline-title">
+                              {COLUMN_NAMES[entry.status]}
+                              {entry.interviewStage && (
+                                <span className="ml-2 text-sm text-gray-500">
+                                  - {entry.interviewStage}
+                                </span>
+                              )}
+                            </div>
                             <div className="timeline-date">{formatDate(entry.date)}</div>
                             {entry.notes && (
                               <div className="timeline-notes">

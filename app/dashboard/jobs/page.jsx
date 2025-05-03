@@ -14,6 +14,7 @@ export default function JobsPage() {
   const [selectedJob, setSelectedJob] = useState(null);
   const [showStatusModal, setShowStatusModal] = useState(false);
   const [showTimeline, setShowTimeline] = useState(false);
+  const [hideRejected, setHideRejected] = useState(false);
 
   useEffect(() => {
     // Fetch jobs from API
@@ -134,25 +135,66 @@ export default function JobsPage() {
   const columns = {
     [COLUMNS.APPLIED]: jobsData.jobs.filter(job => job.status === COLUMNS.APPLIED),
     [COLUMNS.INTERVIEWING]: jobsData.jobs.filter(job => job.status === COLUMNS.INTERVIEWING),
-    [COLUMNS.COMPLETED]: jobsData.jobs.filter(job => job.status === COLUMNS.COMPLETED),
+    [COLUMNS.OFFER]: jobsData.jobs.filter(job => job.status === COLUMNS.OFFER),
+    [COLUMNS.REJECTED]: jobsData.jobs.filter(job => job.status === COLUMNS.REJECTED),
   };
 
-  console.log('Rendering columns:', columns);
+  // Filter out rejected column if hideRejected is true
+  const displayedColumns = hideRejected 
+    ? Object.keys(columns).filter(columnId => columnId !== COLUMNS.REJECTED)
+    : Object.keys(columns);
+
+  // Count total applications
+  const totalApplications = jobsData.jobs.length;
+  const visibleApplications = hideRejected 
+    ? jobsData.jobs.filter(job => job.status !== COLUMNS.REJECTED).length
+    : totalApplications;
 
   return (
     <div className="space-y-6">
       <div className="border-b border-gray-200 pb-3">
-        <h1 className="text-2xl font-semibold text-gray-800">Job Applications</h1>
-        <p className="mt-1 text-sm text-gray-500">
-          Track your applications across different stages
-        </p>
+        <div className="flex justify-between items-center">
+          <div>
+            <h1 className="text-2xl font-semibold text-gray-800">Job Applications</h1>
+            <p className="mt-1 text-sm text-gray-500">
+              Track your applications across different stages
+            </p>
+          </div>
+          <div className="flex items-center">
+            <label className="flex items-center space-x-2 text-sm text-gray-700">
+              <input 
+                type="checkbox" 
+                checked={hideRejected} 
+                onChange={() => setHideRejected(!hideRejected)}
+                className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+              />
+              <span>Hide rejected applications</span>
+            </label>
+          </div>
+        </div>
+        <div className="mt-2">
+          <span className="text-sm text-gray-500">
+            Showing {visibleApplications} of {totalApplications} applications
+            {hideRejected && totalApplications !== visibleApplications && 
+              ` (${totalApplications - visibleApplications} rejected hidden)`
+            }
+          </span>
+        </div>
       </div>
       
       <DragDropContext onDragEnd={handleDragEnd}>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {Object.keys(columns).map(columnId => (
+        <div className={`grid grid-cols-1 ${displayedColumns.length === 4 ? 'md:grid-cols-4' : 'md:grid-cols-3'} gap-6`}>
+          {displayedColumns.map(columnId => (
             <div key={columnId} className="bg-white rounded-lg shadow">
-              <div className="px-4 py-3 border-b border-gray-200">
+              <div className={`px-4 py-3 border-b border-gray-200 ${
+                columnId === COLUMNS.OFFER 
+                  ? 'bg-green-50' 
+                  : columnId === COLUMNS.REJECTED 
+                    ? 'bg-red-50' 
+                    : columnId === COLUMNS.INTERVIEWING 
+                      ? 'bg-yellow-50' 
+                      : 'bg-blue-50'
+              }`}>
                 <h2 className="text-lg font-medium text-gray-800">{COLUMN_NAMES[columnId]}</h2>
                 <p className="text-sm text-gray-500">{columns[columnId].length} applications</p>
               </div>

@@ -1,17 +1,42 @@
 // components/StatusChangeModal.jsx
 'use client';
 
-import { useState } from 'react';
-import { COLUMNS, COLUMN_NAMES } from '@/lib/mockData';
+import { useState, useEffect } from 'react';
+import { COLUMNS, COLUMN_NAMES, INTERVIEW_STAGES } from '@/lib/mockData';
 
 export default function StatusChangeModal({ job, onClose, onStatusChange }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [formData, setFormData] = useState({
     status: job.status,
+    interviewStage: '',
     date: new Date().toISOString().split('T')[0], // Default to today
     notes: ''
   });
+  const [previousStages, setPreviousStages] = useState([]);
+
+  useEffect(() => {
+    // Fetch previous interview stages if this is an interview status
+    const fetchPreviousStages = async () => {
+      if (formData.status === COLUMNS.INTERVIEWING) {
+        try {
+          const response = await fetch(`/api/jobs/${job._id}/status-history`);
+          if (response.ok) {
+            const data = await response.json();
+            // Filter to get only interview stages
+            const interviewHistory = data.statusHistory.filter(
+              entry => entry.status === COLUMNS.INTERVIEWING && entry.interviewStage
+            );
+            setPreviousStages(interviewHistory);
+          }
+        } catch (error) {
+          console.error('Error fetching interview history:', error);
+        }
+      }
+    };
+
+    fetchPreviousStages();
+  }, [job._id, formData.status]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,13 +54,25 @@ export default function StatusChangeModal({ job, onClose, onStatusChange }) {
     try {
       console.log('Submitting status change:', formData);
       
+      // Prepare the data for submission
+      const statusData = {
+        status: formData.status,
+        date: formData.date,
+        notes: formData.notes
+      };
+      
+      // Add interview stage if applicable
+      if (formData.status === COLUMNS.INTERVIEWING && formData.interviewStage) {
+        statusData.interviewStage = formData.interviewStage;
+      }
+      
       // Submit to API
       const response = await fetch(`/api/jobs/${job._id}/status-history`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(statusData),
       });
       
       if (!response.ok) {
@@ -102,6 +139,39 @@ export default function StatusChangeModal({ job, onClose, onStatusChange }) {
                         ))}
                       </select>
                     </div>
+                    
+                    {/* Interview Stage (only shown if status is "Interviewing") */}
+                    {formData.status === COLUMNS.INTERVIEWING && (
+                      <div>
+                        <label htmlFor="interviewStage" className="block text-sm font-medium text-gray-700">
+                          Interview Stage
+                        </label>
+                        <select
+                          id="interviewStage"
+                          name="interviewStage"
+                          value={formData.interviewStage}
+                          onChange={handleChange}
+                          className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        >
+                          <option value="">Select an interview stage</option>
+                          {INTERVIEW_STAGES.map(stage => (
+                            <option key={stage} value={stage}>{stage}</option>
+                          ))}
+                        </select>
+                        
+                        {previousStages.length > 0 && (
+                          <div className="mt-2 text-xs text-gray-500">
+                            Previous interview stages: 
+                            {previousStages.map((stage, index) => (
+                              <span key={index} className="ml-1">
+                                {stage.interviewStage}
+                                {index < previousStages.length - 1 ? ', ' : ''}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
                     
                     {/* Date */}
                     <div>
