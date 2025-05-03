@@ -2,7 +2,6 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { mockFiles } from '@/lib/mockData';
 
 export default function UploadPage() {
   const [files, setFiles] = useState([]);
@@ -10,14 +9,34 @@ export default function UploadPage() {
   const [isUploading, setIsUploading] = useState(false);
   const [dragActive, setDragActive] = useState(false);
   const [previewFile, setPreviewFile] = useState(null);
+  const [error, setError] = useState(null);
   const fileInputRef = useRef(null);
 
   useEffect(() => {
-    // Simulate API call to load files
-    setTimeout(() => {
-      setFiles(mockFiles);
-      setLoading(false);
-    }, 800);
+    // Fetch files from API
+    const fetchFiles = async () => {
+      try {
+        console.log('Fetching files from API');
+        setLoading(true);
+        
+        const response = await fetch('/api/uploads');
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch files');
+        }
+        
+        const data = await response.json();
+        console.log('Received files:', data);
+        setFiles(data.files || []);
+      } catch (error) {
+        console.error('Error fetching files:', error);
+        setError('Failed to load your files. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFiles();
   }, []);
 
   const handleDrag = (e) => {
@@ -50,30 +69,37 @@ export default function UploadPage() {
 
   const handleFiles = async (uploadedFiles) => {
     setIsUploading(true);
+    setError(null);
     
     try {
-      // Convert FileList to Array
-      const filesArray = Array.from(uploadedFiles);
+      console.log(`Uploading ${uploadedFiles.length} files`);
       
-      // In a real app, you would upload these files to your server
-      console.log('Uploading files:', filesArray);
+      // Create a FormData object for the file upload
+      const formData = new FormData();
       
-      // Simulate upload delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // Add file to the form data
+      formData.append('file', uploadedFiles[0]);
       
-      // Add new files to the list (mock implementation)
-      const newFiles = filesArray.map((file, index) => ({
-        id: `new-${Date.now()}-${index}`,
-        name: file.name,
-        type: file.type,
-        size: `${Math.round(file.size / 1024)} KB`,
-        uploadDate: new Date().toISOString().split('T')[0]
-      }));
+      // Upload the file
+      const response = await fetch('/api/uploads', {
+        method: 'POST',
+        body: formData,
+      });
       
-      setFiles(prevFiles => [...newFiles, ...prevFiles]);
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'File upload failed');
+      }
+      
+      const data = await response.json();
+      console.log('File uploaded successfully:', data);
+      
+      // Add new file to the list
+      setFiles(prevFiles => [data.file, ...prevFiles]);
       
     } catch (error) {
       console.error('Error uploading files:', error);
+      setError('Failed to upload files. Please try again.');
     } finally {
       setIsUploading(false);
     }
@@ -81,17 +107,25 @@ export default function UploadPage() {
 
   const handleDelete = async (fileId) => {
     try {
-      // In a real app, you would call your API to delete the file
-      console.log('Deleting file:', fileId);
+      console.log(`Deleting file ${fileId}`);
       
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 500));
+      // Call API to delete the file
+      const response = await fetch(`/api/uploads/${fileId}`, {
+        method: 'DELETE',
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to delete file');
+      }
+      
+      console.log('File deleted successfully');
       
       // Remove file from list
       setFiles(files.filter(file => file.id !== fileId));
       
     } catch (error) {
       console.error('Error deleting file:', error);
+      setError('Failed to delete file. Please try again.');
     }
   };
 
@@ -139,6 +173,21 @@ export default function UploadPage() {
           Manage your resumes, cover letters, and other job-related documents
         </p>
       </div>
+      
+      {error && (
+        <div className="rounded-md bg-red-50 p-4">
+          <div className="flex">
+            <div className="flex-shrink-0">
+              <svg className="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <p className="text-sm font-medium text-red-800">{error}</p>
+            </div>
+          </div>
+        </div>
+      )}
       
       {/* File Upload Area */}
       <div 
@@ -202,7 +251,7 @@ export default function UploadPage() {
           ) : (
             <ul className="divide-y divide-gray-200">
               {files.map((file) => (
-                <li key={file.id} className="p-4 hover:bg-gray-50">
+                <li key={file.id || file._id} className="p-4 hover:bg-gray-50">
                   <div className="flex items-center space-x-4">
                     <div className="flex-shrink-0">
                       {getFileIcon(file.type)}
@@ -212,7 +261,7 @@ export default function UploadPage() {
                         {file.name}
                       </p>
                       <p className="text-sm text-gray-500">
-                        {file.size} • Uploaded on {file.uploadDate}
+                        {file.size} • Uploaded on {new Date(file.uploadDate).toLocaleDateString()}
                       </p>
                     </div>
                     <div className="flex space-x-3">
@@ -223,7 +272,7 @@ export default function UploadPage() {
                         Preview
                       </button>
                       <button
-                        onClick={() => handleDelete(file.id)}
+                        onClick={() => handleDelete(file.id || file._id)}
                         className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded text-red-700 bg-red-100 hover:bg-red-200"
                       >
                         Delete
@@ -256,14 +305,19 @@ export default function UploadPage() {
                       {previewFile.type.includes('image') ? (
                         <div className="text-center">
                           <p className="text-sm text-gray-500 mb-2">Image Preview</p>
-                          <div className="bg-gray-200 rounded w-48 h-48 mx-auto flex items-center justify-center">
-                            <svg className="w-12 h-12 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                              <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
-                            </svg>
-                          </div>
-                          <p className="text-xs text-gray-500 mt-2">
-                            (Real preview would be shown in production)
-                          </p>
+                          {previewFile.filePath ? (
+                            <img 
+                              src={previewFile.filePath} 
+                              alt={previewFile.name} 
+                              className="max-w-full max-h-64 object-contain"
+                            />
+                          ) : (
+                            <div className="bg-gray-200 rounded w-48 h-48 mx-auto flex items-center justify-center">
+                              <svg className="w-12 h-12 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+                              </svg>
+                            </div>
+                          )}
                         </div>
                       ) : (
                         <div className="text-center">
@@ -271,9 +325,16 @@ export default function UploadPage() {
                           <div className="bg-gray-200 rounded w-48 h-64 mx-auto flex items-center justify-center">
                             {getFileIcon(previewFile.type)}
                           </div>
-                          <p className="text-xs text-gray-500 mt-2">
-                            (Real preview would be shown in production)
-                          </p>
+                          {previewFile.filePath && (
+                            <a 
+                              href={previewFile.filePath} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="mt-2 inline-block text-blue-600 hover:underline"
+                            >
+                              Open in new tab
+                            </a>
+                          )}
                         </div>
                       )}
                     </div>
@@ -285,7 +346,7 @@ export default function UploadPage() {
                         Size: {previewFile.size}
                       </p>
                       <p className="text-sm text-gray-500">
-                        Uploaded: {previewFile.uploadDate}
+                        Uploaded: {new Date(previewFile.uploadDate).toLocaleDateString()}
                       </p>
                     </div>
                   </div>

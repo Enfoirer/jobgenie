@@ -14,6 +14,9 @@ export default function JobsPage() {
     // Fetch jobs from API
     const fetchJobs = async () => {
       try {
+        console.log('Fetching jobs from API');
+        setLoading(true);
+        
         const response = await fetch('/api/jobs');
         
         if (!response.ok) {
@@ -21,6 +24,7 @@ export default function JobsPage() {
         }
         
         const data = await response.json();
+        console.log('Received jobs:', data);
         setJobsData(data);
       } catch (error) {
         console.error('Error fetching jobs:', error);
@@ -45,10 +49,15 @@ export default function JobsPage() {
       destination.index === source.index
     ) return;
 
+    console.log(`Moving job ${draggableId} from ${source.droppableId} to ${destination.droppableId}`);
+
     // Find the job being dragged
     const job = jobsData.jobs.find(job => job._id === draggableId);
     
-    if (!job) return;
+    if (!job) {
+      console.error(`Job with ID ${draggableId} not found`);
+      return;
+    }
     
     // Update its status locally first (optimistic update)
     const updatedJobs = jobsData.jobs.map(j => 
@@ -60,6 +69,7 @@ export default function JobsPage() {
 
     // Update in the database
     try {
+      console.log(`Sending PATCH request to /api/jobs/${draggableId}`);
       const response = await fetch(`/api/jobs/${draggableId}`, {
         method: 'PATCH',
         headers: {
@@ -70,12 +80,15 @@ export default function JobsPage() {
       
       if (!response.ok) {
         throw new Error('Failed to update job status');
-        // If there's an error, you might want to revert the optimistic update
       }
+      
+      console.log('Job status updated successfully');
     } catch (error) {
       console.error('Error updating job status:', error);
       // Revert the optimistic update on error
-      setJobsData({ jobs: jobsData.jobs });
+      alert('Failed to update job status. Please try again.');
+      // Refetch jobs to make sure UI is in sync with server
+      fetchJobs();
     }
   };
 
@@ -118,6 +131,8 @@ export default function JobsPage() {
     [COLUMNS.COMPLETED]: jobsData.jobs.filter(job => job.status === COLUMNS.COMPLETED),
   };
 
+  console.log('Rendering columns:', columns);
+
   return (
     <div className="space-y-6">
       <div className="border-b border-gray-200 pb-3">
@@ -145,6 +160,12 @@ export default function JobsPage() {
                       snapshot.isDraggingOver ? 'bg-blue-50' : ''
                     }`}
                   >
+                    {columns[columnId].length === 0 && (
+                      <div className="text-center py-4 text-gray-500 text-sm">
+                        No jobs in this column
+                      </div>
+                    )}
+                    
                     {columns[columnId].map((job, index) => (
                       <Draggable key={job._id} draggableId={job._id} index={index}>
                         {(provided, snapshot) => (
@@ -185,6 +206,7 @@ export default function JobsPage() {
                                         setJobsData({ 
                                           jobs: jobsData.jobs.filter(j => j._id !== job._id) 
                                         });
+                                        alert('Job deleted successfully');
                                       } else {
                                         throw new Error('Failed to delete job');
                                       }
