@@ -2,22 +2,38 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { mockJobs, COLUMNS, COLUMN_NAMES } from '@/lib/mockData';
+import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
+import { COLUMNS, COLUMN_NAMES } from '@/lib/mockData';
 
 export default function JobsPage() {
-  const [jobsData, setJobsData] = useState(null);
+  const [jobsData, setJobsData] = useState({ jobs: [] });
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Simulate API call with mock data
-    setTimeout(() => {
-      setJobsData(mockJobs);
-      setLoading(false);
-    }, 800);
+    // Fetch jobs from API
+    const fetchJobs = async () => {
+      try {
+        const response = await fetch('/api/jobs');
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch jobs');
+        }
+        
+        const data = await response.json();
+        setJobsData(data);
+      } catch (error) {
+        console.error('Error fetching jobs:', error);
+        setError('Failed to load your job applications. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchJobs();
   }, []);
 
-  const handleDragEnd = (result) => {
+  const handleDragEnd = async (result) => {
     const { destination, source, draggableId } = result;
 
     // If dropped outside a droppable area
@@ -30,18 +46,37 @@ export default function JobsPage() {
     ) return;
 
     // Find the job being dragged
-    const job = jobsData.jobs.find(job => job.id === draggableId);
+    const job = jobsData.jobs.find(job => job._id === draggableId);
     
-    // Update its status
+    if (!job) return;
+    
+    // Update its status locally first (optimistic update)
     const updatedJobs = jobsData.jobs.map(j => 
-      j.id === draggableId ? { ...j, status: destination.droppableId } : j
+      j._id === draggableId ? { ...j, status: destination.droppableId } : j
     );
 
     // Update state
     setJobsData({ jobs: updatedJobs });
 
-    // In a real app, you would make an API call to update the job status
-    console.log(`Job ${job.id} moved from ${source.droppableId} to ${destination.droppableId}`);
+    // Update in the database
+    try {
+      const response = await fetch(`/api/jobs/${draggableId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status: destination.droppableId }),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to update job status');
+        // If there's an error, you might want to revert the optimistic update
+      }
+    } catch (error) {
+      console.error('Error updating job status:', error);
+      // Revert the optimistic update on error
+      setJobsData({ jobs: jobsData.jobs });
+    }
   };
 
   if (loading) {
@@ -50,6 +85,27 @@ export default function JobsPage() {
         <div className="text-center">
           <div className="w-12 h-12 border-4 border-blue-400 border-t-transparent rounded-full animate-spin mx-auto"></div>
           <p className="mt-4 text-gray-600">Loading your job applications...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-center">
+          <div className="text-red-500 mb-2">
+            <svg className="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <p className="text-gray-800 font-medium">{error}</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
+            Try Again
+          </button>
         </div>
       </div>
     );
@@ -90,7 +146,7 @@ export default function JobsPage() {
                     }`}
                   >
                     {columns[columnId].map((job, index) => (
-                      <Draggable key={job.id} draggableId={job.id} index={index}>
+                      <Draggable key={job._id} draggableId={job._id} index={index}>
                         {(provided, snapshot) => (
                           <div
                             ref={provided.innerRef}
@@ -116,13 +172,31 @@ export default function JobsPage() {
                             <div className="mt-3 pt-3 border-t border-gray-100 flex justify-between items-center">
                               <p className="text-xs text-gray-500">Applied: {new Date(job.dateApplied).toLocaleDateString()}</p>
                               <button 
-                                onClick={() => {
-                                  // In a real app, navigate to edit form
-                                  console.log(`Edit job ${job.id}`);
+                                onClick={async () => {
+                                  // Delete the job
+                                  if (confirm('Are you sure you want to delete this job application?')) {
+                                    try {
+                                      const response = await fetch(`/api/jobs/${job._id}`, {
+                                        method: 'DELETE'
+                                      });
+                                      
+                                      if (response.ok) {
+                                        // Remove the job from state
+                                        setJobsData({ 
+                                          jobs: jobsData.jobs.filter(j => j._id !== job._id) 
+                                        });
+                                      } else {
+                                        throw new Error('Failed to delete job');
+                                      }
+                                    } catch (error) {
+                                      console.error('Error deleting job:', error);
+                                      alert('Failed to delete job. Please try again.');
+                                    }
+                                  }
                                 }}
-                                className="text-xs text-blue-600 hover:text-blue-800"
+                                className="text-xs text-red-600 hover:text-red-800"
                               >
-                                Edit
+                                Delete
                               </button>
                             </div>
                             

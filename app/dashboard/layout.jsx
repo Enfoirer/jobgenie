@@ -3,19 +3,38 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { useSession, signOut } from 'next-auth/react';
 
 export default function DashboardLayout({ children }) {
   const pathname = usePathname();
-  const [user, setUser] = useState({ name: 'Student User' });
+  const router = useRouter();
+  const { data: session, status } = useSession();
   
-  // In a real app, you would fetch the user from your auth context
+  // Check if the user is authenticated
   useEffect(() => {
-    // Simulate fetching user data
-    setTimeout(() => {
-      setUser({ name: 'Student User' });
-    }, 100);
-  }, []);
+    if (status === 'unauthenticated') {
+      router.push('/login');
+    }
+  }, [status, router]);
+
+  // Show loading state while checking authentication
+  if (status === 'loading') {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-50">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-blue-400 border-t-transparent rounded-full animate-spin mx-auto"></div>
+          <h1 className="mt-6 text-xl font-semibold text-gray-700">JobTrack</h1>
+          <p className="mt-2 text-gray-500">Loading your dashboard...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // If not authenticated, don't render anything (redirect will happen in useEffect)
+  if (status === 'unauthenticated') {
+    return null;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -65,7 +84,7 @@ export default function DashboardLayout({ children }) {
             <div className="flex items-center">
               <div className="flex-shrink-0">
                 <span className="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
-                  {user.name}
+                  {session?.user?.name || session?.user?.email}
                 </span>
               </div>
               <div className="ml-4">
@@ -73,8 +92,7 @@ export default function DashboardLayout({ children }) {
                   type="button"
                   className="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-red-700 bg-red-50 hover:bg-red-100"
                   onClick={() => {
-                    // In a real app, you would integrate with your auth provider to log out
-                    window.location.href = '/login';
+                    signOut({ callbackUrl: '/login' });
                   }}
                 >
                   Logout
