@@ -72,6 +72,18 @@ export default function JobTimeline({ jobId, onClose }) {
     return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
   };
 
+  // Get status display name - Enhanced to include interview stage
+  const getStatusDisplayName = (entry) => {
+    const baseName = COLUMN_NAMES[entry.status];
+    
+    // If it's an interview status and has an interview stage, include it
+    if (entry.status === 'interviewing' && entry.interviewStage) {
+      return `${baseName} - ${entry.interviewStage}`;
+    }
+    
+    return baseName;
+  };
+
   return (
     <div className="fixed inset-0 overflow-y-auto z-50">
       <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -122,12 +134,7 @@ export default function JobTimeline({ jobId, onClose }) {
                           {/* Timeline content */}
                           <div className="timeline-content">
                             <div className="timeline-title">
-                              {COLUMN_NAMES[entry.status]}
-                              {entry.interviewStage && (
-                                <span className="ml-2 text-sm text-gray-500">
-                                  - {entry.interviewStage}
-                                </span>
-                              )}
+                              {getStatusDisplayName(entry)}
                             </div>
                             <div className="timeline-date">{formatDate(entry.date)}</div>
                             {entry.notes && (
