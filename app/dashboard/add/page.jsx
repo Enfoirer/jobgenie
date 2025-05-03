@@ -55,6 +55,11 @@ export default function AddJobPage() {
       const result = await response.json();
       console.log('Job created successfully:', result);
       
+      // Add the initial status history entry
+      if (result.job && result.job._id) {
+        await addInitialStatusHistory(result.job._id);
+      }
+      
       // Redirect to jobs page on success
       router.push('/dashboard/jobs');
       
@@ -62,6 +67,34 @@ export default function AddJobPage() {
       console.error('Error saving job:', error);
       setError(error.message || 'Failed to save job application. Please try again.');
       setIsSubmitting(false);
+    }
+  };
+  
+  // Add initial status history entry
+  const addInitialStatusHistory = async (jobId) => {
+    try {
+      const statusHistoryData = {
+        status: formData.status,
+        date: formData.dateApplied,
+        notes: `Initial application - ${formData.notes}`
+      };
+      
+      const response = await fetch(`/api/jobs/${jobId}/status-history`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(statusHistoryData),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to create status history');
+      }
+      
+      console.log('Initial status history created');
+    } catch (error) {
+      console.error('Error creating initial status history:', error);
+      // We don't need to show this error to the user, as the job was still created
     }
   };
 

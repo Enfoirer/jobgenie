@@ -4,11 +4,16 @@
 import { useState, useEffect } from 'react';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import { COLUMNS, COLUMN_NAMES } from '@/lib/mockData';
+import StatusChangeModal from '@/components/StatusChangeModal';
+import JobTimeline from '@/components/JobTimeline';
 
 export default function JobsPage() {
   const [jobsData, setJobsData] = useState({ jobs: [] });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedJob, setSelectedJob] = useState(null);
+  const [showStatusModal, setShowStatusModal] = useState(false);
+  const [showTimeline, setShowTimeline] = useState(false);
 
   useEffect(() => {
     // Fetch jobs from API
@@ -67,28 +72,29 @@ export default function JobsPage() {
     // Update state
     setJobsData({ jobs: updatedJobs });
 
-    // Update in the database
+    // Show the status change modal
+    setSelectedJob(job);
+    setShowStatusModal(true);
+  };
+
+  const handleStatusChange = async (newStatus) => {
+    // This is called after the status change is saved
+    // We already updated the UI optimistically, so we just need to
+    // close the modal and refetch the jobs to ensure consistency
+    setShowStatusModal(false);
+    // Refresh the jobs list
+    fetchJobs();
+  };
+
+  const fetchJobs = async () => {
     try {
-      console.log(`Sending PATCH request to /api/jobs/${draggableId}`);
-      const response = await fetch(`/api/jobs/${draggableId}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ status: destination.droppableId }),
-      });
-      
-      if (!response.ok) {
-        throw new Error('Failed to update job status');
+      const response = await fetch('/api/jobs');
+      if (response.ok) {
+        const data = await response.json();
+        setJobsData(data);
       }
-      
-      console.log('Job status updated successfully');
     } catch (error) {
-      console.error('Error updating job status:', error);
-      // Revert the optimistic update on error
-      alert('Failed to update job status. Please try again.');
-      // Refetch jobs to make sure UI is in sync with server
-      fetchJobs();
+      console.error('Error refreshing jobs:', error);
     }
   };
 
@@ -175,7 +181,11 @@ export default function JobsPage() {
                             {...provided.dragHandleProps}
                             className={`bg-white rounded-lg border ${
                               snapshot.isDragging ? 'shadow-lg border-blue-300' : 'border-gray-200'
-                            } p-4 mb-3`}
+                            } p-4 mb-3 cursor-pointer hover:border-blue-300 hover:shadow-md transition-all duration-200`}
+                            onClick={() => {
+                              setSelectedJob(job);
+                              setShowTimeline(true);
+                            }}
                           >
                             <div className="flex justify-between items-start">
                               <div>
@@ -192,34 +202,29 @@ export default function JobsPage() {
                             
                             <div className="mt-3 pt-3 border-t border-gray-100 flex justify-between items-center">
                               <p className="text-xs text-gray-500">Applied: {new Date(job.dateApplied).toLocaleDateString()}</p>
-                              <button 
-                                onClick={async () => {
-                                  // Delete the job
-                                  if (confirm('Are you sure you want to delete this job application?')) {
-                                    try {
-                                      const response = await fetch(`/api/jobs/${job._id}`, {
-                                        method: 'DELETE'
-                                      });
-                                      
-                                      if (response.ok) {
-                                        // Remove the job from state
-                                        setJobsData({ 
-                                          jobs: jobsData.jobs.filter(j => j._id !== job._id) 
-                                        });
-                                        alert('Job deleted successfully');
-                                      } else {
-                                        throw new Error('Failed to delete job');
-                                      }
-                                    } catch (error) {
-                                      console.error('Error deleting job:', error);
-                                      alert('Failed to delete job. Please try again.');
+                              <div className="flex space-x-2">
+                                <button 
+                                  onClick={(e) => {
+                                    e.stopPropagation(); // Prevent opening timeline
+                                    setSelectedJob(job);
+                                    setShowStatusModal(true);
+                                  }}
+                                  className="text-xs text-blue-600 hover:text-blue-800"
+                                >
+                                  Update Status
+                                </button>
+                                <button 
+                                  onClick={(e) => {
+                                    e.stopPropagation(); // Prevent opening timeline
+                                    if (confirm('Are you sure you want to delete this job application?')) {
+                                      handleDeleteJob(job._id);
                                     }
-                                  }
-                                }}
-                                className="text-xs text-red-600 hover:text-red-800"
-                              >
-                                Delete
-                              </button>
+                                  }}
+                                  className="text-xs text-red-600 hover:text-red-800"
+                                >
+                                  Delete
+                                </button>
+                              </div>
                             </div>
                             
                             {job.notes && (
@@ -239,6 +244,45 @@ export default function JobsPage() {
           ))}
         </div>
       </DragDropContext>
+
+      {/* Status Change Modal */}
+      {showStatusModal && selectedJob && (
+        <StatusChangeModal 
+          job={selectedJob} 
+          onClose={() => setShowStatusModal(false)} 
+          onStatusChange={handleStatusChange}
+        />
+      )}
+
+      {/* Timeline Modal */}
+      {showTimeline && selectedJob && (
+        <JobTimeline 
+          jobId={selectedJob._id} 
+          onClose={() => setShowTimeline(false)} 
+        />
+      )}
     </div>
   );
+
+  // Helper function to delete a job
+  async function handleDeleteJob(jobId) {
+    try {
+      const response = await fetch(`/api/jobs/${jobId}`, {
+        method: 'DELETE'
+      });
+      
+      if (response.ok) {
+        // Remove the job from state
+        setJobsData({ 
+          jobs: jobsData.jobs.filter(j => j._id !== jobId) 
+        });
+        alert('Job deleted successfully');
+      } else {
+        throw new Error('Failed to delete job');
+      }
+    } catch (error) {
+      console.error('Error deleting job:', error);
+      alert('Failed to delete job. Please try again.');
+    }
+  }
 }

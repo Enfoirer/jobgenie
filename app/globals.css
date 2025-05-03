@@ -31,6 +31,51 @@ body {
   }
 }
 
+/* Timeline Styles */
+.timeline-dot-applied {
+  @apply bg-blue-500 border-4 border-white shadow;
+}
+
+.timeline-dot-interviewing {
+  @apply bg-yellow-500 border-4 border-white shadow;
+}
+
+.timeline-dot-completed {
+  @apply bg-green-500 border-4 border-white shadow;
+}
+
+.timeline-container {
+  @apply relative py-4;
+}
+
+.timeline-line {
+  @apply absolute left-5 top-0 h-full w-0.5 bg-gray-200;
+}
+
+.timeline-item {
+  @apply flex items-start mb-8 relative;
+}
+
+.timeline-dot {
+  @apply flex-shrink-0 h-5 w-5 rounded-full mt-1;
+}
+
+.timeline-content {
+  @apply ml-4 flex-1;
+}
+
+.timeline-title {
+  @apply font-medium text-gray-900;
+}
+
+.timeline-date {
+  @apply text-sm text-gray-500;
+}
+
+.timeline-notes {
+  @apply mt-1 text-sm text-gray-700 bg-gray-50 p-2 rounded;
+}
+
 /* Custom scrollbar for the board columns */
 .scrollbar-thin {
   scrollbar-width: thin;
