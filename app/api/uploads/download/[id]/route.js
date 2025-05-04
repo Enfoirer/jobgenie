@@ -1,4 +1,4 @@
-// app/api/uploads/[id]/route.js
+// app/api/uploads/download/[id]/route.js
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
@@ -24,36 +24,44 @@ const FileSchema = new mongoose.Schema({
 
 const File = mongoose.models.File || mongoose.model('File', FileSchema);
 
-export async function DELETE(request, { params }) {
+export async function GET(request, { params }) {
   try {
     await dbConnect();
+    
     const session = await getServerSession(authOptions);
     
     if (!session) {
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
     }
-    
+
     const { id } = params;
     
-    console.log(`DELETE /api/uploads/${id} - Deleting file`);
+    // Find the file record
+    const fileRecord = await File.findById(id);
     
-    // Find file and verify ownership
-    const file = await File.findById(id);
-    
-    if (!file) {
+    if (!fileRecord) {
       return NextResponse.json({ error: 'File not found' }, { status: 404 });
     }
     
-    if (file.userId.toString() !== session.user.id) {
+    if (fileRecord.userId.toString() !== session.user.id) {
       return NextResponse.json({ error: 'Not authorized' }, { status: 403 });
     }
     
-    // Delete file record from database
-    await File.findByIdAndDelete(id);
+    // If no file data is found
+    if (!fileRecord.fileData) {
+      return NextResponse.json({ error: 'File content not found' }, { status: 404 });
+    }
     
-    return NextResponse.json({ success: true });
+    // Return the file with appropriate headers
+    return new NextResponse(fileRecord.fileData, {
+      headers: {
+        'Content-Type': fileRecord.type || 'application/octet-stream',
+        'Content-Disposition': `inline; filename="${fileRecord.name}"`,
+        'Content-Length': fileRecord.fileData.length.toString()
+      }
+    });
   } catch (error) {
-    console.error(`DELETE /api/uploads/[id] - Error:`, error);
+    console.error(`GET /api/uploads/download/[id] - Error:`, error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

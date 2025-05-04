@@ -1,7 +1,5 @@
 // app/api/uploads/route.js
 import { NextResponse } from 'next/server';
-import { writeFile, mkdir } from 'fs/promises';
-import { join, dirname } from 'path';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import dbConnect from '@/lib/mongodb';
@@ -17,7 +15,7 @@ const FileSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
-  filePath: String,
+  fileData: Buffer, // Store file directly in MongoDB as Buffer
   uploadDate: {
     type: Date,
     default: Date.now
@@ -41,10 +39,20 @@ export async function GET() {
     
     console.log('GET /api/uploads - Authenticated as', session.user.email);
     
-    const userFiles = await File.find({ userId: session.user.id }).sort({ uploadDate: -1 });
+    const userFiles = await File.find({ userId: session.user.id }, { fileData: 0 }).sort({ uploadDate: -1 });
     console.log(`GET /api/uploads - Found ${userFiles.length} files`);
     
-    return NextResponse.json({ files: userFiles });
+    // Transform to include download URLs
+    const filesWithUrls = userFiles.map(file => ({
+      id: file._id,
+      name: file.name,
+      type: file.type,
+      size: file.size,
+      uploadDate: file.uploadDate,
+      filePath: `/api/uploads/download/${file._id}`
+    }));
+    
+    return NextResponse.json({ files: filesWithUrls });
   } catch (error) {
     console.error('GET /api/uploads - Error:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });
@@ -68,35 +76,25 @@ export async function POST(request) {
       return NextResponse.json({ error: 'No file provided' }, { status: 400 });
     }
 
+    // Size check
+    if (file.size > 10 * 1024 * 1024) { // 10MB limit
+      console.log(`File too large: ${file.size} bytes`);
+      return NextResponse.json({ error: 'File too large (max 10MB)' }, { status: 400 });
+    }
+
+    // Get file as buffer
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
     
-    // Create uploads directory if it doesn't exist
-    const uploadsDir = join(process.cwd(), 'public', 'uploads');
-    try {
-      await mkdir(uploadsDir, { recursive: true });
-    } catch (err) {
-      if (err.code !== 'EEXIST') {
-        throw err;
-      }
-    }
+    console.log(`POST /api/uploads - Uploading file: ${file.name}, size: ${buffer.length} bytes`);
     
-    // Create a unique filename
-    const fileName = `${session.user.id.substring(0, 8)}-${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '')}`;
-    const filePath = join(uploadsDir, fileName);
-    
-    console.log(`POST /api/uploads - Saving file ${fileName}`);
-    
-    // Write the file to the public/uploads directory
-    await writeFile(filePath, buffer);
-    
-    // Create a record in the database
+    // Create a record in the database with the file data
     const fileRecord = await File.create({
       name: file.name,
       type: file.type,
       size: `${Math.round(file.size / 1024)} KB`,
       userId: session.user.id,
-      filePath: `/uploads/${fileName}`
+      fileData: buffer // Store the actual file data in MongoDB
     });
     
     console.log(`POST /api/uploads - File saved successfully: ${fileRecord._id}`);
@@ -109,7 +107,7 @@ export async function POST(request) {
         type: fileRecord.type,
         size: fileRecord.size,
         uploadDate: fileRecord.uploadDate,
-        filePath: fileRecord.filePath
+        filePath: `/api/uploads/download/${fileRecord._id}`
       }
     });
   } catch (error) {
