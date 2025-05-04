@@ -332,7 +332,7 @@ export default function UploadPage() {
                               rel="noopener noreferrer"
                               className="mt-2 inline-block text-blue-600 hover:underline"
                             >
-                              Open in new tab
+                              Download
                             </a>
                           )}
                         </div>
