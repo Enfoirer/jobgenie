@@ -48,7 +48,7 @@ export default function DashboardLayout({ children }) {
                   <span className="font-bold text-xl text-blue-600">JobTrack</span>
                 </Link>
               </div>
-              <div className="ml-6 flex space-x-8">
+              <div className="ml-6 flex space-x-6">
                 <Link 
                   href="/dashboard/jobs" 
                   className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
@@ -58,6 +58,16 @@ export default function DashboardLayout({ children }) {
                   }`}
                 >
                   Job Board
+                </Link>
+                <Link 
+                  href="/dashboard/analytics" 
+                  className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
+                    pathname === '/dashboard/analytics' 
+                      ? 'border-blue-500 text-gray-900' 
+                      : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                  }`}
+                >
+                  Analytics
                 </Link>
                 <Link 
                   href="/dashboard/add" 
