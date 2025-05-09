@@ -1,4 +1,4 @@
-// app/dashboard/add/page.jsx
+// app/dashboard/add/page.jsx - Updated with URL field
 'use client';
 
 import { useState } from 'react';
@@ -16,7 +16,8 @@ export default function AddJobPage() {
     applicationSource: APPLICATION_SOURCES[0],
     status: COLUMNS.APPLIED,
     dateApplied: new Date().toISOString().split('T')[0], // Today's date in YYYY-MM-DD format
-    notes: ''
+    notes: '',
+    jobUrl: '' // Added new field for job URL
   });
 
   const handleChange = (e) => {
@@ -194,6 +195,27 @@ export default function AddJobPage() {
                 className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
               />
             </div>
+          </div>
+
+          {/* Job URL - New Field */}
+          <div className="sm:col-span-6">
+            <label htmlFor="jobUrl" className="block text-sm font-medium text-gray-700">
+              Job Posting URL (Optional)
+            </label>
+            <div className="mt-1">
+              <input
+                type="url"
+                name="jobUrl"
+                id="jobUrl"
+                value={formData.jobUrl}
+                onChange={handleChange}
+                placeholder="https://example.com/job-posting"
+                className="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              />
+            </div>
+            <p className="mt-1 text-xs text-gray-500">
+              The URL where you found/applied for this job
+            </p>
           </div>
 
           {/* Application Source */}
