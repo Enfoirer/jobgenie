@@ -6,6 +6,7 @@ import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import { COLUMNS, COLUMN_NAMES } from '@/lib/mockData';
 import StatusChangeModal from '@/components/StatusChangeModal';
 import JobTimeline from '@/components/JobTimeline';
+import EditJobModal from '@/components/EditJobModal';
 
 export default function JobsPage() {
   const [jobsData, setJobsData] = useState({ jobs: [] });
@@ -15,6 +16,8 @@ export default function JobsPage() {
   const [showStatusModal, setShowStatusModal] = useState(false);
   const [showTimeline, setShowTimeline] = useState(false);
   const [hideRejected, setHideRejected] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+
 
   useEffect(() => {
     // Fetch jobs from API
@@ -85,6 +88,18 @@ export default function JobsPage() {
     setShowStatusModal(false);
     // Refresh the jobs list
     fetchJobs();
+  };
+
+
+
+  const handleJobUpdate = (updatedJob) => {
+  // Update the job in the jobs list
+  setJobsData(prev => ({
+    jobs: prev.jobs.map(job => 
+      job._id === updatedJob._id ? updatedJob : job
+    )
+  }));
+  setShowEditModal(false);
   };
 
   const fetchJobs = async () => {
@@ -214,87 +229,98 @@ export default function JobsPage() {
                       </div>
                     )}
                     
+                    
                     {columns[columnId].map((job, index) => (
-                      <Draggable key={job._id} draggableId={job._id} index={index}>
-                      {(provided, snapshot) => (
-                        <div
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          className={`bg-white rounded-lg border ${
-                            snapshot.isDragging ? 'shadow-lg border-blue-300' : 'border-gray-200'
-                          } p-4 mb-3 cursor-pointer hover:border-blue-300 hover:shadow-md transition-all duration-200`}
-                          onClick={() => {
-                            setSelectedJob(job);
-                            setShowTimeline(true);
-                          }}
-                        >
-                          <div className="flex justify-between items-start">
-                            <div>
-                              <h3 className="font-medium text-gray-800">{job.company}</h3>
-                              <p className="text-sm text-gray-600">{job.position}</p>
-                              <p className="text-xs text-gray-500 mt-1">{job.location}</p>
-                              
-                              {/* Job URL - Only show if it exists */}
-                              {job.jobUrl && (
-                                <a 
-                                  href={job.jobUrl}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="inline-flex items-center text-xs text-blue-600 hover:text-blue-800 mt-1"
-                                  onClick={(e) => e.stopPropagation()} // Prevent card click event when clicking the link
-                                >
-                                  <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                                  </svg>
-                                  Job Posting
-                                </a>
-                              )}
-                            </div>
-                            
-                            <div>
-                              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                {job.applicationSource}
-                              </span>
-                            </div>
-                          </div>
-                          
-                          <div className="mt-3 pt-3 border-t border-gray-100 flex justify-between items-center">
-                            <p className="text-xs text-gray-500">Applied: {new Date(job.dateApplied).toLocaleDateString()}</p>
-                            <div className="flex space-x-2">
-                              <button 
-                                onClick={(e) => {
-                                  e.stopPropagation(); // Prevent opening timeline
-                                  setSelectedJob(job);
-                                  setShowStatusModal(true);
-                                }}
-                                className="text-xs text-blue-600 hover:text-blue-800"
-                              >
-                                Update Status
-                              </button>
-                              <button 
-                                onClick={(e) => {
-                                  e.stopPropagation(); // Prevent opening timeline
-                                  if (confirm('Are you sure you want to delete this job application?')) {
-                                    handleDeleteJob(job._id);
-                                  }
-                                }}
-                                className="text-xs text-red-600 hover:text-red-800"
-                              >
-                                Delete
-                              </button>
-                            </div>
-                          </div>
-                          
-                          {job.notes && (
-                            <div className="mt-2 text-xs text-gray-600 bg-gray-50 p-2 rounded">
-                              {job.notes}
-                            </div>
-                          )}
-                        </div>
-                      )}
-                      </Draggable>
-                    ))}
+  <Draggable key={job._id} draggableId={job._id} index={index}>
+    {(provided, snapshot) => (
+      <div
+        ref={provided.innerRef}
+        {...provided.draggableProps}
+        {...provided.dragHandleProps}
+        className={`bg-white rounded-lg border ${
+          snapshot.isDragging ? 'shadow-lg border-blue-300' : 'border-gray-200'
+        } p-4 mb-3 cursor-pointer hover:border-blue-300 hover:shadow-md transition-all duration-200`}
+        onClick={() => {
+          setSelectedJob(job);
+          setShowTimeline(true);
+        }}
+      >
+        <div className="flex justify-between items-start">
+          <div>
+            <h3 className="font-medium text-gray-800">{job.company}</h3>
+            <p className="text-sm text-gray-600">{job.position}</p>
+            <p className="text-xs text-gray-500 mt-1">{job.location}</p>
+            
+            {/* Job URL - Only show if it exists */}
+            {job.jobUrl && (
+              <a 
+                href={job.jobUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center text-xs text-blue-600 hover:text-blue-800 mt-1"
+                onClick={(e) => e.stopPropagation()} // Prevent card click event when clicking the link
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+                Job Posting
+              </a>
+            )}
+          </div>
+          
+          <div>
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+              {job.applicationSource}
+            </span>
+          </div>
+        </div>
+        
+        <div className="mt-3 pt-3 border-t border-gray-100 flex justify-between items-center">
+          <p className="text-xs text-gray-500">Applied: {new Date(job.dateApplied).toLocaleDateString()}</p>
+          <div className="flex space-x-2">
+            <button 
+              onClick={(e) => {
+                e.stopPropagation(); // Prevent opening timeline
+                setSelectedJob(job);
+                setShowEditModal(true);
+              }}
+              className="text-xs text-blue-600 hover:text-blue-800"
+            >
+              Edit Job
+            </button>
+            <button 
+              onClick={(e) => {
+                e.stopPropagation(); // Prevent opening timeline
+                setSelectedJob(job);
+                setShowStatusModal(true);
+              }}
+              className="text-xs text-blue-600 hover:text-blue-800"
+            >
+              Update Status
+            </button>
+            <button 
+              onClick={(e) => {
+                e.stopPropagation(); // Prevent opening timeline
+                if (confirm('Are you sure you want to delete this job application?')) {
+                  handleDeleteJob(job._id);
+                }
+              }}
+              className="text-xs text-red-600 hover:text-red-800"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+        
+        {job.notes && (
+          <div className="mt-2 text-xs text-gray-600 bg-gray-50 p-2 rounded">
+            {job.notes}
+          </div>
+        )}
+      </div>
+    )}
+  </Draggable>
+))}
                     {provided.placeholder}
                   </div>
                 )}
@@ -312,6 +338,15 @@ export default function JobsPage() {
           onStatusChange={handleStatusChange}
         />
       )}
+
+      {/* Edit Job Modal */}
+{showEditModal && selectedJob && (
+  <EditJobModal 
+    job={selectedJob} 
+    onClose={() => setShowEditModal(false)}
+    onUpdate={handleJobUpdate}
+  />
+)}
 
       {/* Timeline Modal */}
       {showTimeline && selectedJob && (

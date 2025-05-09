@@ -1,16 +1,17 @@
-// components/JobTimeline.jsx
-// This is the simpler timeline component for job cards
-
+// components/JobTimeline.jsx - Modified version with edit functionality
 'use client';
 
 import { useState, useEffect } from 'react';
 import { COLUMN_NAMES } from '@/lib/mockData';
+import EditStatusHistoryModal from './EditStatusHistoryModal';
 
 export default function JobTimeline({ jobId, onClose }) {
   const [statusHistory, setStatusHistory] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [job, setJob] = useState(null);
+  const [selectedStatus, setSelectedStatus] = useState(null);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   useEffect(() => {
     const fetchJobAndHistory = async () => {
@@ -86,6 +87,42 @@ export default function JobTimeline({ jobId, onClose }) {
     return baseName;
   };
 
+  // Handle status update from the edit modal
+  const handleStatusUpdate = async (updatedStatus, wasDeleted = false) => {
+    setShowEditModal(false);
+    
+    if (wasDeleted) {
+      // Refresh the entire timeline
+      try {
+        setLoading(true);
+        const historyResponse = await fetch(`/api/jobs/${jobId}/status-history`);
+        if (!historyResponse.ok) {
+          throw new Error('Failed to fetch updated status history');
+        }
+        
+        const historyData = await historyResponse.json();
+        
+        // Sort the history by date
+        const sortedHistory = [...historyData.statusHistory].sort((a, b) => 
+          new Date(a.date) - new Date(b.date)
+        );
+        
+        setStatusHistory(sortedHistory);
+      } catch (error) {
+        console.error('Error refreshing status history:', error);
+      } finally {
+        setLoading(false);
+      }
+    } else if (updatedStatus) {
+      // Update just the modified status entry
+      setStatusHistory(prev => 
+        prev.map(entry => 
+          entry._id === updatedStatus._id ? updatedStatus : entry
+        )
+      );
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -130,10 +167,23 @@ export default function JobTimeline({ jobId, onClose }) {
                 
                 {/* Timeline content */}
                 <div className="timeline-content">
-                  <div className="timeline-title">
-                    {getStatusDisplayName(entry)}
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <div className="timeline-title">
+                        {getStatusDisplayName(entry)}
+                      </div>
+                      <div className="timeline-date">{formatDate(entry.date)}</div>
+                    </div>
+                    <button 
+                      onClick={() => {
+                        setSelectedStatus(entry);
+                        setShowEditModal(true);
+                      }}
+                      className="text-xs text-blue-600 hover:text-blue-800"
+                    >
+                      Edit
+                    </button>
                   </div>
-                  <div className="timeline-date">{formatDate(entry.date)}</div>
                   {entry.notes && (
                     <div className="timeline-notes">
                       {entry.notes}
@@ -155,6 +205,16 @@ export default function JobTimeline({ jobId, onClose }) {
           Close
         </button>
       </div>
+
+      {/* Edit Status Modal */}
+      {showEditModal && selectedStatus && (
+        <EditStatusHistoryModal 
+          statusEntry={selectedStatus}
+          jobId={jobId}
+          onClose={() => setShowEditModal(false)}
+          onUpdate={handleStatusUpdate}
+        />
+      )}
     </div>
   );
 }
