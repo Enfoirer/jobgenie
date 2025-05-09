@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import { COLUMN_NAMES } from '@/lib/mockData';
+import { createPortal } from 'react-dom';
 import EditStatusHistoryModal from './EditStatusHistoryModal';
 
 export default function JobTimeline({ jobId, onClose }) {

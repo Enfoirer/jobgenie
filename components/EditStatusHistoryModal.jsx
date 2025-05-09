@@ -2,6 +2,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { COLUMNS, COLUMN_NAMES, INTERVIEW_STAGES } from '@/lib/mockData';
 
 export default function EditStatusHistoryModal({ statusEntry, jobId, onClose, onUpdate }) {
@@ -13,8 +14,20 @@ export default function EditStatusHistoryModal({ statusEntry, jobId, onClose, on
     date: '',
     notes: ''
   });
+  const [mounted, setMounted] = useState(false);
 
-  // Load status data when modal opens
+  useEffect(() => {
+    setMounted(true);
+    
+    // Lock body scroll when modal is open
+    document.body.style.overflow = 'hidden';
+    
+    return () => {
+      setMounted(false);
+      document.body.style.overflow = '';
+    };
+  }, []);
+
   useEffect(() => {
     if (statusEntry) {
       setFormData({
@@ -40,9 +53,6 @@ export default function EditStatusHistoryModal({ statusEntry, jobId, onClose, on
     setError('');
 
     try {
-      console.log('Updating status history entry:', formData);
-      
-      // Submit to API using PATCH method
       const response = await fetch(`/api/jobs/${jobId}/status-history/${statusEntry._id}`, {
         method: 'PATCH',
         headers: {
@@ -51,23 +61,17 @@ export default function EditStatusHistoryModal({ statusEntry, jobId, onClose, on
         body: JSON.stringify(formData),
       });
       
-      console.log('Response status:', response.status);
-      
       if (!response.ok) {
         const errorData = await response.json();
-        console.error('API error response:', errorData);
         throw new Error(errorData.error || 'Failed to update status history');
       }
       
       const result = await response.json();
-      console.log('Status history updated successfully:', result);
       
-      // Call the onUpdate callback with the updated status
       if (onUpdate) {
         onUpdate(result.statusHistory);
       }
       
-      // Close the modal
       onClose();
       
     } catch (error) {
@@ -86,27 +90,19 @@ export default function EditStatusHistoryModal({ statusEntry, jobId, onClose, on
     setError('');
 
     try {
-      console.log('Deleting status history entry:', statusEntry._id);
-      
-      // Submit to API using DELETE method
-      const response = await fetch(`/api/jobs/${jobId}/status-history/${statusEntry._id}`, {
+      const response = await fetch(`/api/jobs/${jobId}/status-history/${statusId}`, {
         method: 'DELETE'
       });
       
-      console.log('Response status:', response.status);
-      
       if (!response.ok) {
         const errorData = await response.json();
-        console.error('API error response:', errorData);
         throw new Error(errorData.error || 'Failed to delete status history');
       }
       
-      // Call the onUpdate callback to refresh the data
       if (onUpdate) {
-        onUpdate(null, true); // Pass true to indicate deletion
+        onUpdate(null, true);
       }
       
-      // Close the modal
       onClose();
       
     } catch (error) {
@@ -116,157 +112,269 @@ export default function EditStatusHistoryModal({ statusEntry, jobId, onClose, on
     }
   };
 
-  return (
-    <div className="fixed inset-0 overflow-y-auto z-50">
-      <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <div className="fixed inset-0 transition-opacity">
-          <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+  // The modal content
+  const modalContent = (
+    <div id="status-history-modal-overlay" style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      width: '100vw',  // Force full viewport width
+      height: '100vh', // Force full viewport height
+      margin: 0,       // Remove any margins
+      padding: 0,      // Remove any padding
+      backgroundColor: 'rgba(0, 0, 0, 0.75)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      zIndex: 99999,   // Extremely high z-index
+      boxSizing: 'border-box', // Ensure padding doesn't add to dimensions
+    }}>
+      <div id="status-history-modal-content" style={{
+        backgroundColor: 'white',
+        borderRadius: '6px',
+        width: '92%',
+        maxWidth: '550px',
+        maxHeight: '90vh',
+        overflow: 'auto',
+        boxShadow: '0 10px 25px rgba(0, 0, 0, 0.3)',
+        margin: '0 auto', // Center horizontally
+        position: 'relative', // Ensure it's positioned correctly
+        animation: 'fadeIn 0.2s ease-out',
+      }} onClick={e => e.stopPropagation()}>
+        <style>
+          {`
+            @keyframes fadeIn {
+              from { opacity: 0; transform: scale(0.95); }
+              to { opacity: 1; transform: scale(1); }
+            }
+          `}
+        </style>
+        
+        <div style={{ 
+          padding: '16px 20px', 
+          borderBottom: '1px solid #e5e7eb',
+          backgroundColor: '#f9fafb'
+        }}>
+          <h2 style={{ 
+            fontSize: '20px', 
+            fontWeight: '600', 
+            color: '#111827',
+            margin: 0
+          }}>
+            Edit Status History
+          </h2>
         </div>
         
-        <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>&#8203;
-        
-        <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-          <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-            <div className="sm:flex sm:items-start">
-              <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-                <h3 className="text-lg leading-6 font-medium text-gray-900 flex justify-between">
-                  <span>Edit Status History</span>
-                  <button 
-                    onClick={onClose}
-                    className="text-gray-400 hover:text-gray-500"
-                  >
-                    <span className="sr-only">Close</span>
-                    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </h3>
-                
-                {error && (
-                  <div className="mt-2 rounded-md bg-red-50 p-2">
-                    <p className="text-sm text-red-700">{error}</p>
-                  </div>
-                )}
-                
-                <form onSubmit={handleSubmit} className="mt-4">
-                  <div className="space-y-4">
-                    {/* Status */}
-                    <div>
-                      <label htmlFor="status" className="block text-sm font-medium text-gray-700">
-                        Status
-                      </label>
-                      <select
-                        id="status"
-                        name="status"
-                        value={formData.status}
-                        onChange={handleChange}
-                        required
-                        className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                      >
-                        {Object.entries(COLUMN_NAMES).map(([value, label]) => (
-                          <option key={value} value={value}>{label}</option>
-                        ))}
-                      </select>
-                    </div>
-                    
-                    {/* Interview Stage (only shown if status is "Interviewing") */}
-                    {formData.status === COLUMNS.INTERVIEWING && (
-                      <div>
-                        <label htmlFor="interviewStage" className="block text-sm font-medium text-gray-700">
-                          Interview Stage
-                        </label>
-                        <select
-                          id="interviewStage"
-                          name="interviewStage"
-                          value={formData.interviewStage}
-                          onChange={handleChange}
-                          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                        >
-                          <option value="">Select an interview stage</option>
-                          {INTERVIEW_STAGES.map(stage => (
-                            <option key={stage} value={stage}>{stage}</option>
-                          ))}
-                        </select>
-                      </div>
-                    )}
-                    
-                    {/* Date */}
-                    <div>
-                      <label htmlFor="date" className="block text-sm font-medium text-gray-700">
-                        Date
-                      </label>
-                      <input
-                        type="date"
-                        id="date"
-                        name="date"
-                        value={formData.date}
-                        onChange={handleChange}
-                        required
-                        className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                      />
-                    </div>
-                    
-                    {/* Notes */}
-                    <div>
-                      <label htmlFor="notes" className="block text-sm font-medium text-gray-700">
-                        Notes
-                      </label>
-                      <textarea
-                        id="notes"
-                        name="notes"
-                        rows="3"
-                        value={formData.notes}
-                        onChange={handleChange}
-                        className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                        placeholder="Add any notes about this status change"
-                      ></textarea>
-                    </div>
-                  </div>
-
-                  <div className="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3">
-                    <div className="flex space-x-2">
-                      <button
-                        type="button"
-                        onClick={onClose}
-                        className="inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm"
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        type="button"
-                        onClick={handleDelete}
-                        disabled={isSubmitting}
-                        className="inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:text-sm"
-                      >
-                        Delete
-                      </button>
-                    </div>
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className={`w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm ${
-                        isSubmitting ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
-                      }`}
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                          </svg>
-                          Saving...
-                        </>
-                      ) : (
-                        'Save Changes'
-                      )}
-                    </button>
-                  </div>
-                </form>
-              </div>
+        <div style={{ padding: '20px' }}>
+          {error && (
+            <div style={{ 
+              marginBottom: '20px', 
+              backgroundColor: '#fee2e2', 
+              padding: '10px 12px', 
+              borderRadius: '4px', 
+              color: '#b91c1c',
+              fontSize: '14px'
+            }}>
+              {error}
             </div>
+          )}
+          
+          <div style={{ marginBottom: '20px' }}>
+            <label style={{ 
+              display: 'block', 
+              marginBottom: '6px', 
+              fontWeight: '500',
+              color: '#374151',
+              fontSize: '16px'
+            }}>
+              Status
+            </label>
+            <select
+              name="status"
+              value={formData.status}
+              onChange={handleChange}
+              style={{
+                width: '100%',
+                padding: '10px 12px',
+                borderRadius: '6px',
+                border: '1px solid #d1d5db',
+                fontSize: '16px',
+                backgroundColor: 'white',
+                appearance: 'none',
+                backgroundImage: `url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e")`,
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'right 10px center',
+                backgroundSize: '16px',
+                paddingRight: '35px'
+              }}
+            >
+              {Object.entries(COLUMN_NAMES).map(([value, label]) => (
+                <option key={value} value={value}>{label}</option>
+              ))}
+            </select>
+          </div>
+          
+          {formData.status === COLUMNS.INTERVIEWING && (
+            <div style={{ marginBottom: '20px' }}>
+              <label style={{ 
+                display: 'block', 
+                marginBottom: '6px', 
+                fontWeight: '500',
+                color: '#374151',
+                fontSize: '16px'
+              }}>
+                Interview Stage
+              </label>
+              <select
+                name="interviewStage"
+                value={formData.interviewStage}
+                onChange={handleChange}
+                style={{
+                  width: '100%',
+                  padding: '10px 12px',
+                  borderRadius: '6px',
+                  border: '1px solid #d1d5db',
+                  fontSize: '16px',
+                  backgroundColor: 'white',
+                  appearance: 'none',
+                  backgroundImage: `url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e")`,
+                  backgroundRepeat: 'no-repeat',
+                  backgroundPosition: 'right 10px center',
+                  backgroundSize: '16px',
+                  paddingRight: '35px'
+                }}
+              >
+                <option value="">Select an interview stage</option>
+                {INTERVIEW_STAGES.map(stage => (
+                  <option key={stage} value={stage}>{stage}</option>
+                ))}
+              </select>
+            </div>
+          )}
+          
+          <div style={{ marginBottom: '20px' }}>
+            <label style={{ 
+              display: 'block', 
+              marginBottom: '6px', 
+              fontWeight: '500',
+              color: '#374151',
+              fontSize: '16px'
+            }}>
+              Date
+            </label>
+            <input
+              type="date"
+              name="date"
+              value={formData.date}
+              onChange={handleChange}
+              style={{
+                width: '100%',
+                padding: '10px 12px',
+                borderRadius: '6px',
+                border: '1px solid #d1d5db',
+                fontSize: '16px',
+                backgroundColor: 'white'
+              }}
+            />
+          </div>
+          
+          <div style={{ marginBottom: '10px' }}>
+            <label style={{ 
+              display: 'block', 
+              marginBottom: '6px', 
+              fontWeight: '500',
+              color: '#374151',
+              fontSize: '16px'
+            }}>
+              Notes
+            </label>
+            <textarea
+              name="notes"
+              value={formData.notes}
+              onChange={handleChange}
+              rows="4"
+              style={{
+                width: '100%',
+                padding: '10px 12px',
+                borderRadius: '6px',
+                border: '1px solid #d1d5db',
+                fontSize: '16px',
+                minHeight: '100px',
+                resize: 'vertical',
+                fontFamily: 'inherit'
+              }}
+              placeholder="Add any notes about this status change"
+            ></textarea>
+          </div>
+        </div>
+        
+        <div style={{ 
+          padding: '16px 20px', 
+          borderTop: '1px solid #e5e7eb',
+          display: 'flex',
+          justifyContent: 'space-between',
+          backgroundColor: '#f9fafb'
+        }}>
+          <button
+            type="button"
+            onClick={handleDelete}
+            style={{
+              backgroundColor: '#ef4444',
+              color: 'white',
+              padding: '8px 16px',
+              borderRadius: '6px',
+              fontWeight: '500',
+              border: 'none',
+              cursor: 'pointer',
+              fontSize: '14px'
+            }}
+          >
+            Delete
+          </button>
+          
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <button
+              type="button"
+              onClick={onClose}
+              style={{
+                backgroundColor: 'white',
+                color: '#374151',
+                padding: '8px 16px',
+                borderRadius: '6px',
+                fontWeight: '500',
+                border: '1px solid #d1d5db',
+                cursor: 'pointer',
+                fontSize: '14px'
+              }}
+            >
+              Cancel
+            </button>
+            
+            <button
+              type="button"
+              onClick={handleSubmit}
+              disabled={isSubmitting}
+              style={{
+                backgroundColor: isSubmitting ? '#60a5fa' : '#2563eb',
+                color: 'white',
+                padding: '8px 16px',
+                borderRadius: '6px',
+                fontWeight: '500',
+                border: 'none',
+                cursor: isSubmitting ? 'not-allowed' : 'pointer',
+                fontSize: '14px'
+              }}
+            >
+              Save Changes
+            </button>
           </div>
         </div>
       </div>
     </div>
   );
+
+  // Use createPortal to render the modal directly in the document body
+  return mounted ? createPortal(modalContent, document.body) : null;
 }
