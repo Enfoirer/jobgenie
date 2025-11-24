@@ -67,7 +67,7 @@ export async function GET(request) {
   params.set('redirect_uri', redirectUri);
   params.set(
     'scope',
-    'https://graph.microsoft.com/Mail.Read offline_access openid profile email'
+    'https://graph.microsoft.com/Mail.Read https://graph.microsoft.com/User.Read offline_access openid profile email'
   );
 
   const tokenRes = await fetch(OUTLOOK_TOKEN_ENDPOINT(tenant), {

@@ -9,7 +9,7 @@ const OUTLOOK_AUTH_BASE = 'https://login.microsoftonline.com';
 const GOOGLE_SCOPE =
   'https://www.googleapis.com/auth/gmail.readonly openid email profile';
 const OUTLOOK_SCOPE =
-  'https://graph.microsoft.com/Mail.Read offline_access openid profile email';
+  'https://graph.microsoft.com/Mail.Read https://graph.microsoft.com/User.Read offline_access openid profile email';
 
 export default function MailConnectionsPage() {
   const [accounts, setAccounts] = useState([]);
