@@ -40,84 +40,40 @@ export default function DashboardLayout({ children }) {
     <div className="min-h-screen bg-gray-50">
       {/* Navigation Bar */}
       <nav className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
-            <div className="flex">
-              <div className="flex-shrink-0 flex items-center">
-                <Link href="/dashboard">
-                  <span className="font-bold text-xl text-blue-600">JobTrack</span>
-                </Link>
-              </div>
-              <div className="ml-6 flex space-x-8">
-                <Link 
-                  href="/dashboard/jobs" 
-                  className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
-                    pathname === '/dashboard/jobs' 
-                      ? 'border-blue-500 text-gray-900' 
+            <div className="flex overflow-x-auto whitespace-nowrap items-center space-x-4 sm:space-x-6">
+              <Link href="/dashboard">
+                <span className="font-bold text-lg sm:text-xl text-blue-600">JobTrack</span>
+              </Link>
+              {[
+                { href: '/dashboard/jobs', label: 'Job Board' },
+                { href: '/dashboard/add', label: 'Add Job' },
+                { href: '/dashboard/upload', label: 'Uploads' },
+                { href: '/dashboard/pending', label: 'Pending' },
+                { href: '/dashboard/mail', label: 'Mail' },
+                { href: '/dashboard', label: 'Dashboard' },
+              ].map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm sm:text-base font-medium ${
+                    pathname === item.href
+                      ? 'border-blue-500 text-gray-900'
                       : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
                   }`}
                 >
-                  Job Board
+                  {item.label}
                 </Link>
-                <Link 
-                  href="/dashboard/add" 
-                  className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
-                    pathname === '/dashboard/add' 
-                      ? 'border-blue-500 text-gray-900' 
-                      : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-                  }`}
-                >
-                  Add Job
-                </Link>
-                <Link 
-                  href="/dashboard/upload" 
-                  className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
-                    pathname === '/dashboard/upload' 
-                      ? 'border-blue-500 text-gray-900' 
-                      : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-                  }`}
-                >
-                  Uploads
-                </Link>
-                <Link 
-                  href="/dashboard/pending" 
-                  className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
-                    pathname === '/dashboard/pending' 
-                      ? 'border-blue-500 text-gray-900' 
-                      : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-                  }`}
-                >
-                  Pending
-                </Link>
-                <Link 
-                  href="/dashboard/mail" 
-                  className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
-                    pathname === '/dashboard/mail' 
-                      ? 'border-blue-500 text-gray-900' 
-                      : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-                  }`}
-                >
-                  Mail
-                </Link>
-                <Link 
-                  href="/dashboard" 
-                  className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
-                    pathname === '/dashboard' 
-                      ? 'border-blue-500 text-gray-900' 
-                      : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-                  }`}
-                >
-                  Dashboard
-                </Link>
-              </div>
+              ))}
             </div>
             <div className="flex items-center">
-              <div className="flex-shrink-0">
+              <div className="hidden sm:flex-shrink-0 sm:flex">
                 <span className="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
                   {session?.user?.name || session?.user?.email}
                 </span>
               </div>
-              <div className="ml-4">
+              <div className="ml-2 sm:ml-4">
                 <button
                   type="button"
                   className="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-red-700 bg-red-50 hover:bg-red-100"

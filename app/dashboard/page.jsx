@@ -69,9 +69,7 @@ export default function DashboardPage() {
     <div className="space-y-6 px-4 sm:px-0">
       <div className="border-b border-gray-200 pb-3">
         <h1 className="text-2xl font-semibold text-gray-800">Dashboard</h1>
-        <p className="mt-1 text-sm text-gray-500">
-          Timeline of status updates and funnel conversion.
-        </p>
+        <p className="mt-1 text-sm text-gray-500">Timeline of status updates.</p>
       </div>
 
       {error && <div className="rounded-md bg-red-50 p-3 text-sm text-red-700">{error}</div>}
@@ -107,16 +105,8 @@ export default function DashboardPage() {
             <div className="text-sm text-gray-500">No data</div>
           ) : (
             <div className="relative h-full">
-              <div className="absolute left-0 top-0 flex h-full flex-col justify-between text-[10px] text-gray-500">
-                {[1, 0.75, 0.5, 0.25, 0].map((t) => (
-                  <div key={t} className="flex items-center gap-1">
-                    <span className="w-6 text-right">{Math.round(maxCount * t)}</span>
-                    <span className="h-px w-4 bg-gray-200"></span>
-                  </div>
-                ))}
-              </div>
               <div
-                className="absolute left-12 right-0 bottom-0 top-0 flex items-end gap-2 pr-4"
+                className="absolute inset-0 flex items-end gap-2 pr-4"
                 style={{ width: `${timelinePoints.length * 48}px`, minWidth: '100%' }}
               >
                 {timelinePoints.map((p) => {
