@@ -1,0 +1,192 @@
+// app/dashboard/page.jsx
+'use client';
+
+import { useEffect, useMemo, useState } from 'react';
+import { COLUMNS, COLUMN_NAMES } from '@/lib/mockData';
+
+const STATUS_COLORS = {
+  [COLUMNS.APPLIED]: 'bg-blue-500',
+  [COLUMNS.INTERVIEWING]: 'bg-yellow-500',
+  [COLUMNS.OFFER]: 'bg-green-500',
+  [COLUMNS.REJECTED]: 'bg-red-500',
+};
+
+export default function DashboardPage() {
+  const [days, setDays] = useState(7);
+  const [data, setData] = useState({ timeline: {}, funnel: {} });
+  const [statusFilter, setStatusFilter] = useState([
+    COLUMNS.APPLIED,
+    COLUMNS.INTERVIEWING,
+    COLUMNS.OFFER,
+    COLUMNS.REJECTED,
+  ]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        setLoading(true);
+        const res = await fetch(`/api/stats?days=${days}`);
+        if (!res.ok) {
+          const txt = await res.text();
+          throw new Error(txt || 'Failed to load stats');
+        }
+        const json = await res.json();
+        setData(json);
+        setError('');
+      } catch (e) {
+        setError(e.message || 'Failed to load stats');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchStats();
+  }, [days]);
+
+  const timelinePoints = useMemo(() => {
+    const entries = Object.entries(data.timeline || {});
+    const sorted = entries.sort((a, b) => (a[0] < b[0] ? -1 : 1));
+    return sorted.map(([day, counts]) => ({
+      day,
+      counts,
+    }));
+  }, [data]);
+
+  const funnel = data.funnel || {};
+  const funnelTotal =
+    (funnel.applied || 0) +
+    (funnel.interviewing || 0) +
+    (funnel.offer || 0) +
+    (funnel.rejected || 0);
+
+  const maxCount =
+    timelinePoints.reduce((max, p) => {
+      const sum = statusFilter.reduce((acc, s) => acc + (p.counts[s] || 0), 0);
+      return Math.max(max, sum);
+    }, 1) || 1;
+
+  const toggleStatus = (s) => {
+    setStatusFilter((prev) =>
+      prev.includes(s) ? prev.filter((x) => x !== s) : [...prev, s]
+    );
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="border-b border-gray-200 pb-3">
+        <h1 className="text-2xl font-semibold text-gray-800">Dashboard</h1>
+        <p className="mt-1 text-sm text-gray-500">
+          Timeline of status updates and funnel conversion.
+        </p>
+      </div>
+
+      {error && <div className="rounded-md bg-red-50 p-3 text-sm text-red-700">{error}</div>}
+
+      <div className="rounded-lg border bg-white p-4 shadow-sm">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h2 className="text-lg font-medium text-gray-800">Timeline</h2>
+            <p className="text-sm text-gray-500">Status updates per day.</p>
+          </div>
+          <div className="flex items-center gap-3">
+            <label className="text-sm text-gray-700">Range (days)</label>
+            <input
+              type="range"
+              min={7}
+              max={60}
+              value={days}
+              onChange={(e) => setDays(Number(e.target.value))}
+            />
+            <span className="text-sm text-gray-800 w-10 text-right">{days}</span>
+          </div>
+        </div>
+
+        <div className="mt-3 flex flex-wrap gap-2">
+          {[COLUMNS.APPLIED, COLUMNS.INTERVIEWING, COLUMNS.OFFER, COLUMNS.REJECTED].map((s) => (
+            <button
+              key={s}
+              onClick={() => toggleStatus(s)}
+              className={`rounded-full px-3 py-1 text-xs font-medium border ${
+                statusFilter.includes(s)
+                  ? `${STATUS_COLORS[s]} text-white border-transparent`
+                  : 'bg-white text-gray-700 border-gray-300'
+              }`}
+            >
+              {COLUMN_NAMES[s]}
+            </button>
+          ))}
+        </div>
+
+        <div className="mt-4 h-56 rounded-md border bg-gray-50 p-3">
+          {loading ? (
+            <div className="text-sm text-gray-500">Loading...</div>
+          ) : timelinePoints.length === 0 ? (
+            <div className="text-sm text-gray-500">No data</div>
+          ) : (
+            <div className="flex h-full items-end gap-2 overflow-x-auto">
+              {timelinePoints.map((p) => {
+                const total = statusFilter.reduce((acc, s) => acc + (p.counts[s] || 0), 0);
+                const height = `${Math.max(8, (total / maxCount) * 100)}%`;
+                return (
+                  <div key={p.day} className="flex flex-col items-center min-w-[48px]">
+                    <div className="flex w-full flex-col justify-end gap-0.5 rounded bg-white px-1 py-1 shadow-sm border">
+                      {statusFilter.map((s) =>
+                        p.counts[s] ? (
+                          <div
+                            key={s}
+                            className={`${STATUS_COLORS[s]} h-1 rounded-sm`}
+                            style={{
+                              height: `${Math.max(4, (p.counts[s] / maxCount) * 100)}%`,
+                            }}
+                            title={`${COLUMN_NAMES[s]}: ${p.counts[s]}`}
+                          ></div>
+                        ) : null
+                      )}
+                    </div>
+                    <div className="mt-1 text-[10px] text-gray-600">{p.day.slice(5)}</div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="rounded-lg border bg-white p-4 shadow-sm">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-lg font-medium text-gray-800">Funnel</h2>
+            <p className="text-sm text-gray-500">Conversion across stages.</p>
+          </div>
+        </div>
+        <div className="mt-4 grid gap-4 sm:grid-cols-4">
+          {[COLUMNS.APPLIED, COLUMNS.INTERVIEWING, COLUMNS.OFFER, COLUMNS.REJECTED].map((s) => {
+            const count = funnel[s] || 0;
+            const rate =
+              s === COLUMNS.APPLIED
+                ? 1
+                : funnelTotal
+                ? count / (funnel[COLUMNS.APPLIED] || 1)
+                : 0;
+            return (
+              <div key={s} className="rounded-md border bg-gray-50 p-3">
+                <div className="text-sm font-medium text-gray-800">{COLUMN_NAMES[s]}</div>
+                <div className="mt-2 text-2xl font-semibold text-gray-900">{count}</div>
+                <div className="mt-1 h-2 rounded-full bg-gray-200">
+                  <div
+                    className={`${STATUS_COLORS[s]} h-2 rounded-full`}
+                    style={{ width: `${Math.min(100, rate * 100)}%` }}
+                  ></div>
+                </div>
+                <div className="mt-1 text-xs text-gray-500">
+                  Conv vs applied: {(rate * 100).toFixed(1)}%
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
