@@ -29,12 +29,26 @@ export async function GET(request) {
     date: { $gte: since },
   }).lean();
 
+  // Pre-fill timeline for each day in range
   const timeline = {};
+  const statuses = ['applied', 'interviewing', 'offer', 'rejected'];
+  const today = new Date();
+  for (let i = 0; i < days; i++) {
+    const d = new Date(today);
+    d.setDate(today.getDate() - i);
+    const key = d.toISOString().slice(0, 10);
+    timeline[key] = { applied: 0, interviewing: 0, offer: 0, rejected: 0 };
+  }
+
   histories.forEach((h) => {
     const day = new Date(h.date);
     const key = day.toISOString().slice(0, 10);
-    if (!timeline[key]) timeline[key] = { applied: 0, interviewing: 0, offer: 0, rejected: 0 };
-    timeline[key][h.status] = (timeline[key][h.status] || 0) + 1;
+    if (!timeline[key]) {
+      timeline[key] = { applied: 0, interviewing: 0, offer: 0, rejected: 0 };
+    }
+    if (statuses.includes(h.status)) {
+      timeline[key][h.status] = (timeline[key][h.status] || 0) + 1;
+    }
   });
 
   // Funnel: latest status per job
