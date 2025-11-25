@@ -7,8 +7,9 @@ import ProcessedEmail from '@/lib/models/ProcessedEmail';
 import PendingItem from '@/lib/models/PendingItem';
 import { fetchGmailMessages } from '@/lib/mail/gmail';
 import { fetchOutlookMessages } from '@/lib/mail/outlook';
-import { classifyEmail } from '@/lib/classify/emailClassifier';
 import { processEmailForPending } from '@/lib/pipeline/emailProcessor';
+import User from '@/lib/models/User';
+import { applyEventToJob } from '@/lib/pipeline/jobUpdater';
 
 export async function GET(request) {
   await dbConnect();
@@ -40,6 +41,25 @@ export async function GET(request) {
     if (accounts.length === 0) {
       return NextResponse.json({ emails: [], accounts: [] });
     }
+
+    // Load per-user sync settings
+    const userSettingsMap = new Map();
+    const userIds = [...new Set(accounts.map((a) => a.userId.toString()))];
+    const users = await User.find(
+      { _id: { $in: userIds } },
+      { syncMode: 1, autoThreshold: 1 }
+    ).lean();
+    users.forEach((u) => {
+      userSettingsMap.set(u._id.toString(), {
+        syncMode: u.syncMode || 'semi',
+        autoThreshold: u.autoThreshold ?? 0.7,
+      });
+    });
+    const getSettings = (userId) =>
+      userSettingsMap.get(userId.toString()) || {
+        syncMode: 'semi',
+        autoThreshold: 0.7,
+      };
 
     const results = [];
     const errors = [];
@@ -156,11 +176,28 @@ export async function GET(request) {
         }
 
         for (const m of newMessages) {
+          const settings = getSettings(account.userId);
           const processed = await processEmailForPending(m);
           if (!processed?.shouldCreate) {
             continue;
           }
-          const parsed = processed.parsed || classifyEmail(m);
+          const parsed = processed.parsed;
+          const confidence =
+            parsed?.confidence || parsed?.confidence === 0 ? parsed.confidence : 0.5;
+
+          if (settings.syncMode === 'auto' && confidence >= (settings.autoThreshold ?? 0.7)) {
+            await applyEventToJob({
+              userId: m.userId,
+              company: parsed?.company,
+              position: parsed?.position,
+              eventType: parsed?.eventType || 'other',
+              subject: m.subject,
+              snippet: m.snippet,
+              receivedAt: m.receivedAt ? new Date(m.receivedAt) : undefined,
+            });
+            continue;
+          }
+
           const item = {
             userId: m.userId,
             accountId: account._id,
@@ -173,14 +210,14 @@ export async function GET(request) {
             snippet: m.snippet,
             receivedAt: m.receivedAt ? new Date(m.receivedAt) : undefined,
             raw: m,
-            company: parsed.company,
-            position: parsed.position,
-            interviewTime: parsed.interviewTime,
-            eventType: parsed.eventType,
-            confidence: parsed.confidence || parsed.confidence === 0 ? parsed.confidence : 0.5,
-            recommendedAction: parsed.recommendedAction,
-            summary: parsed.summary,
-            rationale: parsed.rationale,
+            company: parsed?.company,
+            position: parsed?.position,
+            interviewTime: parsed?.interviewTime,
+            eventType: parsed?.eventType || 'other',
+            confidence,
+            recommendedAction: parsed?.recommendedAction,
+            summary: parsed?.summary,
+            rationale: parsed?.rationale,
             isRelevant: true,
           };
           try {

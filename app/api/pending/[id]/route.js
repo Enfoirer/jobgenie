@@ -4,9 +4,7 @@ import { getServerSession } from 'next-auth/next';
 import dbConnect from '@/lib/mongodb';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import PendingItem from '@/lib/models/PendingItem';
-import Job from '@/lib/models/Job';
-import StatusHistory from '@/lib/models/StatusHistory';
-import { COLUMNS } from '@/lib/mockData';
+import { applyEventToJob } from '@/lib/pipeline/jobUpdater';
 
 export async function PATCH(request, { params }) {
   await dbConnect();
@@ -40,49 +38,14 @@ export async function PATCH(request, { params }) {
   }
 
   // Accept: create/update Job and StatusHistory
-  const statusMap = {
-    submission: COLUMNS.APPLIED,
-    oa: COLUMNS.INTERVIEWING,
-    interview: COLUMNS.INTERVIEWING,
-    rejection: COLUMNS.REJECTED,
-    offer: COLUMNS.OFFER,
-    other: COLUMNS.APPLIED,
-  };
-
-  const targetStatus = statusMap[item.eventType] || COLUMNS.APPLIED;
-
-  // Try to find existing job by company/position; fallback create
-  let job = null;
-  if (item.company || item.position) {
-    job = await Job.findOne({
-      userId: session.user.id,
-      ...(item.company ? { company: item.company } : {}),
-      ...(item.position ? { position: item.position } : {}),
-    });
-  }
-
-  if (!job) {
-    job = await Job.create({
-      userId: session.user.id,
-      company: item.company || 'Unknown Company',
-      position: item.position || 'Unknown Position',
-      status: targetStatus,
-      notes: item.subject || '',
-      dateApplied: item.receivedAt || new Date(),
-      applicationSource: 'Email',
-    });
-  } else {
-    job.status = targetStatus;
-    job.notes = item.subject || job.notes;
-    await job.save();
-  }
-
-  await StatusHistory.create({
-    jobId: job._id,
-    status: targetStatus,
-    date: item.receivedAt || new Date(),
-    notes: item.snippet || '',
+  const job = await applyEventToJob({
     userId: session.user.id,
+    company: item.company,
+    position: item.position,
+    eventType: item.eventType,
+    subject: item.subject,
+    snippet: item.snippet,
+    receivedAt: item.receivedAt || new Date(),
   });
 
   item.status = 'accepted';

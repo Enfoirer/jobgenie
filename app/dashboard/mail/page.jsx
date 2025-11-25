@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
+import SyncSettingsPanel from '@/components/SyncSettingsPanel';
 
 const GOOGLE_AUTH_URL = 'https://accounts.google.com/o/oauth2/v2/auth';
 const OUTLOOK_AUTH_BASE = 'https://login.microsoftonline.com';
@@ -138,10 +139,10 @@ export default function MailConnectionsPage() {
       </div>
 
       <div className="mt-8">
-                <h2 className="text-lg font-medium text-gray-800">已连接的邮箱</h2>
-                {loading ? (
-                  <div className="mt-3 text-sm text-gray-500">加载中...</div>
-                ) : accounts.length === 0 ? (
+        <h2 className="text-lg font-medium text-gray-800">已连接的邮箱</h2>
+        {loading ? (
+          <div className="mt-3 text-sm text-gray-500">加载中...</div>
+        ) : accounts.length === 0 ? (
                   <div className="mt-3 text-sm text-gray-500">暂无已连接邮箱</div>
                 ) : (
                   <ul className="mt-3 divide-y divide-gray-200 rounded-md border bg-white">
@@ -181,8 +182,12 @@ export default function MailConnectionsPage() {
                       </li>
                     ))}
                   </ul>
-                )}
-              </div>
+        )}
+      </div>
+
+      <div className="mt-8">
+        <SyncSettingsPanel />
+      </div>
     </div>
   );
 }
