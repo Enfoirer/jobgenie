@@ -138,31 +138,51 @@ export default function MailConnectionsPage() {
       </div>
 
       <div className="mt-8">
-        <h2 className="text-lg font-medium text-gray-800">已连接的邮箱</h2>
-        {loading ? (
-          <div className="mt-3 text-sm text-gray-500">加载中...</div>
-        ) : accounts.length === 0 ? (
-          <div className="mt-3 text-sm text-gray-500">暂无已连接邮箱</div>
-        ) : (
-          <ul className="mt-3 divide-y divide-gray-200 rounded-md border bg-white">
-            {accounts.map((acc) => (
-              <li key={acc.id} className="flex items-center justify-between px-4 py-3">
-                <div>
-                  <p className="text-sm font-medium text-gray-900">
-                    {acc.emailAddress}
-                  </p>
-                  <p className="text-xs text-gray-500 uppercase">{acc.provider}</p>
-                </div>
-                {acc.expiresAt && (
-                  <p className="text-xs text-gray-500">
-                    令牌过期：{new Date(acc.expiresAt).toLocaleString()}
-                  </p>
+                <h2 className="text-lg font-medium text-gray-800">已连接的邮箱</h2>
+                {loading ? (
+                  <div className="mt-3 text-sm text-gray-500">加载中...</div>
+                ) : accounts.length === 0 ? (
+                  <div className="mt-3 text-sm text-gray-500">暂无已连接邮箱</div>
+                ) : (
+                  <ul className="mt-3 divide-y divide-gray-200 rounded-md border bg-white">
+                    {accounts.map((acc) => (
+                      <li key={acc.id} className="flex flex-col gap-1 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="min-w-0">
+                          <p className="text-sm font-medium text-gray-900 truncate">
+                            {acc.emailAddress}
+                          </p>
+                          <p className="text-xs text-gray-500 uppercase">{acc.provider}</p>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          {acc.expiresAt && (
+                            <p className="text-xs text-gray-500">
+                              令牌过期：{new Date(acc.expiresAt).toLocaleString()}
+                            </p>
+                          )}
+                          <button
+                            onClick={async () => {
+                              try {
+                                const res = await fetch(`/api/mail/accounts/${acc.id}`, {
+                                  method: 'DELETE',
+                                });
+                                if (!res.ok) {
+                                  throw new Error('断开失败');
+                                }
+                                fetchAccounts();
+                              } catch (e) {
+                                setError(e.message || '断开失败');
+                              }
+                            }}
+                            className="inline-flex items-center rounded-md border border-red-200 px-3 py-1 text-xs font-medium text-red-700 hover:bg-red-50"
+                          >
+                            断开
+                          </button>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
                 )}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+              </div>
     </div>
   );
 }

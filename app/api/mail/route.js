@@ -6,6 +6,7 @@ import MailAccount from '@/lib/models/MailAccount';
 import { fetchGmailMessages } from '@/lib/mail/gmail';
 import { fetchOutlookMessages } from '@/lib/mail/outlook';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import ProcessedEmail from '@/lib/models/ProcessedEmail';
 
 export async function GET(request) {
   await dbConnect();
@@ -35,11 +36,12 @@ export async function GET(request) {
 
     const results = [];
     const errors = [];
+    let skipped = 0;
 
     for (const account of accounts) {
       try {
         if (account.provider === 'gmail') {
-          const messages = await fetchGmailMessages(account, { limit });
+          const { messages, newHistoryId } = await fetchGmailMessages(account, { limit });
           results.push(
             ...messages.map((m) => ({
               ...m,
@@ -47,8 +49,23 @@ export async function GET(request) {
               emailAddress: account.emailAddress,
             }))
           );
+          // Update cursor metadata for incremental fetch
+          const maxHistoryId = messages.reduce((max, m) => {
+            const h = Number(m.historyId || 0);
+            return Number.isNaN(h) ? max : Math.max(max, h);
+          }, 0);
+          account.metadata = {
+            ...account.metadata,
+            lastFetchedAt: new Date(),
+            ...(maxHistoryId > 0
+              ? { historyId: String(maxHistoryId) }
+              : newHistoryId
+                ? { historyId: String(newHistoryId) }
+                : {}),
+          };
+          await account.save();
         } else if (account.provider === 'outlook') {
-          const messages = await fetchOutlookMessages(account, { limit });
+          const { messages, latestReceivedAt } = await fetchOutlookMessages(account, { limit });
           results.push(
             ...messages.map((m) => ({
               ...m,
@@ -56,6 +73,20 @@ export async function GET(request) {
               emailAddress: account.emailAddress,
             }))
           );
+          const latestReceived = messages.reduce((latest, m) => {
+            const ts = m.receivedAt ? new Date(m.receivedAt).getTime() : 0;
+            return ts > latest ? ts : latest;
+          }, 0);
+          account.metadata = {
+            ...account.metadata,
+            lastFetchedAt: new Date(),
+            ...(latestReceived
+              ? { lastReceivedAt: new Date(latestReceived) }
+              : latestReceivedAt
+                ? { lastReceivedAt: new Date(latestReceivedAt) }
+                : {}),
+          };
+          await account.save();
         }
       } catch (err) {
         console.error(
@@ -70,7 +101,60 @@ export async function GET(request) {
       }
     }
 
-    return NextResponse.json({ emails: results, errors });
+    // Deduplicate against already processed emails per account
+    const emailsByAccount = results.reduce((map, msg) => {
+      if (!map[msg.accountId]) {
+        map[msg.accountId] = [];
+      }
+      map[msg.accountId].push(msg);
+      return map;
+    }, {});
+
+    const finalEmails = [];
+
+    for (const account of accounts) {
+      const msgs = emailsByAccount[account._id] || [];
+      if (msgs.length === 0) continue;
+
+      const ids = msgs.map((m) => m.id);
+      const existing = await ProcessedEmail.find(
+        { accountId: account._id, messageId: { $in: ids } },
+        { messageId: 1 }
+      ).lean();
+      const existingSet = new Set(existing.map((e) => e.messageId));
+
+      const newMessages = msgs.filter((m) => !existingSet.has(m.id));
+      skipped += msgs.length - newMessages.length;
+      finalEmails.push(...newMessages);
+
+      if (newMessages.length > 0) {
+        try {
+          await ProcessedEmail.insertMany(
+            newMessages.map((m) => ({
+              provider: m.provider,
+              accountId: account._id,
+              userId: session.user.id,
+              messageId: m.id,
+              threadId: m.threadId,
+              receivedAt: m.receivedAt ? new Date(m.receivedAt) : undefined,
+            })),
+            { ordered: false }
+          );
+        } catch (e) {
+          // ignore duplicate insert errors due to race conditions
+          if (e.code !== 11000) {
+            console.error('insertMany processed emails failed', e);
+          }
+        }
+      }
+    }
+
+    return NextResponse.json({
+      emails: finalEmails,
+      errors,
+      skipped,
+      totalFetched: results.length,
+    });
   } catch (error) {
     console.error('GET /api/mail - Error:', error);
     return NextResponse.json(
