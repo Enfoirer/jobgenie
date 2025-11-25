@@ -26,9 +26,9 @@ export default function MailConnectionsPage() {
   useEffect(() => {
     const connected = searchParams.get('connected');
     if (connected === 'gmail') {
-      setSuccess('已连接 Gmail');
+      setSuccess('Gmail connected');
     } else if (connected === 'outlook') {
-      setSuccess('已连接 Outlook');
+      setSuccess('Outlook connected');
     }
   }, [searchParams]);
 
@@ -37,7 +37,7 @@ export default function MailConnectionsPage() {
       setLoading(true);
       const res = await fetch('/api/mail/accounts');
       if (!res.ok) {
-        throw new Error('加载邮箱授权信息失败');
+        throw new Error('Failed to load mail accounts');
       }
       const data = await res.json();
       setAccounts(data.accounts || []);
@@ -89,9 +89,9 @@ export default function MailConnectionsPage() {
   return (
     <div className="max-w-3xl">
       <div className="border-b border-gray-200 pb-3">
-        <h1 className="text-2xl font-semibold text-gray-800">邮箱授权</h1>
+        <h1 className="text-2xl font-semibold text-gray-800">Mail Connections</h1>
         <p className="mt-1 text-sm text-gray-500">
-          连接 Gmail/Outlook 后，系统即可读取你的求职相关邮件。
+          Connect Gmail/Outlook to read job-related emails.
         </p>
       </div>
 
@@ -112,41 +112,41 @@ export default function MailConnectionsPage() {
 
       <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div className="rounded-lg border bg-white p-4 shadow-sm">
-          <h3 className="text-lg font-medium text-gray-800">连接 Gmail</h3>
+          <h3 className="text-lg font-medium text-gray-800">Connect Gmail</h3>
           <p className="mt-2 text-sm text-gray-600">
-            需开启 Gmail API 并在 Google Console 配置 Redirect URI。
+            Enable Gmail API and configure the Redirect URI in Google Console.
           </p>
           <button
             onClick={connectGoogle}
             className="mt-4 inline-flex w-full justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
-            连接 Gmail
+            Connect Gmail
           </button>
         </div>
 
         <div className="rounded-lg border bg-white p-4 shadow-sm">
-          <h3 className="text-lg font-medium text-gray-800">连接 Outlook</h3>
+          <h3 className="text-lg font-medium text-gray-800">Connect Outlook</h3>
           <p className="mt-2 text-sm text-gray-600">
-            使用 Microsoft Graph Mail.Read 权限，支持个人或工作账号。
+            Uses Microsoft Graph Mail.Read, supports personal or work accounts.
           </p>
           <button
             onClick={connectOutlook}
             className="mt-4 inline-flex w-full justify-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           >
-            连接 Outlook
+            Connect Outlook
           </button>
         </div>
       </div>
 
       <div className="mt-8">
-        <h2 className="text-lg font-medium text-gray-800">已连接的邮箱</h2>
+        <h2 className="text-lg font-medium text-gray-800">Connected accounts</h2>
         {loading ? (
-          <div className="mt-3 text-sm text-gray-500">加载中...</div>
+          <div className="mt-3 text-sm text-gray-500">Loading...</div>
         ) : accounts.length === 0 ? (
-                  <div className="mt-3 text-sm text-gray-500">暂无已连接邮箱</div>
-                ) : (
-                  <ul className="mt-3 divide-y divide-gray-200 rounded-md border bg-white">
-                    {accounts.map((acc) => (
+          <div className="mt-3 text-sm text-gray-500">No connected accounts</div>
+        ) : (
+          <ul className="mt-3 divide-y divide-gray-200 rounded-md border bg-white">
+            {accounts.map((acc) => (
                       <li key={acc.id} className="flex flex-col gap-1 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
                         <div className="min-w-0">
                           <p className="text-sm font-medium text-gray-900 truncate">
@@ -157,7 +157,7 @@ export default function MailConnectionsPage() {
                         <div className="flex items-center gap-3">
                           {acc.expiresAt && (
                             <p className="text-xs text-gray-500">
-                              令牌过期：{new Date(acc.expiresAt).toLocaleString()}
+                              Expires: {new Date(acc.expiresAt).toLocaleString()}
                             </p>
                           )}
                           <button
@@ -167,16 +167,16 @@ export default function MailConnectionsPage() {
                                   method: 'DELETE',
                                 });
                                 if (!res.ok) {
-                                  throw new Error('断开失败');
+                                  throw new Error('Disconnect failed');
                                 }
                                 fetchAccounts();
                               } catch (e) {
-                                setError(e.message || '断开失败');
+                                setError(e.message || 'Disconnect failed');
                               }
                             }}
                             className="inline-flex items-center rounded-md border border-red-200 px-3 py-1 text-xs font-medium text-red-700 hover:bg-red-50"
                           >
-                            断开
+                            Disconnect
                           </button>
                         </div>
                       </li>

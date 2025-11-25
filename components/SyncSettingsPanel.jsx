@@ -60,15 +60,15 @@ export default function SyncSettingsPanel() {
     <div className="rounded-lg border bg-white p-4 shadow-sm">
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-lg font-medium text-gray-900">同步模式</h3>
+          <h3 className="text-lg font-medium text-gray-900">Sync mode</h3>
           <p className="text-sm text-gray-500">
-            自动：高置信度直接更新进度；半自动/严格：全部进入 Pending 审核。
+            Auto: high-confidence items update jobs directly; Semi/Strict: everything goes to Pending.
           </p>
         </div>
       </div>
 
       {loading ? (
-        <p className="mt-3 text-sm text-gray-500">加载中...</p>
+        <p className="mt-3 text-sm text-gray-500">Loading...</p>
       ) : (
         <>
           <div className="mt-4 space-y-3">
@@ -80,7 +80,7 @@ export default function SyncSettingsPanel() {
                 checked={syncMode === 'auto'}
                 onChange={() => setSyncMode('auto')}
               />
-              <span className="text-sm text-gray-800">自动</span>
+              <span className="text-sm text-gray-800">Auto</span>
             </label>
             <label className="flex items-center space-x-2">
               <input
@@ -90,7 +90,7 @@ export default function SyncSettingsPanel() {
                 checked={syncMode === 'semi'}
                 onChange={() => setSyncMode('semi')}
               />
-              <span className="text-sm text-gray-800">半自动（全部进入 Pending）</span>
+              <span className="text-sm text-gray-800">Semi-auto (all go to Pending)</span>
             </label>
             <label className="flex items-center space-x-2">
               <input
@@ -100,14 +100,12 @@ export default function SyncSettingsPanel() {
                 checked={syncMode === 'strict'}
                 onChange={() => setSyncMode('strict')}
               />
-              <span className="text-sm text-gray-800">严格确认（与半自动一致，禁自动写入）</span>
+              <span className="text-sm text-gray-800">Strict (no auto updates)</span>
             </label>
           </div>
 
           <div className="mt-4">
-            <label className="block text-sm font-medium text-gray-700">
-              自动模式置信度阈值
-            </label>
+            <label className="block text-sm font-medium text-gray-700">Auto confidence threshold</label>
             <input
               type="number"
               min="0"
@@ -126,7 +124,7 @@ export default function SyncSettingsPanel() {
               disabled={saving}
               className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-60"
             >
-              {saving ? '保存中...' : '保存'}
+              {saving ? 'Saving...' : 'Save'}
             </button>
             {error && <span className="text-sm text-red-600">{error}</span>}
             {success && <span className="text-sm text-green-600">{success}</span>}

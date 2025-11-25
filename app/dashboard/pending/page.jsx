@@ -76,18 +76,18 @@ export default function PendingPage() {
   return (
     <div className="max-w-5xl">
       <div className="border-b border-gray-200 pb-3">
-        <h1 className="text-2xl font-semibold text-gray-800">Pending 邮件</h1>
+        <h1 className="text-2xl font-semibold text-gray-800">Pending Emails</h1>
         <p className="mt-1 text-sm text-gray-500">
-          审核自动解析的邮件，接受后会更新 Job 和 Timeline。
+          Review parsed emails. Accept will update Jobs and Timeline.
         </p>
       </div>
 
       <div className="mt-4 flex flex-wrap items-center gap-2">
         {[
-          { key: 'pending', label: '待处理' },
-          { key: 'accepted', label: '已接受' },
-          { key: 'ignored', label: '已忽略' },
-          { key: 'all', label: '全部' },
+          { key: 'pending', label: 'Pending' },
+          { key: 'accepted', label: 'Accepted' },
+          { key: 'ignored', label: 'Ignored' },
+          { key: 'all', label: 'All' },
         ].map((f) => (
           <button
             key={f.key}
@@ -106,7 +106,7 @@ export default function PendingPage() {
             onClick={clearProcessed}
             className="rounded-md border border-red-200 px-3 py-1 text-sm font-medium text-red-700 hover:bg-red-50"
           >
-            清空当前视图
+            Clear this view
           </button>
         )}
       </div>
@@ -118,9 +118,9 @@ export default function PendingPage() {
       )}
 
       {loading ? (
-        <div className="mt-6 text-sm text-gray-500">加载中...</div>
+        <div className="mt-6 text-sm text-gray-500">Loading...</div>
       ) : items.length === 0 ? (
-        <div className="mt-6 text-sm text-gray-500">暂无待处理邮件</div>
+        <div className="mt-6 text-sm text-gray-500">No items</div>
       ) : (
         <div className="mt-4 space-y-3">
           {items.map((item) => (
@@ -135,17 +135,17 @@ export default function PendingPage() {
                   <div className="mt-1 flex flex-wrap gap-2 text-xs text-gray-600">
                     {item.interviewTime && (
                       <span className="rounded-full bg-blue-50 px-2 py-0.5 text-blue-700">
-                        时间：{new Date(item.interviewTime).toLocaleString()}
+                        Time: {new Date(item.interviewTime).toLocaleString()}
                       </span>
                     )}
                     {item.deadline && (
                       <span className="rounded-full bg-amber-50 px-2 py-0.5 text-amber-700">
-                        截止：{new Date(item.deadline).toLocaleString()}
+                        Deadline: {new Date(item.deadline).toLocaleString()}
                       </span>
                     )}
                     {item.needsScheduling && (
                       <span className="rounded-full bg-gray-100 px-2 py-0.5 text-gray-700">
-                        需自行约时间
+                        Needs scheduling
                       </span>
                     )}
                   </div>
@@ -164,7 +164,7 @@ export default function PendingPage() {
                     disabled={savingId === item._id}
                     className="rounded-md border border-gray-300 px-3 py-1 text-xs font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-60"
                   >
-                    {expanded === item._id ? '收起' : '详情/编辑'}
+                    {expanded === item._id ? 'Hide' : 'Details/Edit'}
                   </button>
                   {item.status === 'pending' && (
                     <>
@@ -173,14 +173,14 @@ export default function PendingPage() {
                         disabled={savingId === item._id}
                         className="rounded-md bg-green-600 px-3 py-1 text-xs font-medium text-white hover:bg-green-700 disabled:opacity-60"
                       >
-                        {savingId === item._id ? '处理中...' : '接受'}
+                        {savingId === item._id ? 'Processing...' : 'Accept'}
                       </button>
                       <button
                         onClick={() => handleAction(item._id, 'ignore')}
                         disabled={savingId === item._id}
                         className="rounded-md border border-gray-300 px-3 py-1 text-xs font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-60"
                       >
-                        忽略
+                        Ignore
                       </button>
                     </>
                   )}
@@ -191,22 +191,22 @@ export default function PendingPage() {
               )}
               {item.summary && (
                 <p className="mt-2 text-sm text-gray-600">
-                  <span className="font-medium">摘要：</span>
-                  {item.summary}
-                </p>
-              )}
-              {item.rationale && (
-                <p className="mt-1 text-xs text-gray-500">
-                  <span className="font-medium">解析说明：</span>
-                  {item.rationale}
-                </p>
-              )}
+                      <span className="font-medium">Summary: </span>
+                      {item.summary}
+                    </p>
+                  )}
+                  {item.rationale && (
+                    <p className="mt-1 text-xs text-gray-500">
+                      <span className="font-medium">Notes: </span>
+                      {item.rationale}
+                    </p>
+                  )}
 
               {expanded === item._id && (
                 <div className="mt-3 space-y-3 border-t border-gray-100 pt-3">
                   <div className="grid gap-3 sm:grid-cols-2">
                     <div>
-                      <label className="block text-xs text-gray-600">公司</label>
+                      <label className="block text-xs text-gray-600">Company</label>
                       <input
                         type="text"
                         defaultValue={item.company || ''}
@@ -220,7 +220,7 @@ export default function PendingPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-xs text-gray-600">岗位</label>
+                      <label className="block text-xs text-gray-600">Position</label>
                       <input
                         type="text"
                         defaultValue={item.position || ''}
@@ -234,7 +234,7 @@ export default function PendingPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-xs text-gray-600">事件类型</label>
+                      <label className="block text-xs text-gray-600">Event Type</label>
                       <select
                         defaultValue={item.eventType || 'other'}
                         onChange={(e) =>
@@ -255,7 +255,7 @@ export default function PendingPage() {
                       </select>
                     </div>
                     <div>
-                      <label className="block text-xs text-gray-600">面试/事件时间</label>
+                      <label className="block text-xs text-gray-600">Interview/Event Time</label>
                       <input
                         type="datetime-local"
                         defaultValue={
@@ -283,14 +283,14 @@ export default function PendingPage() {
                         disabled={savingId === item._id}
                         className="rounded-md bg-green-600 px-3 py-1 text-xs font-medium text-white hover:bg-green-700 disabled:opacity-60"
                       >
-                        {savingId === item._id ? '处理中...' : '保存并接受'}
+                        {savingId === item._id ? 'Processing...' : 'Save & Accept'}
                       </button>
                       <button
                         onClick={() => handleAction(item._id, 'ignore')}
                         disabled={savingId === item._id}
                         className="rounded-md border border-gray-300 px-3 py-1 text-xs font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-60"
                       >
-                        忽略
+                        Ignore
                       </button>
                     </div>
                   )}
