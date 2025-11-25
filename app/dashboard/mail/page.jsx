@@ -87,7 +87,7 @@ export default function MailConnectionsPage() {
   };
 
   return (
-    <div className="max-w-3xl">
+    <div className="max-w-5xl px-4 sm:px-0">
       <div className="border-b border-gray-200 pb-3">
         <h1 className="text-2xl font-semibold text-gray-800">Mail Connections</h1>
         <p className="mt-1 text-sm text-gray-500">
@@ -110,7 +110,7 @@ export default function MailConnectionsPage() {
         </div>
       )}
 
-      <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
         <div className="rounded-lg border bg-white p-4 shadow-sm">
           <h3 className="text-lg font-medium text-gray-800">Connect Gmail</h3>
           <p className="mt-2 text-sm text-gray-600">
@@ -147,10 +147,10 @@ export default function MailConnectionsPage() {
         ) : (
           <ul className="mt-3 divide-y divide-gray-200 rounded-md border bg-white">
             {accounts.map((acc) => (
-                      <li key={acc.id} className="flex flex-col gap-1 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
-                        <div className="min-w-0">
-                          <p className="text-sm font-medium text-gray-900 truncate">
-                            {acc.emailAddress}
+              <li key={acc.id} className="flex flex-col gap-1 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+                <div className="min-w-0">
+                  <p className="text-sm font-medium text-gray-900 truncate">
+                    {acc.emailAddress}
                           </p>
                           <p className="text-xs text-gray-500 uppercase">{acc.provider}</p>
                         </div>

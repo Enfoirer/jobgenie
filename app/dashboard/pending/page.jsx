@@ -74,7 +74,7 @@ export default function PendingPage() {
   };
 
   return (
-    <div className="max-w-5xl">
+    <div className="max-w-6xl px-4 sm:px-0">
       <div className="border-b border-gray-200 pb-3">
         <h1 className="text-2xl font-semibold text-gray-800">Pending Emails</h1>
         <p className="mt-1 text-sm text-gray-500">
@@ -150,7 +150,7 @@ export default function PendingPage() {
                     )}
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   <span className="rounded-full bg-gray-100 px-2 py-1 text-xs text-gray-700">
                     {item.eventType} · {(item.confidence || 0).toFixed(2)}
                   </span>

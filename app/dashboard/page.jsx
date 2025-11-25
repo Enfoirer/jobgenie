@@ -66,7 +66,7 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 px-4 sm:px-0">
       <div className="border-b border-gray-200 pb-3">
         <h1 className="text-2xl font-semibold text-gray-800">Dashboard</h1>
         <p className="mt-1 text-sm text-gray-500">
@@ -116,8 +116,8 @@ export default function DashboardPage() {
                 ))}
               </div>
               <div
-                className="absolute left-12 right-0 bottom-0 top-0 flex items-end gap-2"
-                style={{ width: `${timelinePoints.length * 48}px` }}
+                className="absolute left-12 right-0 bottom-0 top-0 flex items-end gap-2 pr-4"
+                style={{ width: `${timelinePoints.length * 48}px`, minWidth: '100%' }}
               >
                 {timelinePoints.map((p) => {
                   const total = statusFilter.reduce((acc, s) => acc + (p.counts[s] || 0), 0);
