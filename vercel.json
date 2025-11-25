@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/mail/cron?limit=10&token=d8d3c5a41f3f4690b8f8a2e1c78b6f4c",
+      "schedule": "*/5 * * * *"
+    }
+  ]
+}
