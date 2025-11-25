@@ -7,6 +7,9 @@ import { fetchGmailMessages } from '@/lib/mail/gmail';
 import { fetchOutlookMessages } from '@/lib/mail/outlook';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import ProcessedEmail from '@/lib/models/ProcessedEmail';
+import PendingItem from '@/lib/models/PendingItem';
+import { classifyEmail } from '@/lib/classify/emailClassifier';
+import { processEmailForPending } from '@/lib/pipeline/emailProcessor';
 
 export async function GET(request) {
   await dbConnect();
@@ -144,6 +147,45 @@ export async function GET(request) {
           // ignore duplicate insert errors due to race conditions
           if (e.code !== 11000) {
             console.error('insertMany processed emails failed', e);
+          }
+        }
+
+        // Create pending items for new messages
+        for (const m of newMessages) {
+          // Relevance + extraction pipeline (rule + optional LLM)
+          const processed = await processEmailForPending(m);
+          if (!processed?.shouldCreate) {
+            continue;
+          }
+          const parsed = processed.parsed || classifyEmail(m);
+          const item = {
+            userId: session.user.id,
+            accountId: account._id,
+            provider: account.provider,
+            messageId: m.id,
+            threadId: m.threadId,
+            subject: m.subject,
+            from: m.from,
+            to: m.to,
+            snippet: m.snippet,
+            receivedAt: m.receivedAt ? new Date(m.receivedAt) : undefined,
+            raw: m,
+            company: parsed.company,
+            position: parsed.position,
+            interviewTime: parsed.interviewTime,
+            eventType: parsed.eventType,
+            confidence: parsed.confidence || parsed.confidence === 0 ? parsed.confidence : 0.5,
+            recommendedAction: parsed.recommendedAction,
+            summary: parsed.summary,
+            rationale: parsed.rationale,
+            isRelevant: true,
+          };
+          try {
+            await PendingItem.create(item);
+          } catch (err) {
+            if (err.code !== 11000) {
+              console.error('Failed to create pending item', err);
+            }
           }
         }
       }
