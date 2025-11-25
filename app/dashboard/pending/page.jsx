@@ -8,15 +8,18 @@ export default function PendingPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [savingId, setSavingId] = useState(null);
+  const [filter, setFilter] = useState('pending');
+  const [expanded, setExpanded] = useState(null);
+  const [edits, setEdits] = useState({});
 
   useEffect(() => {
     fetchItems();
-  }, []);
+  }, [filter]);
 
   const fetchItems = async () => {
     try {
       setLoading(true);
-      const res = await fetch('/api/pending');
+      const res = await fetch(`/api/pending?status=${filter}`);
       if (!res.ok) {
         throw new Error('加载失败');
       }
@@ -32,10 +35,14 @@ export default function PendingPage() {
   const handleAction = async (id, action) => {
     setSavingId(id);
     try {
+      const payload = { action };
+      if (action === 'accept' && edits[id]) {
+        payload.updates = edits[id];
+      }
       const res = await fetch(`/api/pending/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action }),
+        body: JSON.stringify(payload),
       });
       if (!res.ok) {
         const data = await res.json();
@@ -56,6 +63,27 @@ export default function PendingPage() {
         <p className="mt-1 text-sm text-gray-500">
           审核自动解析的邮件，接受后会更新 Job 和 Timeline。
         </p>
+      </div>
+
+      <div className="mt-4 flex flex-wrap items-center gap-2">
+        {[
+          { key: 'pending', label: '待处理' },
+          { key: 'accepted', label: '已接受' },
+          { key: 'ignored', label: '已忽略' },
+          { key: 'all', label: '全部' },
+        ].map((f) => (
+          <button
+            key={f.key}
+            onClick={() => setFilter(f.key)}
+            className={`rounded-md px-3 py-1 text-sm ${
+              filter === f.key
+                ? 'bg-blue-600 text-white'
+                : 'bg-white text-gray-700 border border-gray-300'
+            }`}
+          >
+            {f.label}
+          </button>
+        ))}
       </div>
 
       {error && (
@@ -84,24 +112,147 @@ export default function PendingPage() {
                   <span className="rounded-full bg-gray-100 px-2 py-1 text-xs text-gray-700">
                     {item.eventType} · {(item.confidence || 0).toFixed(2)}
                   </span>
+                  {item.status !== 'pending' && (
+                    <span className="rounded-full bg-green-50 px-2 py-1 text-xs text-green-700">
+                      {item.status}
+                    </span>
+                  )}
                   <button
-                    onClick={() => handleAction(item._id, 'accept')}
-                    disabled={savingId === item._id}
-                    className="rounded-md bg-green-600 px-3 py-1 text-xs font-medium text-white hover:bg-green-700 disabled:opacity-60"
-                  >
-                    {savingId === item._id ? '处理中...' : '接受'}
-                  </button>
-                  <button
-                    onClick={() => handleAction(item._id, 'ignore')}
+                    onClick={() => setExpanded(expanded === item._id ? null : item._id)}
                     disabled={savingId === item._id}
                     className="rounded-md border border-gray-300 px-3 py-1 text-xs font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-60"
                   >
-                    忽略
+                    {expanded === item._id ? '收起' : '详情/编辑'}
                   </button>
+                  {item.status === 'pending' && (
+                    <>
+                      <button
+                        onClick={() => handleAction(item._id, 'accept')}
+                        disabled={savingId === item._id}
+                        className="rounded-md bg-green-600 px-3 py-1 text-xs font-medium text-white hover:bg-green-700 disabled:opacity-60"
+                      >
+                        {savingId === item._id ? '处理中...' : '接受'}
+                      </button>
+                      <button
+                        onClick={() => handleAction(item._id, 'ignore')}
+                        disabled={savingId === item._id}
+                        className="rounded-md border border-gray-300 px-3 py-1 text-xs font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-60"
+                      >
+                        忽略
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
               {item.snippet && (
                 <p className="mt-2 text-sm text-gray-700 line-clamp-3">{item.snippet}</p>
+              )}
+              {item.summary && (
+                <p className="mt-2 text-sm text-gray-600">
+                  <span className="font-medium">摘要：</span>
+                  {item.summary}
+                </p>
+              )}
+              {item.rationale && (
+                <p className="mt-1 text-xs text-gray-500">
+                  <span className="font-medium">解析说明：</span>
+                  {item.rationale}
+                </p>
+              )}
+
+              {expanded === item._id && (
+                <div className="mt-3 space-y-3 border-t border-gray-100 pt-3">
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <div>
+                      <label className="block text-xs text-gray-600">公司</label>
+                      <input
+                        type="text"
+                        defaultValue={item.company || ''}
+                        onChange={(e) =>
+                          setEdits((prev) => ({
+                            ...prev,
+                            [item._id]: { ...(prev[item._id] || {}), company: e.target.value },
+                          }))
+                        }
+                        className="mt-1 w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs text-gray-600">岗位</label>
+                      <input
+                        type="text"
+                        defaultValue={item.position || ''}
+                        onChange={(e) =>
+                          setEdits((prev) => ({
+                            ...prev,
+                            [item._id]: { ...(prev[item._id] || {}), position: e.target.value },
+                          }))
+                        }
+                        className="mt-1 w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs text-gray-600">事件类型</label>
+                      <select
+                        defaultValue={item.eventType || 'other'}
+                        onChange={(e) =>
+                          setEdits((prev) => ({
+                            ...prev,
+                            [item._id]: { ...(prev[item._id] || {}), eventType: e.target.value },
+                          }))
+                        }
+                        className="mt-1 w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                      >
+                        {['submission', 'oa', 'interview', 'rejection', 'offer', 'other'].map(
+                          (opt) => (
+                            <option key={opt} value={opt}>
+                              {opt}
+                            </option>
+                          )
+                        )}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-xs text-gray-600">面试/事件时间</label>
+                      <input
+                        type="datetime-local"
+                        defaultValue={
+                          item.interviewTime
+                            ? new Date(item.interviewTime).toISOString().slice(0, 16)
+                            : ''
+                        }
+                        onChange={(e) =>
+                          setEdits((prev) => ({
+                            ...prev,
+                            [item._id]: {
+                              ...(prev[item._id] || {}),
+                              interviewTime: e.target.value ? new Date(e.target.value) : null,
+                            },
+                          }))
+                        }
+                        className="mt-1 w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                      />
+                    </div>
+                  </div>
+                  {item.status === 'pending' && (
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => handleAction(item._id, 'accept')}
+                        disabled={savingId === item._id}
+                        className="rounded-md bg-green-600 px-3 py-1 text-xs font-medium text-white hover:bg-green-700 disabled:opacity-60"
+                      >
+                        {savingId === item._id ? '处理中...' : '保存并接受'}
+                      </button>
+                      <button
+                        onClick={() => handleAction(item._id, 'ignore')}
+                        disabled={savingId === item._id}
+                        className="rounded-md border border-gray-300 px-3 py-1 text-xs font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-60"
+                      >
+                        忽略
+                      </button>
+                    </div>
+                  )}
+                </div>
               )}
             </div>
           ))}

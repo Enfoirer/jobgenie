@@ -5,7 +5,7 @@ import dbConnect from '@/lib/mongodb';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import PendingItem from '@/lib/models/PendingItem';
 
-export async function GET() {
+export async function GET(request) {
   await dbConnect();
 
   const session = await getServerSession(authOptions);
@@ -13,9 +13,20 @@ export async function GET() {
     return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
   }
 
-  const items = await PendingItem.find({ userId: session.user.id, status: 'pending' })
-    .sort({ createdAt: -1 })
-    .lean();
+  const { searchParams } = new URL(request.url);
+  const statusParam = searchParams.get('status');
+
+  const statusFilter =
+    statusParam && ['pending', 'accepted', 'ignored', 'all'].includes(statusParam)
+      ? statusParam
+      : 'pending';
+
+  const query = { userId: session.user.id };
+  if (statusFilter !== 'all') {
+    query.status = statusFilter;
+  }
+
+  const items = await PendingItem.find(query).sort({ createdAt: -1 }).lean();
 
   return NextResponse.json({ items });
 }
