@@ -100,42 +100,55 @@ export default function DashboardPage() {
           ))}
         </div>
 
-        <div className="mt-4 h-72 rounded-md border bg-gray-50 p-3 overflow-x-auto">
+        <div className="mt-4 h-80 rounded-md border bg-gray-50 p-3 overflow-x-auto">
           {loading ? (
             <div className="text-sm text-gray-500">Loading...</div>
           ) : timelinePoints.length === 0 ? (
             <div className="text-sm text-gray-500">No data</div>
           ) : (
-            <div className="flex h-full items-end gap-2" style={{ width: `${timelinePoints.length * 60}px` }}>
-              {timelinePoints.map((p) => {
-                const total = statusFilter.reduce((acc, s) => acc + (p.counts[s] || 0), 0);
-                const columnHeight = Math.max(8, (total / maxCount) * 100);
-                return (
-                  <div key={p.day} className="flex flex-col items-center min-w-[48px]">
-                    <div
-                      className="flex w-full flex-col justify-end gap-0.5 rounded bg-white px-1 py-1 shadow-sm border"
-                      style={{ height: `${columnHeight}%` }}
-                    >
-                      {statusFilter.map((s) => {
-                        const count = p.counts[s] || 0;
-                        if (!count || total === 0) return null;
-                        return (
-                          <div
-                            key={s}
-                            className={`${STATUS_COLORS[s]} rounded-sm`}
-                            style={{
-                              height: `${(count / total) * 100}%`,
-                              minHeight: '6px',
-                            }}
-                            title={`${COLUMN_NAMES[s]}: ${count}`}
-                          ></div>
-                        );
-                      })}
-                    </div>
-                    <div className="mt-1 text-[10px] text-gray-600">{p.day.slice(5)}</div>
+            <div className="relative h-full">
+              <div className="absolute left-0 top-0 flex h-full flex-col justify-between text-[10px] text-gray-500">
+                {[1, 0.75, 0.5, 0.25, 0].map((t) => (
+                  <div key={t} className="flex items-center gap-1">
+                    <span className="w-6 text-right">{Math.round(maxCount * t)}</span>
+                    <span className="h-px w-4 bg-gray-200"></span>
                   </div>
-                );
-              })}
+                ))}
+              </div>
+              <div
+                className="absolute left-12 right-0 bottom-0 top-0 flex items-end gap-2"
+                style={{ width: `${timelinePoints.length * 48}px` }}
+              >
+                {timelinePoints.map((p) => {
+                  const total = statusFilter.reduce((acc, s) => acc + (p.counts[s] || 0), 0);
+                  const columnHeight = total === 0 ? 0 : (total / maxCount) * 100;
+                  return (
+                    <div key={p.day} className="flex flex-col items-center min-w-[40px]">
+                      <div
+                        className="flex w-full flex-col justify-end gap-0.5 rounded bg-white px-1 py-1 shadow-sm border"
+                        style={{ height: `${Math.max(4, columnHeight)}%` }}
+                      >
+                        {statusFilter.map((s) => {
+                          const count = p.counts[s] || 0;
+                          if (!count || total === 0) return null;
+                          return (
+                            <div
+                              key={s}
+                              className={`${STATUS_COLORS[s]} rounded-sm`}
+                              style={{
+                                height: `${(count / total) * 100}%`,
+                                minHeight: '6px',
+                              }}
+                              title={`${COLUMN_NAMES[s]}: ${count}`}
+                            ></div>
+                          );
+                        })}
+                      </div>
+                      <div className="mt-1 text-[10px] text-gray-600">{p.day.slice(5)}</div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           )}
         </div>
