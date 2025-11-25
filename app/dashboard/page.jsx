@@ -12,7 +12,7 @@ const STATUS_COLORS = {
 };
 
 export default function DashboardPage() {
-  const [days, setDays] = useState(7);
+  const [days, setDays] = useState(60);
   const [data, setData] = useState({ timeline: {}, funnel: {} });
   const [statusFilter, setStatusFilter] = useState([
     COLUMNS.APPLIED,
@@ -53,13 +53,6 @@ export default function DashboardPage() {
     }));
   }, [data]);
 
-  const funnel = data.funnel || {};
-  const funnelTotal =
-    (funnel.applied || 0) +
-    (funnel.interviewing || 0) +
-    (funnel.offer || 0) +
-    (funnel.rejected || 0);
-
   const maxCount =
     timelinePoints.reduce((max, p) => {
       const sum = statusFilter.reduce((acc, s) => acc + (p.counts[s] || 0), 0);
@@ -87,18 +80,7 @@ export default function DashboardPage() {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h2 className="text-lg font-medium text-gray-800">Timeline</h2>
-            <p className="text-sm text-gray-500">Status updates per day.</p>
-          </div>
-          <div className="flex items-center gap-3">
-            <label className="text-sm text-gray-700">Range (days)</label>
-            <input
-              type="range"
-              min={7}
-              max={60}
-              value={days}
-              onChange={(e) => setDays(Number(e.target.value))}
-            />
-            <span className="text-sm text-gray-800 w-10 text-right">{days}</span>
+            <p className="text-sm text-gray-500">Status updates per day (past 60 days). Scroll horizontally to view older days.</p>
           </div>
         </div>
 
@@ -118,31 +100,37 @@ export default function DashboardPage() {
           ))}
         </div>
 
-        <div className="mt-4 h-56 rounded-md border bg-gray-50 p-3">
+        <div className="mt-4 h-72 rounded-md border bg-gray-50 p-3 overflow-x-auto">
           {loading ? (
             <div className="text-sm text-gray-500">Loading...</div>
           ) : timelinePoints.length === 0 ? (
             <div className="text-sm text-gray-500">No data</div>
           ) : (
-            <div className="flex h-full items-end gap-2 overflow-x-auto">
+            <div className="flex h-full items-end gap-2 min-w-max">
               {timelinePoints.map((p) => {
                 const total = statusFilter.reduce((acc, s) => acc + (p.counts[s] || 0), 0);
-                const height = `${Math.max(8, (total / maxCount) * 100)}%`;
+                const columnHeight = Math.max(8, (total / maxCount) * 100);
                 return (
                   <div key={p.day} className="flex flex-col items-center min-w-[48px]">
-                    <div className="flex w-full flex-col justify-end gap-0.5 rounded bg-white px-1 py-1 shadow-sm border">
-                      {statusFilter.map((s) =>
-                        p.counts[s] ? (
+                    <div
+                      className="flex w-full flex-col justify-end gap-0.5 rounded bg-white px-1 py-1 shadow-sm border"
+                      style={{ height: `${columnHeight}%` }}
+                    >
+                      {statusFilter.map((s) => {
+                        const count = p.counts[s] || 0;
+                        if (!count || total === 0) return null;
+                        return (
                           <div
                             key={s}
-                            className={`${STATUS_COLORS[s]} h-1 rounded-sm`}
+                            className={`${STATUS_COLORS[s]} rounded-sm`}
                             style={{
-                              height: `${Math.max(4, (p.counts[s] / maxCount) * 100)}%`,
+                              height: `${(count / total) * 100}%`,
+                              minHeight: '6px',
                             }}
-                            title={`${COLUMN_NAMES[s]}: ${p.counts[s]}`}
+                            title={`${COLUMN_NAMES[s]}: ${count}`}
                           ></div>
-                        ) : null
-                      )}
+                        );
+                      })}
                     </div>
                     <div className="mt-1 text-[10px] text-gray-600">{p.day.slice(5)}</div>
                   </div>
@@ -153,40 +141,6 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      <div className="rounded-lg border bg-white p-4 shadow-sm">
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-lg font-medium text-gray-800">Funnel</h2>
-            <p className="text-sm text-gray-500">Conversion across stages.</p>
-          </div>
-        </div>
-        <div className="mt-4 grid gap-4 sm:grid-cols-4">
-          {[COLUMNS.APPLIED, COLUMNS.INTERVIEWING, COLUMNS.OFFER, COLUMNS.REJECTED].map((s) => {
-            const count = funnel[s] || 0;
-            const rate =
-              s === COLUMNS.APPLIED
-                ? 1
-                : funnelTotal
-                ? count / (funnel[COLUMNS.APPLIED] || 1)
-                : 0;
-            return (
-              <div key={s} className="rounded-md border bg-gray-50 p-3">
-                <div className="text-sm font-medium text-gray-800">{COLUMN_NAMES[s]}</div>
-                <div className="mt-2 text-2xl font-semibold text-gray-900">{count}</div>
-                <div className="mt-1 h-2 rounded-full bg-gray-200">
-                  <div
-                    className={`${STATUS_COLORS[s]} h-2 rounded-full`}
-                    style={{ width: `${Math.min(100, rate * 100)}%` }}
-                  ></div>
-                </div>
-                <div className="mt-1 text-xs text-gray-500">
-                  Conv vs applied: {(rate * 100).toFixed(1)}%
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
     </div>
   );
 }
