@@ -36,17 +36,17 @@ npm run dev
 ### Pipeline (Mermaid)
 ```mermaid
 flowchart TD
-  A[OAuth Gmail/Outlook] --> B["Fetch messages&#10;(Gmail historyId / Outlook receivedAt)"]
-  B --> C[Dedup by messageId]
-  C --> D[Rule filter: spam/recommendations]
+  A[OAuth Gmail/Outlook] --> B["Fetch messages (Gmail historyId / Outlook receivedAt)"]
+  B --> C["Dedup by messageId"]
+  C --> D["Rule filter: spam or recommendations"]
   D -->|irrelevant| Z[Skip]
-  D --> E[Rule classify]
-  E --> F[LLM (optional): status update only]
+  D --> E["Rule classify"]
+  E --> F["LLM (optional) status update only"]
   F -->|isStatusUpdate=false| Z
-  F --> G[Result fusion (eventType, confidence, fields)]
-  G -->|auto & conf >= threshold| H[Update Job + StatusHistory]
-  G -->|otherwise| I[Create PendingItem]
-  I --> J[Pending UI Accept/Ignore/Edit]
+  F --> G["Result fusion (eventType, confidence, fields)"]
+  G -->|auto & conf >= threshold| H["Update Job + StatusHistory"]
+  G -->|otherwise| I["Create PendingItem"]
+  I --> J["Pending UI Accept/Ignore/Edit"]
   J -->|Accept| H
 ```
 
