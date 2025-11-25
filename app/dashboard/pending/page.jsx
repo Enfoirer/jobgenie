@@ -107,6 +107,23 @@ export default function PendingPage() {
                     {item.from} · {item.provider.toUpperCase()} ·{' '}
                     {item.receivedAt ? new Date(item.receivedAt).toLocaleString() : ''}
                   </p>
+                  <div className="mt-1 flex flex-wrap gap-2 text-xs text-gray-600">
+                    {item.interviewTime && (
+                      <span className="rounded-full bg-blue-50 px-2 py-0.5 text-blue-700">
+                        时间：{new Date(item.interviewTime).toLocaleString()}
+                      </span>
+                    )}
+                    {item.deadline && (
+                      <span className="rounded-full bg-amber-50 px-2 py-0.5 text-amber-700">
+                        截止：{new Date(item.deadline).toLocaleString()}
+                      </span>
+                    )}
+                    {item.needsScheduling && (
+                      <span className="rounded-full bg-gray-100 px-2 py-0.5 text-gray-700">
+                        需自行约时间
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="rounded-full bg-gray-100 px-2 py-1 text-xs text-gray-700">

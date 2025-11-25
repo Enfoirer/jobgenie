@@ -38,6 +38,11 @@ export async function PATCH(request, { params }) {
   }
 
   // Accept: create/update Job and StatusHistory
+  const isInterviewLike = item.eventType === 'oa' || item.eventType === 'interview';
+  const eventDate = isInterviewLike
+    ? item.interviewTime || item.receivedAt || new Date()
+    : item.receivedAt || new Date();
+
   const job = await applyEventToJob({
     userId: session.user.id,
     company: item.company,
@@ -45,7 +50,7 @@ export async function PATCH(request, { params }) {
     eventType: item.eventType,
     subject: item.subject,
     snippet: item.snippet,
-    receivedAt: item.receivedAt || new Date(),
+    receivedAt: eventDate,
   });
 
   item.status = 'accepted';

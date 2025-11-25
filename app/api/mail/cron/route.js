@@ -193,7 +193,12 @@ export async function GET(request) {
               eventType: parsed?.eventType || 'other',
               subject: m.subject,
               snippet: m.snippet,
-              receivedAt: m.receivedAt ? new Date(m.receivedAt) : undefined,
+              receivedAt:
+                parsed?.eventType === 'oa' || parsed?.eventType === 'interview'
+                  ? parsed?.interviewTime || (m.receivedAt ? new Date(m.receivedAt) : undefined)
+                  : m.receivedAt
+                    ? new Date(m.receivedAt)
+                    : undefined,
             });
             continue;
           }
@@ -213,6 +218,8 @@ export async function GET(request) {
             company: parsed?.company,
             position: parsed?.position,
             interviewTime: parsed?.interviewTime,
+            deadline: parsed?.deadline,
+            needsScheduling: parsed?.needsScheduling,
             eventType: parsed?.eventType || 'other',
             confidence,
             recommendedAction: parsed?.recommendedAction,
