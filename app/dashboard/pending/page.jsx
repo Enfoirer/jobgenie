@@ -56,6 +56,23 @@ export default function PendingPage() {
     }
   };
 
+  const clearProcessed = async () => {
+    if (!confirm('确认清空当前视图的已处理记录？')) return;
+    try {
+      setError('');
+      const res = await fetch(`/api/pending/clear?status=${filter}`, {
+        method: 'POST',
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || '清空失败');
+      }
+      await fetchItems();
+    } catch (e) {
+      setError(e.message || '清空失败');
+    }
+  };
+
   return (
     <div className="max-w-5xl">
       <div className="border-b border-gray-200 pb-3">
@@ -84,6 +101,14 @@ export default function PendingPage() {
             {f.label}
           </button>
         ))}
+        {filter !== 'pending' && (
+          <button
+            onClick={clearProcessed}
+            className="rounded-md border border-red-200 px-3 py-1 text-sm font-medium text-red-700 hover:bg-red-50"
+          >
+            清空当前视图
+          </button>
+        )}
       </div>
 
       {error && (
