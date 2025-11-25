@@ -106,7 +106,7 @@ export default function DashboardPage() {
           ) : timelinePoints.length === 0 ? (
             <div className="text-sm text-gray-500">No data</div>
           ) : (
-            <div className="flex h-full items-end gap-2 min-w-max">
+            <div className="flex h-full items-end gap-2" style={{ width: `${timelinePoints.length * 60}px` }}>
               {timelinePoints.map((p) => {
                 const total = statusFilter.reduce((acc, s) => acc + (p.counts[s] || 0), 0);
                 const columnHeight = Math.max(8, (total / maxCount) * 100);
