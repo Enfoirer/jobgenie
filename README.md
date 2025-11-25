@@ -2,6 +2,8 @@
 
 Next.js 15 app for tracking job applications with email ingestion, status timeline, document uploads, and credential auth.
 
+Live demo: https://jobgenie-six.vercel.app
+
 ## Key Features
 - Job board (drag-and-drop), add job form, uploads, auth-protected dashboard.
 - Email agent: Gmail/Outlook OAuth, incremental fetch (Gmail historyId, Outlook receivedAt filter), rule+LLM parsing, relevance filtering, pending review queue, sync modes (auto/semi/strict), job/status auto-update.
@@ -34,7 +36,7 @@ npm run dev
 ### Pipeline (Mermaid)
 ```mermaid
 flowchart TD
-  A[OAuth Gmail/Outlook] --> B[Fetch messages\n(Gmail historyId / Outlook receivedAt)]
+  A[OAuth Gmail/Outlook] --> B[Fetch messages<br/>(Gmail historyId / Outlook receivedAt)]
   B --> C[Dedup by messageId]
   C --> D[Rule filter\nspam/recommendations]
   D -->|irrelevant| Z[Skip]
