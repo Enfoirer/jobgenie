@@ -15,6 +15,7 @@ import User from '../lib/models/User.js';
 import Job from '../lib/models/Job.js';
 import StatusHistory from '../lib/models/StatusHistory.js';
 import { createJob, addHistory } from '../lib/jobs/jobMutations.js';
+import { verifySchedule } from './verify-schedule-ui.mjs';
 
 const chromePath = process.env.CHROME_BIN || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const freePort = async () => {
@@ -148,7 +149,7 @@ try {
   // Fail exactly one save at the network boundary; the form must stay editable.
   await send('Fetch.enable', { patterns: [{ urlPattern: `*/api/jobs/${job._id}`, requestStage: 'Request' }] });
   let failNextSave = true;
-  socket.addEventListener('message', (event) => {
+  const interceptJobSave = (event) => {
     const message = JSON.parse(event.data);
     if (message.method !== 'Fetch.requestPaused') return;
     const { requestId, request } = message.params;
@@ -158,12 +159,14 @@ try {
         responseHeaders: [{ name: 'Content-Type', value: 'application/json' }],
         body: Buffer.from(JSON.stringify({ error: 'Simulated save failure' })).toString('base64') }).catch(() => {});
     } else send('Fetch.continueRequest', { requestId }).catch(() => {});
-  });
+  };
+  socket.addEventListener('message', interceptJobSave);
   await click('Save Changes', 'document.querySelector("dialog[open]")');
   await wait('document.querySelector("dialog [role=alert]")?.textContent.includes("Simulated save failure")', 'failed-save message');
   assert.equal((await Job.findById(job._id)).company, 'UI Acme');
   assert.equal(await evaluate('document.querySelector("dialog input[name=company]").value'), 'UI Acme Updated');
   await send('Fetch.disable');
+  socket.removeEventListener('message', interceptJobSave);
   await click('Save Changes', 'document.querySelector("dialog[open]")');
   await dialogCount(0);
   const beforeReload = await evaluate('performance.timeOrigin');
@@ -234,8 +237,10 @@ try {
   const screenshot = await send('Page.captureScreenshot', { format: 'png' });
   const screenshotPath = join(tmpdir(), 'jobgenie-editing-mobile.png');
   await writeFile(screenshotPath, Buffer.from(screenshot.data, 'base64'));
+  await verifySchedule({ user, foreign, send, evaluate, wait, click, fill, dialogCount, escape, base, socket });
   await send('Network.clearBrowserCookies');
   assert.equal(await evaluate(`fetch('/api/jobs/${job._id}').then(response => response.status)`), 401);
+  assert.equal(await evaluate(`fetch('/api/schedule').then(response => response.status)`), 401);
   assert.deepEqual(exceptions, []);
   console.log(`PASS: HTTP ownership/parent binding, statistics, mobile dialog, unauthenticated access and no uncaught browser errors. Screenshot: ${screenshotPath}`);
 } catch (error) {

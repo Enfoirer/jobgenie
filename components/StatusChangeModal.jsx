@@ -5,13 +5,14 @@ import { COLUMN_NAMES, INTERVIEW_STAGES } from '@/lib/mockData';
 import Modal from './Modal';
 
 function localInput(value) {
+  if (!value) return '';
   const date = new Date(value);
   return new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().slice(0, 19);
 }
 export default function StatusChangeModal({ job, suggestedStatus, onClose, onStatusChange }) {
   const [form, setForm] = useState({
     status: suggestedStatus || job.status, interviewStage: '',
-    date: new Date().toISOString(), notes: '',
+    date: new Date().toISOString(), notes: '', scheduledTime: null, deadline: null,
   });
   const [previousStages, setPreviousStages] = useState([]);
   const [busy, setBusy] = useState(false);
@@ -26,7 +27,10 @@ export default function StatusChangeModal({ job, suggestedStatus, onClose, onSta
     }).catch(() => {});
     return () => { active = false; };
   }, [job._id]);
-  const change = (event) => setForm((previous) => ({ ...previous, [event.target.name]: event.target.value }));
+  const change = (event) => setForm((previous) => ({
+    ...previous, [event.target.name]: event.target.value,
+    ...(event.target.name === 'status' && event.target.value !== 'interviewing' && { scheduledTime: null, deadline: null }),
+  }));
   const submit = async (event) => {
     event.preventDefault();
     if (busy) return;
@@ -64,6 +68,16 @@ export default function StatusChangeModal({ job, suggestedStatus, onClose, onSta
               onChange={(event) => setForm((previous) => ({ ...previous, date: event.target.value ? new Date(event.target.value).toISOString() : '' }))}
               required className="mt-1 block w-full rounded border-gray-300" />
           </label>
+          {form.status === 'interviewing' && <div className="space-y-4">
+            <p className="text-xs text-gray-500">Use appointment time for an interview and deadline for an assessment. Leave unknown times empty to add them to Needs a time.</p>
+            {[['scheduledTime', 'Appointment time (optional)'], ['deadline', 'Deadline (optional)']].map(([name, label]) => (
+              <label key={name} className="block text-sm text-gray-700">{label}
+                <input name={name} type="datetime-local" step="1" value={localInput(form[name])}
+                  onChange={(event) => setForm((previous) => ({ ...previous, [name]: event.target.value ? new Date(event.target.value).toISOString() : null }))}
+                  className="mt-1 block w-full rounded border-gray-300" />
+              </label>
+            ))}
+          </div>}
           <label className="block text-sm text-gray-700">Notes
             <textarea name="notes" rows={3} maxLength={10000} value={form.notes} onChange={change} className="mt-1 block w-full rounded border-gray-300" />
           </label>

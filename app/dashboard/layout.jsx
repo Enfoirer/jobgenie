@@ -48,6 +48,7 @@ export default function DashboardLayout({ children }) {
               </Link>
               {[
                 { href: '/dashboard/jobs', label: 'Job Board' },
+                { href: '/dashboard/todo', label: 'Calendar & To-do' },
                 { href: '/dashboard/add', label: 'Add Job' },
                 { href: '/dashboard/upload', label: 'Uploads' },
                 { href: '/dashboard/pending', label: 'Pending' },

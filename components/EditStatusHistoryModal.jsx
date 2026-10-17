@@ -55,7 +55,7 @@ export default function EditStatusHistoryModal({ statusEntry, jobId, onClose, on
           </label>}
           {[['date', 'Event date and time'], ['scheduledTime', 'Appointment time (optional)'], ['deadline', 'Deadline (optional)']].map(([name, label]) => (
             <label key={name} className="block text-sm text-gray-700">{label}
-              <input type="datetime-local" step="1" required={name === 'date'} value={localInput(form[name])}
+              <input name={name} type="datetime-local" step="1" required={name === 'date'} value={localInput(form[name])}
                 onChange={(event) => setForm((previous) => ({ ...previous, [name]: event.target.value ? new Date(event.target.value).toISOString() : null }))}
                 className="mt-1 block w-full rounded border-gray-300" />
             </label>

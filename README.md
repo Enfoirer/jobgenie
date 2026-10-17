@@ -108,3 +108,15 @@ returns it to Applied. History-only emails retain their ordering protection.
 See [editing acceptance and integration notes](docs/job-editing-acceptance.md).
 Run `npm test` for database/API checks; after `npm run build`, run `npm run test:ui` for the optional
 isolated headless Chrome acceptance (set `CHROME_BIN` outside macOS).
+
+## Calendar and to-do
+
+Open **Calendar & To-do** for interview appointments, assessment deadlines and
+the **Upcoming**, **Overdue / past**, and **Needs a time** lists. Dates use your
+browser's time zone. Create a schedule through **Update Status** on the Job Board,
+or edit/delete an existing history from the calendar or timeline. Offer/rejected
+applications keep their historical schedules; missing times are never replaced by
+email or status-event dates. Elapsed events do not imply non-completion.
+
+See [calendar behavior and acceptance](docs/calendar-acceptance.md). The shared
+`npm test` and `npm run test:ui` commands include calendar and to-do coverage.
