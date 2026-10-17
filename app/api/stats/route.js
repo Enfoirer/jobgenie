@@ -26,6 +26,7 @@ export async function GET(request) {
   // Timeline: count events per day per status
   const histories = await StatusHistory.find({
     userId: session.user.id,
+    deletedAt: null,
     date: { $gte: since },
   }).lean();
 

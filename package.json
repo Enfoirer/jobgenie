@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "test": "node --test --test-concurrency=1 tests/*.test.js",
+    "test:ui": "node scripts/verify-job-editing-ui.mjs",
     "db:mail-indexes": "node --env-file-if-exists=.env.local scripts/ensure-mail-indexes.mjs"
   },
   "dependencies": {

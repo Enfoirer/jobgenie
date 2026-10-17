@@ -6,6 +6,7 @@ import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import { COLUMNS, COLUMN_NAMES } from '@/lib/mockData';
 import StatusChangeModal from '@/components/StatusChangeModal';
 import JobTimeline from '@/components/JobTimeline';
+import EditJobModal from '@/components/EditJobModal';
 
 export default function JobsPage() {
   const [jobsData, setJobsData] = useState({ jobs: [] });
@@ -14,6 +15,8 @@ export default function JobsPage() {
   const [selectedJob, setSelectedJob] = useState(null);
   const [showStatusModal, setShowStatusModal] = useState(false);
   const [showTimeline, setShowTimeline] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [suggestedStatus, setSuggestedStatus] = useState(null);
   const [hideRejected, setHideRejected] = useState(false);
 
   useEffect(() => {
@@ -51,8 +54,7 @@ export default function JobsPage() {
 
     // If dropped in the same position
     if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
+      destination.droppableId === source.droppableId
     ) return;
 
     console.log(`Moving job ${draggableId} from ${source.droppableId} to ${destination.droppableId}`);
@@ -65,38 +67,15 @@ export default function JobsPage() {
       return;
     }
     
-    // Update its status locally first (optimistic update)
-    const updatedJobs = jobsData.jobs.map(j => 
-      j._id === draggableId ? { ...j, status: destination.droppableId } : j
-    );
-
-    // Update state
-    setJobsData({ jobs: updatedJobs });
-
     // Show the status change modal
     setSelectedJob(job);
+    setSuggestedStatus(destination.droppableId);
     setShowStatusModal(true);
   };
 
-  const handleStatusChange = async (newStatus) => {
-    // This is called after the status change is saved
-    // We already updated the UI optimistically, so we just need to
-    // close the modal and refetch the jobs to ensure consistency
-    setShowStatusModal(false);
-    // Refresh the jobs list
-    fetchJobs();
-  };
-
-  const fetchJobs = async () => {
-    try {
-      const response = await fetch('/api/jobs');
-      if (response.ok) {
-        const data = await response.json();
-        setJobsData(data);
-      }
-    } catch (error) {
-      console.error('Error refreshing jobs:', error);
-    }
+  const handleJobUpdate = (job) => {
+    setJobsData((previous) => ({ ...previous, jobs: previous.jobs.map((entry) => entry._id === job._id ? job : entry) }));
+    setSelectedJob(job);
   };
 
   if (loading) {
@@ -234,6 +213,8 @@ export default function JobsPage() {
                                 <h3 className="font-medium text-gray-800">{job.company}</h3>
                                 <p className="text-sm text-gray-600">{job.position}</p>
                                 <p className="text-xs text-gray-500 mt-1">{job.location}</p>
+                                {/^https?:\/\//i.test(job.jobUrl || '') && <a href={job.jobUrl} target="_blank" rel="noopener noreferrer"
+                                  onClick={(event) => event.stopPropagation()} className="mt-1 inline-block text-xs text-blue-600 hover:underline">Job Posting ↗</a>}
                               </div>
                               <div>
                                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
@@ -244,11 +225,14 @@ export default function JobsPage() {
                             
                             <div className="mt-3 pt-3 border-t border-gray-100 flex justify-between items-center">
                               <p className="text-xs text-gray-500">Applied: {new Date(job.dateApplied).toLocaleDateString()}</p>
-                              <div className="flex space-x-2">
+                              <div className="flex flex-wrap justify-end gap-2">
+                                <button onClick={(event) => { event.stopPropagation(); setSelectedJob(job); setShowEditModal(true); }}
+                                  className="text-xs text-blue-600 hover:text-blue-800">Edit Job</button>
                                 <button 
                                   onClick={(e) => {
                                     e.stopPropagation(); // Prevent opening timeline
                                     setSelectedJob(job);
+                                    setSuggestedStatus(null);
                                     setShowStatusModal(true);
                                   }}
                                   className="text-xs text-blue-600 hover:text-blue-800"
@@ -291,15 +275,20 @@ export default function JobsPage() {
       {showStatusModal && selectedJob && (
         <StatusChangeModal 
           job={selectedJob} 
+          suggestedStatus={suggestedStatus}
           onClose={() => setShowStatusModal(false)} 
-          onStatusChange={handleStatusChange}
+          onStatusChange={handleJobUpdate}
         />
       )}
+
+      {showEditModal && selectedJob && <EditJobModal key={selectedJob._id} job={selectedJob}
+        onClose={() => setShowEditModal(false)} onUpdate={handleJobUpdate} />}
 
       {/* Timeline Modal */}
       {showTimeline && selectedJob && (
         <JobTimeline 
           jobId={selectedJob._id} 
+          onJobUpdate={handleJobUpdate}
           onClose={() => setShowTimeline(false)} 
         />
       )}

@@ -16,7 +16,8 @@ export default function AddJobPage() {
     applicationSource: APPLICATION_SOURCES[0],
     status: COLUMNS.APPLIED,
     dateApplied: new Date().toISOString().split('T')[0], // Today's date in YYYY-MM-DD format
-    notes: ''
+    notes: '',
+    jobUrl: ''
   });
 
   const handleChange = (e) => {
@@ -52,13 +53,8 @@ export default function AddJobPage() {
         throw new Error(errorData.error || 'Failed to save job application');
       }
       
-      const result = await response.json();
-      console.log('Job created successfully:', result);
+      await response.json();
       
-      // Add the initial status history entry
-      if (result.job && result.job._id) {
-        await addInitialStatusHistory(result.job._id);
-      }
       
       // Redirect to jobs page on success
       router.push('/dashboard/jobs');
@@ -70,40 +66,12 @@ export default function AddJobPage() {
     }
   };
   
-  // Add initial status history entry
-  const addInitialStatusHistory = async (jobId) => {
-    try {
-      const statusHistoryData = {
-        status: formData.status,
-        date: formData.dateApplied,
-        notes: `Initial application - ${formData.notes}`
-      };
-      
-      const response = await fetch(`/api/jobs/${jobId}/status-history`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(statusHistoryData),
-      });
-      
-      if (!response.ok) {
-        throw new Error('Failed to create status history');
-      }
-      
-      console.log('Initial status history created');
-    } catch (error) {
-      console.error('Error creating initial status history:', error);
-      // We don't need to show this error to the user, as the job was still created
-    }
-  };
-
   return (
     <div className="max-w-2xl mx-auto">
       <div className="border-b border-gray-200 pb-3">
         <h1 className="text-2xl font-semibold text-gray-800">Add New Job Application</h1>
         <p className="mt-1 text-sm text-gray-500">
-          Track a new job you've applied for
+          Track a new job you have applied for
         </p>
       </div>
 
@@ -123,6 +91,10 @@ export default function AddJobPage() {
       )}
 
       <form onSubmit={handleSubmit} className="mt-6 space-y-6">
+        <label className="block text-sm font-medium text-gray-700">Job URL (optional)
+          <input type="url" name="jobUrl" value={formData.jobUrl} onChange={handleChange} maxLength={2048}
+            placeholder="https://example.com/jobs/123" className="mt-1 block w-full rounded-md border-gray-300" />
+        </label>
         <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
           {/* Company Name */}
           <div className="sm:col-span-3">

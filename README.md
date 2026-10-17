@@ -5,9 +5,9 @@ Next.js 15 app for tracking job applications with email ingestion, status timeli
 web app: https://jobgenie-six.vercel.app
 
 ## Key Features
-- Job board (drag-and-drop), add job form, uploads, auth-protected dashboard.
+- Job board (drag-and-drop), add/edit application details and posting links, uploads, auth-protected dashboard.
 - Email agent: Gmail/Outlook OAuth, incremental fetch (Gmail historyId, Outlook receivedAt filter), rule+LLM parsing, relevance filtering, pending review queue, sync modes (auto/semi/strict), job/status auto-update.
-- Timeline & status history per job; accept/ignore pending items and update Job/StatusHistory.
+- Editable/deletable status history with atomic current-state maintenance; accept/ignore pending emails.
 - File uploads stored in MongoDB per user.
 
 ## Quick Start
@@ -96,3 +96,15 @@ email protection. Fixed sample emails cover confirmation, assessment, interview,
 rejection, offer, marketing and incomplete information. Pending review supports
 choosing the target application; historical emails retain their source without
 replacing newer state.
+
+## Application and history editing
+
+Use **Edit Job** on a board card to edit company, position, location, notes and
+posting URL. Open the timeline and choose **Edit History** to update or delete an
+event. Changes persist on refresh and update the board together with the timeline.
+Current state follows the latest eligible event; deleting all eligible history
+returns it to Applied. History-only emails retain their ordering protection.
+
+See [editing acceptance and integration notes](docs/job-editing-acceptance.md).
+Run `npm test` for database/API checks; after `npm run build`, run `npm run test:ui` for the optional
+isolated headless Chrome acceptance (set `CHROME_BIN` outside macOS).
