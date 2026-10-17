@@ -76,3 +76,14 @@ sync workers and run `npm run db:mail-indexes`.
 See [mail sync reliability](docs/mail-sync-reliability.md) for rollout, legacy
 record behavior, and failure recovery. Run `npm test` (Node.js 22.12+) for the
 isolated replica-set integration tests; the first run downloads a MongoDB binary.
+
+## Production build verification
+
+Next.js and `eslint-config-next` are pinned together at `15.5.28`, the 15.x
+security release in the [October 14, 2026 advisory](https://nextjs.org/blog/nextjs-security-update-october-14-2026).
+Vercel blocks deployments containing known vulnerable framework versions.
+
+Before pushing a deployment change, run both `npm test` and `npm run build` with
+the required environment variables configured. Business tests alone do not cover
+production compilation or Vercel's framework security gate. Commit the updated
+`package-lock.json` with any dependency version changes.
