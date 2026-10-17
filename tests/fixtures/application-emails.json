@@ -1,0 +1,191 @@
+[
+  {
+    "name": "submission",
+    "message": {
+      "id": "fixture-submission",
+      "provider": "gmail",
+      "from": "careers@acme.example.test",
+      "subject": "Application received \u2014 Acme",
+      "bodyText": "Thank you for applying. We received your application for Software Engineer, Backend at Acme Inc.",
+      "snippet": "Thank you for applying. We received your application for Software Engineer, Backend at Acme Inc.",
+      "receivedAt": "2026-10-17T01:00:00Z"
+    },
+    "extraction": {
+      "isStatusUpdate": true,
+      "company": "Acme Inc.",
+      "position": "Software Engineer, Backend",
+      "scheduledTime": "",
+      "deadline": "",
+      "needsScheduling": false,
+      "summary": "Application update",
+      "confidence": 0.95,
+      "rationale": "Explicit application status and named role.",
+      "eventType": "submission"
+    },
+    "expectedEvent": "submission",
+    "expectedCreate": true,
+    "expectedReview": false
+  },
+  {
+    "name": "assessment",
+    "message": {
+      "id": "fixture-assessment",
+      "provider": "gmail",
+      "from": "careers@acme.example.test",
+      "subject": "Acme online assessment",
+      "bodyText": "Please complete the online assessment for Software Engineer, Backend at Acme Inc. by October 20.",
+      "snippet": "Please complete the online assessment for Software Engineer, Backend at Acme Inc. by October 20.",
+      "receivedAt": "2026-10-17T01:00:00Z"
+    },
+    "extraction": {
+      "isStatusUpdate": true,
+      "company": "Acme Inc.",
+      "position": "Software Engineer, Backend",
+      "scheduledTime": "",
+      "deadline": "2026-10-20T23:59:00-04:00",
+      "needsScheduling": false,
+      "summary": "Application update",
+      "confidence": 0.95,
+      "rationale": "Explicit application status and named role.",
+      "eventType": "oa"
+    },
+    "expectedEvent": "oa",
+    "expectedCreate": true,
+    "expectedReview": false
+  },
+  {
+    "name": "interview",
+    "message": {
+      "id": "fixture-interview",
+      "provider": "gmail",
+      "from": "careers@acme.example.test",
+      "subject": "Interview invitation \u2014 Acme",
+      "bodyText": "We invite you to an interview for Software Engineer, Backend at Acme Inc. on October 21.",
+      "snippet": "We invite you to an interview for Software Engineer, Backend at Acme Inc. on October 21.",
+      "receivedAt": "2026-10-17T01:00:00Z"
+    },
+    "extraction": {
+      "isStatusUpdate": true,
+      "company": "Acme Inc.",
+      "position": "Software Engineer, Backend",
+      "scheduledTime": "2026-10-21T09:00:00-04:00",
+      "deadline": "",
+      "needsScheduling": false,
+      "summary": "Application update",
+      "confidence": 0.95,
+      "rationale": "Explicit application status and named role.",
+      "eventType": "interview"
+    },
+    "expectedEvent": "interview",
+    "expectedCreate": true,
+    "expectedReview": false
+  },
+  {
+    "name": "rejection",
+    "message": {
+      "id": "fixture-rejection",
+      "provider": "gmail",
+      "from": "careers@acme.example.test",
+      "subject": "Your application at Acme",
+      "bodyText": "Unfortunately we are not moving forward after your interview for Software Engineer, Backend at Acme Inc.",
+      "snippet": "Unfortunately we are not moving forward after your interview for Software Engineer, Backend at Acme Inc.",
+      "receivedAt": "2026-10-17T01:00:00Z"
+    },
+    "extraction": {
+      "isStatusUpdate": true,
+      "company": "Acme Inc.",
+      "position": "Software Engineer, Backend",
+      "scheduledTime": "",
+      "deadline": "",
+      "needsScheduling": false,
+      "summary": "Application update",
+      "confidence": 0.95,
+      "rationale": "Explicit application status and named role.",
+      "eventType": "rejection"
+    },
+    "expectedEvent": "rejection",
+    "expectedCreate": true,
+    "expectedReview": false
+  },
+  {
+    "name": "offer",
+    "message": {
+      "id": "fixture-offer",
+      "provider": "gmail",
+      "from": "careers@acme.example.test",
+      "subject": "Employment offer \u2014 Acme",
+      "bodyText": "We are pleased to offer you the Software Engineer, Backend position at Acme Inc.",
+      "snippet": "We are pleased to offer you the Software Engineer, Backend position at Acme Inc.",
+      "receivedAt": "2026-10-17T01:00:00Z"
+    },
+    "extraction": {
+      "isStatusUpdate": true,
+      "company": "Acme Inc.",
+      "position": "Software Engineer, Backend",
+      "scheduledTime": "",
+      "deadline": "",
+      "needsScheduling": false,
+      "summary": "Application update",
+      "confidence": 0.95,
+      "rationale": "Explicit application status and named role.",
+      "eventType": "offer"
+    },
+    "expectedEvent": "offer",
+    "expectedCreate": true,
+    "expectedReview": false
+  },
+  {
+    "name": "marketing",
+    "message": {
+      "id": "fixture-marketing",
+      "provider": "gmail",
+      "from": "careers@acme.example.test",
+      "subject": "Recommended jobs this week",
+      "bodyText": "Our newsletter includes recommended jobs and interview tips.",
+      "snippet": "Our newsletter includes recommended jobs and interview tips.",
+      "receivedAt": "2026-10-17T01:00:00Z"
+    },
+    "extraction": {
+      "isStatusUpdate": false,
+      "company": "Acme Inc.",
+      "position": "Software Engineer, Backend",
+      "scheduledTime": "",
+      "deadline": "",
+      "needsScheduling": false,
+      "summary": "Application update",
+      "confidence": 0.95,
+      "rationale": "Explicit application status and named role.",
+      "eventType": "other"
+    },
+    "expectedEvent": "other",
+    "expectedCreate": false,
+    "expectedReview": false
+  },
+  {
+    "name": "incomplete",
+    "message": {
+      "id": "fixture-incomplete",
+      "provider": "gmail",
+      "from": "careers@acme.example.test",
+      "subject": "Interview invitation",
+      "bodyText": "We invite you to an interview. Please schedule a time.",
+      "snippet": "We invite you to an interview. Please schedule a time.",
+      "receivedAt": "2026-10-17T01:00:00Z"
+    },
+    "extraction": {
+      "isStatusUpdate": true,
+      "company": "",
+      "position": "",
+      "scheduledTime": "",
+      "deadline": "",
+      "needsScheduling": true,
+      "summary": "Application update",
+      "confidence": 0.95,
+      "rationale": "Explicit application status and named role.",
+      "eventType": "interview"
+    },
+    "expectedEvent": "interview",
+    "expectedCreate": true,
+    "expectedReview": true
+  }
+]

@@ -78,6 +78,7 @@ export async function POST(request, { params }) {
 
     const statusHistory = await StatusHistory.create(statusHistoryData)
     job.status = data.status
+    job.lastStatusEventAt = new Date()
     await job.save()
 
     return NextResponse.json({ statusHistory }, { status: 201 })

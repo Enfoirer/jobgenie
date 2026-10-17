@@ -75,7 +75,10 @@ export async function PATCH(request, { params }) {
       console.log(`PATCH /api/jobs/${jobId} - Status history entry created`)
     }
 
-    const updatedJob = await Job.findByIdAndUpdate(jobId, data, { new: true })
+    const updates = { ...data };
+    delete updates.lastStatusEventAt;
+    if (data.status && data.status !== job.status) updates.lastStatusEventAt = new Date();
+    const updatedJob = await Job.findByIdAndUpdate(jobId, updates, { new: true })
     return NextResponse.json({ job: updatedJob })
   } catch (error) {
     console.error(`PATCH /api/jobs/[id] - Error:`, error)

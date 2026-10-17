@@ -50,7 +50,8 @@ export async function POST(request) {
     // Make sure we have the userId
     const newJob = {
       ...data,
-      userId: session.user.id
+      userId: session.user.id,
+      lastStatusEventAt: new Date(),
     };
     
     const job = await Job.create(newJob);

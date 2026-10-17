@@ -54,21 +54,11 @@ export async function GET(request) {
   // Funnel: latest status per job
   const jobs = await Job.find({ userId: session.user.id }).lean();
   const statusOrder = [COLUMNS.APPLIED, COLUMNS.INTERVIEWING, COLUMNS.OFFER, COLUMNS.REJECTED];
-  const latestByJob = {};
-  histories.forEach((h) => {
-    if (!latestByJob[h.jobId]) latestByJob[h.jobId] = h;
-    else if (new Date(h.date) > new Date(latestByJob[h.jobId].date)) latestByJob[h.jobId] = h;
-  });
-  jobs.forEach((j) => {
-    if (!latestByJob[j._id]) latestByJob[j._id] = { status: j.status };
-  });
-
-  const funnelCounts = statusOrder.reduce((acc, s) => {
-    acc[s] = 0;
-    return acc;
-  }, {});
-  Object.values(latestByJob).forEach((h) => {
-    funnelCounts[h.status] = (funnelCounts[h.status] || 0) + 1;
+  // Historical emails may be recorded without changing a job's current status.
+  // The job is the authority for current-state counts, regardless of date filter.
+  const funnelCounts = statusOrder.reduce((counts, status) => ({ ...counts, [status]: 0 }), {});
+  jobs.forEach((job) => {
+    if (statuses.includes(job.status)) funnelCounts[job.status]++;
   });
 
   return NextResponse.json({

@@ -62,7 +62,7 @@ export default function SyncSettingsPanel() {
         <div>
           <h3 className="text-lg font-medium text-gray-900">Sync mode</h3>
           <p className="text-sm text-gray-500">
-            Auto: high-confidence items update jobs directly; Semi/Strict: everything goes to Pending.
+            Auto creates or updates unambiguous applications. Semi updates matched applications, with offers and rejections reviewed first. Strict reviews every application update.
           </p>
         </div>
       </div>
@@ -90,7 +90,7 @@ export default function SyncSettingsPanel() {
                 checked={syncMode === 'semi'}
                 onChange={() => setSyncMode('semi')}
               />
-              <span className="text-sm text-gray-800">Semi-auto (all go to Pending)</span>
+              <span className="text-sm text-gray-800">Semi-auto (matched applications; offers and rejections require review)</span>
             </label>
             <label className="flex items-center space-x-2">
               <input
@@ -105,7 +105,7 @@ export default function SyncSettingsPanel() {
           </div>
 
           <div className="mt-4">
-            <label className="block text-sm font-medium text-gray-700">Auto confidence threshold</label>
+            <label className="block text-sm font-medium text-gray-700">Automatic update confidence threshold</label>
             <input
               type="number"
               min="0"
@@ -114,7 +114,7 @@ export default function SyncSettingsPanel() {
               value={threshold}
               onChange={(e) => setThreshold(Number(e.target.value))}
               className="mt-1 w-32 rounded-md border-gray-300 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500"
-              disabled={syncMode !== 'auto'}
+              disabled={syncMode === 'strict'}
             />
           </div>
 

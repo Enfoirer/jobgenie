@@ -87,8 +87,8 @@ writes, rollback between job/history/completion writes, replay, concurrent sync,
 expired/live/replaced leases, concurrent pending acceptance, mailbox isolation,
 and legacy rows.
 
-Improved AI extraction/matching, retry controls in the UI, and business rules
-for out-of-order distinct emails remain separate work. Historical gaps caused by
+AI extraction/matching and out-of-order email protection are described in
+[email matching acceptance](email-matching-acceptance.md). Retry controls in the UI remain separate work. Historical gaps caused by
 the old implementation are not automatically repaired.
 
 ## Pagination and request boundaries
@@ -155,7 +155,8 @@ counts per account, plus its ID, provider, email address and backlog.
 | `stored` | Newly inserted durable queue rows |
 | `skipped` | Returned messages already in the queue or legacy deduplication records |
 | `processed` | Queue processing attempts committed successfully |
-| `applied` | Successful processing routed to automatic job/history updates |
+| `applied` | Successful processing that applied the current application status |
+| `historical` | Source-linked history retained while newer current state was preserved |
 | `pendingReview` | Successful processing routed to human review |
 | `irrelevant` | Successful processing classified as irrelevant/non-status mail |
 | `failed` | Processing attempts that threw; not the number of provider errors |
@@ -165,7 +166,8 @@ counts per account, plus its ID, provider, email address and backlog.
 | `cursorResets` | Expired cursor/token recovery attempts |
 | `errorCount` | Ingestion, processing, queue or summary errors in `errors` |
 
-`processed = applied + pendingReview + irrelevant`. A provider or partial inbox
+`processed = applied + historical + pendingReview + irrelevant`. `historical` counts
+source-linked events recorded without replacing a newer application state. A provider or partial inbox
 write failure can leave `totalFetched` greater than `stored + skipped`; inspect
 `errors` instead of treating the difference as successfully stored mail.
 

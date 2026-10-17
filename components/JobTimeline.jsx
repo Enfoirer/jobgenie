@@ -137,6 +137,15 @@ export default function JobTimeline({ jobId, onClose }) {
                               {getStatusDisplayName(entry)}
                             </div>
                             <div className="timeline-date">{formatDate(entry.date)}</div>
+                            {entry.source?.messageId && (
+                              <div className="mt-1 text-xs text-gray-500">
+                                <p>{entry.source.provider} · {entry.source.from} · {entry.source.subject}</p>
+                                {entry.source.receivedAt && <p>Received: {new Date(entry.source.receivedAt).toLocaleString()}</p>}
+                                {entry.statusApplied === false && <p>Recorded as history; current status retained.</p>}
+                              </div>
+                            )}
+                            {entry.scheduledTime && <p className="mt-1 text-xs text-gray-600">Scheduled: {new Date(entry.scheduledTime).toLocaleString()}</p>}
+                            {entry.deadline && <p className="mt-1 text-xs text-gray-600">Deadline: {new Date(entry.deadline).toLocaleString()}</p>}
                             {entry.notes && (
                               <div className="timeline-notes">
                                 {entry.notes}

@@ -1,7 +1,29 @@
 // app/dashboard/pending/page.jsx
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+
+const REVIEW_LABELS = {
+  unverified_company: 'The company name could not be verified against the email.',
+  unverified_position: 'The position could not be verified against the email.',
+  missing_company: 'Company is missing.', missing_position: 'Position is missing.',
+  match_incomplete: 'Fill in the missing fields or select an existing application.',
+  match_ambiguous: 'Multiple applications match. Select the correct one below.',
+  match_uncertain: 'A similar application exists. Confirm the correct application.',
+  low_confidence: 'Extraction confidence is below your automatic update threshold.',
+  invalid_scheduledTime: 'The interview time could not be validated.',
+  invalid_deadline: 'The deadline could not be validated.', invalid_eventType: 'Confirm the event type.',
+  invalid_confidence: 'The extraction confidence is invalid.', invalid_received_time: 'The email received time needs review.',
+  strict_mode: 'Strict mode requires your confirmation.', semi_new_application: 'Semi mode requires confirmation for new applications.',
+  semi_terminal_event: 'Semi mode requires confirmation for offers and rejections.',
+  event_type_conflict: 'The email type is uncertain. Confirm it below.', relevance_conflict: 'Confirm whether this email updates an application.',
+  ambiguous_event: 'The email may contain more than one event.', unknown_event: 'Choose a valid event type.',
+};
+function localDateTime(value) {
+  if (!value) return '';
+  const date = new Date(value);
+  return Number.isFinite(date.getTime()) ? new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().slice(0, 16) : '';
+}
 
 export default function PendingPage() {
   const [items, setItems] = useState([]);
@@ -11,12 +33,18 @@ export default function PendingPage() {
   const [filter, setFilter] = useState('pending');
   const [expanded, setExpanded] = useState(null);
   const [edits, setEdits] = useState({});
+  const [jobs, setJobs] = useState([]);
+  const [jobsError, setJobsError] = useState('');
+  const fetchJobs = useCallback(async () => {
+    await fetch('/api/jobs').then(async (response) => {
+      if (!response.ok) throw new Error('Could not load applications. Refresh to try again.');
+      const data = await response.json();
+      setJobs(data.jobs || []);
+    }).catch((failure) => setJobsError(failure.message));
+  }, []);
+  useEffect(() => { fetchJobs(); }, [fetchJobs]);
 
-  useEffect(() => {
-    fetchItems();
-  }, [filter]);
-
-  const fetchItems = async () => {
+  const fetchItems = useCallback(async () => {
     try {
       setLoading(true);
       const res = await fetch(`/api/pending?status=${filter}`);
@@ -30,7 +58,9 @@ export default function PendingPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [filter]);
+
+  useEffect(() => { fetchItems(); }, [fetchItems]);
 
   const handleAction = async (id, action) => {
     setSavingId(id);
@@ -48,6 +78,8 @@ export default function PendingPage() {
         const data = await res.json();
         throw new Error(data.error || '操作失败');
       }
+      if (action === 'accept') await fetchJobs();
+      if (action === 'accept') setEdits((previous) => { const next = { ...previous }; delete next[id]; return next; });
       await fetchItems();
     } catch (e) {
       setError(e.message || '操作失败');
@@ -186,6 +218,14 @@ export default function PendingPage() {
                   )}
                 </div>
               </div>
+              {!!item.reviewReasons?.length && (
+                <p className="mt-2 text-xs text-amber-800">
+                  {[...new Set(item.reviewReasons.map((reason) => REVIEW_LABELS[reason] || 'Some extracted fields need confirmation.'))].join(' ')}
+                </p>
+              )}
+              {item.status === 'accepted' && item.statusApplied === false && (
+                <p className="mt-2 text-xs text-blue-700">Saved to the timeline. The current application status was retained.</p>
+              )}
               {item.snippet && (
                 <p className="mt-2 text-sm text-gray-700 line-clamp-3">{item.snippet}</p>
               )}
@@ -204,6 +244,25 @@ export default function PendingPage() {
 
               {expanded === item._id && (
                 <div className="mt-3 space-y-3 border-t border-gray-100 pt-3">
+                  <div>
+                    <label className="block text-xs text-gray-600">Application to update</label>
+                    <select
+                      value={edits[item._id]?.createNew ? 'new' : edits[item._id] && Object.hasOwn(edits[item._id], 'targetJobId') ? edits[item._id].targetJobId || '' : item.targetJobId || ''}
+                      onChange={(e) => setEdits((previous) => ({
+                        ...previous,
+                        [item._id]: { ...(previous[item._id] || {}), targetJobId: e.target.value === 'new' || !e.target.value ? null : e.target.value, createNew: e.target.value === 'new' },
+                      }))}
+                      className="mt-1 w-full rounded-md border-gray-300 text-sm"
+                      disabled={item.status !== 'pending'}
+                    >
+                      <option value="">Choose an application or use the extracted company and position</option>
+                      <option value="new">Create a new application</option>
+                      {jobs.map((job) => <option key={job._id} value={job._id}>{job.company} — {job.position} ({job.status})</option>)}
+                    </select>
+                    <p className="mt-1 text-xs text-gray-500">Selecting an existing application links this email without renaming the application.</p>
+                    {jobsError && <p className="mt-1 text-xs text-red-600">{jobsError}</p>}
+                    {!!item.candidates?.length && <p className="mt-1 text-xs text-gray-600">Suggested: {item.candidates.map((candidate) => `${candidate.company} — ${candidate.position}`).join('; ')}</p>}
+                  </div>
                   <div className="grid gap-3 sm:grid-cols-2">
                     <div>
                       <label className="block text-xs text-gray-600">Company</label>
@@ -259,9 +318,7 @@ export default function PendingPage() {
                       <input
                         type="datetime-local"
                         defaultValue={
-                          item.interviewTime
-                            ? new Date(item.interviewTime).toISOString().slice(0, 16)
-                            : ''
+                          localDateTime(item.interviewTime)
                         }
                         onChange={(e) =>
                           setEdits((prev) => ({
@@ -275,6 +332,12 @@ export default function PendingPage() {
                         className="mt-1 w-full rounded-md border-gray-300 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500"
                       />
                     </div>
+                  </div>
+                  <div>
+                    <label className="block text-xs text-gray-600">Deadline</label>
+                    <input type="datetime-local" defaultValue={localDateTime(item.deadline)}
+                      onChange={(e) => setEdits((previous) => ({ ...previous, [item._id]: { ...(previous[item._id] || {}), deadline: e.target.value ? new Date(e.target.value) : null } }))}
+                      className="mt-1 w-full rounded-md border-gray-300 text-sm" />
                   </div>
                   {item.status === 'pending' && (
                     <div className="flex gap-2">

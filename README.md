@@ -28,8 +28,8 @@ npm run dev
 ## Email Agent Overview
 - **Auth**: Connect Gmail/Outlook via UI, tokens stored in MongoDB; auto-refresh with refresh tokens.
 - **Fetch**: Incremental (Gmail historyId; Outlook by receivedAt), messageId dedupe (ProcessedEmail).
-- **Parse**: Rule filters drop marketing/recommendations; LLM (optional) extracts structured fields; only status updates (submission/oa/interview/rejection/offer) kept.
-- **Sync modes**: Auto (high-confidence updates Job/StatusHistory directly), Semi/Strict (everything goes to Pending). Per-user settings via `/api/sync-settings`.
+- **Parse**: Event classification and field extraction are independent; schema/date/evidence validation routes incomplete or conflicting updates to review. Marketing/recommendations are skipped.
+- **Sync modes**: Auto (validated, unambiguous updates/create), Semi (matched existing applications except offers/rejections), Strict (all relevant updates to Pending). Per-user settings via `/api/sync-settings`.
 - **Pending**: Review, edit key fields, accept/ignore; accept updates Job and StatusHistory.
 - **Scheduling**: Use an external scheduler (e.g. cron-job.org) to call `/api/mail/cron?limit=10&token=<CRON_SECRET>`.
 
@@ -41,10 +41,10 @@ flowchart TD
   C --> D["Rule filter: spam or recommendations"]
   D -->|irrelevant| Z[Skip]
   D --> E["Rule classify"]
-  E --> F["LLM (optional) status update only"]
-  F -->|isStatusUpdate=false| Z
-  F --> G["Result fusion (eventType, confidence, fields)"]
-  G -->|auto & conf >= threshold| H["Update Job + StatusHistory"]
+  E --> F["Extract fields independently (LLM or explicit labels)"]
+  F -->|confirmed non-status| Z
+  F --> G["Validate fields, match application and apply mode policy"]
+  G -->|validated automatic update| H["Update Job + source-linked StatusHistory"]
   G -->|otherwise| I["Create PendingItem"]
   I --> J["Pending UI Accept/Ignore/Edit"]
   J -->|Accept| H
@@ -62,8 +62,8 @@ flowchart TD
 
 ## Notes
 - PendingItem/ProcessedEmail stored per user in MongoDB.
-- OA/Interview times use parsed scheduledTime when available, otherwise email received time; submission/offer/rejection use received time.
-- Auto mode only applies to status updates with confidence above the user threshold; others go to Pending or are skipped if non-status.
+- Status ordering uses the email received time. Interview appointments and deadlines are stored separately; unknown scheduling times remain empty. Older emails add history without replacing newer status.
+- Auto mode also requires complete validated fields and an unambiguous match. Semi automates only matched existing applications except offers/rejections. Strict reviews all relevant updates. Non-status mail is skipped.
 
 ## Reliable mail processing
 
@@ -87,3 +87,12 @@ Before pushing a deployment change, run both `npm test` and `npm run build` with
 the required environment variables configured. Business tests alone do not cover
 production compilation or Vercel's framework security gate. Commit the updated
 `package-lock.json` with any dependency version changes.
+
+## AI extraction and matching
+
+See [the second-stage acceptance report](docs/email-matching-acceptance.md) for
+mode behavior, validation, conservative name matching, source retention and stale
+email protection. Fixed sample emails cover confirmation, assessment, interview,
+rejection, offer, marketing and incomplete information. Pending review supports
+choosing the target application; historical emails retain their source without
+replacing newer state.

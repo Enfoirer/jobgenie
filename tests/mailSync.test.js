@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { processEmailForPending } from '../lib/pipeline/emailProcessor.js';
 import assert from 'node:assert/strict';
 import { after, before, beforeEach, test } from 'node:test';
 import { execFile } from 'node:child_process';
@@ -19,7 +21,7 @@ let replica;
 let user;
 let account;
 const models = [User, MailAccount, ProcessedEmail, PendingItem, Job, StatusHistory];
-const parsed = { shouldCreate: true, parsed: { eventType: 'interview', confidence: 0.95 } };
+const parsed = { shouldCreate: true, parsed: { eventType: 'interview', company: 'Acme', position: 'Engineer', confidence: 0.95 } };
 const message = (id = 'mail-1') => ({
   id, provider: 'gmail', subject: 'Interview invitation', snippet: 'Please select a time.',
   bodyText: 'Please select a time.', from: 'recruiter@example.test',
@@ -30,7 +32,7 @@ const options = (messages = [message()], overrides = {}) => ({
     gmail: async () => ({ messages, cursor: { historyId: '9007199254740993', gmailSync: null } }),
     outlook: async () => ({ messages, cursor: { outlookSync: null, ...(messages.length ? { lastReceivedAt: new Date(messages[0].receivedAt) } : {}) } }),
   },
-  parseEmail: async () => structuredClone(parsed),
+  parseEmail: async (mail) => ({ ...structuredClone(parsed), parsed: { ...parsed.parsed, company: mail.id === 'mail-1' ? 'Acme' : mail.id === 'mail-2' ? 'Zebra Industries' : `Company ${mail.id}` } }),
   ...overrides,
 });
 const sync = (opts = options(), accounts = [account]) => syncMailAccounts(accounts, opts);
@@ -166,7 +168,7 @@ test('failure saving the final success marker rolls back all business writes', a
   assert.equal(await StatusHistory.countDocuments(), 1);
 });
 
-test('repeated sync creates one job and one history even with no company or position', async () => {
+test('repeated sync creates one job and one history for fully extracted application fields', async () => {
   await sync();
   const result = await sync();
   assert.equal(result.skipped, 1);
@@ -459,7 +461,7 @@ test('sync summaries distinguish fetched, duplicate, applied, review, irrelevant
     parseEmail: async (mail) => {
       if (mail.id === 'fail') throw new Error('parse failure');
       if (mail.id === 'irrelevant') return { shouldCreate: false };
-      return { shouldCreate: true, parsed: { eventType: 'submission', confidence: mail.id === 'review' ? 0.2 : 0.9 } };
+      return { shouldCreate: true, parsed: { company: `Company ${mail.id}`, position: 'Engineer', eventType: 'submission', confidence: mail.id === 'review' ? 0.2 : 0.9 } };
     },
   }));
   assert.equal(result.totalFetched, 5);
@@ -524,4 +526,169 @@ test('failed backlog reads report unknown status instead of claiming the queue i
   assert.equal(result.accounts[0].backlog, null);
   assert.equal(result.errors[0].stage, 'summary');
   assert.equal(result.errorCount, 1);
+});
+
+const acceptanceEmails = JSON.parse(readFileSync(new URL('./fixtures/application-emails.json', import.meta.url)));
+const seedApplication = (overrides = {}) => Job.create({
+  userId: user._id, company: 'ACME, Inc.', position: 'Backend SWE', status: 'applied',
+  dateApplied: new Date('2026-10-01T00:00:00Z'), lastStatusEventAt: new Date('2026-10-01T00:00:00Z'), notes: 'My application notes',
+  ...overrides,
+});
+const fixtureSync = (fixture, overrides = {}, accounts = [account]) => sync(options([fixture.message], {
+  parseEmail: (mail) => processEmailForPending(mail, { extractor: async () => fixture.extraction }),
+  ...overrides,
+}), accounts);
+
+for (const fixture of acceptanceEmails) {
+  test(`database acceptance for fixed ${fixture.name} email`, async () => {
+    const original = await seedApplication();
+    const result = await fixtureSync(fixture);
+    assert.equal(result.failed, 0);
+    assert.equal(result.errors.length, 0);
+    if (fixture.name === 'marketing') {
+      assert.equal(result.irrelevant, 1);
+      assert.equal(await PendingItem.countDocuments(), 0);
+      assert.equal(await StatusHistory.countDocuments(), 0);
+    } else if (fixture.name === 'incomplete') {
+      assert.equal(result.pendingReview, 1);
+      assert.equal(await StatusHistory.countDocuments(), 0);
+      assert.equal(await Job.countDocuments({ company: 'Unknown Company' }), 0);
+      const item = await PendingItem.findOne();
+      await assert.rejects(reviewPendingItem({ id: item._id, userId: user._id, action: 'accept' }), /Company and position/);
+      await reviewPendingItem({ id: item._id, userId: user._id, action: 'accept', updates: { targetJobId: String(original._id) } });
+      assert.equal(await Job.countDocuments(), 1);
+    } else {
+      const expected = { submission: 'applied', oa: 'interviewing', interview: 'interviewing', rejection: 'rejected', offer: 'offer' }[fixture.expectedEvent];
+      assert.equal(result.applied, 1);
+      const job = await Job.findById(original._id);
+      assert.equal(job.status, expected);
+      assert.equal(job.notes, 'My application notes');
+      const history = await StatusHistory.findOne();
+      assert.equal(history.source.messageId, fixture.message.id);
+      assert.equal(history.source.provider, 'gmail');
+      assert.equal(history.source.from, fixture.message.from);
+      assert.equal(history.source.receivedAt.toISOString(), fixture.message.receivedAt.replace('Z', '.000Z'));
+      assert.equal(history.date.toISOString(), history.source.receivedAt.toISOString());
+      if (fixture.name === 'interview') assert.equal(history.scheduledTime.toISOString(), '2026-10-21T13:00:00.000Z');
+      if (fixture.name === 'assessment') assert.equal(history.deadline.toISOString(), '2026-10-21T03:59:00.000Z');
+    }
+    assert.equal(await Job.countDocuments(), 1);
+  });
+}
+
+test('Semi automatically updates a matched interview but reviews offers, rejections and new applications', async () => {
+  user.syncMode = 'semi'; await user.save();
+  const original = await seedApplication();
+  const interview = acceptanceEmails.find((f) => f.name === 'interview');
+  assert.equal((await fixtureSync(interview)).applied, 1);
+  for (const name of ['offer', 'rejection']) assert.equal((await fixtureSync(acceptanceEmails.find((f) => f.name === name))).pendingReview, 1);
+  assert.equal((await Job.findById(original._id)).status, 'interviewing');
+  const newMail = { ...message('new-application'), subject: 'Application received', bodyText: 'Company: Zebra\nPosition: Analyst\nThank you for applying.' };
+  const result = await sync(options([newMail], { parseEmail: (mail) => processEmailForPending(mail, { extractor: async () => undefined }) }));
+  assert.equal(result.pendingReview, 1);
+  assert.equal(await Job.countDocuments(), 1);
+});
+
+test('Strict queues every relevant fixture and does not update the matched application', async () => {
+  user.syncMode = 'strict'; await user.save();
+  const original = await seedApplication();
+  for (const fixture of acceptanceEmails.filter((f) => f.expectedCreate)) assert.equal((await fixtureSync(fixture)).pendingReview, 1);
+  assert.equal(await PendingItem.countDocuments(), 6);
+  assert.equal(await StatusHistory.countDocuments(), 0);
+  assert.equal((await Job.findById(original._id)).status, 'applied');
+});
+
+test('ambiguous application matches require an explicit owned target before acceptance', async () => {
+  const first = await seedApplication();
+  const second = await seedApplication();
+  const result = await fixtureSync(acceptanceEmails.find((f) => f.name === 'interview'));
+  assert.equal(result.pendingReview, 1);
+  const item = await PendingItem.findOne();
+  assert.equal(item.matchStatus, 'ambiguous');
+  assert.equal(item.candidates.length, 2);
+  await assert.rejects(reviewPendingItem({ id: item._id, userId: user._id, action: 'accept' }), { status: 409 });
+  await reviewPendingItem({ id: item._id, userId: user._id, action: 'accept', updates: { targetJobId: String(second._id) } });
+  assert.equal((await Job.findById(first._id)).status, 'applied');
+  assert.equal((await Job.findById(second._id)).status, 'interviewing');
+  assert.equal(await StatusHistory.countDocuments(), 1);
+});
+
+test('review cannot link an email to another user application', async () => {
+  user.syncMode = 'strict'; await user.save();
+  await fixtureSync(acceptanceEmails[0]);
+  const item = await PendingItem.findOne();
+  const other = await User.create({ email: 'other@example.test', password: 'test-only' });
+  const foreign = await seedApplication({ userId: other._id });
+  await assert.rejects(reviewPendingItem({ id: item._id, userId: user._id, action: 'accept', updates: { targetJobId: String(foreign._id) } }), { status: 403 });
+  assert.equal((await PendingItem.findById(item._id)).status, 'pending');
+  assert.equal(await StatusHistory.countDocuments(), 0);
+});
+
+test('old interview mail records its source and scheduled date without replacing a newer offer', async () => {
+  const original = await seedApplication({ status: 'offer', lastStatusEventAt: new Date('2026-10-17T03:00:00Z') });
+  const fixture = structuredClone(acceptanceEmails.find((f) => f.name === 'interview'));
+  fixture.message.receivedAt = '2026-10-16T01:00:00Z';
+  const result = await fixtureSync(fixture);
+  assert.equal(result.historical, 1);
+  assert.equal(result.applied, 0);
+  assert.equal((await Job.findById(original._id)).status, 'offer');
+  const history = await StatusHistory.findOne();
+  assert.equal(history.statusApplied, false);
+  assert.equal(history.source.receivedAt.toISOString(), '2026-10-16T01:00:00.000Z');
+  assert.equal(history.scheduledTime.toISOString(), '2026-10-21T13:00:00.000Z');
+});
+
+test('accepting an old pending email also preserves the newer status', async () => {
+  user.syncMode = 'strict'; await user.save();
+  const original = await seedApplication({ status: 'offer', lastStatusEventAt: new Date('2026-10-17T03:00:00Z') });
+  await fixtureSync(acceptanceEmails.find((f) => f.name === 'rejection'));
+  const item = await PendingItem.findOne();
+  const result = await reviewPendingItem({ id: item._id, userId: user._id, action: 'accept' });
+  assert.equal(result.statusApplied, false);
+  assert.equal((await Job.findById(original._id)).status, 'offer');
+  assert.equal((await PendingItem.findById(item._id)).statusApplied, false);
+});
+
+test('a manual status watermark and equal timestamps prevent stale/conflicting overwrites', async () => {
+  const original = await seedApplication({ status: 'offer', lastStatusEventAt: new Date('2026-10-17T01:00:00Z') });
+  const result = await fixtureSync(acceptanceEmails.find((f) => f.name === 'rejection'));
+  assert.equal(result.historical, 1);
+  assert.equal((await Job.findById(original._id)).status, 'offer');
+});
+
+test('concurrent distinct emails for the same new application create one job and retain the newest status', async () => {
+  const second = await MailAccount.create({ provider: 'gmail', emailAddress: 'second@example.test', accessToken: 'test-only', userId: user._id });
+  const interview = structuredClone(acceptanceEmails.find((f) => f.name === 'interview'));
+  const offer = structuredClone(acceptanceEmails.find((f) => f.name === 'offer'));
+  offer.message.receivedAt = '2026-10-17T03:00:00Z';
+  const results = await Promise.all([fixtureSync(interview), fixtureSync(offer, {}, [second])]);
+  assert.equal(results.flatMap((r) => r.errors).length, 0);
+  assert.equal(await Job.countDocuments(), 1);
+  assert.equal(await StatusHistory.countDocuments(), 2);
+  assert.equal((await Job.findOne()).status, 'offer');
+});
+
+test('invalid AI dates and confidence go to review instead of failing MongoDB writes', async () => {
+  const fixture = structuredClone(acceptanceEmails.find((f) => f.name === 'interview'));
+  fixture.extraction.scheduledTime = '2026-02-30T10:00:00Z';
+  fixture.extraction.confidence = 5;
+  const result = await fixtureSync(fixture);
+  assert.equal(result.pendingReview, 1);
+  assert.equal(result.failed, 0);
+  const item = await PendingItem.findOne();
+  assert.equal(item.interviewTime, null);
+  assert.ok(item.validationErrors.includes('invalid_scheduledTime'));
+  assert.ok(item.validationErrors.includes('invalid_confidence'));
+});
+
+test('missing email receive time cannot automatically advance application status', async () => {
+  const fixture = structuredClone(acceptanceEmails.find((f) => f.name === 'offer'));
+  delete fixture.message.receivedAt;
+  const original = await seedApplication();
+  const result = await fixtureSync(fixture);
+  assert.equal(result.pendingReview, 1);
+  const item = await PendingItem.findOne();
+  const accepted = await reviewPendingItem({ id: item._id, userId: user._id, action: 'accept' });
+  assert.equal(accepted.statusApplied, false);
+  assert.equal((await Job.findById(original._id)).status, 'applied');
 });
