@@ -27,8 +27,8 @@ const message = (id = 'mail-1') => ({
 });
 const options = (messages = [message()], overrides = {}) => ({
   fetchers: {
-    gmail: async () => ({ messages, newHistoryId: '9007199254740993' }),
-    outlook: async () => ({ messages }),
+    gmail: async () => ({ messages, cursor: { historyId: '9007199254740993', gmailSync: null } }),
+    outlook: async () => ({ messages, cursor: { outlookSync: null, ...(messages.length ? { lastReceivedAt: new Date(messages[0].receivedAt) } : {}) } }),
   },
   parseEmail: async () => structuredClone(parsed),
   ...overrides,
@@ -373,4 +373,155 @@ test('index rollout is repeatable, preserves data and replaces only the legacy c
   assert.ok(!indexes.some((i) => i.name === 'userId_1_messageId_1_provider_1'));
   assert.equal(await PendingItem.countDocuments(), 1);
   assert.equal((await stored()).status, 'succeeded');
+});
+
+test('real Gmail pagination persists unconsumed IDs and drains mail beyond the per-sync limit', async (t) => {
+  t.mock.method(globalThis, 'fetch', async (input) => {
+    const url = new URL(input);
+    if (url.pathname.endsWith('/history')) {
+      return Response.json({
+        history: [{ messagesAdded: Array.from({ length: 7 }, (_,i) => ({ message: { id: `gmail-${i}` } })) }],
+        historyId: '300',
+      });
+    }
+    return Response.json({ id: url.pathname.split('/').at(-1), historyId: '99999', internalDate: '1792198800000' });
+  });
+  for (let round = 0; round < 4; round++) {
+    const current = await MailAccount.findById(account._id);
+    const result = await sync({ limit: 2, parseEmail: async () => ({ shouldCreate: false }) }, [current]);
+    assert.equal(result.errors.length, 0);
+    assert.ok(result.totalFetched <= 2);
+    assert.equal(result.hasMore, round < 3);
+    assert.equal(await ProcessedEmail.countDocuments(), Math.min((round + 1) * 2, 7));
+    const saved = await MailAccount.findById(account._id);
+    assert.equal(saved.metadata.historyId, round < 3 ? '100' : '300');
+  }
+  assert.equal(await ProcessedEmail.countDocuments({ status: 'succeeded' }), 7);
+});
+
+test('an inbox failure does not consume a persisted Gmail continuation', async (t) => {
+  account.metadata.gmailSync = {
+    mode: 'history', startHistoryId: '100', remainingIds: ['a', 'b'],
+    loaded: true, pageToken: null, completionHistoryId: '300',
+  };
+  await account.save();
+  t.mock.method(globalThis, 'fetch', async (input) => Response.json({
+    id: new URL(input).pathname.split('/').at(-1), internalDate: '1792198800000',
+  }));
+  const original = ProcessedEmail.updateOne.bind(ProcessedEmail);
+  const patch = t.mock.method(ProcessedEmail, 'updateOne', (filter, ...args) => {
+    if (filter.messageId === 'b') throw new Error('inbox unavailable');
+    return original(filter, ...args);
+  });
+  let result = await sync({ limit: 2, parseEmail: async () => ({ shouldCreate: false }) });
+  assert.equal(result.hasMore, true);
+  let saved = await MailAccount.findById(account._id);
+  assert.deepEqual(saved.metadata.gmailSync.remainingIds, ['a', 'b']);
+  assert.equal(saved.metadata.historyId, '100');
+  patch.mock.restore();
+  result = await sync({ limit: 2, parseEmail: async () => ({ shouldCreate: false }) }, [saved]);
+  assert.equal(result.errors.length, 0);
+  assert.equal(result.skipped, 1);
+  saved = await MailAccount.findById(account._id);
+  assert.equal(saved.metadata.gmailSync, null);
+  assert.equal(saved.metadata.historyId, '300');
+  assert.equal(await ProcessedEmail.countDocuments(), 2);
+});
+
+test('real Outlook paging persists nextLink and overflow before completing its watermark', async (t) => {
+  account.provider = 'outlook';
+  account.metadata.lastReceivedAt = new Date('2026-10-16T00:00:00Z');
+  await account.save();
+  const link = 'https://graph.microsoft.com/v1.0/me/mailFolders/Inbox/messages?$skiptoken=next';
+  const item = (id) => ({ id, receivedDateTime: '2026-10-17T01:00:00Z' });
+  let requests = 0;
+  t.mock.method(globalThis, 'fetch', async (input) => {
+    requests++;
+    return Response.json(String(input) === link
+      ? { value: [item('c'), item('d')] }
+      : { value: [item('a'), item('b')], '@odata.nextLink': link });
+  });
+  for (const [limit, expected, more] of [[2, 2, true], [1, 3, true], [1, 4, false]]) {
+    const result = await sync({ limit, parseEmail: async () => ({ shouldCreate: false }) }, [await MailAccount.findById(account._id)]);
+    assert.equal(result.errors.length, 0);
+    assert.equal(result.hasMore, more);
+    assert.equal(await ProcessedEmail.countDocuments(), expected);
+    const saved = await MailAccount.findById(account._id);
+    assert.equal(saved.metadata.lastReceivedAt.toISOString(), more ? '2026-10-16T00:00:00.000Z' : '2026-10-17T01:00:00.000Z');
+  }
+  assert.equal(requests, 2);
+});
+
+test('sync summaries distinguish fetched, duplicate, applied, review, irrelevant and failed mail', async () => {
+  const messages = ['apply', 'review', 'irrelevant', 'fail', 'apply'].map(message);
+  const result = await sync(options(messages, {
+    fetchers: { gmail: async () => ({ messages, pagesFetched: 2, unavailable: 1, cursorResets: 1, cursor: { historyId: '300', gmailSync: null } }) },
+    parseEmail: async (mail) => {
+      if (mail.id === 'fail') throw new Error('parse failure');
+      if (mail.id === 'irrelevant') return { shouldCreate: false };
+      return { shouldCreate: true, parsed: { eventType: 'submission', confidence: mail.id === 'review' ? 0.2 : 0.9 } };
+    },
+  }));
+  assert.equal(result.totalFetched, 5);
+  assert.equal(result.stored, 4);
+  assert.equal(result.skipped, 1);
+  assert.equal(result.processed, 3);
+  assert.equal(result.failed, 1);
+  assert.equal(result.applied, 1);
+  assert.equal(result.pendingReview, 1);
+  assert.equal(result.irrelevant, 1);
+  assert.equal(result.pagesFetched, 2);
+  assert.equal(result.unavailable, 1);
+  assert.equal(result.cursorResets, 1);
+  assert.equal(result.errorCount, 1);
+  assert.equal(result.hasMore, false);
+  assert.equal(result.hasPendingWork, true);
+  assert.deepEqual(result.accounts[0].backlog, { pending: 0, processing: 0, failed: 1, pendingReview: 1 });
+  const retry = await sync(options([]));
+  assert.equal(retry.totalFetched, 0);
+  assert.equal(retry.retried, 1);
+  assert.equal(retry.processed, 1);
+  assert.equal(retry.applied, 1);
+  assert.equal(retry.hasPendingWork, false);
+  assert.equal(retry.accounts[0].backlog.pendingReview, 1);
+});
+
+test('aggregate summaries add independent mailboxes without losing per-account errors', async () => {
+  const second = await MailAccount.create({
+    provider: 'outlook', emailAddress: 'outlook@example.test', accessToken: 'test-only', userId: user._id,
+  });
+  const result = await sync(options([message()], {
+    fetchers: {
+      gmail: async () => ({ messages: [message()], cursor: { historyId: '300' } }),
+      outlook: async () => { throw new Error('outlook offline'); },
+    },
+  }), [account, second]);
+  assert.equal(result.accounts.length, 2);
+  assert.equal(result.totalFetched, 1);
+  assert.equal(result.processed, 1);
+  assert.equal(result.errorCount, 1);
+  assert.equal(result.accounts[0].errorCount, 0);
+  assert.equal(result.accounts[1].errorCount, 1);
+  assert.equal(result.errors[0].accountId, String(second._id));
+});
+
+test('empty account results return the same complete zero summary', async () => {
+  const result = await sync(options(), []);
+  assert.deepEqual(result.accounts, []);
+  assert.equal(result.totalFetched, 0);
+  assert.equal(result.pendingReview, 0);
+  assert.equal(result.errorCount, 0);
+  assert.equal(result.hasMore, false);
+  assert.equal(result.hasPendingWork, false);
+});
+
+test('failed backlog reads report unknown status instead of claiming the queue is empty', async (t) => {
+  t.mock.method(ProcessedEmail, 'aggregate', async () => { throw new Error('summary unavailable'); });
+  const result = await sync();
+  assert.equal(result.processed, 1);
+  assert.equal(result.hasMore, null);
+  assert.equal(result.hasPendingWork, null);
+  assert.equal(result.accounts[0].backlog, null);
+  assert.equal(result.errors[0].stage, 'summary');
+  assert.equal(result.errorCount, 1);
 });

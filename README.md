@@ -53,6 +53,12 @@ flowchart TD
 ## Manual Triggers
 - Logged-in user: `/api/mail` (optional `?limit=10`).
 - External cron: `/api/mail/cron?limit=10&token=<CRON_SECRET>`.
+- Both share validation and processing: `limit` defaults to 10 and must be an
+  integer from 1 to 50 per account; invalid values return 400. Optional `provider`
+  must be `gmail` or `outlook`.
+- Gmail/Outlook paging resumes on the next sync when the fetch budget is reached.
+  Results include fetched/stored/processed/failed/review counts, per-account
+  backlogs, `hasMore` (provider pages) and `hasPendingWork` (background queue).
 
 ## Notes
 - PendingItem/ProcessedEmail stored per user in MongoDB.
