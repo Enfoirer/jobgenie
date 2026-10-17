@@ -58,3 +58,15 @@ flowchart TD
 - PendingItem/ProcessedEmail stored per user in MongoDB.
 - OA/Interview times use parsed scheduledTime when available, otherwise email received time; submission/offer/rejection use received time.
 - Auto mode only applies to status updates with confidence above the user threshold; others go to Pending or are skipped if non-status.
+
+## Reliable mail processing
+
+Fetched messages are now stored before advancing sync cursors. A durable queue
+tracks pending/processing/failed/succeeded states, retries failures on the next
+sync, and commits business writes atomically with completion. MongoDB Atlas or a
+replica set is required. Before rollout against an existing database, pause old
+sync workers and run `npm run db:mail-indexes`.
+
+See [mail sync reliability](docs/mail-sync-reliability.md) for rollout, legacy
+record behavior, and failure recovery. Run `npm test` (Node.js 22.12+) for the
+isolated replica-set integration tests; the first run downloads a MongoDB binary.
