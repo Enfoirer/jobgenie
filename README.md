@@ -174,3 +174,12 @@ are rejected before exchanging the authorization code.
 Login and registration use shared MongoDB quotas by IP and normalized email,
 returning HTTP 429 with `Retry-After` and a visible retry message. See
 [security rules, deployment configuration and acceptance](docs/account-security-acceptance.md).
+
+## iPhone app
+
+The native SwiftUI app lives in [`ios/`](ios/README.md). Open
+`ios/JobGenie.xcodeproj` in Xcode and run the **JobGenie** scheme on an iPhone
+simulator. This first increment supports native sign-in, application browsing,
+creation and metadata editing, the shared schedule, and mailbox summaries.
+An explicitly labeled demo mode works without an account. See the iOS README
+for setup, isolated integration tests, current limits and the remaining roadmap.
