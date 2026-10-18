@@ -18,6 +18,7 @@ import { createJob, addHistory } from '../lib/jobs/jobMutations.js';
 import { verifySchedule } from './verify-schedule-ui.mjs';
 import { verifyReminders } from './verify-reminders-ui.mjs';
 import { verifyMailAndAuth } from './verify-mail-auth-ui.mjs';
+import { verifyAccountSecurity } from './verify-account-security-ui.mjs';
 import { verifyUploads } from './verify-uploads-ui.mjs';
 import { verifyAnalytics } from './verify-analytics-ui.mjs';
 
@@ -60,7 +61,7 @@ try {
   // stub. Disable it in this disposable local server, which has no browser storage.
   const nodeFlags = process.allowedNodeEnvironmentFlags.has('--no-experimental-webstorage') ? ['--no-experimental-webstorage'] : [];
   server = spawn(process.execPath, [...nodeFlags, 'node_modules/next/dist/bin/next', 'start', '--hostname', '127.0.0.1', '--port', String(port)], {
-    env: { ...process.env, MONGODB_URI: uri, NEXTAUTH_URL: base, NEXTAUTH_SECRET: 'disposable-ui-test-secret', NEXT_TELEMETRY_DISABLED: '1', OPENAI_API_KEY: '', RESEND_API_KEY: '', PASSWORD_RESET_FROM: '' },
+    env: { ...process.env, MONGODB_URI: uri, NEXTAUTH_URL: base, NEXTAUTH_SECRET: 'disposable-ui-test-secret', NEXT_TELEMETRY_DISABLED: '1', OPENAI_API_KEY: '', RESEND_API_KEY: '', PASSWORD_RESET_FROM: '', GOOGLE_CLIENT_ID: 'local-ui-google-id', GOOGLE_CLIENT_SECRET: 'local-ui-google-secret', OUTLOOK_CLIENT_ID: 'local-ui-outlook-id', OUTLOOK_CLIENT_SECRET: 'local-ui-outlook-secret', OUTLOOK_TENANT_ID: 'common' },
     stdio: ['ignore', 'pipe', 'pipe'],
   });
   for (const stream of [server.stdout, server.stderr]) stream.on('data', (data) => { output = (output + data).slice(-16000); });
@@ -246,6 +247,7 @@ try {
   await verifyAnalytics({ user, foreign, send, evaluate, wait, click, fill, base, socket });
   await verifyUploads({ user, foreign, send, evaluate, wait, click, dialogCount, escape, base });
   await verifyMailAndAuth({ user, foreign, send, evaluate, wait, click, fill, base });
+  await verifyAccountSecurity({ user, send, evaluate, wait, click, fill, base, socket });
   await send('Network.clearBrowserCookies');
   assert.equal(await evaluate(`fetch('/api/jobs/${job._id}').then(response => response.status)`), 401);
   assert.equal(await evaluate(`fetch('/api/schedule').then(response => response.status)`), 401);

@@ -15,6 +15,13 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
 
+  const loginError = (code) => {
+    const limited = /^AUTH_RATE_LIMITED_(\d+)$/.exec(code || '');
+    if (limited) return `Too many sign-in attempts. Try again in ${Math.ceil(Number(limited[1]) / 60)} minute(s).`;
+    if (code === 'AUTH_UNAVAILABLE') return 'Sign-in is temporarily unavailable. Please try again later.';
+    return 'Invalid email or password. Please try again.';
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -45,8 +52,7 @@ export default function LoginPage() {
       router.push('/dashboard/jobs');
       
     } catch (error) {
-      console.error('Login error:', error);
-      setError('Invalid email or password. Please try again.');
+      setError(loginError(error.message));
       setIsLoading(false);
     }
   };
@@ -84,14 +90,13 @@ export default function LoginPage() {
       });
       
       if (loginResult.error) {
-        throw new Error(loginResult.error);
+        throw new Error(loginError(loginResult.error));
       }
       
       // Redirect to dashboard
       router.push('/dashboard/jobs');
       
     } catch (error) {
-      console.error('Registration error:', error);
       setError(error.message || 'Registration failed. Please try again.');
       setIsLoading(false);
     }
@@ -112,7 +117,7 @@ export default function LoginPage() {
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <form className="space-y-6" onSubmit={handleSubmit}>
             {error && (
-              <div className="rounded-md bg-red-50 p-4">
+              <div role="alert" className="rounded-md bg-red-50 p-4">
                 <div className="flex">
                   <div className="flex-shrink-0">
                     <svg className="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">

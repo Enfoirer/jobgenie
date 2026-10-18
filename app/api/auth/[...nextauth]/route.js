@@ -1,11 +1,10 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { encode } from 'next-auth/jwt';
-import bcrypt from 'bcrypt';
 import dbConnect from '@/lib/mongodb';
 import User from '@/lib/models/User';
-import { normalizeEmail } from '@/lib/auth/validation';
-import { REMEMBERED_SESSION_SECONDS, startAuthToken, validAuthToken } from '@/lib/auth/session';
+import { createCredentialsAuthorizer, credentialErrorResponse } from '@/lib/auth/credentials';
+import { REMEMBERED_SESSION_SECONDS, startAuthToken, validAuthToken, sessionBinding } from '@/lib/auth/session';
 
 export const authOptions = {
   providers: [CredentialsProvider({
@@ -15,17 +14,7 @@ export const authOptions = {
       password: { label: 'Password', type: 'password' },
       rememberMe: { label: 'Remember me', type: 'checkbox' },
     },
-    async authorize(credentials) {
-      try {
-        const email = normalizeEmail(credentials?.email);
-        if (typeof credentials?.password !== 'string' || !credentials.password || Buffer.byteLength(credentials.password, 'utf8') > 72) return null;
-        await dbConnect();
-        const user = await User.findOne({ email });
-        if (!user || !await bcrypt.compare(credentials.password, user.password)) return null;
-        return { id: String(user._id), email: user.email, name: user.name || 'User',
-          authVersion: user.authVersion || 0, rememberMe: credentials.rememberMe === 'true' };
-      } catch { return null; }
-    },
+    authorize: createCredentialsAuthorizer({ connect: dbConnect }),
   })],
   session: { strategy: 'jwt', maxAge: REMEMBERED_SESSION_SECONDS },
   jwt: {
@@ -48,6 +37,7 @@ export const authOptions = {
     },
     async session({ session, token }) {
       session.user.id = token.id;
+      session.user.sessionId = sessionBinding(token);
       session.expires = new Date(token.authExpiresAt * 1000).toISOString();
       return session;
     },
@@ -57,4 +47,8 @@ export const authOptions = {
 };
 
 const handler = NextAuth(authOptions);
-export { handler as GET, handler as POST };
+export { handler as GET };
+export async function POST(request, context) {
+  const response = await handler(request, context);
+  return new URL(request.url).pathname.endsWith('/callback/credentials') ? credentialErrorResponse(response) : response;
+}

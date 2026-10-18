@@ -163,3 +163,14 @@ Convert legacy DOC files to PDF or DOCX for new uploads. Existing files remain
 in the same collection, and all file downloads now use attachment disposition
 and an inert content type. Details display metadata only, without inline previews.
 See [upload rules and security acceptance](docs/upload-security-acceptance.md).
+
+## Account and mailbox security
+
+Mailbox connections start on the server and require a one-use, 10-minute OAuth
+state bound to the signed-in session and an HttpOnly browser cookie. Google and
+Outlook authorization both use PKCE S256. Invalid, expired or replayed callbacks
+are rejected before exchanging the authorization code.
+
+Login and registration use shared MongoDB quotas by IP and normalized email,
+returning HTTP 429 with `Retry-After` and a visible retry message. See
+[security rules, deployment configuration and acceptance](docs/account-security-acceptance.md).

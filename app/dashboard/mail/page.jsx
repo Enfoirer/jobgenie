@@ -6,18 +6,12 @@ import { useSearchParams } from 'next/navigation';
 import MailSyncPanel from '@/components/MailSyncPanel';
 import SyncSettingsPanel from '@/components/SyncSettingsPanel';
 
-const GOOGLE_AUTH_URL = 'https://accounts.google.com/o/oauth2/v2/auth';
-const OUTLOOK_AUTH_BASE = 'https://login.microsoftonline.com';
-const GOOGLE_SCOPE =
-  'https://www.googleapis.com/auth/gmail.readonly openid email profile';
-const OUTLOOK_SCOPE =
-  'https://graph.microsoft.com/Mail.Read https://graph.microsoft.com/User.Read offline_access openid profile email';
-
 export default function MailConnectionsPage() {
   const [accounts, setAccounts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [connecting, setConnecting] = useState(false);
   const searchParams = useSearchParams();
 
   useEffect(() => {
@@ -25,6 +19,13 @@ export default function MailConnectionsPage() {
   }, []);
 
   useEffect(() => {
+    const messages = {
+      invalid_state: 'This mailbox authorization is invalid or expired. Start Connect again.',
+      cancelled: 'Mailbox connection was cancelled. You can try again.',
+      failed: 'Unable to connect your mailbox. Please start Connect again.',
+      session_expired: 'Your sign-in changed or expired. Sign in again and restart the connection.',
+    };
+    setError(messages[searchParams.get('oauth_error')] || '');
     const connected = searchParams.get('connected');
     if (connected === 'gmail') {
       setSuccess('Gmail connected');
@@ -49,42 +50,17 @@ export default function MailConnectionsPage() {
     }
   };
 
-  const connectGoogle = () => {
-    const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
-    if (!clientId) {
-      setError('缺少 NEXT_PUBLIC_GOOGLE_CLIENT_ID 配置');
-      return;
+  const connectMailbox = async (provider) => {
+    setConnecting(true); setError(''); setSuccess('');
+    try {
+      const response = await fetch(`/api/oauth/${provider}/start`, { method: 'POST' });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'Unable to start mailbox connection.');
+      window.location.assign(data.url);
+    } catch (err) {
+      setError(err.message || 'Unable to start mailbox connection.');
+      setConnecting(false);
     }
-    const redirectUri = `${window.location.origin}/api/oauth/google/callback`;
-    const params = new URLSearchParams({
-      client_id: clientId,
-      redirect_uri: redirectUri,
-      response_type: 'code',
-      access_type: 'offline',
-      prompt: 'consent',
-      scope: GOOGLE_SCOPE,
-      include_granted_scopes: 'true',
-    });
-    window.location.href = `${GOOGLE_AUTH_URL}?${params.toString()}`;
-  };
-
-  const connectOutlook = () => {
-    const clientId = process.env.NEXT_PUBLIC_OUTLOOK_CLIENT_ID;
-    if (!clientId) {
-      setError('缺少 NEXT_PUBLIC_OUTLOOK_CLIENT_ID 配置');
-      return;
-    }
-    const tenant = process.env.NEXT_PUBLIC_OUTLOOK_TENANT_ID || 'common';
-    const redirectUri = `${window.location.origin}/api/oauth/outlook/callback`;
-    const params = new URLSearchParams({
-      client_id: clientId,
-      response_type: 'code',
-      redirect_uri: redirectUri,
-      response_mode: 'query',
-      scope: OUTLOOK_SCOPE,
-      prompt: 'select_account',
-    });
-    window.location.href = `${OUTLOOK_AUTH_BASE}/${tenant}/oauth2/v2.0/authorize?${params.toString()}`;
   };
 
   return (
@@ -99,7 +75,7 @@ export default function MailConnectionsPage() {
       {(error || success) && (
         <div className="mt-4">
           {error && (
-            <div className="rounded-md bg-red-50 p-3 text-sm text-red-700">
+            <div role="alert" className="rounded-md bg-red-50 p-3 text-sm text-red-700">
               {error}
             </div>
           )}
@@ -117,10 +93,11 @@ export default function MailConnectionsPage() {
         <div className="rounded-lg border bg-white p-4 shadow-sm">
           <h3 className="text-lg font-medium text-gray-800">Connect Gmail</h3>
           <p className="mt-2 text-sm text-gray-600">
-            Enable Gmail API and configure the Redirect URI in Google Console.
+            Authorize read-only access to your Gmail inbox.
           </p>
           <button
-            onClick={connectGoogle}
+            disabled={connecting}
+            onClick={() => connectMailbox('google')}
             className="mt-4 inline-flex w-full justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
             Connect Gmail
@@ -133,7 +110,8 @@ export default function MailConnectionsPage() {
             Uses Microsoft Graph Mail.Read, supports personal or work accounts.
           </p>
           <button
-            onClick={connectOutlook}
+            disabled={connecting}
+            onClick={() => connectMailbox('outlook')}
             className="mt-4 inline-flex w-full justify-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           >
             Connect Outlook
