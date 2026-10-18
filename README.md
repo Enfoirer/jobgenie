@@ -130,3 +130,13 @@ Rescheduling starts a new occurrence; clearing/deleting a schedule or closing an
 application stops reminders. Read/cancelled choices survive reload and preference
 changes. Reminders refresh while the app is visible; no email/browser push is sent
 when the app is closed. See [reminder rules and acceptance](docs/reminders-acceptance.md).
+
+## Application analytics
+
+Open **Analytics** to compare current status distribution with historical stage
+conversion. Current distribution covers all saved applications; conversion uses
+applications submitted within the selected dates, observed through that period's
+end. Rejections never imply an interview, repeated rounds count once, and direct
+offers do not invent missing stages. Select preset/custom dates and a time zone,
+switch daily application/status-event trends, and inspect application progression.
+See [metric definitions, date boundaries and acceptance](docs/analytics-acceptance.md).

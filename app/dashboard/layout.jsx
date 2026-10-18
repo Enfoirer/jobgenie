@@ -55,7 +55,7 @@ export default function DashboardLayout({ children }) {
                 { href: '/dashboard/upload', label: 'Uploads' },
                 { href: '/dashboard/pending', label: 'Pending' },
                 { href: '/dashboard/mail', label: 'Mail' },
-                { href: '/dashboard', label: 'Dashboard' },
+                { href: '/dashboard/analytics', label: 'Analytics' },
               ].map((item) => (
                 <Link
                   key={item.href}

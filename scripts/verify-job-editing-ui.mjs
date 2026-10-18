@@ -17,6 +17,7 @@ import StatusHistory from '../lib/models/StatusHistory.js';
 import { createJob, addHistory } from '../lib/jobs/jobMutations.js';
 import { verifySchedule } from './verify-schedule-ui.mjs';
 import { verifyReminders } from './verify-reminders-ui.mjs';
+import { verifyAnalytics } from './verify-analytics-ui.mjs';
 
 const chromePath = process.env.CHROME_BIN || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const freePort = async () => {
@@ -227,7 +228,7 @@ try {
   assert.equal(foreignRead, 404); assert.equal(wrongParent, 404);
   assert.equal((await Job.findById(foreignJob._id)).company, 'Private Other');
   const stats = await evaluate(`fetch('/api/stats?days=7').then(response => response.json())`);
-  assert.equal(stats.funnel.rejected, 1); assert.equal(stats.funnel.applied, 1);
+  assert.equal(stats.currentStatus.counts.rejected, 1); assert.equal(stats.currentStatus.counts.applied, 1);
   assert.equal(Object.values(stats.timeline).reduce((sum, row) => sum + row.interviewing, 0), 0);
   await send('Emulation.setDeviceMetricsOverride', { width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
   await click('Edit History', 'document.querySelector("dialog[open]")', 1); await dialogCount(2);
@@ -240,10 +241,12 @@ try {
   await writeFile(screenshotPath, Buffer.from(screenshot.data, 'base64'));
   await verifySchedule({ user, foreign, send, evaluate, wait, click, fill, dialogCount, escape, base, socket });
   await verifyReminders({ user, foreign, send, evaluate, wait, click, fill, dialogCount, base, socket });
+  await verifyAnalytics({ user, foreign, send, evaluate, wait, click, fill, base, socket });
   await send('Network.clearBrowserCookies');
   assert.equal(await evaluate(`fetch('/api/jobs/${job._id}').then(response => response.status)`), 401);
   assert.equal(await evaluate(`fetch('/api/schedule').then(response => response.status)`), 401);
   assert.equal(await evaluate(`fetch('/api/reminders').then(response => response.status)`), 401);
+  assert.equal(await evaluate(`fetch('/api/stats?days=7').then(response => response.status)`), 401);
   assert.equal(await evaluate(`fetch('/api/reminders/settings', {method:'PATCH',headers:{'Content-Type':'application/json'},body:'{"enabled":false}'}).then(response => response.status)`), 401);
   assert.deepEqual(exceptions, []);
   console.log(`PASS: HTTP ownership/parent binding, statistics, mobile dialog, unauthenticated access and no uncaught browser errors. Screenshot: ${screenshotPath}`);

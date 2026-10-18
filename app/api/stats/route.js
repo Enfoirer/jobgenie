@@ -1,69 +1,10 @@
-// app/api/stats/route.js
-import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import dbConnect from '@/lib/mongodb';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-import StatusHistory from '@/lib/models/StatusHistory';
-import Job from '@/lib/models/Job';
-import { COLUMNS } from '@/lib/mockData';
+import { createStatsRoute } from '@/lib/analytics/routeHandler';
 
-export async function GET(request) {
-  await dbConnect();
-
-  const session = await getServerSession(authOptions);
-  if (!session) {
-    return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
-  }
-
-  const { searchParams } = new URL(request.url);
-  const days = Math.max(
-    1,
-    Math.min(90, Number(searchParams.get('days')) || 7)
-  );
-  const since = new Date();
-  since.setDate(since.getDate() - days + 1);
-
-  // Timeline: count events per day per status
-  const histories = await StatusHistory.find({
-    userId: session.user.id,
-    deletedAt: null,
-    date: { $gte: since },
-  }).lean();
-
-  // Pre-fill timeline for each day in range
-  const timeline = {};
-  const statuses = ['applied', 'interviewing', 'offer', 'rejected'];
-  const today = new Date();
-  for (let i = 0; i < days; i++) {
-    const d = new Date(today);
-    d.setDate(today.getDate() - i);
-    const key = d.toISOString().slice(0, 10);
-    timeline[key] = { applied: 0, interviewing: 0, offer: 0, rejected: 0 };
-  }
-
-  histories.forEach((h) => {
-    const day = new Date(h.date);
-    const key = day.toISOString().slice(0, 10);
-    if (!timeline[key]) {
-      timeline[key] = { applied: 0, interviewing: 0, offer: 0, rejected: 0 };
-    }
-    if (statuses.includes(h.status)) {
-      timeline[key][h.status] = (timeline[key][h.status] || 0) + 1;
-    }
-  });
-
-  // Funnel: latest status per job
-  const jobs = await Job.find({ userId: session.user.id }).lean();
-  const statusOrder = [COLUMNS.APPLIED, COLUMNS.INTERVIEWING, COLUMNS.OFFER, COLUMNS.REJECTED];
-  // Historical emails may be recorded without changing a job's current status.
-  // The job is the authority for current-state counts, regardless of date filter.
-  const funnelCounts = statusOrder.reduce((counts, status) => ({ ...counts, [status]: 0 }), {});
-  jobs.forEach((job) => {
-    if (statuses.includes(job.status)) funnelCounts[job.status]++;
-  });
-
-  return NextResponse.json({
-    timeline,
-    funnel: funnelCounts,
-  });
-}
+export const dynamic = 'force-dynamic';
+export const GET = createStatsRoute({
+  authenticate: async () => (await getServerSession(authOptions))?.user?.id,
+  connect: dbConnect,
+});

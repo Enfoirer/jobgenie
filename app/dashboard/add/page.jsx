@@ -1,7 +1,8 @@
 // app/dashboard/add/page.jsx
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { dayKey } from '@/lib/schedule/events';
 import { useRouter } from 'next/navigation';
 import { APPLICATION_SOURCES, COLUMNS, COLUMN_NAMES } from '@/lib/mockData';
 
@@ -15,10 +16,11 @@ export default function AddJobPage() {
     location: '',
     applicationSource: APPLICATION_SOURCES[0],
     status: COLUMNS.APPLIED,
-    dateApplied: new Date().toISOString().split('T')[0], // Today's date in YYYY-MM-DD format
+    dateApplied: '',
     notes: '',
     jobUrl: ''
   });
+  useEffect(() => { setFormData((previous) => ({ ...previous, dateApplied: previous.dateApplied || dayKey(new Date()) })); }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -42,7 +44,7 @@ export default function AddJobPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, dateApplied: new Date(`${formData.dateApplied}T00:00:00`).toISOString() }),
       });
       
       console.log('Response status:', response.status);
