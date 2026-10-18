@@ -303,6 +303,7 @@ export default function JobsPage() {
       });
       
       if (response.ok) {
+        window.dispatchEvent(new Event('jobgenie:schedule-changed'));
         // Remove the job from state
         setJobsData({ 
           jobs: jobsData.jobs.filter(j => j._id !== jobId) 

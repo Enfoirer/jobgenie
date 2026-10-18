@@ -120,3 +120,13 @@ email or status-event dates. Elapsed events do not imply non-completion.
 
 See [calendar behavior and acceptance](docs/calendar-acceptance.md). The shared
 `npm test` and `npm run test:ui` commands include calendar and to-do coverage.
+
+## In-app reminders
+
+Use the dashboard bell to open **Reminders** and see the unread count. Reminders
+default to one hour before an appointment/deadline; choose 15/30 minutes or 24
+hours in settings. Mark read, snooze for 10 minutes, or cancel just that reminder.
+Rescheduling starts a new occurrence; clearing/deleting a schedule or closing an
+application stops reminders. Read/cancelled choices survive reload and preference
+changes. Reminders refresh while the app is visible; no email/browser push is sent
+when the app is closed. See [reminder rules and acceptance](docs/reminders-acceptance.md).

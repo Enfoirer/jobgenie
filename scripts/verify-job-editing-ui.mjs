@@ -16,6 +16,7 @@ import Job from '../lib/models/Job.js';
 import StatusHistory from '../lib/models/StatusHistory.js';
 import { createJob, addHistory } from '../lib/jobs/jobMutations.js';
 import { verifySchedule } from './verify-schedule-ui.mjs';
+import { verifyReminders } from './verify-reminders-ui.mjs';
 
 const chromePath = process.env.CHROME_BIN || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const freePort = async () => {
@@ -238,9 +239,12 @@ try {
   const screenshotPath = join(tmpdir(), 'jobgenie-editing-mobile.png');
   await writeFile(screenshotPath, Buffer.from(screenshot.data, 'base64'));
   await verifySchedule({ user, foreign, send, evaluate, wait, click, fill, dialogCount, escape, base, socket });
+  await verifyReminders({ user, foreign, send, evaluate, wait, click, fill, dialogCount, base, socket });
   await send('Network.clearBrowserCookies');
   assert.equal(await evaluate(`fetch('/api/jobs/${job._id}').then(response => response.status)`), 401);
   assert.equal(await evaluate(`fetch('/api/schedule').then(response => response.status)`), 401);
+  assert.equal(await evaluate(`fetch('/api/reminders').then(response => response.status)`), 401);
+  assert.equal(await evaluate(`fetch('/api/reminders/settings', {method:'PATCH',headers:{'Content-Type':'application/json'},body:'{"enabled":false}'}).then(response => response.status)`), 401);
   assert.deepEqual(exceptions, []);
   console.log(`PASS: HTTP ownership/parent binding, statistics, mobile dialog, unauthenticated access and no uncaught browser errors. Screenshot: ${screenshotPath}`);
 } catch (error) {

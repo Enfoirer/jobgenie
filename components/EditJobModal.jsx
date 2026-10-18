@@ -22,6 +22,7 @@ export default function EditJobModal({ job, onClose, onUpdate }) {
       });
       const result = await response.json();
       if (!response.ok) throw new Error(result.error || 'Failed to update application');
+      window.dispatchEvent(new Event('jobgenie:schedule-changed'));
       onUpdate(result.job);
       onClose();
     } catch (failure) { setError(failure.message); setBusy(false); }

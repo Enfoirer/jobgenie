@@ -41,6 +41,7 @@ export default function StatusChangeModal({ job, suggestedStatus, onClose, onSta
       });
       const result = await response.json();
       if (!response.ok) throw new Error(result.error || 'Failed to update status');
+      window.dispatchEvent(new Event('jobgenie:schedule-changed'));
       onStatusChange(result.job);
       onClose();
     } catch (failure) { setError(failure.message); setBusy(false); }

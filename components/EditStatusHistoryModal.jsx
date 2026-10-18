@@ -30,6 +30,7 @@ export default function EditStatusHistoryModal({ statusEntry, jobId, onClose, on
       });
       const result = await response.json();
       if (!response.ok) throw new Error(result.error || 'Failed to change history');
+      window.dispatchEvent(new Event('jobgenie:schedule-changed'));
       await onUpdate(result.job);
       onClose();
     } catch (failure) { setError(failure.message); setBusy(false); }

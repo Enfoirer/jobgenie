@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useSession, signOut } from 'next-auth/react';
+import ReminderProvider, { ReminderLink } from '@/components/ReminderProvider';
 
 export default function DashboardLayout({ children }) {
   const pathname = usePathname();
@@ -37,6 +38,7 @@ export default function DashboardLayout({ children }) {
   }
 
   return (
+    <ReminderProvider>
     <div className="min-h-screen bg-gray-50">
       {/* Navigation Bar */}
       <nav className="bg-white shadow-sm">
@@ -68,7 +70,8 @@ export default function DashboardLayout({ children }) {
                 </Link>
               ))}
             </div>
-            <div className="flex items-center">
+            <div className="flex shrink-0 items-center">
+              <ReminderLink />
               <div className="hidden sm:flex-shrink-0 sm:flex">
                 <span className="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
                   {session?.user?.name || session?.user?.email}
@@ -97,5 +100,6 @@ export default function DashboardLayout({ children }) {
         </div>
       </main>
     </div>
+    </ReminderProvider>
   );
 }
