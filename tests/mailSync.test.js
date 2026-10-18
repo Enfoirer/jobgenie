@@ -692,3 +692,39 @@ test('missing email receive time cannot automatically advance application status
   assert.equal(accepted.statusApplied, false);
   assert.equal((await Job.findById(original._id)).status, 'applied');
 });
+
+test('retry-only processes failed rows without fetching or moving cursors, and remains idempotent', async () => {
+  await sync(options([message()], { parseEmail: async () => { throw new Error('temporary failure'); } }));
+  await ProcessedEmail.create({ provider: 'gmail', accountId: account._id, userId: user._id, messageId: 'pending-only', status: 'pending', raw: message('pending-only') });
+  let fetches = 0;
+  const retryOptions = options([], { retryOnly: true, fetchers: { gmail: async () => { fetches++; throw new Error('must not download'); } } });
+  const before = (await MailAccount.findById(account._id)).metadata.toObject();
+  const result = await sync(retryOptions);
+  assert.equal(fetches, 0); assert.equal(result.totalFetched, 0); assert.equal(result.processed, 1);
+  assert.equal(await ProcessedEmail.countDocuments({ status: 'pending' }), 1);
+  assert.deepEqual((await MailAccount.findById(account._id)).metadata.toObject(), before);
+  await sync(retryOptions);
+  assert.equal(await Job.countDocuments(), 1); assert.equal(await StatusHistory.countDocuments(), 1);
+  const saved = await MailAccount.findById(account._id);
+  assert.equal(saved.lastSync.action, 'retry'); assert.equal(saved.lastSync.processed, 0);
+});
+
+test('sync status is scoped, persists results and omits provider credentials and raw error details', async () => {
+  const { getMailSyncStatus } = await import('../lib/mail/syncStatus.js');
+  await sync(options([message()], { parseEmail: async () => { throw new Error('private-provider-secret'); } }));
+  const stranger = await User.create({ email: 'stranger@example.test', password: 'not-a-login' });
+  assert.deepEqual(await getMailSyncStatus(stranger._id), []);
+  const [status] = await getMailSyncStatus(user._id);
+  assert.equal(status.backlog.failed, 1); assert.equal(status.failures[0].subject, message().subject);
+  assert.equal(status.lastSync.failed, 1); assert.deepEqual(status.lastSync.errorStages, ['process']);
+  assert.equal(JSON.stringify(status).includes('private-provider-secret'), false);
+  assert.equal(JSON.stringify(status).includes('test-only'), false);
+});
+
+test('retry-only respects the batch limit and leaves the remaining failures available for next time', async () => {
+  await sync(options([message(), message('mail-2')], { parseEmail: async () => { throw new Error('failure'); } }));
+  const first = await sync(options([], { retryOnly: true, retryLimit: 1 }));
+  assert.equal(first.processed, 1); assert.equal(first.accounts[0].backlog.failed, 1);
+  const second = await sync(options([], { retryOnly: true, retryLimit: 1 }));
+  assert.equal(second.processed, 1); assert.equal(second.accounts[0].backlog.failed, 0);
+});

@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
+import MailSyncPanel from '@/components/MailSyncPanel';
 import SyncSettingsPanel from '@/components/SyncSettingsPanel';
 
 const GOOGLE_AUTH_URL = 'https://accounts.google.com/o/oauth2/v2/auth';
@@ -109,6 +110,8 @@ export default function MailConnectionsPage() {
           )}
         </div>
       )}
+
+      <MailSyncPanel accountVersion={accounts.map((a) => a.id).join(',')} />
 
       <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
         <div className="rounded-lg border bg-white p-4 shadow-sm">

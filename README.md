@@ -140,3 +140,17 @@ end. Rejections never imply an interview, repeated rounds count once, and direct
 offers do not invent missing stages. Select preset/custom dates and a time zone,
 switch daily application/status-event trends, and inspect application progression.
 See [metric definitions, date boundaries and acceptance](docs/analytics-acceptance.md).
+
+## Mail actions and account recovery
+
+Open **Mail** to sync immediately, continue a remaining page, retry only failed
+stored emails, or review pending matches. Each account shows its live queue and
+last saved result, including results from scheduled syncs. Failed-only retry does
+not call Gmail/Outlook or replay successful messages.
+
+**Remember me** keeps a login valid for 30 days; unchecked logins last 12 hours.
+Both durations are fixed from sign-in. **Forgot your password?** opens the recovery
+flow with one-use, 30-minute links; resetting a password signs out old sessions.
+Configure server-only `RESEND_API_KEY`, `PASSWORD_RESET_FROM` (a verified sender),
+and the public `NEXTAUTH_URL` before enabling real reset email delivery.
+See [setup, behavior and acceptance](docs/sync-and-auth-acceptance.md).

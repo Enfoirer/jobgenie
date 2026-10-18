@@ -1,4 +1,3 @@
-// Modified version of app/login/page.jsx with explicit register button function
 'use client';
 
 import { useState } from 'react';
@@ -14,6 +13,7 @@ export default function LoginPage() {
     password: ''
   });
   const [error, setError] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,7 +33,8 @@ export default function LoginPage() {
       const result = await signIn('credentials', {
         redirect: false,
         email: formData.email,
-        password: formData.password
+        password: formData.password,
+        rememberMe: String(rememberMe),
       });
       
       if (result.error) {
@@ -50,11 +51,10 @@ export default function LoginPage() {
     }
   };
 
-  // This function was missing or not properly connected to the button
   const handleRegister = async () => {
     setError('');
     setIsLoading(true);
-    console.log('Register button clicked!'); // Debug log
+
 
     try {
       // Register the user
@@ -79,7 +79,8 @@ export default function LoginPage() {
       const loginResult = await signIn('credentials', {
         redirect: false,
         email: formData.email,
-        password: formData.password
+        password: formData.password,
+        rememberMe: String(rememberMe),
       });
       
       if (loginResult.error) {
@@ -100,7 +101,7 @@ export default function LoginPage() {
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          JobTrack
+          JobGenie
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600">
           Sign in to manage your job applications
@@ -169,6 +170,8 @@ export default function LoginPage() {
                   id="remember_me"
                   name="remember_me"
                   type="checkbox"
+                  checked={rememberMe}
+                  onChange={(event) => setRememberMe(event.target.checked)}
                   className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                 />
                 <label htmlFor="remember_me" className="ml-2 block text-sm text-gray-900">
@@ -177,11 +180,13 @@ export default function LoginPage() {
               </div>
 
               <div className="text-sm">
-                <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
+                <Link href="/forgot-password" className="font-medium text-blue-600 hover:text-blue-500">
                   Forgot your password?
-                </a>
+                </Link>
               </div>
             </div>
+
+            <p className="text-xs text-gray-500">Stay signed in for 30 days when checked, or 12 hours otherwise. Resetting your password signs out all devices.</p>
 
             <div>
               <button
@@ -215,7 +220,7 @@ export default function LoginPage() {
               </div>
               <div className="relative flex justify-center text-sm">
                 <span className="px-2 bg-white text-gray-500">
-                  Or register with these credentials
+                  Create an account (password: at least 8 characters)
                 </span>
               </div>
             </div>
@@ -223,7 +228,7 @@ export default function LoginPage() {
             <div className="mt-6">
               <button
                 type="button"
-                onClick={handleRegister}  // This was missing or not properly connected
+                onClick={handleRegister}
                 disabled={isLoading}
                 className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 ${
                   isLoading

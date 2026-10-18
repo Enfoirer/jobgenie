@@ -11,3 +11,6 @@ export const GET = createMailSyncHandler({
     return session?.user?.id ? { userId: session.user.id } : null;
   },
 });
+
+// Manual actions use POST; GET remains compatible with existing integrations.
+export const POST = GET;

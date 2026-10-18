@@ -17,6 +17,7 @@ import StatusHistory from '../lib/models/StatusHistory.js';
 import { createJob, addHistory } from '../lib/jobs/jobMutations.js';
 import { verifySchedule } from './verify-schedule-ui.mjs';
 import { verifyReminders } from './verify-reminders-ui.mjs';
+import { verifyMailAndAuth } from './verify-mail-auth-ui.mjs';
 import { verifyAnalytics } from './verify-analytics-ui.mjs';
 
 const chromePath = process.env.CHROME_BIN || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
@@ -58,7 +59,7 @@ try {
   // stub. Disable it in this disposable local server, which has no browser storage.
   const nodeFlags = process.allowedNodeEnvironmentFlags.has('--no-experimental-webstorage') ? ['--no-experimental-webstorage'] : [];
   server = spawn(process.execPath, [...nodeFlags, 'node_modules/next/dist/bin/next', 'start', '--hostname', '127.0.0.1', '--port', String(port)], {
-    env: { ...process.env, MONGODB_URI: uri, NEXTAUTH_URL: base, NEXTAUTH_SECRET: 'disposable-ui-test-secret', NEXT_TELEMETRY_DISABLED: '1' },
+    env: { ...process.env, MONGODB_URI: uri, NEXTAUTH_URL: base, NEXTAUTH_SECRET: 'disposable-ui-test-secret', NEXT_TELEMETRY_DISABLED: '1', OPENAI_API_KEY: '', RESEND_API_KEY: '', PASSWORD_RESET_FROM: '' },
     stdio: ['ignore', 'pipe', 'pipe'],
   });
   for (const stream of [server.stdout, server.stderr]) stream.on('data', (data) => { output = (output + data).slice(-16000); });
@@ -242,6 +243,7 @@ try {
   await verifySchedule({ user, foreign, send, evaluate, wait, click, fill, dialogCount, escape, base, socket });
   await verifyReminders({ user, foreign, send, evaluate, wait, click, fill, dialogCount, base, socket });
   await verifyAnalytics({ user, foreign, send, evaluate, wait, click, fill, base, socket });
+  await verifyMailAndAuth({ user, foreign, send, evaluate, wait, click, fill, base });
   await send('Network.clearBrowserCookies');
   assert.equal(await evaluate(`fetch('/api/jobs/${job._id}').then(response => response.status)`), 401);
   assert.equal(await evaluate(`fetch('/api/schedule').then(response => response.status)`), 401);

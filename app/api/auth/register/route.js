@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 import bcrypt from 'bcrypt';
 import dbConnect from '@/lib/mongodb';
 import User from '@/lib/models/User';
+import { normalizeEmail, validateNewPassword } from '@/lib/auth/validation';
 
 export async function POST(request) {
   try {
@@ -11,9 +12,11 @@ export async function POST(request) {
     
     // Get request body
     const body = await request.json();
-    const { name, email, password } = body;
+    const { name, password } = body;
+    const email = normalizeEmail(body.email);
+    validateNewPassword(password);
     
-    console.log('Registration attempt:', { name, email });
+
     
     // Validate input
     if (!email || !password) {
@@ -50,14 +53,14 @@ export async function POST(request) {
       email: user.email,
     };
     
-    console.log('User created successfully:', newUser.email);
+
     
     return NextResponse.json({ user: newUser }, { status: 201 });
   } catch (error) {
     console.error('Registration error:', error);
     return NextResponse.json(
-      { error: `Registration failed: ${error.message}` },
-      { status: 500 }
+      { error: error.status === 400 ? error.message : 'Registration failed. Please try again.' },
+      { status: error.status === 400 ? 400 : 500 }
     );
   }
 }

@@ -76,3 +76,29 @@ test('database errors have the same failure response for both entry points', asy
     assert.deepEqual(await response.json(), { error: 'Failed to sync mail', details: 'database offline' });
   }
 });
+
+const post = (body, headers = {}) => new Request('https://jobgenie.example.test/api/mail', { method: 'POST', body: JSON.stringify(body), headers });
+test('manual POST scopes a retry to an owned account and uses the shared queue processor', async () => {
+  const { handler, calls } = harness({ userId: 'user-1' });
+  const id = '0123456789abcdef01234567';
+  assert.equal((await handler(post({ action: 'retry', accountId: id }))).status, 200);
+  assert.deepEqual(calls.queries, [{ userId: 'user-1', _id: id }]);
+  assert.deepEqual(calls.syncs[0].options, { limit: 10, retryOnly: true });
+});
+
+test('manual POST rejects invalid bodies and cross-origin requests before database access', async () => {
+  for (const body of [null, [], {}, { action: 'delete' }, { action: 'retry', accountId: {} }, { action: 'sync', userId: 'other' }]) {
+    const { handler, calls } = harness({ userId: 'user-1' });
+    assert.equal((await handler(post(body))).status, 400); assert.equal(calls.connects, 0);
+  }
+  assert.equal((await harness({ userId: 'user-1' }).handler(post({ action: 'sync' }, { origin: 'https://evil.test' }))).status, 403);
+});
+
+test('missing or foreign account returns 404, and manual results contain no raw emails or errors', async () => {
+  const handler = createMailSyncHandler({ authenticate: async () => ({ userId: 'owner' }), connect: async () => {}, findAccounts: async () => [] });
+  assert.equal((await handler(post({ action: 'retry', accountId: '0123456789abcdef01234567' }))).status, 404);
+  const safe = createMailSyncHandler({ authenticate: async () => ({ userId: 'owner' }), connect: async () => {}, findAccounts: async () => ['account'],
+    sync: async () => ({ emails: [{ bodyText: 'private' }], errors: [{ accountId: 'account', stage: 'ingest', message: 'private token' }], processed: 0 }) });
+  const response = await safe(post({ action: 'sync' }));
+  assert.deepEqual(await response.json(), { processed: 0, errors: [{ accountId: 'account', stage: 'ingest' }] });
+});
