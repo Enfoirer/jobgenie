@@ -18,6 +18,7 @@ import { createJob, addHistory } from '../lib/jobs/jobMutations.js';
 import { verifySchedule } from './verify-schedule-ui.mjs';
 import { verifyReminders } from './verify-reminders-ui.mjs';
 import { verifyMailAndAuth } from './verify-mail-auth-ui.mjs';
+import { verifyUploads } from './verify-uploads-ui.mjs';
 import { verifyAnalytics } from './verify-analytics-ui.mjs';
 
 const chromePath = process.env.CHROME_BIN || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
@@ -243,12 +244,15 @@ try {
   await verifySchedule({ user, foreign, send, evaluate, wait, click, fill, dialogCount, escape, base, socket });
   await verifyReminders({ user, foreign, send, evaluate, wait, click, fill, dialogCount, base, socket });
   await verifyAnalytics({ user, foreign, send, evaluate, wait, click, fill, base, socket });
+  await verifyUploads({ user, foreign, send, evaluate, wait, click, dialogCount, escape, base });
   await verifyMailAndAuth({ user, foreign, send, evaluate, wait, click, fill, base });
   await send('Network.clearBrowserCookies');
   assert.equal(await evaluate(`fetch('/api/jobs/${job._id}').then(response => response.status)`), 401);
   assert.equal(await evaluate(`fetch('/api/schedule').then(response => response.status)`), 401);
   assert.equal(await evaluate(`fetch('/api/reminders').then(response => response.status)`), 401);
   assert.equal(await evaluate(`fetch('/api/stats?days=7').then(response => response.status)`), 401);
+  assert.equal(await evaluate(`fetch('/api/uploads').then(response => response.status)`), 401);
+  assert.equal(await evaluate(`fetch('/api/uploads/download/0123456789abcdef01234567').then(response => response.status)`), 401);
   assert.equal(await evaluate(`fetch('/api/reminders/settings', {method:'PATCH',headers:{'Content-Type':'application/json'},body:'{"enabled":false}'}).then(response => response.status)`), 401);
   assert.deepEqual(exceptions, []);
   console.log(`PASS: HTTP ownership/parent binding, statistics, mobile dialog, unauthenticated access and no uncaught browser errors. Screenshot: ${screenshotPath}`);

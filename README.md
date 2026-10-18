@@ -154,3 +154,12 @@ flow with one-use, 30-minute links; resetting a password signs out old sessions.
 Configure server-only `RESEND_API_KEY`, `PASSWORD_RESET_FROM` (a verified sender),
 and the public `NEXTAUTH_URL` before enabling real reset email delivery.
 See [setup, behavior and acceptance](docs/sync-and-auth-acceptance.md).
+
+## File uploads
+
+**Uploads** accepts one PDF, DOCX, PNG or JPG/JPEG at a time (maximum 4 MB).
+The server verifies filename, type, format signatures and DOCX container limits.
+Convert legacy DOC files to PDF or DOCX for new uploads. Existing files remain
+in the same collection, and all file downloads now use attachment disposition
+and an inert content type. Details display metadata only, without inline previews.
+See [upload rules and security acceptance](docs/upload-security-acceptance.md).
