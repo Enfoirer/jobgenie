@@ -66,12 +66,17 @@ struct ApplicationsView: View {
 }
 struct JobDetailView: View {
     @EnvironmentObject private var model: AppModel
+    @Environment(\.scenePhase) private var scenePhase
     let jobID: String
     @State private var editing = false
-    @State private var history: [HistoryEntry] = []
+    @State private var historyEditor: HistoryEditorTarget?
+    @State private var deleting: HistoryEntry?
+    @State private var confirmingDelete = false
     @State private var loading = false
     @State private var error: UserMessage?
     private var job: Job? { model.jobs.first { $0.id == jobID } }
+    private var history: [HistoryEntry] { model.histories[jobID] ?? [] }
+    private var mutating: Bool { model.historyMutations.contains(jobID) }
     var body: some View {
         Group {
             if let job {
@@ -79,7 +84,7 @@ struct JobDetailView: View {
                 DemoNotice()
                     Section {
                         HStack(spacing: 14) { CompanyMark(company: job.company); VStack(alignment: .leading, spacing: 6) { Text(job.company).font(.title2.bold()); Text(job.position).foregroundStyle(.secondary) } }
-                        StatusBadge(status: job.status)
+                        StatusBadge(status: job.status).accessibilityIdentifier("job.currentStatus")
                         if let location = job.location, !location.isEmpty { Label(location, systemImage: "mappin.and.ellipse") }
                         LabeledContent("申请日期") { Text(job.dateApplied, format: .dateTime.year().month(.abbreviated).day()).accessibilityIdentifier("job.appliedDate") }
                         if let raw = job.jobUrl, let url = JobDraft.safeURL(raw) { Link(destination: url) { Label("查看岗位链接", systemImage: "arrow.up.right.square") } }
@@ -89,14 +94,35 @@ struct JobDetailView: View {
                         else { Text("暂无备注") }
                     }
                     Section("状态时间线") {
+                        Button { historyEditor = HistoryEditorTarget(entry: nil) } label: {
+                            Label("更新状态 / 新增历史", systemImage: "plus.circle")
+                        }.accessibilityIdentifier("history.add").disabled(mutating || loading)
+                        Text("当前状态由有效历史中最新的记录决定。修改较早记录不一定改变当前状态。")
+                            .font(.footnote).foregroundStyle(.secondary)
                         if loading { ProgressView() }
+                        if mutating { ProgressView("正在保存状态…") }
                         if let error { ErrorBanner(message: error) { Task { await load() } } }
                         ForEach(history) { entry in
                             VStack(alignment: .leading, spacing: 8) {
                                 StatusBadge(status: entry.status)
                                 Text(entry.date, format: .dateTime.year().month(.abbreviated).day().hour().minute()).font(.caption).foregroundStyle(.secondary)
-                                if let stage = entry.interviewStage, !stage.isEmpty { Text(stage) }
-                                if let notes = entry.notes, !notes.isEmpty { Text(notes).font(.subheadline) }
+                                if let stage = entry.interviewStage, !stage.isEmpty { Text(verbatim: stage) }
+                                if let notes = entry.notes, !notes.isEmpty { Text(verbatim: notes).font(.subheadline) }
+                                if !entry.affectsCurrentStatus { Text("仅保留历史，不影响当前状态").font(.caption).foregroundStyle(.secondary) }
+                                if let source = entry.source {
+                                    Label("邮件来源", systemImage: "envelope").font(.caption.bold())
+                                    if let subject = source.subject, !subject.isEmpty { Text(verbatim: subject).font(.caption) }
+                                    if let from = source.from, !from.isEmpty { Text(verbatim: from).font(.caption).foregroundStyle(.secondary) }
+                                }
+                                if let time = entry.scheduledTime { LabeledContent("预约时间") { Text(time, format: .dateTime.year().month().day().hour().minute()) }.font(.caption) }
+                                if let time = entry.deadline { LabeledContent("截止时间") { Text(time, format: .dateTime.year().month().day().hour().minute()) }.font(.caption) }
+                                HStack {
+                                    Button("编辑记录") { historyEditor = HistoryEditorTarget(entry: entry) }
+                                        .accessibilityIdentifier("history.edit.\(entry.id)")
+                                    Spacer()
+                                    Button("删除记录", role: .destructive) { deleting = entry; confirmingDelete = true }
+                                        .accessibilityIdentifier("history.delete.\(entry.id)")
+                                }.buttonStyle(.borderless).disabled(mutating || loading)
                             }.padding(.vertical, 4)
                         }
                         if !loading && history.isEmpty && error == nil { Text("暂无状态记录").foregroundStyle(.secondary) }
@@ -104,15 +130,34 @@ struct JobDetailView: View {
                 }
                 .toolbar { Button("编辑") { editing = true }.accessibilityIdentifier("job.edit") }
                 .sheet(isPresented: $editing) { JobEditor(job: job) }
+                .sheet(item: $historyEditor, onDismiss: { Task { await load() } }) { target in
+                    HistoryEditor(jobID: jobID, entry: target.entry, status: job.status)
+                }
+                .alert("删除这条状态记录？", isPresented: $confirmingDelete) {
+                    Button("取消", role: .cancel) { deleting = nil }
+                    Button("确认删除", role: .destructive) { Task { await removeHistory() } }
+                } message: {
+                    Text("删除后会重新计算当前状态，并移除该记录关联的日程和提醒。此操作无法在 App 内撤销。")
+                }
                 .refreshable { await load() }
             } else { ContentUnavailableView("申请已不可用", systemImage: "tray") }
         }.localizedNavigationTitle("申请详情").navigationBarTitleDisplayMode(.inline).task { await load() }
+            .onChange(of: scenePhase) { _, phase in if phase == .active { Task { await load() } } }
     }
     private func load() async {
-        guard let job, !loading else { return }
+        guard job != nil, !loading, !mutating else { return }
         loading = true; error = nil
         defer { loading = false }
-        do { history = try await model.history(for: job) } catch { self.error = model.message(error) }
+        do { try await model.refreshDetail(jobID: jobID) }
+        catch is CancellationError { }
+        catch { self.error = model.message(error) }
+    }
+    private func removeHistory() async {
+        guard let entry = deleting else { return }
+        deleting = nil; error = nil
+        do { try await model.deleteHistory(jobID: jobID, entryID: entry.id) }
+        catch is CancellationError { }
+        catch { self.error = model.message(error) }
     }
 }
 struct JobEditor: View {

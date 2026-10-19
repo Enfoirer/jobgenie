@@ -1768,6 +1768,431 @@
           }
         }
       }
+    },
+    "请选择有效的状态发生时间。": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "请选择有效的状态发生时间。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose a valid status event time."
+          }
+        }
+      }
+    },
+    "面试或笔试阶段不能超过 200 个字符。": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "面试或笔试阶段不能超过 200 个字符。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The interview or assessment stage must be 200 characters or fewer."
+          }
+        }
+      }
+    },
+    "提交内容无效，请检查后重试。": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "提交内容无效，请检查后重试。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The submitted information is invalid. Check it and try again."
+          }
+        }
+      }
+    },
+    "记录已不存在或无权访问，请刷新后重试。": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "记录已不存在或无权访问，请刷新后重试。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This record is unavailable or you do not have access. Refresh and try again."
+          }
+        }
+      }
+    },
+    "记录已发生变化，请刷新后重试。": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "记录已发生变化，请刷新后重试。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This record has changed. Refresh and try again."
+          }
+        }
+      }
+    },
+    "更新状态 / 新增历史": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "更新状态 / 新增历史"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Update status / Add history"
+          }
+        }
+      }
+    },
+    "当前状态由有效历史中最新的记录决定。修改较早记录不一定改变当前状态。": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "当前状态由有效历史中最新的记录决定。修改较早记录不一定改变当前状态。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The latest eligible history entry determines the current status. Editing an older entry may not change it."
+          }
+        }
+      }
+    },
+    "正在保存状态…": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正在保存状态…"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saving status…"
+          }
+        }
+      }
+    },
+    "仅保留历史，不影响当前状态": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "仅保留历史，不影响当前状态"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "History only; does not affect the current status"
+          }
+        }
+      }
+    },
+    "邮件来源": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "邮件来源"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Source email"
+          }
+        }
+      }
+    },
+    "预约时间": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "预约时间"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Appointment time"
+          }
+        }
+      }
+    },
+    "编辑记录": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "编辑记录"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit entry"
+          }
+        }
+      }
+    },
+    "删除记录": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "删除记录"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete entry"
+          }
+        }
+      }
+    },
+    "删除这条状态记录？": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "删除这条状态记录？"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete this status entry?"
+          }
+        }
+      }
+    },
+    "确认删除": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "确认删除"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete"
+          }
+        }
+      }
+    },
+    "删除后会重新计算当前状态，并移除该记录关联的日程和提醒。此操作无法在 App 内撤销。": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "删除后会重新计算当前状态，并移除该记录关联的日程和提醒。此操作无法在 App 内撤销。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deleting recalculates the current status and removes the associated schedule and reminders. This cannot be undone in the app."
+          }
+        }
+      }
+    },
+    "状态记录": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "状态记录"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Status entry"
+          }
+        }
+      }
+    },
+    "状态发生时间": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "状态发生时间"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Status event time"
+          }
+        }
+      }
+    },
+    "阶段，例如笔试、初面、终面": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "阶段，例如笔试、初面、终面"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stage, e.g. assessment, first or final interview"
+          }
+        }
+      }
+    },
+    "状态发生时间用于排列历史，不是面试预约或笔试截止时间。时间按 iPhone 当前时区显示。": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "状态发生时间用于排列历史，不是面试预约或笔试截止时间。时间按 iPhone 当前时区显示。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The event time orders history. It is separate from an interview appointment or assessment deadline. Times use your iPhone’s current time zone."
+          }
+        }
+      }
+    },
+    "此记录仅保留历史。编辑后仍不会用于计算当前状态。": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "此记录仅保留历史。编辑后仍不会用于计算当前状态。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This is a history-only entry. Editing it will not make it affect the current status."
+          }
+        }
+      }
+    },
+    "邮件来源会保留，无法在此修改。": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "邮件来源会保留，无法在此修改。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The source email is preserved and cannot be changed here."
+          }
+        }
+      }
+    },
+    "保存结果未确认。请返回并刷新时间线，确认是否已保存后再新增，避免重复记录。": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存结果未确认。请返回并刷新时间线，确认是否已保存后再新增，避免重复记录。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The save result is uncertain. Go back and refresh the timeline to check whether it was saved before adding another entry."
+          }
+        }
+      }
+    },
+    "新增状态记录": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "新增状态记录"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add status entry"
+          }
+        }
+      }
+    },
+    "编辑状态记录": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "编辑状态记录"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit status entry"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

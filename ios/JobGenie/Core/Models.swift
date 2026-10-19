@@ -54,14 +54,6 @@ struct JobDraft: Encodable {
         return url
     }
 }
-struct HistoryEntry: Decodable, Identifiable {
-    let id: String
-    let status: ApplicationStatus
-    let date: Date
-    let notes: String?
-    let interviewStage: String?
-    enum CodingKeys: String, CodingKey { case id = "_id", status, date, notes, interviewStage }
-}
 struct ScheduleEvent: Decodable, Identifiable {
     let id: String
     let jobId: String

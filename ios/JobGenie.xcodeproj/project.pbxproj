@@ -4,6 +4,8 @@
 A5601B87DF3C44332E4EB24F = { isa = PBXBuildFile; fileRef = 587BB8EDAB5BFC9C93188824; };
 6D433B80DB50353484C90D2F = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Core/AppModel.swift"; sourceTree = "<group>"; };
 39745CC2C82FFD78275F2A79 = { isa = PBXBuildFile; fileRef = 6D433B80DB50353484C90D2F; };
+C9FA97D815F955C3FBA46F17 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Core/History.swift"; sourceTree = "<group>"; };
+EAF7D7A8B090B86E2B5E765E = { isa = PBXBuildFile; fileRef = C9FA97D815F955C3FBA46F17; };
 BC75B57103ECBF952871AB71 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Core/Localization.swift"; sourceTree = "<group>"; };
 85AACC72A42E0B698F7B610F = { isa = PBXBuildFile; fileRef = BC75B57103ECBF952871AB71; };
 7356EEE5CA16F0E7002B3FBA = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Core/Models.swift"; sourceTree = "<group>"; };
@@ -16,6 +18,8 @@ FFB08EF94960B251954F7A7D = { isa = PBXBuildFile; fileRef = 4B5B3C7205D66097E82E4
 1B3A8C3A1F989271E8004297 = { isa = PBXBuildFile; fileRef = 6D8A007FE5010BEC83EBC2E5; };
 FD90E66E519B2BE13F99544C = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Features/Components.swift"; sourceTree = "<group>"; };
 18C344C3B711A5BB32C58363 = { isa = PBXBuildFile; fileRef = FD90E66E519B2BE13F99544C; };
+D1035BF7369D94FBBA746CC4 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Features/HistoryEditor.swift"; sourceTree = "<group>"; };
+D19736838D00C418256C29B1 = { isa = PBXBuildFile; fileRef = D1035BF7369D94FBBA746CC4; };
 C7850D56E6D8721DC9EB1562 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Features/ScheduleView.swift"; sourceTree = "<group>"; };
 6D903486732832B20EEEBE2E = { isa = PBXBuildFile; fileRef = C7850D56E6D8721DC9EB1562; };
 D01F0AC39B9B14ECAF6A6831 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Features/WelcomeView.swift"; sourceTree = "<group>"; };
@@ -25,9 +29,9 @@ E882F669AF613A32B914681F = { isa = PBXFileReference; lastKnownFileType = sourcec
 59BD0A3FF43B32849B319E64 = { isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 BFD903E8670902324963C591 = { isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 7781F6FBBFEFB8CCA526AFB4 = { isa = PBXBuildFile; fileRef = BFD903E8670902324963C591; };
-0A92F910C7545494D8FB2759 = { isa = PBXGroup; path = JobGenie; sourceTree = "<group>"; children = (587BB8EDAB5BFC9C93188824, 6D433B80DB50353484C90D2F, BC75B57103ECBF952871AB71, 7356EEE5CA16F0E7002B3FBA, 914D8F43DED466F14719BDF7, 4B5B3C7205D66097E82E41BD, 6D8A007FE5010BEC83EBC2E5, FD90E66E519B2BE13F99544C, C7850D56E6D8721DC9EB1562, D01F0AC39B9B14ECAF6A6831, E882F669AF613A32B914681F, 59BD0A3FF43B32849B319E64, BFD903E8670902324963C591,); };
+0A92F910C7545494D8FB2759 = { isa = PBXGroup; path = JobGenie; sourceTree = "<group>"; children = (587BB8EDAB5BFC9C93188824, 6D433B80DB50353484C90D2F, C9FA97D815F955C3FBA46F17, BC75B57103ECBF952871AB71, 7356EEE5CA16F0E7002B3FBA, 914D8F43DED466F14719BDF7, 4B5B3C7205D66097E82E41BD, 6D8A007FE5010BEC83EBC2E5, FD90E66E519B2BE13F99544C, D1035BF7369D94FBBA746CC4, C7850D56E6D8721DC9EB1562, D01F0AC39B9B14ECAF6A6831, E882F669AF613A32B914681F, 59BD0A3FF43B32849B319E64, BFD903E8670902324963C591,); };
 518536F67799C3397803776B = { isa = PBXFileReference; explicitFileType = wrapper.application; path = JobGenie.app; sourceTree = BUILT_PRODUCTS_DIR; };
-656A0FE35E1109A368BADAE8 = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A5601B87DF3C44332E4EB24F, 39745CC2C82FFD78275F2A79, 85AACC72A42E0B698F7B610F, 8B19ECC12EDC5FC49A0968E9, 3276EAE5562894BCC6ADD454, FFB08EF94960B251954F7A7D, 1B3A8C3A1F989271E8004297, 18C344C3B711A5BB32C58363, 6D903486732832B20EEEBE2E, D53E5CD3296F750FD2FA4D2C, 7D6B17D3EEB986A5AE852729,); runOnlyForDeploymentPostprocessing = 0; };
+656A0FE35E1109A368BADAE8 = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A5601B87DF3C44332E4EB24F, 39745CC2C82FFD78275F2A79, EAF7D7A8B090B86E2B5E765E, 85AACC72A42E0B698F7B610F, 8B19ECC12EDC5FC49A0968E9, 3276EAE5562894BCC6ADD454, FFB08EF94960B251954F7A7D, 1B3A8C3A1F989271E8004297, 18C344C3B711A5BB32C58363, D19736838D00C418256C29B1, 6D903486732832B20EEEBE2E, D53E5CD3296F750FD2FA4D2C, 7D6B17D3EEB986A5AE852729,); runOnlyForDeploymentPostprocessing = 0; };
 A65F85ECE187A3C119F8D26E = { isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
 1FBE96D3DED8AD7C46A5AF73 = { isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (7781F6FBBFEFB8CCA526AFB4,); runOnlyForDeploymentPostprocessing = 0; };
 FDF8DAED8F9E4823F2BA1634 = { isa = XCBuildConfiguration; buildSettings = { PRODUCT_NAME = "$(TARGET_NAME)"; PRODUCT_BUNDLE_IDENTIFIER = com.enfoirer.jobgenie; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = 1; IPHONEOS_DEPLOYMENT_TARGET = 17.0; SDKROOT = iphoneos; SUPPORTED_PLATFORMS = "iphoneos iphonesimulator"; CODE_SIGN_STYLE = Automatic; MARKETING_VERSION = 0.1.0; CURRENT_PROJECT_VERSION = 1; SWIFT_EMIT_LOC_STRINGS = YES; SWIFT_STRICT_CONCURRENCY = complete; SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)"; SWIFT_OPTIMIZATION_LEVEL = "-Onone"; ENABLE_TESTABILITY = YES; INFOPLIST_FILE = JobGenie/Info.plist; GENERATE_INFOPLIST_FILE = NO; LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks"; }; name = Debug; };
@@ -36,11 +40,13 @@ B7FEBD6ED571975EA15EF433 = { isa = XCConfigurationList; buildConfigurations = (F
 4B3B68B6CF69F528F3D7E4F0 = { isa = PBXNativeTarget; buildConfigurationList = B7FEBD6ED571975EA15EF433; buildPhases = (656A0FE35E1109A368BADAE8, A65F85ECE187A3C119F8D26E, 1FBE96D3DED8AD7C46A5AF73,); buildRules = (); dependencies = (); name = JobGenie; productName = JobGenie; productReference = 518536F67799C3397803776B; productType = "com.apple.product-type.application"; };
 950EB30C221D76CE42B4E880 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTests.swift"; sourceTree = "<group>"; };
 EC9071FED9B6458D3D97E0B9 = { isa = PBXBuildFile; fileRef = 950EB30C221D76CE42B4E880; };
+0252B91FBFD0D9DB9F7184B6 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HistoryTests.swift"; sourceTree = "<group>"; };
+A10C31662776188BD922C7A2 = { isa = PBXBuildFile; fileRef = 0252B91FBFD0D9DB9F7184B6; };
 5910ED28CDF48C1A939DF25B = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalizationTests.swift"; sourceTree = "<group>"; };
 FA6B50A5F7733F176F0FC00D = { isa = PBXBuildFile; fileRef = 5910ED28CDF48C1A939DF25B; };
-0074BED254CF89FA5F3D014A = { isa = PBXGroup; path = JobGenieTests; sourceTree = "<group>"; children = (950EB30C221D76CE42B4E880, 5910ED28CDF48C1A939DF25B,); };
+0074BED254CF89FA5F3D014A = { isa = PBXGroup; path = JobGenieTests; sourceTree = "<group>"; children = (950EB30C221D76CE42B4E880, 0252B91FBFD0D9DB9F7184B6, 5910ED28CDF48C1A939DF25B,); };
 612A999C82DB3FDD7CE0037B = { isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = JobGenieTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-1564ACF3BD18B5D2E30F018B = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (EC9071FED9B6458D3D97E0B9, FA6B50A5F7733F176F0FC00D,); runOnlyForDeploymentPostprocessing = 0; };
+1564ACF3BD18B5D2E30F018B = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (EC9071FED9B6458D3D97E0B9, A10C31662776188BD922C7A2, FA6B50A5F7733F176F0FC00D,); runOnlyForDeploymentPostprocessing = 0; };
 6A4237FF851825C831D5A44C = { isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
 3FA339390D38313B50E142A4 = { isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
 206B8F0F3710AB713AF935F7 = { isa = XCBuildConfiguration; buildSettings = { PRODUCT_NAME = "$(TARGET_NAME)"; PRODUCT_BUNDLE_IDENTIFIER = com.enfoirer.jobgenie.JobGenieTests; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = 1; IPHONEOS_DEPLOYMENT_TARGET = 17.0; SDKROOT = iphoneos; SUPPORTED_PLATFORMS = "iphoneos iphonesimulator"; CODE_SIGN_STYLE = Automatic; MARKETING_VERSION = 0.1.0; CURRENT_PROJECT_VERSION = 1; SWIFT_EMIT_LOC_STRINGS = YES; SWIFT_STRICT_CONCURRENCY = complete; SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)"; SWIFT_OPTIMIZATION_LEVEL = "-Onone"; ENABLE_TESTABILITY = YES; GENERATE_INFOPLIST_FILE = YES; LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks"; TEST_HOST = "$(BUILT_PRODUCTS_DIR)/JobGenie.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/JobGenie"; BUNDLE_LOADER = "$(TEST_HOST)"; }; name = Debug; };

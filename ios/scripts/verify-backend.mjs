@@ -14,6 +14,8 @@ import { MongoMemoryReplSet } from 'mongodb-memory-server';
 import User from '../../lib/models/User.js';
 import Job from '../../lib/models/Job.js';
 import StatusHistory from '../../lib/models/StatusHistory.js';
+import { createJob } from '../../lib/jobs/jobMutations.js';
+import { verifyHistoryWeb } from './verify-history-web.mjs';
 
 const device = process.env.IOS_SIMULATOR_ID;
 assert(device, 'Set IOS_SIMULATOR_ID from xcrun simctl list devices available.');
@@ -39,7 +41,8 @@ try {
   await Promise.all([User.init(), Job.init(), StatusHistory.init()]);
   const user = await User.create({ email: 'ios-acceptance@example.test', name: 'Native Tester', password: await bcrypt.hash('ios-local-test-password', 4) });
   const foreign = await User.create({ email: 'other-ios@example.test', password: 'not-a-login' });
-  await Job.create({ userId: foreign._id, company: 'Private Other User', position: 'Do not display' });
+  const { job: foreignJob } = await createJob(foreign._id, { company: 'Private Other User', position: 'Do not display' });
+  const foreignHistory = await StatusHistory.findOne({ jobId: foreignJob._id });
   const socket = createServer(); socket.listen(0, '127.0.0.1'); await once(socket, 'listening');
   const port = socket.address().port; await new Promise(resolve => socket.close(resolve));
   const base = `http://127.0.0.1:${port}`;
@@ -73,15 +76,25 @@ def visit(node):
 visit(data)
 with open(sys.argv[2],'wb') as f: plistlib.dump(data,f)
 `, join(products, files[0]), runFile, base]);
-  console.log('Disposable backend ready; running native login/create/edit/relaunch/logout acceptance.');
+  console.log('Disposable backend ready; running native login/application/history/relaunch/logout acceptance.');
   await run('xcodebuild', ['test-without-building', '-xctestrun', runFile, '-destination', `platform=iOS Simulator,id=${device}`, '-parallel-testing-enabled', 'NO', '-only-testing:JobGenieUITests/JobGenieUITests/testRealBackend', '-resultBundlePath', join(work, 'backend.xcresult')]);
   const jobs = await Job.find({ userId: user._id });
   assert.equal(jobs.length, 1, 'Native test must execute rather than skip');
   assert.equal(jobs[0].company, 'Native Acceptance');
   assert.equal(jobs[0].location, 'Shanghai');
-  assert.equal(await StatusHistory.countDocuments({ jobId: jobs[0]._id, userId: user._id }), 1);
+  assert.equal(jobs[0].status, 'interviewing');
+  assert.equal(await StatusHistory.countDocuments({ jobId: jobs[0]._id, userId: user._id, deletedAt: null }), 2);
+  assert.equal(await StatusHistory.countDocuments({ jobId: jobs[0]._id, userId: user._id, deletedAt: { $ne: null } }), 1);
+  assert.equal((await StatusHistory.findOne({ jobId: jobs[0]._id, notes: 'Native interview' })).interviewStage, 'Assessment');
   assert.equal(await Job.countDocuments({ userId: foreign._id }), 1);
-  console.log('PASS: real native NextAuth login, Keychain restore after relaunch, create/edit persistence, single initial history and local sign-out.');
+  console.log('PASS: native history create/edit/delete, correct fallback, Keychain relaunch persistence and local sign-out.');
+  await verifyHistoryWeb({ base, jobID: String(jobs[0]._id), foreignJobID: String(foreignJob._id), foreignHistoryID: String(foreignHistory._id), work });
+  assert.equal((await Job.findById(jobs[0]._id)).status, 'offer');
+  assert.equal((await StatusHistory.findById(foreignHistory._id)).status, 'applied');
+  assert.equal(await StatusHistory.countDocuments({ jobId: foreignJob._id }), 1);
+  assert.equal(await StatusHistory.countDocuments({ jobId: jobs[0]._id }), 3);
+  await run('xcodebuild', ['test-without-building', '-xctestrun', runFile, '-destination', `platform=iOS Simulator,id=${device}`, '-parallel-testing-enabled', 'NO', '-only-testing:JobGenieUITests/JobGenieUITests/testWebHistoryRefresh', '-resultBundlePath', join(work, 'web-to-native.xcresult')]);
+  console.log('PASS: web-edited status and history displayed by native app.');
   console.log(`Results: ${work}`);
 } catch (error) {
   console.error(`Acceptance failed. Logs: ${work}`);

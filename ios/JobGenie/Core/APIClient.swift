@@ -1,7 +1,7 @@
 import Foundation
 
 enum APIError: LocalizedError, Equatable {
-    case unauthorized, credentials, rateLimited(Int), server, invalidResponse, secureStorage, configuration
+    case unauthorized, credentials, rateLimited(Int), server, invalidResponse, secureStorage, configuration, invalidInput, notFound, conflict
     var errorDescription: String? { userMessage.localized(locale: .current) }
     var userMessage: UserMessage {
         switch self {
@@ -12,6 +12,9 @@ enum APIError: LocalizedError, Equatable {
         case .invalidResponse: .text("未能读取服务器数据，请稍后重试。")
         case .secureStorage: .text("无法访问安全存储，请解锁设备后重试。")
         case .configuration: .text("服务地址配置无效。")
+        case .invalidInput: .text("提交内容无效，请检查后重试。")
+        case .notFound: .text("记录已不存在或无权访问，请刷新后重试。")
+        case .conflict: .text("记录已发生变化，请刷新后重试。")
         }
     }
 }
@@ -111,6 +114,21 @@ final class APIClient {
         let response = try await send(id.map { "api/jobs/\($0)" } ?? "api/jobs", method: id == nil ? "POST" : "PATCH", body: data)
         return try decode(JobResponse.self, response).job
     }
+    func saveHistory(_ draft: HistoryDraft, jobID: String, entryID: String?) async throws -> HistoryMutationResponse {
+        guard draft.validationMessage == nil else { throw APIError.invalidInput }
+        let path = "api/jobs/\(jobID)/status-history" + (entryID.map { "/\($0)" } ?? "")
+        let data = try await send(path, method: entryID == nil ? "POST" : "PATCH", body: JSONEncoder().encode(draft.normalized))
+        let result = try decode(HistoryMutationResponse.self, data)
+        guard result.job.id == jobID, let entry = result.statusHistory,
+              entryID == nil || entry.id == entryID else { throw APIError.invalidResponse }
+        return result
+    }
+    func deleteHistory(jobID: String, entryID: String) async throws -> HistoryMutationResponse {
+        let data = try await send("api/jobs/\(jobID)/status-history/\(entryID)", method: "DELETE")
+        let result = try decode(HistoryMutationResponse.self, data)
+        guard result.job.id == jobID else { throw APIError.invalidResponse }
+        return result
+    }
     private func decode<T: Decodable>(_ type: T.Type, _ data: Data) throws -> T {
         do { return try JSONDecoder.jobGenie.decode(type, from: data) } catch { throw APIError.invalidResponse }
     }
@@ -129,6 +147,9 @@ final class APIClient {
         switch http.statusCode {
         case 200..<300: break
         case 401: throw path == "api/auth/callback/credentials" ? APIError.credentials : APIError.unauthorized
+        case 400, 422: throw APIError.invalidInput
+        case 403, 404: throw APIError.notFound
+        case 409: throw APIError.conflict
         case 429: throw APIError.rateLimited(Int(http.value(forHTTPHeaderField: "Retry-After") ?? "60") ?? 60)
         default: throw APIError.server
         }

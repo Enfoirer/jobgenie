@@ -10,6 +10,8 @@ final class AppModel: ObservableObject {
     @Published var jobs: [Job] = []
     @Published var events: [ScheduleEvent] = []
     @Published var mailboxes: [Mailbox] = []
+    @Published var histories: [String: [HistoryEntry]] = [:]
+    @Published private(set) var historyMutations: Set<String> = []
     @Published var jobsLoading = false
     @Published var scheduleLoading = false
     @Published var mailLoading = false
@@ -18,6 +20,9 @@ final class AppModel: ObservableObject {
     @Published var mailError: UserMessage?
     let api: APIClient
     private var generation = UUID()
+    private var jobsRequest = UUID()
+    private var scheduleRequest = UUID()
+    private var detailRequests: [String: UUID] = [:]
     init(api: APIClient = APIClient(baseURL: APIClient.configuredURL())) { self.api = api }
 
     func restore() async {
@@ -38,11 +43,20 @@ final class AppModel: ObservableObject {
         generation = UUID(); isDemo = true; authMessage = nil
         user = SessionUser(id: "demo", name: "探索者", email: "demo@example.com")
         jobs = DemoData.jobs; events = DemoData.events; mailboxes = DemoData.mailboxes
+        histories = Dictionary(uniqueKeysWithValues: jobs.map { job in
+            (job.id, [HistoryEntry(id: "initial-\(job.id)", status: job.status, date: job.dateApplied, notes: "演示状态记录",
+                                  scheduledTime: job.id == "demo-1" ? events[0].time : nil,
+                                  deadline: job.id == "demo-2" ? events[1].time : nil)])
+        })
+        histories["demo-1", default: []].append(HistoryEntry(id: "unscheduled-demo-1", status: .interviewing,
+                                                           date: .now.addingTimeInterval(-86400), statusApplied: false))
+        rebuildDemoSchedule()
     }
     func signOut() async {
         generation = UUID()
         do { try await api.signOut(); authMessage = nil } catch { authMessage = message(error) }
         user = nil; isDemo = false; jobs = []; events = []; mailboxes = []
+        histories = [:]; historyMutations = []; detailRequests = [:]
         jobsError = nil; scheduleError = nil; mailError = nil
         jobsLoading = false; scheduleLoading = false; mailLoading = false
     }
@@ -56,20 +70,22 @@ final class AppModel: ObservableObject {
     func refreshJobs() async {
         guard !isDemo, user != nil, !jobsLoading else { return }
         let current = generation
+        let request = UUID(); jobsRequest = request
         jobsLoading = true; jobsError = nil
-        defer { if current == generation { jobsLoading = false } }
-        do { let response: JobsResponse = try await api.get("api/jobs"); if current == generation { jobs = response.jobs } }
-        catch { if current == generation { jobsError = await handle(error) } }
+        defer { if current == generation && request == jobsRequest { jobsLoading = false } }
+        do { let response: JobsResponse = try await api.get("api/jobs"); if current == generation && request == jobsRequest { jobs = response.jobs } }
+        catch { if current == generation && request == jobsRequest { jobsError = await handle(error) } }
     }
-    func refreshSchedule() async {
-        guard !isDemo, user != nil, !scheduleLoading else { return }
+    func refreshSchedule(force: Bool = false) async {
+        guard !isDemo, user != nil, force || !scheduleLoading else { return }
         let current = generation
+        let request = UUID(); scheduleRequest = request
         scheduleLoading = true; scheduleError = nil
-        defer { if current == generation { scheduleLoading = false } }
+        defer { if current == generation && request == scheduleRequest { scheduleLoading = false } }
         do {
             let response: ScheduleResponse = try await api.get("api/schedule")
-            if current == generation { events = response.events.sorted { ($0.time ?? .distantFuture) < ($1.time ?? .distantFuture) } }
-        } catch { if current == generation { scheduleError = await handle(error) } }
+            if current == generation && request == scheduleRequest { events = response.events.sorted { ($0.time ?? .distantFuture) < ($1.time ?? .distantFuture) } }
+        } catch { if current == generation && request == scheduleRequest { scheduleError = await handle(error) } }
     }
     func refreshMail() async {
         guard !isDemo, user != nil, !mailLoading else { return }
@@ -79,10 +95,107 @@ final class AppModel: ObservableObject {
         do { let response: MailboxesResponse = try await api.get("api/mail/accounts"); if current == generation { mailboxes = response.accounts } }
         catch { if current == generation { mailError = await handle(error) } }
     }
-    func history(for job: Job) async throws -> [HistoryEntry] {
-        if isDemo { return [HistoryEntry(id: "demo-history", status: job.status, date: job.dateApplied, notes: "演示状态记录", interviewStage: nil)] }
-        do { let response: HistoryResponse = try await api.get("api/jobs/\(job.id)/status-history"); return response.statusHistory.reversed() }
-        catch { if error as? APIError == .unauthorized { await expire() }; throw error }
+    func refreshDetail(jobID: String) async throws {
+        guard !isDemo else { return }
+        let current = generation, request = UUID()
+        detailRequests[jobID] = request
+        do {
+            let job: JobResponse = try await api.get("api/jobs/\(jobID)")
+            let response: HistoryResponse = try await api.get("api/jobs/\(jobID)/status-history")
+            guard current == generation, detailRequests[jobID] == request else { throw CancellationError() }
+            applyJob(job.job)
+            histories[jobID] = response.statusHistory.sorted(by: HistoryEntry.newestFirst)
+        } catch {
+            guard current == generation, detailRequests[jobID] == request else { throw CancellationError() }
+            if error as? APIError == .unauthorized { await expire() }
+            if error as? APIError == .notFound {
+                jobs.removeAll { $0.id == jobID }; histories[jobID] = nil
+                events.removeAll { $0.jobId == jobID }
+            }
+            throw error
+        }
+    }
+    func saveHistory(_ draft: HistoryDraft, jobID: String, entryID: String? = nil) async throws {
+        guard user != nil else { throw APIError.unauthorized }
+        guard draft.validationMessage == nil else { throw APIError.invalidInput }
+        guard !historyMutations.contains(jobID) else { throw APIError.conflict }
+        let current = generation
+        historyMutations.insert(jobID)
+        defer { if current == generation { historyMutations.remove(jobID) } }
+        do {
+            if isDemo {
+                guard jobs.contains(where: { $0.id == jobID }) else { throw APIError.notFound }
+                let old = histories[jobID]?.first { $0.id == entryID }
+                if entryID != nil && old == nil { throw APIError.notFound }
+                let d = draft.normalized
+                var entry = old ?? HistoryEntry(id: UUID().uuidString, status: d.status, date: d.date, createdAt: .now, statusApplied: true)
+                entry.status = d.status; entry.date = d.date; entry.notes = d.notes; entry.interviewStage = d.interviewStage
+                replaceHistory(entry, jobID: jobID); recomputeDemo(jobID: jobID)
+            } else {
+                let response = try await api.saveHistory(draft, jobID: jobID, entryID: entryID)
+                guard current == generation else { throw CancellationError() }
+                detailRequests[jobID] = nil
+                applyJob(response.job)
+                if let entry = response.statusHistory { replaceHistory(entry, jobID: jobID) }
+                await refreshSchedule(force: true)
+            }
+        } catch {
+            if current == generation && error as? APIError == .unauthorized { await expire() }
+            throw error
+        }
+    }
+    func deleteHistory(jobID: String, entryID: String) async throws {
+        guard user != nil else { throw APIError.unauthorized }
+        guard !historyMutations.contains(jobID) else { throw APIError.conflict }
+        let current = generation
+        historyMutations.insert(jobID)
+        defer { if current == generation { historyMutations.remove(jobID) } }
+        do {
+            if isDemo {
+                guard histories[jobID]?.contains(where: { $0.id == entryID }) == true else { throw APIError.notFound }
+            } else {
+                let response = try await api.deleteHistory(jobID: jobID, entryID: entryID)
+                guard current == generation else { throw CancellationError() }
+                detailRequests[jobID] = nil; applyJob(response.job)
+            }
+            histories[jobID]?.removeAll { $0.id == entryID }
+            if isDemo { recomputeDemo(jobID: jobID) } else { await refreshSchedule(force: true) }
+        } catch {
+            if current == generation && error as? APIError == .unauthorized { await expire() }
+            throw error
+        }
+    }
+    private func applyJob(_ job: Job) {
+        // An earlier list request must never overwrite a confirmed mutation.
+        jobsRequest = UUID(); jobsLoading = false; jobsError = nil
+        if let index = jobs.firstIndex(where: { $0.id == job.id }) { jobs[index] = job } else { jobs.insert(job, at: 0) }
+    }
+    private func replaceHistory(_ entry: HistoryEntry, jobID: String) {
+        histories[jobID, default: []].removeAll { $0.id == entry.id }
+        histories[jobID, default: []].append(entry)
+        histories[jobID]?.sort(by: HistoryEntry.newestFirst)
+    }
+    private func recomputeDemo(jobID: String) {
+        if let index = jobs.firstIndex(where: { $0.id == jobID }) {
+            jobs[index].status = histories[jobID]?.sorted(by: HistoryEntry.newestFirst).first(where: \.affectsCurrentStatus)?.status ?? .applied
+        }
+        rebuildDemoSchedule()
+    }
+    private func rebuildDemoSchedule() {
+        events = jobs.flatMap { job in
+            (histories[job.id] ?? []).flatMap { entry -> [ScheduleEvent] in
+                var result: [ScheduleEvent] = []
+                if entry.scheduledTime != nil || (entry.status == .interviewing && entry.deadline == nil) {
+                    result.append(ScheduleEvent(id: "\(entry.id)-appointment", jobId: job.id, company: job.company, position: job.position,
+                                                kind: "appointment", time: entry.scheduledTime, label: "Interview"))
+                }
+                if let deadline = entry.deadline {
+                    result.append(ScheduleEvent(id: "\(entry.id)-deadline", jobId: job.id, company: job.company, position: job.position,
+                                                kind: "deadline", time: deadline, label: "Assessment deadline"))
+                }
+                return result
+            }
+        }
     }
     func save(_ draft: JobDraft, id: String?) async throws {
         let current = generation
@@ -97,7 +210,11 @@ final class AppModel: ObservableObject {
             catch { if error as? APIError == .unauthorized { await expire() }; throw error }
         }
         guard generation == current else { throw CancellationError() }
-        if let index = jobs.firstIndex(where: { $0.id == job.id }) { jobs[index] = job } else { jobs.insert(job, at: 0) }
+        detailRequests[job.id] = nil
+        applyJob(job)
+        if isDemo && id == nil {
+            histories[job.id] = [HistoryEntry(id: UUID().uuidString, status: .applied, date: job.dateApplied, createdAt: .now, statusApplied: true)]
+        }
         if isDemo {
             events = events.map { event in
                 guard event.jobId == job.id else { return event }
