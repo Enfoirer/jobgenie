@@ -144,6 +144,36 @@ final class AppModel: ObservableObject {
             throw error
         }
     }
+    func saveSchedule(_ draft: ScheduleDraft, jobID: String, entryID: String) async throws {
+        guard user != nil else { throw APIError.unauthorized }
+        guard draft.isValid else { throw APIError.invalidInput }
+        guard !historyMutations.contains(jobID) else { throw APIError.conflict }
+        let current = generation
+        historyMutations.insert(jobID)
+        defer { if current == generation { historyMutations.remove(jobID) } }
+        do {
+            if isDemo {
+                guard var entry = histories[jobID]?.first(where: { $0.id == entryID }) else { throw APIError.notFound }
+                if draft.kind == .appointment { entry.scheduledTime = draft.time } else { entry.deadline = draft.time }
+                replaceHistory(entry, jobID: jobID); rebuildDemoSchedule()
+            } else {
+                let response = try await api.saveSchedule(draft, jobID: jobID, entryID: entryID)
+                guard current == generation else { throw CancellationError() }
+                detailRequests[jobID] = nil
+                applyJob(response.job)
+                if let entry = response.statusHistory {
+                    replaceHistory(entry, jobID: jobID)
+                    // Apply the confirmed response even if the subsequent list refresh is offline.
+                    events.removeAll { $0.historyId == entryID && $0.jobId == jobID }
+                    events += ScheduleEvent.project(entry, job: response.job)
+                }
+                await refreshSchedule(force: true)
+            }
+        } catch {
+            if current == generation && error as? APIError == .unauthorized { await expire() }
+            throw error
+        }
+    }
     func deleteHistory(jobID: String, entryID: String) async throws {
         guard user != nil else { throw APIError.unauthorized }
         guard !historyMutations.contains(jobID) else { throw APIError.conflict }
@@ -183,18 +213,7 @@ final class AppModel: ObservableObject {
     }
     private func rebuildDemoSchedule() {
         events = jobs.flatMap { job in
-            (histories[job.id] ?? []).flatMap { entry -> [ScheduleEvent] in
-                var result: [ScheduleEvent] = []
-                if entry.scheduledTime != nil || (entry.status == .interviewing && entry.deadline == nil) {
-                    result.append(ScheduleEvent(id: "\(entry.id)-appointment", jobId: job.id, company: job.company, position: job.position,
-                                                kind: "appointment", time: entry.scheduledTime, label: "Interview"))
-                }
-                if let deadline = entry.deadline {
-                    result.append(ScheduleEvent(id: "\(entry.id)-deadline", jobId: job.id, company: job.company, position: job.position,
-                                                kind: "deadline", time: deadline, label: "Assessment deadline"))
-                }
-                return result
-            }
+            (histories[job.id] ?? []).flatMap { ScheduleEvent.project($0, job: job) }
         }
     }
     func save(_ draft: JobDraft, id: String?) async throws {
@@ -218,7 +237,7 @@ final class AppModel: ObservableObject {
         if isDemo {
             events = events.map { event in
                 guard event.jobId == job.id else { return event }
-                return ScheduleEvent(id: event.id, jobId: job.id, company: job.company, position: job.position, kind: event.kind, time: event.time, label: event.label)
+                return ScheduleEvent(historyId: event.historyId, id: event.id, jobId: job.id, company: job.company, position: job.position, kind: event.kind, time: event.time, label: event.label)
             }
         } else { await refreshSchedule() }
     }

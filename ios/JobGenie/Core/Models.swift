@@ -55,6 +55,7 @@ struct JobDraft: Encodable {
     }
 }
 struct ScheduleEvent: Decodable, Identifiable {
+    var historyId: String? = nil
     let id: String
     let jobId: String
     let company: String

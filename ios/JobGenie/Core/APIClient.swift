@@ -123,6 +123,13 @@ final class APIClient {
               entryID == nil || entry.id == entryID else { throw APIError.invalidResponse }
         return result
     }
+    func saveSchedule(_ draft: ScheduleDraft, jobID: String, entryID: String) async throws -> HistoryMutationResponse {
+        guard draft.isValid else { throw APIError.invalidInput }
+        let data = try await send("api/jobs/\(jobID)/status-history/\(entryID)", method: "PATCH", body: JSONEncoder().encode(draft))
+        let result = try decode(HistoryMutationResponse.self, data)
+        guard result.job.id == jobID, result.statusHistory?.id == entryID else { throw APIError.invalidResponse }
+        return result
+    }
     func deleteHistory(jobID: String, entryID: String) async throws -> HistoryMutationResponse {
         let data = try await send("api/jobs/\(jobID)/status-history/\(entryID)", method: "DELETE")
         let result = try decode(HistoryMutationResponse.self, data)

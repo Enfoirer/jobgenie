@@ -4,6 +4,7 @@ struct HistorySource: Decodable, Equatable {
     var provider: String?
     var subject: String?
     var from: String?
+    var eventType: String?
 }
 struct HistoryEntry: Decodable, Identifiable, Equatable {
     var id: String

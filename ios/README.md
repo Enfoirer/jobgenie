@@ -8,7 +8,7 @@
 - 原生邮箱密码登录，保留现有服务端限流；显示网络异常、限流和会话失效提示。
 - 申请列表、搜索、状态筛选、当前状态数量和详情；支持新增、编辑、删除状态历史，当前状态由服务端统一计算。
 - 新建申请，以及公司、职位、地点、备注、岗位链接编辑。保存使用现有 POST/PATCH 接口，不在客户端另算当前状态；编辑结果回写列表并刷新日程。
-- 统一日程接口，区分即将到来、已过时间、时间待补充。时间按手机时区显示，不用状态事件日期代替缺失的面试时间。
+- 统一日程接口，区分即将到来、已过时间、时间待补充；支持面试时间、笔试截止时间补充、修改、清除，从日程跳转申请详情。时间按手机时区显示，不用状态事件日期代替缺失的面试时间。
 - 已绑定邮箱概览；账户信息及退出。
 - 无账号演示模式，示例数据明显标注，只保留在内存中，退出后重置；不会访问真实账号数据。
 
@@ -93,22 +93,22 @@ IOS_SIMULATOR_ID="$IOS_SIMULATOR_ID" node ios/scripts/verify-backend.mjs
 
 2026-10-19 已完成：
 
-- iPhone 17 Pro、iPhone 16e（iOS 26）模拟器：26 项核心/本地化/历史测试、3 项演示及语言 UI 测试、2 项真实后端与网页互通 UI 测试，合计 31 个不同测试分批执行通过。普通运行中跳过的两项集成测试由独立脚本补跑。
+- iPhone 17、iPhone 16e（iOS 26）模拟器：31 项核心/本地化/历史/日程测试、4 项演示及语言 UI 测试、2 项真实后端与网页互通 UI 测试，合计 37 个不同测试分批执行通过。普通运行中跳过的两项集成测试由独立脚本补跑。
 - 语言验收覆盖即时切换、已填写邮箱与原始业务文字保留、已有错误提示翻译、日期格式、详情导航标题刷新、重启后记住选择，以及中英文系统语言匹配。未通过重建导航栈实现刷新。
 - 真正的 NextAuth 登录、申请创建/编辑、重启后的 Keychain 会话恢复、退出后的会话清理和 MongoDB 持久化断言通过。
-- 历史新增/编辑/删除、最新历史删除后的状态回退、网页/App 双向一致性和权限隔离通过；25 项现有服务端历史管理回归通过。
+- 历史新增/编辑/删除、最新历史删除后的状态回退、网页/App 双向一致性和权限隔离通过；64 项现有服务端历史、日程和提醒回归通过。
+- 日程补充、改期、清除、跳转详情和中英文交互通过；真实联调验证 App 设置时间重启保留，网页改期/清除被 App 读取，App 再清除后数据库及当前状态保持一致。
 - Debug 模拟器构建及未签名的 iPhone arm64 Release 构建通过，工程与 plist 检查通过。Release 编译通过不等于真机安装或签名验收。
-- 已检查模拟器截图：[申请页](docs/iphone-applications.png)、[日程页](docs/iphone-schedule.png)、[英文语言设置](docs/iphone-language-english.png)。
+- 已检查模拟器截图：[申请页](docs/iphone-applications.png)、[日程页](docs/iphone-schedule.png)、[日程编辑](docs/iphone-schedule-editor.png)、[英文语言设置](docs/iphone-language-english.png)。
 
 ## 后续阶段
 
-1. 日程编辑：补充、修改、清除面试时间和笔试截止时间，从日程跳转申请详情，并验证网页/App 同步一致性。
-2. 原生邮箱授权与安全回跳、立即同步、失败重试、待确认邮件处理；继续使用 state/PKCE 和一次性回调，不复制网页登录凭证到外部浏览器。
-3. 提醒与推送、统计、文件上传；后台推送需要后端和 APNs 配套，现阶段 App 不发送推送。
-4. 原生注册与账号删除、隐私政策、正式图标、开发者签名、真机验证和 TestFlight。
+1. 原生邮箱授权与安全回跳、立即同步、失败重试、待确认邮件处理；继续使用 state/PKCE 和一次性回调，不复制网页登录凭证到外部浏览器。
+2. 提醒与推送、统计、文件上传；后台推送需要后端和 APNs 配套，现阶段 App 不发送推送。
+3. 原生注册与账号删除、隐私政策、正式图标、开发者签名、真机验证和 TestFlight。
 
 目前是可运行的首个开发增量，尚未达到上架版本；没有离线业务数据库，也不在本地排队重试写操作。真实第三方邮箱授权、推送、签名和实机表现尚未验收。
 
-状态历史功能的规则、错误恢复和隔离联调方法见 [iOS 历史管理验收](../docs/ios-history-acceptance.md)。历史编辑中的“状态发生时间”用于排序；预约和截止时间仍由下一阶段完成原生编辑。
+状态历史功能的规则、错误恢复和隔离联调方法见 [iOS 历史管理验收](../docs/ios-history-acceptance.md)。历史编辑中的“状态发生时间”用于排序；预约和截止时间通过独立入口编辑，验收见 [iOS 日程编辑](../docs/ios-schedule-acceptance.md)。
 
 参考：[Apple SwiftUI 导航](https://developer.apple.com/documentation/swiftui/understanding-the-navigation-stack)、[NextAuth REST API](https://next-auth.js.org/getting-started/rest-api)、[Apple 临时网络会话](https://developer.apple.com/documentation/foundation/urlsessionconfiguration/ephemeral)、[Keychain 访问级别](https://developer.apple.com/documentation/security/ksecattraccessiblewhenunlockedthisdeviceonly)。

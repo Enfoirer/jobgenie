@@ -70,6 +70,7 @@ struct JobDetailView: View {
     let jobID: String
     @State private var editing = false
     @State private var historyEditor: HistoryEditorTarget?
+    @State private var scheduleEditor: ScheduleEditorTarget?
     @State private var deleting: HistoryEntry?
     @State private var confirmingDelete = false
     @State private var loading = false
@@ -116,6 +117,13 @@ struct JobDetailView: View {
                                 }
                                 if let time = entry.scheduledTime { LabeledContent("预约时间") { Text(time, format: .dateTime.year().month().day().hour().minute()) }.font(.caption) }
                                 if let time = entry.deadline { LabeledContent("截止时间") { Text(time, format: .dateTime.year().month().day().hour().minute()) }.font(.caption) }
+                                ForEach(ScheduleKind.allCases) { kind in
+                                    Button(LocalizedStringKey(kind.editTitle)) {
+                                        scheduleEditor = ScheduleEditorTarget(jobID: jobID, entryID: entry.id, kind: kind,
+                                            time: kind == .appointment ? entry.scheduledTime : entry.deadline)
+                                    }.buttonStyle(.borderless).disabled(mutating || loading)
+                                        .accessibilityIdentifier("history.schedule.\(kind.rawValue).\(entry.id)")
+                                }
                                 HStack {
                                     Button("编辑记录") { historyEditor = HistoryEditorTarget(entry: entry) }
                                         .accessibilityIdentifier("history.edit.\(entry.id)")
@@ -133,6 +141,7 @@ struct JobDetailView: View {
                 .sheet(item: $historyEditor, onDismiss: { Task { await load() } }) { target in
                     HistoryEditor(jobID: jobID, entry: target.entry, status: job.status)
                 }
+                .sheet(item: $scheduleEditor) { ScheduleEditor(target: $0) }
                 .alert("删除这条状态记录？", isPresented: $confirmingDelete) {
                     Button("取消", role: .cancel) { deleting = nil }
                     Button("确认删除", role: .destructive) { Task { await removeHistory() } }
@@ -140,12 +149,14 @@ struct JobDetailView: View {
                     Text("删除后会重新计算当前状态，并移除该记录关联的日程和提醒。此操作无法在 App 内撤销。")
                 }
                 .refreshable { await load() }
-            } else { ContentUnavailableView("申请已不可用", systemImage: "tray") }
+            } else if loading { ProgressView("正在加载申请…") }
+            else if let error { ErrorBanner(message: error) { Task { await load() } } }
+            else { ContentUnavailableView("申请已不可用", systemImage: "tray") }
         }.localizedNavigationTitle("申请详情").navigationBarTitleDisplayMode(.inline).task { await load() }
             .onChange(of: scenePhase) { _, phase in if phase == .active { Task { await load() } } }
     }
     private func load() async {
-        guard job != nil, !loading, !mutating else { return }
+        guard !loading, !mutating else { return }
         loading = true; error = nil
         defer { loading = false }
         do { try await model.refreshDetail(jobID: jobID) }

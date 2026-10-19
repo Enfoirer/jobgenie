@@ -44,6 +44,52 @@ final class JobGenieUITests: XCTestCase {
         reveal(edit, in: app)
         let screenshot = XCTAttachment(screenshot: app.screenshot()); screenshot.name = "Native status history"; screenshot.lifetime = .keepAlways; self.add(screenshot)
     }
+    private func setSchedule(_ app: XCUIApplication, kind: String) {
+        let button = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "history.schedule.\(kind).")).firstMatch
+        reveal(button, in: app); button.tap()
+        let toggle = app.switches["scheduleEditor.enabled"]
+        XCTAssertTrue(toggle.waitForExistence(timeout: 5))
+        if toggle.value as? String == "0" { toggle.coordinate(withNormalizedOffset: CGVector(dx: 0.93, dy: 0.5)).tap() }
+        XCTAssertTrue(app.datePickers["scheduleEditor.time"].exists)
+        app.buttons["scheduleEditor.save"].tap()
+        XCTAssertTrue(app.buttons["scheduleEditor.save"].waitForNonExistence(timeout: 15))
+    }
+    func testDemoScheduleEditClearAndNavigation() {
+        let app = XCUIApplication()
+        app.launchArguments = ["-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN", "-jobgenie.language", "system"]
+        app.launchEnvironment["JOBGENIE_TEST_BASE_URL"] = "http://127.0.0.1:39998"
+        app.launch(); XCTAssertTrue(app.buttons["login.demo"].waitForExistence(timeout: 10)); app.buttons["login.demo"].tap()
+        app.tabBars.buttons["日程"].tap()
+        let edit = app.buttons["schedule.edit.initial-demo-1:appointment"]
+        XCTAssertTrue(edit.waitForExistence(timeout: 5)); edit.tap()
+        app.buttons["scheduleEditor.clear"].tap(); app.buttons["scheduleEditor.save"].tap()
+        XCTAssertTrue(app.buttons["scheduleEditor.save"].waitForNonExistence(timeout: 10))
+        XCTAssertFalse(edit.exists)
+        app.buttons["schedule.filter"].tap(); app.buttons["时间待补充"].tap()
+        XCTAssertTrue(edit.waitForExistence(timeout: 5)); edit.tap()
+        app.switches["scheduleEditor.enabled"].coordinate(withNormalizedOffset: CGVector(dx: 0.93, dy: 0.5)).tap()
+        XCTAssertTrue(app.datePickers["scheduleEditor.time"].waitForExistence(timeout: 5))
+        let screenshot = XCTAttachment(screenshot: app.screenshot()); screenshot.name = "Schedule editor"; screenshot.lifetime = .keepAlways; add(screenshot)
+        app.buttons["scheduleEditor.save"].tap()
+        XCTAssertTrue(app.buttons["scheduleEditor.save"].waitForNonExistence(timeout: 10))
+        app.buttons["schedule.filter"].tap(); app.buttons["即将到来"].tap()
+        app.buttons["schedule.detail.initial-demo-1:appointment"].tap()
+        XCTAssertTrue(app.navigationBars["申请详情"].waitForExistence(timeout: 5))
+        assertCurrentStatus("面试中", in: app)
+        setSchedule(app, kind: "deadline")
+        let deadline = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "history.schedule.deadline.")).firstMatch
+        reveal(deadline, in: app); deadline.tap(); app.buttons["scheduleEditor.clear"].tap()
+        app.buttons["取消"].tap()
+        deadline.tap(); XCTAssertTrue(app.buttons["scheduleEditor.clear"].exists)
+        app.buttons["scheduleEditor.clear"].tap(); app.buttons["scheduleEditor.save"].tap()
+        XCTAssertTrue(app.buttons["scheduleEditor.save"].waitForNonExistence(timeout: 10))
+        app.tabBars.buttons["我的"].tap(); app.buttons["language.picker"].tap(); app.buttons["English"].tap()
+        app.tabBars.buttons["Schedule"].tap()
+        reveal(deadline, in: app); deadline.tap()
+        XCTAssertTrue(app.navigationBars["Edit assessment deadline"].exists)
+        app.buttons["Cancel"].tap()
+        app.tabBars.buttons["Account"].tap(); app.buttons["account.signout"].tap(); app.buttons["Confirm sign out"].tap()
+    }
     func testDemoHistoryCRUDAndEnglishEditor() {
         let app = XCUIApplication()
         app.launchArguments = ["-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN", "-jobgenie.language", "system"]
@@ -169,6 +215,8 @@ final class JobGenieUITests: XCTestCase {
         app.buttons["editor.save"].tap()
         XCTAssertTrue(app.staticTexts["Shanghai"].waitForExistence(timeout: 15))
         exerciseHistory(app)
+        setSchedule(app, kind: "appointment")
+        setSchedule(app, kind: "deadline")
         app.terminate(); app.launch()
         XCTAssertTrue(app.staticTexts["Native Acceptance"].waitForExistence(timeout: 20))
         app.staticTexts["Native Acceptance"].tap()
@@ -178,6 +226,7 @@ final class JobGenieUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["Native interview"].exists)
         app.tabBars.buttons["日程"].tap()
         XCTAssertTrue(app.navigationBars["日程与待办"].exists)
+        XCTAssertEqual(app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "schedule.edit.")).count, 2)
         app.tabBars.buttons["我的"].tap()
         app.buttons["account.signout"].tap(); app.buttons["确认退出"].tap()
         XCTAssertTrue(app.buttons["login.submit"].waitForExistence(timeout: 10))
@@ -199,6 +248,13 @@ final class JobGenieUITests: XCTestCase {
         assertCurrentStatus("已获 Offer", in: app)
         reveal(app.staticTexts["Web updated history"], in: app)
         XCTAssertTrue(app.staticTexts["Web updated history"].exists)
+        app.tabBars.buttons["日程"].tap()
+        XCTAssertTrue(app.staticTexts["Native Acceptance"].waitForExistence(timeout: 10))
+        XCTAssertEqual(app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "schedule.edit.")).count, 1)
+        let edit = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "schedule.edit.")).firstMatch
+        edit.tap(); app.buttons["scheduleEditor.clear"].tap(); app.buttons["scheduleEditor.save"].tap()
+        XCTAssertTrue(app.buttons["scheduleEditor.save"].waitForNonExistence(timeout: 15))
+        XCTAssertTrue(app.staticTexts["暂无此类日程"].waitForExistence(timeout: 10))
         app.tabBars.buttons["我的"].tap(); app.buttons["account.signout"].tap(); app.buttons["确认退出"].tap()
         XCTAssertTrue(app.buttons["login.submit"].waitForExistence(timeout: 10))
     }

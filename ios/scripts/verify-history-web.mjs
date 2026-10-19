@@ -64,6 +64,10 @@ export async function verifyHistoryWeb({ base, jobID, foreignJobID, foreignHisto
     assert.equal(await evaluate(`document.querySelector('dialog').textContent.includes('Temporary offer')`), false);
     await click('Edit History', 'document.querySelector("dialog[open]")', 1);
     await wait(`document.querySelectorAll('dialog[open]').length === 2`, 'history editor');
+    assert(await evaluate(`!!document.querySelector('dialog:last-of-type input[name=scheduledTime]').value`));
+    assert(await evaluate(`!!document.querySelector('dialog:last-of-type input[name=deadline]').value`));
+    await fill('dialog:last-of-type input[name=scheduledTime]', '');
+    await fill('dialog:last-of-type input[name=deadline]', '2030-10-20T09:30');
     await fill('dialog:last-of-type select[name=status]', 'offer');
     await fill('dialog:last-of-type textarea[name=notes]', 'Web updated history');
     await click('Save Changes', '[...document.querySelectorAll("dialog[open]")].at(-1)');
@@ -80,6 +84,8 @@ export async function verifyHistoryWeb({ base, jobID, foreignJobID, foreignHisto
     for (const parent of [foreignJobID, jobID]) for (const method of ['PATCH', 'DELETE']) {
       assert.equal(await status(`/api/jobs/${parent}/status-history/${foreignHistoryID}`, method, method === 'PATCH' ? { status: 'rejected' } : undefined), 404);
     }
+    assert.equal(await status(`/api/jobs/${foreignJobID}/status-history/${foreignHistoryID}`, 'PATCH', { deadline: null }), 404);
+    assert.equal(await status(`/api/jobs/${jobID}/status-history/${foreignHistoryID}`, 'PATCH', { scheduledTime: null }), 404);
     assert.equal(await status(`/api/jobs/${jobID}/status-history`, 'POST', { status: 'offer', statusApplied: true }), 400);
     for (const [path, method] of [[`/api/jobs/${jobID}/status-history`, 'GET'], [`/api/jobs/${jobID}/status-history`, 'POST'], [`/api/jobs/${jobID}/status-history/${foreignHistoryID}`, 'PATCH'], [`/api/jobs/${jobID}/status-history/${foreignHistoryID}`, 'DELETE']]) {
       assert.equal((await fetch(base + path, { method })).status, 401);

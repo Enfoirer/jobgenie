@@ -86,6 +86,11 @@ with open(sys.argv[2],'wb') as f: plistlib.dump(data,f)
   assert.equal(await StatusHistory.countDocuments({ jobId: jobs[0]._id, userId: user._id, deletedAt: null }), 2);
   assert.equal(await StatusHistory.countDocuments({ jobId: jobs[0]._id, userId: user._id, deletedAt: { $ne: null } }), 1);
   assert.equal((await StatusHistory.findOne({ jobId: jobs[0]._id, notes: 'Native interview' })).interviewStage, 'Assessment');
+  const nativeHistory = await StatusHistory.findOne({ jobId: jobs[0]._id, notes: 'Native interview' });
+  assert(nativeHistory.scheduledTime instanceof Date);
+  assert(nativeHistory.deadline instanceof Date);
+  assert.equal(nativeHistory.reminderRevision.appointment, 1);
+  assert.equal(nativeHistory.reminderRevision.deadline, 1);
   assert.equal(await Job.countDocuments({ userId: foreign._id }), 1);
   console.log('PASS: native history create/edit/delete, correct fallback, Keychain relaunch persistence and local sign-out.');
   await verifyHistoryWeb({ base, jobID: String(jobs[0]._id), foreignJobID: String(foreignJob._id), foreignHistoryID: String(foreignHistory._id), work });
@@ -94,7 +99,11 @@ with open(sys.argv[2],'wb') as f: plistlib.dump(data,f)
   assert.equal(await StatusHistory.countDocuments({ jobId: foreignJob._id }), 1);
   assert.equal(await StatusHistory.countDocuments({ jobId: jobs[0]._id }), 3);
   await run('xcodebuild', ['test-without-building', '-xctestrun', runFile, '-destination', `platform=iOS Simulator,id=${device}`, '-parallel-testing-enabled', 'NO', '-only-testing:JobGenieUITests/JobGenieUITests/testWebHistoryRefresh', '-resultBundlePath', join(work, 'web-to-native.xcresult')]);
-  console.log('PASS: web-edited status and history displayed by native app.');
+  const cleared = await StatusHistory.findById(nativeHistory._id);
+  assert.equal(cleared.scheduledTime, null);
+  assert.equal(cleared.deadline, null);
+  assert.equal((await Job.findById(jobs[0]._id)).status, 'offer');
+  console.log('PASS: native schedule persisted across relaunch; web reschedule/clear visible in App; App clear persisted without changing Offer.');
   console.log(`Results: ${work}`);
 } catch (error) {
   console.error(`Acceptance failed. Logs: ${work}`);
