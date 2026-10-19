@@ -2,15 +2,16 @@ import Foundation
 
 enum APIError: LocalizedError, Equatable {
     case unauthorized, credentials, rateLimited(Int), server, invalidResponse, secureStorage, configuration
-    var errorDescription: String? {
+    var errorDescription: String? { userMessage.localized(locale: .current) }
+    var userMessage: UserMessage {
         switch self {
-        case .unauthorized: "登录已过期，请重新登录。"
-        case .credentials: "邮箱或密码不正确。"
-        case .rateLimited(let seconds): "操作过于频繁，请在 \(max(1, Int(ceil(Double(seconds) / 60)))) 分钟后重试。"
-        case .server: "服务暂时不可用，请稍后重试。"
-        case .invalidResponse: "未能读取服务器数据，请稍后重试。"
-        case .secureStorage: "无法访问安全存储，请解锁设备后重试。"
-        case .configuration: "服务地址配置无效。"
+        case .unauthorized: .text("登录已过期，请重新登录。")
+        case .credentials: .text("邮箱或密码不正确。")
+        case .rateLimited(let seconds): .rateLimited(minutes: max(1, Int(ceil(Double(seconds) / 60))))
+        case .server: .text("服务暂时不可用，请稍后重试。")
+        case .invalidResponse: .text("未能读取服务器数据，请稍后重试。")
+        case .secureStorage: .text("无法访问安全存储，请解锁设备后重试。")
+        case .configuration: .text("服务地址配置无效。")
         }
     }
 }

@@ -134,6 +134,6 @@ final class CoreTests: XCTestCase {
         StubProtocol.handler = { _ in (200, ["Content-Type":"application/json"], Data("{}".utf8)) }
         await model.revalidate()
         XCTAssertNil(model.user); XCTAssertTrue(model.jobs.isEmpty)
-        XCTAssertEqual(model.authMessage, APIError.unauthorized.localizedDescription)
+        XCTAssertEqual(model.authMessage, APIError.unauthorized.userMessage)
     }
 }

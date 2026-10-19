@@ -12,17 +12,21 @@ def settings(values): return '{ ' + ' '.join(f'{k} = {v};' for k,v in values.ite
 targets = [('JobGenie','com.apple.product-type.application','app'), ('JobGenieTests','com.apple.product-type.bundle.unit-test','xctest'), ('JobGenieUITests','com.apple.product-type.bundle.ui-testing','xctest')]
 groups=[]; products=[]
 for name, kind, suffix in targets:
-    files=[]; builds=[]
+    files=[]; builds=[]; resources=[]
     for path in sorted((root/name).rglob('*.swift')):
         key = str(path.relative_to(root))
         files.append(add(key, f'isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "{path.relative_to(root/name)}"; sourceTree = "<group>";'))
         builds.append(add(key+'build', f'isa = PBXBuildFile; fileRef = {ref(key)};'))
     if name == 'JobGenie': files.append(add('info', 'isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>";'))
+    if name == 'JobGenie':
+        files.append(add('localizations', 'isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>";'))
+        resources.append(add('localizationsbuild', f'isa = PBXBuildFile; fileRef = {ref("localizations")};'))
+
     groups.append(add(name+'group', f'isa = PBXGroup; path = {name}; sourceTree = "<group>"; children = {array(files)};'))
     products.append(add(name+'product', f'isa = PBXFileReference; explicitFileType = {"wrapper.application" if suffix == "app" else "wrapper.cfbundle"}; path = {name}.{suffix}; sourceTree = BUILT_PRODUCTS_DIR;'))
     phases=[]
     for phase in ['Sources','Frameworks','Resources']:
-        phases.append(add(name+phase, f'isa = PBX{phase}BuildPhase; buildActionMask = 2147483647; files = {array(builds if phase == "Sources" else [])}; runOnlyForDeploymentPostprocessing = 0;'))
+        phases.append(add(name+phase, f'isa = PBX{phase}BuildPhase; buildActionMask = 2147483647; files = {array(builds if phase == "Sources" else resources if phase == "Resources" else [])}; runOnlyForDeploymentPostprocessing = 0;'))
     configs=[]
     for mode in ['Debug','Release']:
         s={'PRODUCT_NAME':'"$(TARGET_NAME)"','PRODUCT_BUNDLE_IDENTIFIER':f'com.enfoirer.jobgenie{("."+name) if suffix != "app" else ""}', 'SWIFT_VERSION':'5.0','TARGETED_DEVICE_FAMILY':'1','IPHONEOS_DEPLOYMENT_TARGET':'17.0','SDKROOT':'iphoneos','SUPPORTED_PLATFORMS':'"iphoneos iphonesimulator"','CODE_SIGN_STYLE':'Automatic','MARKETING_VERSION':'0.1.0','CURRENT_PROJECT_VERSION':'1','SWIFT_EMIT_LOC_STRINGS':'YES','SWIFT_STRICT_CONCURRENCY':'complete'}
@@ -46,7 +50,7 @@ configs=[]
 for mode in ['Debug','Release']:
     configs.append(add('project'+mode, f'isa = XCBuildConfiguration; name = {mode}; buildSettings = {{ CLANG_ENABLE_MODULES = YES; CLANG_ENABLE_OBJC_ARC = YES; }};'))
 add('projectconfigs', f'isa = XCConfigurationList; buildConfigurations = {array(configs)}; defaultConfigurationIsVisible = 0; defaultConfigurationName = Release;')
-add('project',f'isa = PBXProject; attributes = {{ LastUpgradeCheck = 2600; }}; buildConfigurationList = {ref("projectconfigs")}; compatibilityVersion = "Xcode 14.0"; developmentRegion = zh-Hans; hasScannedForEncodings = 0; knownRegions = ("zh-Hans", en, Base); mainGroup = {ref("rootgroup")}; productRefGroup = {productsGroup}; projectDirPath = ""; projectRoot = ""; targets = {array([ref(name+"target") for name,_,_ in targets])};')
+add('project',f'isa = PBXProject; attributes = {{ LastUpgradeCheck = 2600; }}; buildConfigurationList = {ref("projectconfigs")}; compatibilityVersion = "Xcode 14.0"; developmentRegion = en; hasScannedForEncodings = 0; knownRegions = ("zh-Hans", en, Base); mainGroup = {ref("rootgroup")}; productRefGroup = {productsGroup}; projectDirPath = ""; projectRoot = ""; targets = {array([ref(name+"target") for name,_,_ in targets])};')
 (root/'JobGenie.xcodeproj/project.pbxproj').write_text('// !$*UTF8*$!\n{ archiveVersion = 1; classes = {}; objectVersion = 56; objects = {\n'+'\n'.join(objects)+'\n}; rootObject = '+ref('project')+'; }\n')
 def buildref(name): return f'<BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="{ref(name+"target")}" BuildableName="{name}{".app" if name == "JobGenie" else ".xctest"}" BlueprintName="{name}" ReferencedContainer="container:JobGenie.xcodeproj"/>'
 scheme=f'''<?xml version="1.0" encoding="UTF-8"?>

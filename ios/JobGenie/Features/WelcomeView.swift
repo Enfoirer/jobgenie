@@ -28,7 +28,7 @@ struct WelcomeView: View {
                     }.padding(20).background(.background, in: RoundedRectangle(cornerRadius: 20))
                     if let message = model.authMessage { ErrorBanner(message: message) }
                     Button(action: login) {
-                        HStack { if model.isSigningIn { ProgressView().tint(.white) }; Text(model.isSigningIn ? "正在登录…" : "登录").fontWeight(.semibold) }.frame(maxWidth: .infinity).padding(.vertical, 8)
+                        HStack { if model.isSigningIn { ProgressView().tint(.white) }; Text(LocalizedStringKey(model.isSigningIn ? "正在登录…" : "登录")).fontWeight(.semibold) }.frame(maxWidth: .infinity).padding(.vertical, 8)
                     }.buttonStyle(.borderedProminent).controlSize(.large)
                         .disabled(email.trimmingCharacters(in: .whitespaces).isEmpty || password.isEmpty || model.isSigningIn)
                         .accessibilityIdentifier("login.submit")
@@ -44,6 +44,7 @@ struct WelcomeView: View {
                         .font(.footnote).foregroundStyle(.secondary)
                 }.padding(24).frame(maxWidth: 500)
             }.background(Brand.background).scrollDismissesKeyboard(.interactively)
+            .toolbar { ToolbarItem(placement: .topBarTrailing) { LanguagePicker() } }
         }
     }
     private func login() {

@@ -6,16 +6,16 @@ final class AppModel: ObservableObject {
     @Published var isDemo = false
     @Published var isRestoring = true
     @Published var isSigningIn = false
-    @Published var authMessage: String?
+    @Published var authMessage: UserMessage?
     @Published var jobs: [Job] = []
     @Published var events: [ScheduleEvent] = []
     @Published var mailboxes: [Mailbox] = []
     @Published var jobsLoading = false
     @Published var scheduleLoading = false
     @Published var mailLoading = false
-    @Published var jobsError: String?
-    @Published var scheduleError: String?
-    @Published var mailError: String?
+    @Published var jobsError: UserMessage?
+    @Published var scheduleError: UserMessage?
+    @Published var mailError: UserMessage?
     let api: APIClient
     private var generation = UUID()
     init(api: APIClient = APIClient(baseURL: APIClient.configuredURL())) { self.api = api }
@@ -105,16 +105,16 @@ final class AppModel: ObservableObject {
             }
         } else { await refreshSchedule() }
     }
-    private func expire() async { await signOut(); authMessage = APIError.unauthorized.localizedDescription }
-    private func handle(_ error: Error) async -> String? {
+    private func expire() async { await signOut(); authMessage = APIError.unauthorized.userMessage }
+    private func handle(_ error: Error) async -> UserMessage? {
         if error as? APIError == .unauthorized { await expire(); return nil }
         if error is CancellationError { return nil }
         return message(error)
     }
-    func message(_ error: Error) -> String {
-        if let apiError = error as? APIError { return apiError.localizedDescription }
-        if let urlError = error as? URLError, [.notConnectedToInternet, .timedOut, .cannotConnectToHost, .networkConnectionLost].contains(urlError.code) { return "网络连接失败，请检查网络后重试。" }
-        return "暂时无法完成操作，请重试。"
+    func message(_ error: Error) -> UserMessage {
+        if let apiError = error as? APIError { return apiError.userMessage }
+        if let urlError = error as? URLError, [.notConnectedToInternet, .timedOut, .cannotConnectToHost, .networkConnectionLost].contains(urlError.code) { return .text("网络连接失败，请检查网络后重试。") }
+        return .text("暂时无法完成操作，请重试。")
     }
 }
 

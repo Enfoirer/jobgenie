@@ -5,6 +5,7 @@ final class JobGenieUITests: XCTestCase {
     override func setUpWithError() throws { continueAfterFailure = false }
     func testDemoNavigationCreateEditAndExit() {
         let app = XCUIApplication()
+        app.launchArguments = ["-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN", "-jobgenie.language", "system"]
         app.launchEnvironment["JOBGENIE_TEST_BASE_URL"] = "http://127.0.0.1:39998"
         app.launch()
         XCTAssertTrue(app.buttons["login.demo"].waitForExistence(timeout: 10))
@@ -35,9 +36,65 @@ final class JobGenieUITests: XCTestCase {
         app.buttons["account.signout"].tap(); app.buttons["确认退出"].tap()
         XCTAssertTrue(app.buttons["login.demo"].waitForExistence(timeout: 5))
     }
+    func testLanguageSwitchingAndPersistence() {
+        let app = XCUIApplication()
+        app.launchEnvironment["JOBGENIE_TEST_BASE_URL"] = "http://127.0.0.1:39997"
+        app.launchArguments = ["-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN", "-jobgenie.language", "system"]
+        app.launch()
+        XCTAssertTrue(app.buttons["language.picker"].waitForExistence(timeout: 10))
+        let email = app.textFields["login.email"]
+        email.tap(); email.typeText("keep@example.test")
+        app.secureTextFields["login.password"].tap(); app.secureTextFields["login.password"].typeText("local-invalid-password")
+        app.buttons["login.submit"].tap()
+        XCTAssertTrue(app.staticTexts["网络连接失败，请检查网络后重试。"].waitForExistence(timeout: 10))
+        app.buttons["language.picker"].tap(); app.buttons["English"].tap()
+        XCTAssertTrue(app.buttons["Explore the demo"].waitForExistence(timeout: 5))
+        XCTAssertEqual(email.value as? String, "keep@example.test")
+        XCTAssertTrue(app.staticTexts["Connection failed. Check your network and try again."].exists)
+        app.swipeUp()
+        app.buttons["login.demo"].tap()
+        XCTAssertTrue(app.navigationBars["My applications"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Applications · 4"].exists)
+        app.buttons["jobs.add"].tap(); app.buttons["editor.save"].tap()
+        XCTAssertTrue(app.staticTexts["Enter a company and role."].exists)
+        app.buttons["Cancel"].tap()
+        app.buttons["job.demo-1"].tap()
+        XCTAssertTrue(app.navigationBars["Application details"].exists)
+        XCTAssertFalse(app.staticTexts["job.appliedDate"].label.contains("月"))
+        XCTAssertTrue(app.staticTexts["iOS 工程师"].exists)
+        XCTAssertTrue(app.staticTexts["准备项目介绍，以及一次最有挑战的技术决策。"].exists)
+        app.tabBars.buttons["Schedule"].tap()
+        XCTAssertTrue(app.navigationBars["Schedule & to-do"].exists)
+        app.buttons["schedule.filter"].tap(); app.buttons["Needs a time"].tap()
+        XCTAssertTrue(app.staticTexts["Time not scheduled"].exists)
+        app.tabBars.buttons["Email"].tap()
+        XCTAssertTrue(app.staticTexts["Connected mailboxes"].exists)
+        app.tabBars.buttons["Account"].tap()
+        app.buttons["language.picker"].tap(); app.buttons["简体中文"].tap()
+        XCTAssertTrue(app.tabBars.buttons["日程"].exists)
+        app.tabBars.buttons["申请"].tap()
+        let switched = XCTAttachment(screenshot: app.screenshot()); switched.name = "Switched detail"; switched.lifetime = .keepAlways; add(switched)
+        XCTAssertTrue(app.navigationBars["申请详情"].exists, app.debugDescription)
+        XCTAssertTrue(app.staticTexts["job.appliedDate"].label.contains("月"))
+        app.tabBars.buttons["我的"].tap()
+        app.buttons["language.picker"].tap(); app.buttons["English"].tap()
+        let screenshot = XCTAttachment(screenshot: app.screenshot()); screenshot.name = "English language setting"; screenshot.lifetime = .keepAlways; add(screenshot)
+        app.terminate()
+        // Drop the test's initial preference override: verify the saved choice.
+        app.launchArguments = ["-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN"]
+        app.launch()
+        XCTAssertTrue(app.buttons["Explore the demo"].waitForExistence(timeout: 10))
+        app.buttons["language.picker"].tap(); app.buttons["Follow system"].tap()
+        XCTAssertTrue(app.buttons["先体验演示版"].exists)
+        app.terminate()
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launch()
+        XCTAssertTrue(app.buttons["Explore the demo"].waitForExistence(timeout: 10))
+    }
     func testRealBackend() throws {
         guard let url = ProcessInfo.processInfo.environment["JOBGENIE_TEST_BASE_URL"] else { throw XCTSkip("Run ios/scripts/verify-backend.mjs for isolated NextAuth/Mongo integration") }
         let app = XCUIApplication()
+        app.launchArguments = ["-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN", "-jobgenie.language", "system"]
         app.launchEnvironment["JOBGENIE_TEST_BASE_URL"] = url
         app.launch()
         XCTAssertTrue(app.textFields["login.email"].waitForExistence(timeout: 15))

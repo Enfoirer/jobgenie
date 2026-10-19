@@ -10,16 +10,17 @@ extension ApplicationStatus {
 struct StatusBadge: View {
     let status: ApplicationStatus
     var body: some View {
-        Label(status.title, systemImage: status.symbol).font(.caption.weight(.medium)).foregroundStyle(status.color)
+        Label(LocalizedStringKey(status.title), systemImage: status.symbol).font(.caption.weight(.medium)).foregroundStyle(status.color)
             .padding(.horizontal, 9).padding(.vertical, 6).background(status.color.opacity(0.1), in: Capsule())
     }
 }
 struct ErrorBanner: View {
-    let message: String
+    @Environment(\.locale) private var locale
+    let message: UserMessage
     var retry: (() -> Void)? = nil
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Label(message, systemImage: "exclamationmark.circle").font(.subheadline).foregroundStyle(.red)
+            Label(message.localized(locale: locale), systemImage: "exclamationmark.circle").font(.subheadline).foregroundStyle(.red)
             if let retry { Button("重试", action: retry).font(.subheadline.bold()) }
         }.accessibilityElement(children: .contain)
     }

@@ -4,7 +4,7 @@
 
 ## 本阶段交付
 
-- 四个独立导航页签：申请、日程、邮箱、我的。中文界面，系统字体、深浅色和动态字号。
+- 四个独立导航页签：申请、日程、邮箱、我的。中英文界面，系统字体、深浅色和动态字号。
 - 原生邮箱密码登录，保留现有服务端限流；显示网络异常、限流和会话失效提示。
 - 申请列表、搜索、状态筛选、当前状态数量、详情及只读状态时间线。
 - 新建申请，以及公司、职位、地点、备注、岗位链接编辑。保存使用现有 POST/PATCH 接口，不在客户端另算当前状态；编辑结果回写列表并刷新日程。
@@ -32,6 +32,14 @@ xcodebuild -project ios/JobGenie.xcodeproj -scheme JobGenie \
 安装到自己的 iPhone 时，在 **Signing & Capabilities** 选择自己的 Team，并按需要设置唯一 Bundle Identifier。当前 `com.enfoirer.jobgenie` 是工程初始值；尚未配置开发者团队、发布签名或提交 TestFlight。
 
 已提交完整 Xcode 工程，不需要 XcodeGen/CocoaPods。新增 Swift 文件后可使用 `python3 ios/scripts/generate-project.py` 更新工程；生成器是工程配置的来源，修改 build settings 时也应同步生成器。
+
+## 界面语言
+
+登录页右上角，或 **我的 → 偏好设置 → 语言**，可以选择 **跟随系统 / 简体中文 / English**。默认跟随系统，中文系统使用简体中文，英文系统使用英文；按系统首选语言列表匹配，其他语言回退英文。
+
+选择立即生效，并保存在本机，重启和退出登录后仍保留。切换不会重新登录、清空申请、重置导航或修改公司、职位、备注等原始内容。导航、表单、状态、空页面、错误和重试提示均支持两种语言；日期格式随所选语言变化，时区仍使用手机当前时区。
+
+应用文案统一维护于 `JobGenie/Localizable.xcstrings`。状态等动态文案按本地化键渲染，错误保留语义及参数，到显示时再翻译；业务数据按原文显示。网页版、第三方授权页面和系统键盘的语言由各自设置决定。
 
 ## 会话与网络
 
@@ -85,10 +93,11 @@ IOS_SIMULATOR_ID="$IOS_SIMULATOR_ID" node ios/scripts/verify-backend.mjs
 
 2026-10-19 已完成：
 
-- iPhone 17 Pro、iPhone 16e（iOS 26）模拟器：12 项核心测试及完整演示交互流程通过；独立的真实后端 UI 流程通过。合计 14 个不同测试全部执行通过，普通测试中的集成项由独立脚本补跑。
+- iPhone 17 Pro、iPhone 16e（iOS 26）模拟器：16 项核心/本地化测试、完整演示交互流程、中英文切换流程及独立的真实后端 UI 流程通过。合计 19 个不同测试全部执行通过，普通测试中的集成项由独立脚本补跑。
+- 语言验收覆盖即时切换、已填写邮箱与原始业务文字保留、已有错误提示翻译、日期格式、详情导航标题刷新、重启后记住选择，以及中英文系统语言匹配。未通过重建导航栈实现刷新。
 - 真正的 NextAuth 登录、申请创建/编辑、重启后的 Keychain 会话恢复、退出后的会话清理和 MongoDB 持久化断言通过。
 - Debug 模拟器构建及未签名的 iPhone arm64 Release 构建通过，工程与 plist 检查通过。Release 编译通过不等于真机安装或签名验收。
-- 已检查模拟器截图：[申请页](docs/iphone-applications.png)、[日程页](docs/iphone-schedule.png)。
+- 已检查模拟器截图：[申请页](docs/iphone-applications.png)、[日程页](docs/iphone-schedule.png)、[英文语言设置](docs/iphone-language-english.png)。
 
 ## 后续阶段
 

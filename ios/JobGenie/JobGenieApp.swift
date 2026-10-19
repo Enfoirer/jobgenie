@@ -3,6 +3,7 @@ import SwiftUI
 @main
 struct JobGenieApp: App {
     @StateObject private var model = AppModel()
+    @StateObject private var language = LanguageSettings()
     @Environment(\.scenePhase) private var scenePhase
     var body: some Scene {
         WindowGroup {
@@ -12,10 +13,12 @@ struct JobGenieApp: App {
                 else { MainTabs().id(model.user?.id) }
             }
             .environmentObject(model)
+            .environmentObject(language)
+            .environment(\.locale, language.locale)
             .tint(Brand.teal)
             .task { await model.restore() }
             .onChange(of: scenePhase) { _, phase in
-                if phase == .active { Task { await model.revalidate() } }
+                if phase == .active { language.refreshSystemLanguages(); Task { await model.revalidate() } }
             }
         }
     }

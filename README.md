@@ -183,3 +183,6 @@ simulator. This first increment supports native sign-in, application browsing,
 creation and metadata editing, the shared schedule, and mailbox summaries.
 An explicitly labeled demo mode works without an account. See the iOS README
 for setup, isolated integration tests, current limits and the remaining roadmap.
+Choose **Follow system**, **简体中文**, or **English** on the sign-in screen or in
+**Account → Preferences → Language**. Language changes apply immediately and
+persist across launches; application data keeps its original text.
