@@ -90,6 +90,74 @@ final class JobGenieUITests: XCTestCase {
         app.buttons["Cancel"].tap()
         app.tabBars.buttons["Account"].tap(); app.buttons["account.signout"].tap(); app.buttons["Confirm sign out"].tap()
     }
+    func testDemoMailSyncReviewIgnoreAndEnglish() {
+        let app = XCUIApplication()
+        app.launchArguments = ["-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN", "-jobgenie.language", "system"]
+        app.launchEnvironment["JOBGENIE_TEST_BASE_URL"] = "http://127.0.0.1:39998"
+        app.launch(); XCTAssertTrue(app.buttons["login.demo"].waitForExistence(timeout: 10)); app.buttons["login.demo"].tap()
+        app.tabBars.buttons["邮箱"].tap()
+        let retry = app.buttons["mail.retry.demo-mail"]
+        reveal(retry, in: app); retry.tap()
+        XCTAssertTrue(app.staticTexts["最近同步结果"].waitForExistence(timeout: 5)); XCTAssertFalse(retry.isEnabled)
+        app.buttons["mail.sync.demo-mail"].tap()
+        for _ in 0..<3 { app.swipeDown() }
+        app.buttons["mail.pending"].tap(); app.buttons["mail.review.demo-review"].tap()
+        let accept = app.buttons["review.accept"]
+        reveal(accept, in: app)
+        let screenshot = XCTAttachment(screenshot: app.screenshot()); screenshot.name = "Mail review"; screenshot.lifetime = .keepAlways; add(screenshot)
+        accept.tap(); XCTAssertTrue(app.staticTexts["没有待确认邮件"].waitForExistence(timeout: 10))
+        app.tabBars.buttons["我的"].tap(); app.buttons["account.signout"].tap(); app.buttons["确认退出"].tap()
+        app.buttons["login.demo"].tap(); app.tabBars.buttons["邮箱"].tap()
+        app.buttons["mail.pending"].tap(); app.buttons["mail.review.demo-review"].tap()
+        let ignore = app.buttons["review.ignore"]
+        reveal(ignore, in: app); ignore.tap(); app.buttons["确认忽略"].tap()
+        XCTAssertTrue(app.staticTexts["没有待确认邮件"].waitForExistence(timeout: 10))
+        app.tabBars.buttons["我的"].tap(); app.buttons["language.picker"].tap(); app.buttons["English"].tap()
+        app.tabBars.buttons["Email"].tap()
+        XCTAssertTrue(app.navigationBars["Pending review"].exists)
+        app.navigationBars.buttons.firstMatch.tap()
+        let connect = app.buttons["mail.connect.google"]
+        reveal(connect, in: app); XCTAssertEqual(connect.label, "Connect Gmail"); XCTAssertFalse(connect.isEnabled)
+        app.tabBars.buttons["Account"].tap(); app.buttons["account.signout"].tap(); app.buttons["Confirm sign out"].tap()
+    }
+    func testRealMailBackend() throws {
+        guard let url = ProcessInfo.processInfo.environment["JOBGENIE_TEST_BASE_URL"] else { throw XCTSkip("Run isolated backend acceptance") }
+        let app = XCUIApplication()
+        app.launchArguments = ["-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN", "-jobgenie.language", "system"]
+        app.launchEnvironment["JOBGENIE_TEST_BASE_URL"] = url
+        app.launch(); XCTAssertTrue(app.textFields["login.email"].waitForExistence(timeout: 15))
+        app.textFields["login.email"].tap(); app.textFields["login.email"].typeText("ios-acceptance@example.test")
+        app.secureTextFields["login.password"].tap(); app.secureTextFields["login.password"].typeText("ios-local-test-password")
+        app.buttons["login.submit"].tap(); XCTAssertTrue(app.buttons["jobs.add"].waitForExistence(timeout: 20))
+        app.tabBars.buttons["邮箱"].tap()
+        XCTAssertTrue(app.staticTexts["native-mail@example.test"].waitForExistence(timeout: 15))
+        XCTAssertFalse(app.staticTexts["foreign-mail@example.test"].exists)
+        let retry = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "mail.retry.")).firstMatch
+        reveal(retry, in: app); retry.tap()
+        XCTAssertTrue(app.staticTexts["最近同步结果"].waitForExistence(timeout: 20))
+        XCTAssertFalse(retry.isEnabled)
+        let sync = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "mail.sync.")).firstMatch
+        reveal(sync, in: app); sync.tap()
+        XCTAssertTrue(app.staticTexts["同步已结束，部分环节失败，请查看结果。"].waitForExistence(timeout: 20))
+        for _ in 0..<3 { app.swipeDown() }
+        app.buttons["mail.pending"].tap()
+        XCTAssertTrue(app.staticTexts["Application received at Native Mail Co"].waitForExistence(timeout: 10))
+        app.staticTexts["Application received at Native Mail Co"].tap()
+        let target = app.buttons["review.target"]
+        reveal(target, in: app); target.tap(); app.buttons["新建申请"].tap()
+        let accept = app.buttons["review.accept"]
+        reveal(accept, in: app); accept.tap()
+        XCTAssertTrue(app.staticTexts["Application received at Native Mail Co"].waitForNonExistence(timeout: 20))
+        app.staticTexts["Ignore this fixture"].tap()
+        let ignore = app.buttons["review.ignore"]
+        reveal(ignore, in: app); ignore.tap(); app.buttons["确认忽略"].tap()
+        XCTAssertTrue(app.staticTexts["没有待确认邮件"].waitForExistence(timeout: 15))
+        app.terminate(); app.launch()
+        XCTAssertTrue(app.staticTexts["Native Mail Co"].waitForExistence(timeout: 20))
+        app.tabBars.buttons["邮箱"].tap(); app.buttons["mail.pending"].tap()
+        XCTAssertTrue(app.staticTexts["没有待确认邮件"].waitForExistence(timeout: 15))
+        app.tabBars.buttons["我的"].tap(); app.buttons["account.signout"].tap(); app.buttons["确认退出"].tap()
+    }
     func testDemoHistoryCRUDAndEnglishEditor() {
         let app = XCUIApplication()
         app.launchArguments = ["-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN", "-jobgenie.language", "system"]

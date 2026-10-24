@@ -1,6 +1,6 @@
-# JobGenie for iPhone · 第一阶段
+# JobGenie for iPhone
 
-原生 SwiftUI 应用，最低 iOS 17，使用现有 JobGenie 后端和数据库。代码与网页位于同一个仓库；本阶段不修改生产后端，也不新增第三方移动端依赖。
+原生 SwiftUI 应用，最低 iOS 17，使用现有 JobGenie 后端和数据库。代码与网页位于同一个仓库。邮箱授权新增专用后端接口，不新增第三方移动端依赖。
 
 ## 本阶段交付
 
@@ -9,7 +9,8 @@
 - 申请列表、搜索、状态筛选、当前状态数量和详情；支持新增、编辑、删除状态历史，当前状态由服务端统一计算。
 - 新建申请，以及公司、职位、地点、备注、岗位链接编辑。保存使用现有 POST/PATCH 接口，不在客户端另算当前状态；编辑结果回写列表并刷新日程。
 - 统一日程接口，区分即将到来、已过时间、时间待补充；支持面试时间、笔试截止时间补充、修改、清除，从日程跳转申请详情。时间按手机时区显示，不用状态事件日期代替缺失的面试时间。
-- 已绑定邮箱概览；账户信息及退出。
+- 邮箱立即同步、失败邮件重试、队列数量和最近同步结果；人工确认支持核对公司、职位、事件、目标申请和时间，确认或忽略后刷新申请与日程。
+- Gmail / Outlook 原生授权入口，使用系统授权窗口，完成后安全回到 App；账户信息及退出。
 - 无账号演示模式，示例数据明显标注，只保留在内存中，退出后重置；不会访问真实账号数据。
 
 ## 打开和运行
@@ -49,7 +50,8 @@ xcodebuild -project ios/JobGenie.xcodeproj -scheme JobGenie \
 - 不勾选时凭证只保留在本次进程中，最长仍受后端 12 小时限制；勾选时最多 30 天，不因使用 App 延长。
 - 前台恢复会重新验证会话；401 清理当前用户与已加载的私有数据。退出会清除本机 Cookie/Keychain，取消旧请求并更换网络会话，防止旧请求结果恢复已退出用户的数据。
 - 退出仅退出本机，不声称撤销其他设备或复制出去的 JWT；沿用现有后端会话模型。离线时也会执行本地清理。
-- 注册、找回密码及邮箱管理暂时打开网页版，浏览器需独立登录。App 不把会话凭证拼接到网页链接中。
+- 注册、找回密码暂时打开网页版，浏览器需独立登录。App 不把会话凭证拼接到网页链接中。
+- 邮箱绑定使用系统 `ASWebAuthenticationSession`、随机 state、S256 PKCE 和一次性服务端记录。回跳只携带 state，服务端校验同一用户、会话及 verifier 后才换取提供商 token 并保存邮箱。详见 [邮箱验收](../docs/ios-mail-acceptance.md)。
 
 ## 代码结构
 
@@ -61,6 +63,8 @@ JobGenie/
     SessionVault.swift   Keychain 和 Cookie 恢复边界
     Models.swift         与服务器字段对应的数据模型
     AppModel.swift       页面状态、数据刷新、演示数据
+    Mail.swift           同步结果、人工确认模型与接口
+    MailAuthorization.swift 系统邮箱授权与回跳校验
   Features/              原生 SwiftUI 页面和组件
 JobGenieTests/           模型、接口、存储边界与状态测试
 JobGenieUITests/         模拟器交互及真实本地后端验收
@@ -81,7 +85,7 @@ xcodebuild -project ios/JobGenie.xcodeproj -scheme JobGenie \
   -parallel-testing-enabled NO test
 ```
 
-普通测试覆盖接口解码、日期边界、表单校验、Cookie 域名/过期/分片、401/429、HTML 响应拒绝、会话失效清理、演示隔离及实际页面交互。`testRealBackend` 在普通运行中显式跳过，须执行下述隔离集成命令：
+普通测试覆盖接口解码、日期边界、表单校验、Cookie 域名/过期/分片、401/429、HTML 响应拒绝、会话失效清理、邮箱授权和演示页面交互。`testRealBackend`、`testWebHistoryRefresh`、`testRealMailBackend` 在普通运行中显式跳过，须执行下述隔离集成命令：
 
 ```sh
 MONGODB_URI=mongodb://127.0.0.1:27017/jobgenie-build-only \
@@ -89,7 +93,7 @@ MONGODB_URI=mongodb://127.0.0.1:27017/jobgenie-build-only \
 IOS_SIMULATOR_ID="$IOS_SIMULATOR_ID" node ios/scripts/verify-backend.mjs
 ```
 
-脚本创建临时 MongoDB 副本集、临时用户及本地 Next.js 服务，将仅本次测试的 localhost 地址传给 Debug App。验证真实登录、新建/编辑、重启后 Keychain 恢复、数据持久化、退出后不再恢复，以及数据库只有一条初始历史。测试不会连接生产数据库或真实邮箱服务。日志和 xcresult 保存在脚本输出的临时目录。
+脚本创建临时 MongoDB 副本集、临时用户及本地 Next.js 服务，将仅本次测试的 localhost 地址传给 Debug App。验证真实登录、历史和日程编辑、网页互通、重启持久化、失败邮件重试、人工确认与忽略、同步部分失败提示和权限隔离。数据库断言确认邮件只生成一条申请历史。测试不会连接生产数据库或真实邮箱服务。日志和 xcresult 保存在脚本输出的临时目录。
 
 2026-10-19 已完成：
 
@@ -101,13 +105,15 @@ IOS_SIMULATOR_ID="$IOS_SIMULATOR_ID" node ios/scripts/verify-backend.mjs
 - Debug 模拟器构建及未签名的 iPhone arm64 Release 构建通过，工程与 plist 检查通过。Release 编译通过不等于真机安装或签名验收。
 - 已检查模拟器截图：[申请页](docs/iphone-applications.png)、[日程页](docs/iphone-schedule.png)、[日程编辑](docs/iphone-schedule-editor.png)、[英文语言设置](docs/iphone-language-english.png)。
 
+2026-10-24 邮箱增量验收：43 项核心测试、5 项演示/语言 UI、3 项真实隔离后端 UI，共 51 个不同测试分批通过；258 项服务端测试和 Web / Debug / 未签名 iPhone Release 构建通过。真实账号授权同意和真实邮件拉取尚待实测。细节见 [邮箱操作与授权验收](../docs/ios-mail-acceptance.md)，界面见 [人工确认截图](docs/iphone-mail-review.png)。
+
 ## 后续阶段
 
-1. 原生邮箱授权与安全回跳、立即同步、失败重试、待确认邮件处理；继续使用 state/PKCE 和一次性回调，不复制网页登录凭证到外部浏览器。
+1. 部署邮箱原生授权后端接口后，使用真实 Gmail / Outlook 账号验收系统授权、拒绝、取消和重连。自动测试使用隔离邮件与模拟提供商响应。
 2. 提醒与推送、统计、文件上传；后台推送需要后端和 APNs 配套，现阶段 App 不发送推送。
 3. 原生注册与账号删除、隐私政策、正式图标、开发者签名、真机验证和 TestFlight。
 
-目前是可运行的首个开发增量，尚未达到上架版本；没有离线业务数据库，也不在本地排队重试写操作。真实第三方邮箱授权、推送、签名和实机表现尚未验收。
+目前为开发版本，尚未达到上架版本；没有离线业务数据库，也不在本地排队重试写操作。真实第三方邮箱授权、推送、签名和实机表现尚未验收。
 
 状态历史功能的规则、错误恢复和隔离联调方法见 [iOS 历史管理验收](../docs/ios-history-acceptance.md)。历史编辑中的“状态发生时间”用于排序；预约和截止时间通过独立入口编辑，验收见 [iOS 日程编辑](../docs/ios-schedule-acceptance.md)。
 

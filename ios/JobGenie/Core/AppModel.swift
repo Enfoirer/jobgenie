@@ -10,6 +10,10 @@ final class AppModel: ObservableObject {
     @Published var jobs: [Job] = []
     @Published var events: [ScheduleEvent] = []
     @Published var mailboxes: [Mailbox] = []
+    @Published var pendingMail: [PendingMail] = []
+    @Published private(set) var mailBusy = false
+    @Published var mailNotice: UserMessage?
+    private var mailRequest = UUID()
     @Published var histories: [String: [HistoryEntry]] = [:]
     @Published private(set) var historyMutations: Set<String> = []
     @Published var jobsLoading = false
@@ -20,6 +24,7 @@ final class AppModel: ObservableObject {
     @Published var mailError: UserMessage?
     let api: APIClient
     private var generation = UUID()
+    var sessionGeneration: UUID { generation }
     private var jobsRequest = UUID()
     private var scheduleRequest = UUID()
     private var detailRequests: [String: UUID] = [:]
@@ -50,6 +55,9 @@ final class AppModel: ObservableObject {
         })
         histories["demo-1", default: []].append(HistoryEntry(id: "unscheduled-demo-1", status: .interviewing,
                                                            date: .now.addingTimeInterval(-86400), statusApplied: false))
+        pendingMail = [PendingMail(id: "demo-review", subject: "Northstar interview invitation", from: "recruiting@example.com", snippet: "Please confirm your interview time.", company: "Northstar", position: "iOS 工程师", eventType: "interview", confidence: 0.85, targetJobId: "demo-1")]
+        mailboxes[0].backlog = MailBacklog(pending: 0, processing: 0, failed: 1, pendingReview: 1)
+        mailboxes[0].failures = [MailFailure(id: "demo-failure", subject: "Demo email", attempts: 1)]
         rebuildDemoSchedule()
     }
     func signOut() async {
@@ -57,6 +65,7 @@ final class AppModel: ObservableObject {
         do { try await api.signOut(); authMessage = nil } catch { authMessage = message(error) }
         user = nil; isDemo = false; jobs = []; events = []; mailboxes = []
         histories = [:]; historyMutations = []; detailRequests = [:]
+        pendingMail = []; mailBusy = false; mailNotice = nil; mailRequest = UUID()
         jobsError = nil; scheduleError = nil; mailError = nil
         jobsLoading = false; scheduleLoading = false; mailLoading = false
     }
@@ -87,13 +96,101 @@ final class AppModel: ObservableObject {
             if current == generation && request == scheduleRequest { events = response.events.sorted { ($0.time ?? .distantFuture) < ($1.time ?? .distantFuture) } }
         } catch { if current == generation && request == scheduleRequest { scheduleError = await handle(error) } }
     }
-    func refreshMail() async {
-        guard !isDemo, user != nil, !mailLoading else { return }
-        let current = generation
+    func refreshMail(force: Bool = false) async {
+        guard !isDemo, user != nil, force || !mailLoading else { return }
+        let current = generation, request = UUID(); mailRequest = request
         mailLoading = true; mailError = nil
-        defer { if current == generation { mailLoading = false } }
-        do { let response: MailboxesResponse = try await api.get("api/mail/accounts"); if current == generation { mailboxes = response.accounts } }
-        catch { if current == generation { mailError = await handle(error) } }
+        defer { if current == generation && request == mailRequest { mailLoading = false } }
+        do {
+            async let accounts: MailboxesResponse = api.get("api/mail/status")
+            async let pending: PendingResponse = api.get("api/pending")
+            let result = try await (accounts, pending)
+            guard current == generation, request == mailRequest else { return }
+            mailboxes = result.0.accounts; pendingMail = result.1.items
+        } catch { if current == generation && request == mailRequest { mailError = await handle(error) } }
+    }
+    func runMail(accountID: String, retry: Bool) async {
+        guard !mailBusy, user != nil else { return }
+        let current = generation
+        mailBusy = true; mailNotice = nil; mailError = nil
+        defer { if current == generation { mailBusy = false } }
+        do {
+            if isDemo {
+                if let i = mailboxes.firstIndex(where: { $0.id == accountID }) {
+                    mailboxes[i].lastSync = MailRun(totalFetched: retry ? 0 : 3, processed: 1, failed: 0, pendingReview: 1, errorCount: 0, hasMore: false, finishedAt: .now)
+                    mailboxes[i].backlog = MailBacklog(pending: 0, processing: 0, failed: 0, pendingReview: pendingMail.count)
+                    mailboxes[i].failures = []
+                }
+            } else {
+                let result = try await api.syncMail(accountID: accountID, retry: retry)
+                guard current == generation else { return }
+                mailNotice = .text(result.accounts.contains { $0.errorCount > 0 } ? "同步已结束，部分环节失败，请查看结果。" : "同步已完成，请查看结果。")
+                mailRequest = UUID(); mailLoading = false
+                for summary in result.accounts {
+                    if let index = mailboxes.firstIndex(where: { $0.id == summary.accountId }) {
+                        mailboxes[index].lastSync = MailRun(totalFetched: summary.totalFetched, processed: summary.processed,
+                            failed: summary.failed, pendingReview: summary.pendingReview, errorCount: summary.errorCount, finishedAt: .now)
+                    }
+                }
+                await refreshMail(force: true)
+                guard current == generation else { return }
+                jobsRequest = UUID(); jobsLoading = false
+                await refreshJobs()
+                guard current == generation else { return }
+                await refreshSchedule(force: true)
+            }
+        } catch {
+            if current == generation {
+                mailError = await handle(error)
+                if user != nil { mailNotice = .text("请求未能确认完成，请先刷新结果；已入库邮件不会重复创建申请。") }
+            }
+        }
+    }
+    func reviewMail(_ item: PendingMail, draft: MailReviewDraft, ignore: Bool) async throws {
+        guard user != nil else { throw APIError.unauthorized }
+        guard !mailBusy else { throw APIError.conflict }
+        guard ignore || draft.isValid else { throw APIError.invalidInput }
+        let current = generation
+        mailBusy = true; mailNotice = nil
+        defer { if current == generation { mailBusy = false } }
+        do {
+            if isDemo {
+                guard pendingMail.contains(where: { $0.id == item.id }) else { throw APIError.conflict }
+                if !ignore {
+                    let jobID: String
+                    if draft.target == "new" {
+                        var job = JobDraft(); job.company = draft.company; job.position = draft.position
+                        try await save(job, id: nil); jobID = jobs[0].id
+                    } else { jobID = draft.target }
+                    var entry = HistoryDraft(status: MailEventType(rawValue: draft.eventType)!.status)
+                    entry.notes = item.subject ?? ""; entry.interviewStage = draft.eventType == "oa" ? "Online Assessment" : ""
+                    try await saveHistory(entry, jobID: jobID)
+                    if let entryID = histories[jobID]?.first?.id {
+                        try await saveSchedule(ScheduleDraft(kind: .appointment, time: draft.interviewTime), jobID: jobID, entryID: entryID)
+                        try await saveSchedule(ScheduleDraft(kind: .deadline, time: draft.deadline), jobID: jobID, entryID: entryID)
+                    }
+                }
+                pendingMail.removeAll { $0.id == item.id }
+                for index in mailboxes.indices { mailboxes[index].backlog?.pendingReview = pendingMail.count }
+            } else {
+                let result = try await api.reviewMail(id: item.id, draft: draft, ignore: ignore)
+                guard current == generation else { throw CancellationError() }
+                mailRequest = UUID(); mailLoading = false
+                pendingMail.removeAll { $0.id == item.id }
+                if result.statusApplied == false { mailNotice = .text("已确认并保留历史；较旧邮件未覆盖当前申请状态。") }
+                jobsRequest = UUID(); jobsLoading = false
+                await refreshJobs()
+                guard current == generation else { throw CancellationError() }
+                if let id = result.jobId { try? await refreshDetail(jobID: id) }
+                guard current == generation else { throw CancellationError() }
+                await refreshSchedule(force: true)
+                guard current == generation else { throw CancellationError() }
+                await refreshMail(force: true)
+            }
+        } catch {
+            if current == generation && error as? APIError == .unauthorized { await expire() }
+            throw error
+        }
     }
     func refreshDetail(jobID: String) async throws {
         guard !isDemo else { return }

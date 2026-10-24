@@ -14,6 +14,9 @@ import { MongoMemoryReplSet } from 'mongodb-memory-server';
 import User from '../../lib/models/User.js';
 import Job from '../../lib/models/Job.js';
 import StatusHistory from '../../lib/models/StatusHistory.js';
+import MailAccount from '../../lib/models/MailAccount.js';
+import ProcessedEmail from '../../lib/models/ProcessedEmail.js';
+import PendingItem from '../../lib/models/PendingItem.js';
 import { createJob } from '../../lib/jobs/jobMutations.js';
 import { verifyHistoryWeb } from './verify-history-web.mjs';
 
@@ -104,6 +107,26 @@ with open(sys.argv[2],'wb') as f: plistlib.dump(data,f)
   assert.equal(cleared.deadline, null);
   assert.equal((await Job.findById(jobs[0]._id)).status, 'offer');
   console.log('PASS: native schedule persisted across relaunch; web reschedule/clear visible in App; App clear persisted without changing Offer.');
+  await Promise.all([MailAccount.init(), ProcessedEmail.init(), PendingItem.init()]);
+  await User.updateOne({ _id: user._id }, { $set: { syncMode: 'strict' } });
+  const account = await MailAccount.create({ userId: user._id, provider: 'gmail', emailAddress: 'native-mail@example.test', accessToken: 'test-only-expired', expiresAt: new Date(0) });
+  await MailAccount.create({ userId: foreign._id, provider: 'gmail', emailAddress: 'foreign-mail@example.test', accessToken: 'test-only-expired', expiresAt: new Date(0) });
+  const receivedAt = new Date(Date.now() - 60000);
+  await ProcessedEmail.create({ userId: user._id, accountId: account._id, provider: 'gmail', messageId: 'native-mail-fixture', status: 'failed', attempts: 1,
+    receivedAt, raw: { id: 'native-mail-fixture', subject: 'Application received at Native Mail Co', from: 'hiring@example.test', receivedAt,
+      bodyText: 'Thank you for applying. We have received your application.\nCompany: Native Mail Co\nPosition: Engineer' } });
+  await PendingItem.create({ userId: user._id, accountId: account._id, provider: 'gmail', messageId: 'ignore-fixture', subject: 'Ignore this fixture', status: 'pending' });
+  await run('xcodebuild', ['test-without-building', '-xctestrun', runFile, '-destination', `platform=iOS Simulator,id=${device}`, '-parallel-testing-enabled', 'NO', '-only-testing:JobGenieUITests/JobGenieUITests/testRealMailBackend', '-resultBundlePath', join(work, 'mail.xcresult')]);
+  const processed = await ProcessedEmail.findOne({ messageId: 'native-mail-fixture' });
+  assert.equal(processed.status, 'succeeded'); assert.equal(processed.attempts, 2);
+  const reviewed = await PendingItem.findOne({ messageId: 'native-mail-fixture' });
+  assert.equal(reviewed.status, 'accepted');
+  assert.equal(await StatusHistory.countDocuments({ jobId: reviewed.jobId }), 1);
+  assert.equal((await Job.findById(reviewed.jobId)).company, 'Native Mail Co');
+  assert.equal((await PendingItem.findOne({ messageId: 'ignore-fixture' })).status, 'ignored');
+  assert.equal((await MailAccount.findById(account._id)).lastSync.errorStages[0], 'ingest');
+  assert.equal(await Job.countDocuments({ userId: foreign._id }), 1);
+  console.log('PASS: native retry, partial sync result, explicit application review, ignore, relaunch persistence and mailbox owner isolation. No external provider calls.');
   console.log(`Results: ${work}`);
 } catch (error) {
   console.error(`Acceptance failed. Logs: ${work}`);

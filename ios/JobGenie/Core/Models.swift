@@ -72,6 +72,10 @@ enum ScheduleBucket: String, CaseIterable, Identifiable {
     var title: String { switch self { case .upcoming: "即将到来"; case .past: "已过时间"; case .unscheduled: "时间待补充" } }
 }
 struct Mailbox: Decodable, Identifiable {
+    var backlog: MailBacklog? = nil
+    var lastSync: MailRun? = nil
+    var hasMore: Bool? = nil
+    var failures: [MailFailure]? = nil
     let id: String
     let provider: String
     let emailAddress: String
