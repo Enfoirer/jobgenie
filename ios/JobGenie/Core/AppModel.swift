@@ -13,6 +13,22 @@ final class AppModel: ObservableObject {
     @Published var pendingMail: [PendingMail] = []
     @Published private(set) var mailBusy = false
     @Published var mailNotice: UserMessage?
+    @Published var reminders: [ReminderItem] = []
+    @Published var reminderSettings: ReminderSettings?
+    @Published private(set) var remindersLoading = false
+    @Published private(set) var remindersBusy = false
+    @Published var remindersError: UserMessage?
+    @Published var remindersNotice: UserMessage?
+    private var remindersStarted = false
+    private var reminderRequest = UUID()
+    private var reminderServerTime = Date.now
+    private var reminderUptime = ProcessInfo.processInfo.systemUptime
+    private var demoReminderTimes: [String: Date] = [:]
+    private var demoReminderRevisions: [String: Int] = [:]
+    private var demoReminderStates: [String: (ReminderStatus, Date?)] = [:]
+    var reminderNow: Date { reminderServerTime.addingTimeInterval(max(0, ProcessInfo.processInfo.systemUptime - reminderUptime)) }
+    var visibleReminders: [ReminderItem] { reminders.filter { $0.time > reminderNow } }
+    var reminderUnreadCount: Int { visibleReminders.filter { $0.status == .unread }.count }
     private var mailRequest = UUID()
     @Published var histories: [String: [HistoryEntry]] = [:]
     @Published private(set) var historyMutations: Set<String> = []
@@ -39,13 +55,13 @@ final class AppModel: ObservableObject {
         guard !isSigningIn else { return }
         isSigningIn = true; authMessage = nil
         defer { isSigningIn = false }
-        do { user = try await api.signIn(email: email, password: password, remember: remember); generation = UUID() }
+        do { user = try await api.signIn(email: email, password: password, remember: remember); generation = UUID(); resetReminders() }
         catch { authMessage = message(error) }
     }
     func useDemo() {
         do { try api.clearLocalSession() }
         catch { authMessage = message(error); return }
-        generation = UUID(); isDemo = true; authMessage = nil
+        generation = UUID(); resetReminders(); isDemo = true; authMessage = nil
         user = SessionUser(id: "demo", name: "探索者", email: "demo@example.com")
         jobs = DemoData.jobs; events = DemoData.events; mailboxes = DemoData.mailboxes
         histories = Dictionary(uniqueKeysWithValues: jobs.map { job in
@@ -62,6 +78,7 @@ final class AppModel: ObservableObject {
     }
     func signOut() async {
         generation = UUID()
+        resetReminders()
         do { try await api.signOut(); authMessage = nil } catch { authMessage = message(error) }
         user = nil; isDemo = false; jobs = []; events = []; mailboxes = []
         histories = [:]; historyMutations = []; detailRequests = [:]
@@ -95,6 +112,119 @@ final class AppModel: ObservableObject {
             let response: ScheduleResponse = try await api.get("api/schedule")
             if current == generation && request == scheduleRequest { events = response.events.sorted { ($0.time ?? .distantFuture) < ($1.time ?? .distantFuture) } }
         } catch { if current == generation && request == scheduleRequest { scheduleError = await handle(error) } }
+        if current == generation && remindersStarted { await refreshReminders(force: true) }
+    }
+    private func resetReminders() {
+        reminderRequest = UUID(); remindersStarted = false
+        reminders = []; reminderSettings = nil; remindersLoading = false; remindersBusy = false
+        remindersError = nil; remindersNotice = nil
+        demoReminderTimes = [:]; demoReminderRevisions = [:]; demoReminderStates = [:]
+    }
+    func refreshReminders(force: Bool = false) async {
+        guard user != nil, force || (!remindersLoading && !remindersBusy) else { return }
+        remindersStarted = true
+        if isDemo { rebuildDemoReminders(); return }
+        let current = generation, request = UUID(); reminderRequest = request
+        remindersLoading = true; remindersError = nil
+        defer { if current == generation && request == reminderRequest { remindersLoading = false } }
+        do {
+            let response: RemindersResponse = try await api.get("api/reminders")
+            guard current == generation && request == reminderRequest else { return }
+            guard response.settings.isValid else { throw APIError.invalidResponse }
+            reminderServerTime = response.serverTime; reminderUptime = ProcessInfo.processInfo.systemUptime
+            reminders = response.reminders.sorted { $0.time == $1.time ? $0.id < $1.id : $0.time < $1.time }
+            reminderSettings = response.settings
+        } catch { if current == generation && request == reminderRequest { remindersError = await handle(error) } }
+    }
+    private func invalidateReminders(jobID: String? = nil, historyID: String? = nil) {
+        reminderRequest = UUID(); remindersLoading = false
+        reminders.removeAll { (jobID != nil && $0.jobId == jobID) || (historyID != nil && $0.historyId == historyID) }
+    }
+    func actOnReminder(_ item: ReminderItem, action: ReminderAction) async throws {
+        guard user != nil else { throw APIError.unauthorized }
+        guard !remindersBusy else { throw APIError.conflict }
+        let current = generation
+        remindersBusy = true; remindersNotice = nil; remindersError = nil
+        reminderRequest = UUID(); remindersLoading = false
+        defer { if current == generation { remindersBusy = false } }
+        do {
+            if isDemo {
+                rebuildDemoReminders()
+                guard let live = reminders.first(where: { $0.id == item.id }) else { throw APIError.conflict }
+                if action == .snooze {
+                    guard live.status == .unread || live.status == .snoozed else { throw APIError.conflict }
+                    guard live.time > Date.now.addingTimeInterval(600) else { throw APIError.invalidInput }
+                    if live.status != .snoozed { demoReminderStates[live.id] = (.snoozed, .now.addingTimeInterval(600)) }
+                } else if live.status != .cancelled {
+                    demoReminderStates[live.id] = (action == .cancel ? .cancelled : .read, nil)
+                }
+                rebuildDemoReminders()
+            } else {
+                try await api.actOnReminder(item, action: action)
+                guard current == generation else { throw CancellationError() }
+                // A successful idempotent response may refer to an already cancelled
+                // item. Remove the stale copy; only GET supplies the canonical state.
+                reminderRequest = UUID(); remindersLoading = false
+                reminders.removeAll { $0.id == item.id }
+                remindersNotice = .text("操作已保存，正在刷新提醒。")
+                await refreshReminders(force: true)
+                guard current == generation else { throw CancellationError() }
+                remindersNotice = remindersError == nil ? nil : .text("操作已保存，提醒列表暂未刷新，请重试刷新。")
+            }
+        } catch {
+            if current == generation {
+                if error as? APIError == .unauthorized { await expire() }
+                else if error as? APIError == .conflict || error as? APIError == .notFound {
+                    invalidateReminders(historyID: item.historyId)
+                    await refreshReminders(force: true)
+                }
+            }
+            throw error
+        }
+    }
+    func saveReminderSettings(_ settings: ReminderSettings) async throws {
+        guard user != nil else { throw APIError.unauthorized }
+        guard !remindersBusy else { throw APIError.conflict }
+        guard settings.isValid else { throw APIError.invalidInput }
+        let current = generation
+        remindersBusy = true; remindersNotice = nil
+        reminderRequest = UUID(); remindersLoading = false
+        defer { if current == generation { remindersBusy = false } }
+        do {
+            let confirmed = isDemo ? settings : try await api.saveReminderSettings(settings)
+            guard current == generation else { throw CancellationError() }
+            reminderSettings = confirmed
+            reminders = []
+            await refreshReminders(force: true)
+            guard current == generation else { throw CancellationError() }
+            if remindersError != nil { remindersNotice = .text("设置已保存，提醒列表暂未刷新，请重试刷新。") }
+        } catch {
+            if current == generation && error as? APIError == .unauthorized { await expire() }
+            throw error
+        }
+    }
+    private func rebuildDemoReminders(now: Date = .now) {
+        guard isDemo else { return }
+        let settings = reminderSettings ?? ReminderSettings(); reminderSettings = settings
+        reminderServerTime = now; reminderUptime = ProcessInfo.processInfo.systemUptime
+        let currentTimes = Dictionary(uniqueKeysWithValues: events.compactMap { event in event.time.map { (event.id, $0) } })
+        for id in Set(demoReminderTimes.keys).union(currentTimes.keys) where demoReminderTimes[id] != currentTimes[id] {
+            if demoReminderTimes[id] != nil || demoReminderRevisions[id] != nil { demoReminderRevisions[id, default: 0] += 1 }
+            else { demoReminderRevisions[id] = 0 }
+        }
+        demoReminderTimes = currentTimes
+        reminders = events.compactMap { event in
+            guard settings.enabled, let time = event.time, let historyID = event.historyId,
+                  let job = jobs.first(where: { $0.id == event.jobId }), job.status != .offer, job.status != .rejected,
+                  now >= time.addingTimeInterval(-Double(settings.leadMinutes) * 60), now < time else { return nil }
+            let revision = demoReminderRevisions[event.id, default: 0], id = "\(event.id):\(revision)"
+            let saved = demoReminderStates[id]
+            let status: ReminderStatus = saved?.0 == .snoozed && (saved?.1 ?? .distantPast) <= now ? .unread : saved?.0 ?? .unread
+            return ReminderItem(id: id, historyId: historyID, jobId: event.jobId, kind: event.kind, revision: revision,
+                                company: event.company, position: event.position, label: event.label, time: time,
+                                dueAt: time.addingTimeInterval(-Double(settings.leadMinutes) * 60), status: status,
+                                snoozedUntil: status == .snoozed ? saved?.1 : nil, canSnooze: now.addingTimeInterval(600) < time)
+        }.sorted { $0.time < $1.time }
     }
     func refreshMail(force: Bool = false) async {
         guard !isDemo, user != nil, force || !mailLoading else { return }
@@ -206,6 +336,7 @@ final class AppModel: ObservableObject {
             guard current == generation, detailRequests[jobID] == request else { throw CancellationError() }
             if error as? APIError == .unauthorized { await expire() }
             if error as? APIError == .notFound {
+                invalidateReminders(jobID: jobID)
                 jobs.removeAll { $0.id == jobID }; histories[jobID] = nil
                 events.removeAll { $0.jobId == jobID }
             }
@@ -231,6 +362,7 @@ final class AppModel: ObservableObject {
             } else {
                 let response = try await api.saveHistory(draft, jobID: jobID, entryID: entryID)
                 guard current == generation else { throw CancellationError() }
+                invalidateReminders(jobID: jobID)
                 detailRequests[jobID] = nil
                 applyJob(response.job)
                 if let entry = response.statusHistory { replaceHistory(entry, jobID: jobID) }
@@ -256,6 +388,7 @@ final class AppModel: ObservableObject {
             } else {
                 let response = try await api.saveSchedule(draft, jobID: jobID, entryID: entryID)
                 guard current == generation else { throw CancellationError() }
+                invalidateReminders(historyID: entryID)
                 detailRequests[jobID] = nil
                 applyJob(response.job)
                 if let entry = response.statusHistory {
@@ -286,6 +419,7 @@ final class AppModel: ObservableObject {
                 detailRequests[jobID] = nil; applyJob(response.job)
             }
             histories[jobID]?.removeAll { $0.id == entryID }
+            invalidateReminders(historyID: entryID)
             if isDemo { recomputeDemo(jobID: jobID) } else { await refreshSchedule(force: true) }
         } catch {
             if current == generation && error as? APIError == .unauthorized { await expire() }
@@ -293,6 +427,10 @@ final class AppModel: ObservableObject {
         }
     }
     private func applyJob(_ job: Job) {
+        if job.status == .offer || job.status == .rejected { invalidateReminders(jobID: job.id) }
+        for index in reminders.indices where reminders[index].jobId == job.id {
+            reminders[index].company = job.company; reminders[index].position = job.position
+        }
         // An earlier list request must never overwrite a confirmed mutation.
         jobsRequest = UUID(); jobsLoading = false; jobsError = nil
         if let index = jobs.firstIndex(where: { $0.id == job.id }) { jobs[index] = job } else { jobs.insert(job, at: 0) }
@@ -312,6 +450,7 @@ final class AppModel: ObservableObject {
         events = jobs.flatMap { job in
             (histories[job.id] ?? []).flatMap { ScheduleEvent.project($0, job: job) }
         }
+        rebuildDemoReminders()
     }
     func save(_ draft: JobDraft, id: String?) async throws {
         let current = generation
@@ -336,6 +475,7 @@ final class AppModel: ObservableObject {
                 guard event.jobId == job.id else { return event }
                 return ScheduleEvent(historyId: event.historyId, id: event.id, jobId: job.id, company: job.company, position: job.position, kind: event.kind, time: event.time, label: event.label)
             }
+            rebuildDemoReminders()
         } else { await refreshSchedule() }
     }
     private func expire() async { await signOut(); authMessage = APIError.unauthorized.userMessage }
@@ -359,7 +499,7 @@ enum DemoData {
         Job(id: "demo-4", company: "Maple", position: "前端工程师", location: "北京", status: .rejected, dateApplied: .now.addingTimeInterval(-20 * 86400)),
     ] }
     static var events: [ScheduleEvent] { [
-        ScheduleEvent(id: "event-1", jobId: "demo-1", company: "Northstar", position: "iOS 工程师", kind: "appointment", time: .now.addingTimeInterval(86400), label: "Interview"),
+        ScheduleEvent(id: "event-1", jobId: "demo-1", company: "Northstar", position: "iOS 工程师", kind: "appointment", time: .now.addingTimeInterval(1800), label: "Interview"),
         ScheduleEvent(id: "event-2", jobId: "demo-2", company: "Linear Labs", position: "产品工程师", kind: "deadline", time: .now.addingTimeInterval(-86400), label: "Assessment deadline"),
         ScheduleEvent(id: "event-3", jobId: "demo-1", company: "Northstar", position: "iOS 工程师", kind: "appointment", time: nil, label: "Interview"),
     ] }

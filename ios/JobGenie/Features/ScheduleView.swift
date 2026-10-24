@@ -41,6 +41,12 @@ struct ScheduleView: View {
                 }
             }
         }.localizedNavigationTitle("日程与待办")
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                NavigationLink { RemindersView() } label: { Label("提醒", systemImage: "bell") }
+                    .accessibilityIdentifier("reminders.open")
+            }
+        }
         .sheet(item: $editor) { ScheduleEditor(target: $0) }
         .onChange(of: scenePhase) { _, phase in if phase == .active { Task { await model.refreshSchedule() } } }
         .refreshable { await model.refreshSchedule() }.task { await model.refreshSchedule() }

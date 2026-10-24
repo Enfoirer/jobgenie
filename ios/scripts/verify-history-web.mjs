@@ -7,7 +7,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
 
-export async function verifyHistoryWeb({ base, jobID, foreignJobID, foreignHistoryID, work }) {
+export async function verifyHistoryWeb({ base, jobID, foreignJobID, foreignHistoryID, work, reminder }) {
   const profile = await mkdtemp(join(tmpdir(), 'jobgenie-native-web-'));
   let chrome, socket;
   const pending = new Map();
@@ -55,6 +55,27 @@ export async function verifyHistoryWeb({ base, jobID, foreignJobID, foreignHisto
     await send('Page.navigate', { url: `${base}/login` });
     await wait(`(() => { const f=document.querySelector('form'); return f && Object.keys(f).some(k => k.startsWith('__reactProps') && typeof f[k].onSubmit === 'function'); })()`, 'login hydration');
     await fill('#email', 'ios-acceptance@example.test'); await fill('#password', 'ios-local-test-password'); await click('Sign in');
+    if (reminder) {
+      await wait(`location.pathname === '/dashboard/jobs'`, 'login redirect');
+      await send('Page.navigate', { url: `${base}/dashboard/reminders` });
+      await wait(`document.querySelector('[aria-label="Reminder list"]')?.getAttribute('aria-busy') === 'false'`, 'reminders loaded');
+      await click('Handled');
+      const scope = kind => `document.querySelector('[data-reminder-id="${reminder.historyID}:${kind}:0"]')`;
+      await wait(`${scope('appointment')}?.textContent.includes('Read')`, 'native read visible on web');
+      assert(await evaluate(`${scope('deadline')}.textContent.includes('Cancelled')`));
+      assert.equal(await evaluate('document.querySelector("select[name=leadMinutes]").value'), '1440');
+      const request = (path, body) => evaluate(`fetch(${JSON.stringify(path)}, {method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(${JSON.stringify(body)})}).then(r => r.status)`);
+      assert.equal(await request(`/api/jobs/${jobID}/status-history/${reminder.historyID}`, { scheduledTime: new Date(Date.now() + 45 * 60000).toISOString(), deadline: null }), 200);
+      assert.equal(await request('/api/reminders', { historyId: reminder.historyID, kind: 'appointment', revision: 0, action: 'read' }), 409);
+      assert.equal(await request('/api/reminders', { historyId: foreignHistoryID, kind: 'appointment', revision: 0, action: 'read' }), 404);
+      await send('Page.reload');
+      await wait(`document.querySelector('[data-reminder-id="${reminder.historyID}:appointment:1"]')?.textContent.includes('Unread')`, 'new reminder after web reschedule');
+      assert.equal((await fetch(`${base}/api/reminders`)).status, 401);
+      const screenshot = await send('Page.captureScreenshot', { format: 'png' });
+      await writeFile(join(work, 'web-reminders.png'), Buffer.from(screenshot.data, 'base64'));
+      console.log('PASS: native read/cancel/settings visible on web; web reschedule resets only the occurrence; stale and foreign actions rejected.');
+      return;
+    }
     const card = `document.querySelector('[data-rfd-draggable-id="${jobID}"]')`;
     await wait(`!!${card}`, 'native-created application');
     assert.match(await evaluate(`${card}.closest('.shadow').querySelector('h2').textContent`), /Interviewing/);

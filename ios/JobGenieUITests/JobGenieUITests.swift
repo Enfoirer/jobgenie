@@ -120,6 +120,90 @@ final class JobGenieUITests: XCTestCase {
         reveal(connect, in: app); XCTAssertEqual(connect.label, "Connect Gmail"); XCTAssertFalse(connect.isEnabled)
         app.tabBars.buttons["Account"].tap(); app.buttons["account.signout"].tap(); app.buttons["Confirm sign out"].tap()
     }
+    func testDemoRemindersReadSnoozeCancelSettingsAndEnglish() {
+        let app = XCUIApplication()
+        app.launchArguments = ["-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN", "-jobgenie.language", "system"]
+        app.launchEnvironment["JOBGENIE_TEST_BASE_URL"] = "http://127.0.0.1:39998"
+        app.launch(); XCTAssertTrue(app.buttons["login.demo"].waitForExistence(timeout: 10)); app.buttons["login.demo"].tap()
+        app.tabBars.buttons["日程"].tap(); app.buttons["reminders.open"].tap()
+        let read = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "reminder.read.")).firstMatch
+        XCTAssertTrue(read.waitForExistence(timeout: 10)); reveal(read, in: app); read.tap()
+        XCTAssertTrue(app.staticTexts["reminders.empty"].waitForExistence(timeout: 5))
+        app.buttons["reminders.filter"].tap(); app.buttons["已处理"].tap()
+        XCTAssertTrue(app.staticTexts["已读"].exists)
+        app.tabBars.buttons["我的"].tap(); app.buttons["account.signout"].tap(); app.buttons["确认退出"].tap()
+        app.buttons["login.demo"].tap(); app.tabBars.buttons["日程"].tap(); app.buttons["reminders.open"].tap()
+        let snooze = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "reminder.snooze.")).firstMatch
+        reveal(snooze, in: app); snooze.tap()
+        app.buttons["reminders.filter"].tap(); app.buttons["已延后"].tap()
+        XCTAssertTrue(app.staticTexts["再次提醒时间"].exists)
+        let cancel = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "reminder.cancel.")).firstMatch
+        reveal(cancel, in: app); cancel.tap(); app.buttons["确认取消提醒"].tap()
+        app.buttons["reminders.filter"].tap(); app.buttons["已处理"].tap()
+        XCTAssertTrue(app.staticTexts["已取消提醒"].waitForExistence(timeout: 5))
+        app.buttons["reminders.settings"].tap()
+        app.buttons["reminders.lead"].tap(); app.buttons["提前 24 小时"].tap()
+        app.buttons["reminders.saveSettings"].tap()
+        XCTAssertTrue(app.buttons["reminders.saveSettings"].waitForNonExistence(timeout: 10))
+        let screenshot = XCTAttachment(screenshot: app.screenshot()); screenshot.name = "Reminders"; screenshot.lifetime = .keepAlways; add(screenshot)
+        app.tabBars.buttons["我的"].tap(); app.buttons["language.picker"].tap(); app.buttons["English"].tap()
+        app.tabBars.buttons["Schedule"].tap(); XCTAssertTrue(app.navigationBars["Reminders"].exists)
+        XCTAssertTrue(app.staticTexts["Reminder cancelled"].exists)
+        app.tabBars.buttons["Account"].tap(); app.buttons["account.signout"].tap(); app.buttons["Confirm sign out"].tap()
+    }
+    private func reminderLogin() throws -> XCUIApplication {
+        guard let url = ProcessInfo.processInfo.environment["JOBGENIE_TEST_BASE_URL"] else { throw XCTSkip("Run isolated backend acceptance") }
+        let app = XCUIApplication()
+        app.launchArguments = ["-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN", "-jobgenie.language", "system"]
+        app.launchEnvironment["JOBGENIE_TEST_BASE_URL"] = url
+        app.launch(); XCTAssertTrue(app.textFields["login.email"].waitForExistence(timeout: 15))
+        app.textFields["login.email"].tap(); app.textFields["login.email"].typeText("ios-acceptance@example.test")
+        app.secureTextFields["login.password"].tap(); app.secureTextFields["login.password"].typeText("ios-local-test-password")
+        app.buttons["login.submit"].tap(); XCTAssertTrue(app.buttons["jobs.add"].waitForExistence(timeout: 20))
+        app.tabBars.buttons["日程"].tap(); app.buttons["reminders.open"].tap()
+        return app
+    }
+    func testRealRemindersBackend() throws {
+        let app = try reminderLogin()
+        let appointment = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@ AND identifier CONTAINS %@", "reminder.read.", ":appointment:")).firstMatch
+        XCTAssertTrue(appointment.waitForExistence(timeout: 15)); reveal(appointment, in: app); appointment.tap()
+        XCTAssertTrue(appointment.waitForNonExistence(timeout: 15))
+        let snooze = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "reminder.snooze.")).firstMatch
+        reveal(snooze, in: app); snooze.tap()
+        XCTAssertTrue(app.staticTexts["reminders.empty"].waitForExistence(timeout: 15))
+        app.buttons["reminders.filter"].tap(); app.buttons["已延后"].tap()
+        XCTAssertTrue(app.staticTexts["再次提醒时间"].exists)
+        app.terminate(); app.launch()
+        XCTAssertTrue(app.buttons["jobs.add"].waitForExistence(timeout: 20))
+        app.tabBars.buttons["日程"].tap(); app.buttons["reminders.open"].tap()
+        app.buttons["reminders.filter"].tap(); app.buttons["已延后"].tap()
+        let cancel = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "reminder.cancel.")).firstMatch
+        XCTAssertTrue(cancel.waitForExistence(timeout: 15)); reveal(cancel, in: app); cancel.tap(); app.buttons["确认取消提醒"].tap()
+        XCTAssertTrue(app.staticTexts["reminders.empty"].waitForExistence(timeout: 15))
+        app.buttons["reminders.settings"].tap()
+        app.buttons["reminders.lead"].tap(); app.buttons["提前 24 小时"].tap()
+        app.buttons["reminders.saveSettings"].tap()
+        XCTAssertTrue(app.buttons["reminders.saveSettings"].waitForNonExistence(timeout: 15))
+        app.buttons["reminders.filter"].tap(); app.buttons["已处理"].tap()
+        XCTAssertTrue(app.staticTexts["已读"].waitForExistence(timeout: 10)); XCTAssertTrue(app.staticTexts["已取消提醒"].exists)
+        XCTAssertFalse(app.staticTexts["Private Other User"].exists)
+        app.tabBars.buttons["我的"].tap(); app.buttons["account.signout"].tap(); app.buttons["确认退出"].tap()
+    }
+    func testWebReminderRescheduleAndNativeClear() throws {
+        let app = try reminderLogin()
+        let read = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@ AND identifier CONTAINS %@", "reminder.read.", ":appointment:1")).firstMatch
+        XCTAssertTrue(read.waitForExistence(timeout: 15))
+        XCTAssertFalse(app.staticTexts["Private Other User"].exists)
+        let detail = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "reminder.detail.")).firstMatch
+        reveal(detail, in: app); detail.tap()
+        XCTAssertTrue(app.navigationBars["申请详情"].waitForExistence(timeout: 10))
+        let edit = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "history.schedule.appointment.")).firstMatch
+        reveal(edit, in: app); edit.tap(); app.buttons["scheduleEditor.clear"].tap(); app.buttons["scheduleEditor.save"].tap()
+        XCTAssertTrue(app.buttons["scheduleEditor.save"].waitForNonExistence(timeout: 15))
+        app.navigationBars.buttons.firstMatch.tap()
+        XCTAssertTrue(app.staticTexts["reminders.empty"].waitForExistence(timeout: 15))
+        app.tabBars.buttons["我的"].tap(); app.buttons["account.signout"].tap(); app.buttons["确认退出"].tap()
+    }
     func testRealMailBackend() throws {
         guard let url = ProcessInfo.processInfo.environment["JOBGENIE_TEST_BASE_URL"] else { throw XCTSkip("Run isolated backend acceptance") }
         let app = XCUIApplication()
