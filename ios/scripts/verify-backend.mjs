@@ -11,6 +11,7 @@ import { setTimeout as delay } from 'node:timers/promises';
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import { MongoMemoryReplSet } from 'mongodb-memory-server';
+import UploadedFile from '../../lib/models/UploadedFile.js';
 import User from '../../lib/models/User.js';
 import Job from '../../lib/models/Job.js';
 import StatusHistory from '../../lib/models/StatusHistory.js';
@@ -71,7 +72,7 @@ try {
 with open(sys.argv[1],'rb') as f: data=plistlib.load(f)
 def visit(node):
  if isinstance(node,dict):
-  if node.get('BlueprintName') == 'JobGenieUITests' or 'JobGenieUITests.xctest' in str(node.get('TestBundlePath','')):
+  if node.get('BlueprintName') in ['JobGenieUITests', 'JobGenieTests'] or any(name in str(node.get('TestBundlePath','')) for name in ['JobGenieUITests.xctest', 'JobGenieTests.xctest']):
    node.setdefault('EnvironmentVariables',{})['JOBGENIE_TEST_BASE_URL']=sys.argv[3]
   for value in node.values(): visit(value)
  elif isinstance(node,list):
@@ -79,74 +80,92 @@ def visit(node):
 visit(data)
 with open(sys.argv[2],'wb') as f: plistlib.dump(data,f)
 `, join(products, files[0]), runFile, base]);
-  if (!process.argv.includes('--reminders-only')) {
-    console.log('Disposable backend ready; running native login/application/history/relaunch/logout acceptance.');
-    await run('xcodebuild', ['test-without-building', '-xctestrun', runFile, '-destination', `platform=iOS Simulator,id=${device}`, '-parallel-testing-enabled', 'NO', '-only-testing:JobGenieUITests/JobGenieUITests/testRealBackend', '-resultBundlePath', join(work, 'backend.xcresult')]);
-    const jobs = await Job.find({ userId: user._id });
-    assert.equal(jobs.length, 1, 'Native test must execute rather than skip');
-    assert.equal(jobs[0].company, 'Native Acceptance');
-    assert.equal(jobs[0].location, 'Shanghai');
-    assert.equal(jobs[0].status, 'interviewing');
-    assert.equal(await StatusHistory.countDocuments({ jobId: jobs[0]._id, userId: user._id, deletedAt: null }), 2);
-    assert.equal(await StatusHistory.countDocuments({ jobId: jobs[0]._id, userId: user._id, deletedAt: { $ne: null } }), 1);
-    assert.equal((await StatusHistory.findOne({ jobId: jobs[0]._id, notes: 'Native interview' })).interviewStage, 'Assessment');
-    const nativeHistory = await StatusHistory.findOne({ jobId: jobs[0]._id, notes: 'Native interview' });
-    assert(nativeHistory.scheduledTime instanceof Date);
-    assert(nativeHistory.deadline instanceof Date);
-    assert.equal(nativeHistory.reminderRevision.appointment, 1);
-    assert.equal(nativeHistory.reminderRevision.deadline, 1);
-    assert.equal(await Job.countDocuments({ userId: foreign._id }), 1);
-    console.log('PASS: native history create/edit/delete, correct fallback, Keychain relaunch persistence and local sign-out.');
-    await verifyHistoryWeb({ base, jobID: String(jobs[0]._id), foreignJobID: String(foreignJob._id), foreignHistoryID: String(foreignHistory._id), work });
-    assert.equal((await Job.findById(jobs[0]._id)).status, 'offer');
-    assert.equal((await StatusHistory.findById(foreignHistory._id)).status, 'applied');
-    assert.equal(await StatusHistory.countDocuments({ jobId: foreignJob._id }), 1);
-    assert.equal(await StatusHistory.countDocuments({ jobId: jobs[0]._id }), 3);
-    await run('xcodebuild', ['test-without-building', '-xctestrun', runFile, '-destination', `platform=iOS Simulator,id=${device}`, '-parallel-testing-enabled', 'NO', '-only-testing:JobGenieUITests/JobGenieUITests/testWebHistoryRefresh', '-resultBundlePath', join(work, 'web-to-native.xcresult')]);
-    const cleared = await StatusHistory.findById(nativeHistory._id);
-    assert.equal(cleared.scheduledTime, null);
-    assert.equal(cleared.deadline, null);
-    assert.equal((await Job.findById(jobs[0]._id)).status, 'offer');
-    console.log('PASS: native schedule persisted across relaunch; web reschedule/clear visible in App; App clear persisted without changing Offer.');
-    await Promise.all([MailAccount.init(), ProcessedEmail.init(), PendingItem.init()]);
-    await User.updateOne({ _id: user._id }, { $set: { syncMode: 'strict' } });
-    const account = await MailAccount.create({ userId: user._id, provider: 'gmail', emailAddress: 'native-mail@example.test', accessToken: 'test-only-expired', expiresAt: new Date(0) });
-    await MailAccount.create({ userId: foreign._id, provider: 'gmail', emailAddress: 'foreign-mail@example.test', accessToken: 'test-only-expired', expiresAt: new Date(0) });
-    const receivedAt = new Date(Date.now() - 60000);
-    await ProcessedEmail.create({ userId: user._id, accountId: account._id, provider: 'gmail', messageId: 'native-mail-fixture', status: 'failed', attempts: 1,
-      receivedAt, raw: { id: 'native-mail-fixture', subject: 'Application received at Native Mail Co', from: 'hiring@example.test', receivedAt,
-        bodyText: 'Thank you for applying. We have received your application.\nCompany: Native Mail Co\nPosition: Engineer' } });
-    await PendingItem.create({ userId: user._id, accountId: account._id, provider: 'gmail', messageId: 'ignore-fixture', subject: 'Ignore this fixture', status: 'pending' });
-    await run('xcodebuild', ['test-without-building', '-xctestrun', runFile, '-destination', `platform=iOS Simulator,id=${device}`, '-parallel-testing-enabled', 'NO', '-only-testing:JobGenieUITests/JobGenieUITests/testRealMailBackend', '-resultBundlePath', join(work, 'mail.xcresult')]);
-    const processed = await ProcessedEmail.findOne({ messageId: 'native-mail-fixture' });
-    assert.equal(processed.status, 'succeeded'); assert.equal(processed.attempts, 2);
-    const reviewed = await PendingItem.findOne({ messageId: 'native-mail-fixture' });
-    assert.equal(reviewed.status, 'accepted');
-    assert.equal(await StatusHistory.countDocuments({ jobId: reviewed.jobId }), 1);
-    assert.equal((await Job.findById(reviewed.jobId)).company, 'Native Mail Co');
-    assert.equal((await PendingItem.findOne({ messageId: 'ignore-fixture' })).status, 'ignored');
-    assert.equal((await MailAccount.findById(account._id)).lastSync.errorStages[0], 'ingest');
-    assert.equal(await Job.countDocuments({ userId: foreign._id }), 1);
-    console.log('PASS: native retry, partial sync result, explicit application review, ignore, relaunch persistence and mailbox owner isolation. No external provider calls.');
+  if (process.argv.includes('--resources-only')) {
+    const { job } = await createJob(user._id, { company: 'Native Analytics', position: 'Engineer', dateApplied: new Date(Date.now() - 2 * 86400000).toISOString() });
+    await addHistory(user._id, job._id, { status: 'interviewing', date: new Date(Date.now() - 86400000).toISOString() });
+    await addHistory(user._id, job._id, { status: 'offer', date: new Date(Date.now() - 60000).toISOString() });
+    await createJob(user._id, { company: 'Old Application', position: 'Engineer', dateApplied: '2020-01-01' });
+    const privateFile = await UploadedFile.create({ userId: foreign._id, name: 'private.pdf', type: 'application/pdf', size: '1 KB', sizeBytes: 7, fileData: Buffer.from('private') });
+    console.log('Running native upload/download and analytics against the disposable backend.');
+    await run('xcodebuild', ['test-without-building', '-xctestrun', runFile, '-destination', `platform=iOS Simulator,id=${device}`, '-parallel-testing-enabled', 'NO', '-only-testing:JobGenieTests/ResourceTests/testRealResourcesAPI', '-resultBundlePath', join(work, 'resources-api.xcresult')]);
+    const files = await UploadedFile.find({ userId: user._id }).select('+fileData');
+    assert.equal(files.length, 1); assert.equal(files[0].name, 'native-resume.pdf'); assert(files[0].fileData.includes(Buffer.from('%PDF-1.4')));
+    await verifyHistoryWeb({ base, work, resources: { fileID: String(files[0]._id), foreignFileID: String(privateFile._id), bytes: files[0].fileData.toString('base64') } });
+    await run('xcodebuild', ['test-without-building', '-xctestrun', runFile, '-destination', `platform=iOS Simulator,id=${device}`, '-parallel-testing-enabled', 'NO', '-only-testing:JobGenieUITests/JobGenieUITests/testRealResourcesUI', '-resultBundlePath', join(work, 'resources-ui.xcresult')]);
+    const roundTrip = await UploadedFile.find({ userId: user._id }).select('+fileData');
+    assert.equal(roundTrip.length, 2);
+    assert(roundTrip[0].fileData.equals(roundTrip[1].fileData), 'Save to Files and picker upload must preserve exact bytes');
+    console.log('PASS: native multipart upload, exact binary download, statistics, web consistency, preview/export UI, relaunch persistence and owner isolation.');
+  } else {
+    if (!process.argv.includes('--reminders-only')) {
+      console.log('Disposable backend ready; running native login/application/history/relaunch/logout acceptance.');
+      await run('xcodebuild', ['test-without-building', '-xctestrun', runFile, '-destination', `platform=iOS Simulator,id=${device}`, '-parallel-testing-enabled', 'NO', '-only-testing:JobGenieUITests/JobGenieUITests/testRealBackend', '-resultBundlePath', join(work, 'backend.xcresult')]);
+      const jobs = await Job.find({ userId: user._id });
+      assert.equal(jobs.length, 1, 'Native test must execute rather than skip');
+      assert.equal(jobs[0].company, 'Native Acceptance');
+      assert.equal(jobs[0].location, 'Shanghai');
+      assert.equal(jobs[0].status, 'interviewing');
+      assert.equal(await StatusHistory.countDocuments({ jobId: jobs[0]._id, userId: user._id, deletedAt: null }), 2);
+      assert.equal(await StatusHistory.countDocuments({ jobId: jobs[0]._id, userId: user._id, deletedAt: { $ne: null } }), 1);
+      assert.equal((await StatusHistory.findOne({ jobId: jobs[0]._id, notes: 'Native interview' })).interviewStage, 'Assessment');
+      const nativeHistory = await StatusHistory.findOne({ jobId: jobs[0]._id, notes: 'Native interview' });
+      assert(nativeHistory.scheduledTime instanceof Date);
+      assert(nativeHistory.deadline instanceof Date);
+      assert.equal(nativeHistory.reminderRevision.appointment, 1);
+      assert.equal(nativeHistory.reminderRevision.deadline, 1);
+      assert.equal(await Job.countDocuments({ userId: foreign._id }), 1);
+      console.log('PASS: native history create/edit/delete, correct fallback, Keychain relaunch persistence and local sign-out.');
+      await verifyHistoryWeb({ base, jobID: String(jobs[0]._id), foreignJobID: String(foreignJob._id), foreignHistoryID: String(foreignHistory._id), work });
+      assert.equal((await Job.findById(jobs[0]._id)).status, 'offer');
+      assert.equal((await StatusHistory.findById(foreignHistory._id)).status, 'applied');
+      assert.equal(await StatusHistory.countDocuments({ jobId: foreignJob._id }), 1);
+      assert.equal(await StatusHistory.countDocuments({ jobId: jobs[0]._id }), 3);
+      await run('xcodebuild', ['test-without-building', '-xctestrun', runFile, '-destination', `platform=iOS Simulator,id=${device}`, '-parallel-testing-enabled', 'NO', '-only-testing:JobGenieUITests/JobGenieUITests/testWebHistoryRefresh', '-resultBundlePath', join(work, 'web-to-native.xcresult')]);
+      const cleared = await StatusHistory.findById(nativeHistory._id);
+      assert.equal(cleared.scheduledTime, null);
+      assert.equal(cleared.deadline, null);
+      assert.equal((await Job.findById(jobs[0]._id)).status, 'offer');
+      console.log('PASS: native schedule persisted across relaunch; web reschedule/clear visible in App; App clear persisted without changing Offer.');
+      await Promise.all([MailAccount.init(), ProcessedEmail.init(), PendingItem.init()]);
+      await User.updateOne({ _id: user._id }, { $set: { syncMode: 'strict' } });
+      const account = await MailAccount.create({ userId: user._id, provider: 'gmail', emailAddress: 'native-mail@example.test', accessToken: 'test-only-expired', expiresAt: new Date(0) });
+      await MailAccount.create({ userId: foreign._id, provider: 'gmail', emailAddress: 'foreign-mail@example.test', accessToken: 'test-only-expired', expiresAt: new Date(0) });
+      const receivedAt = new Date(Date.now() - 60000);
+      await ProcessedEmail.create({ userId: user._id, accountId: account._id, provider: 'gmail', messageId: 'native-mail-fixture', status: 'failed', attempts: 1,
+        receivedAt, raw: { id: 'native-mail-fixture', subject: 'Application received at Native Mail Co', from: 'hiring@example.test', receivedAt,
+          bodyText: 'Thank you for applying. We have received your application.\nCompany: Native Mail Co\nPosition: Engineer' } });
+      await PendingItem.create({ userId: user._id, accountId: account._id, provider: 'gmail', messageId: 'ignore-fixture', subject: 'Ignore this fixture', status: 'pending' });
+      await run('xcodebuild', ['test-without-building', '-xctestrun', runFile, '-destination', `platform=iOS Simulator,id=${device}`, '-parallel-testing-enabled', 'NO', '-only-testing:JobGenieUITests/JobGenieUITests/testRealMailBackend', '-resultBundlePath', join(work, 'mail.xcresult')]);
+      const processed = await ProcessedEmail.findOne({ messageId: 'native-mail-fixture' });
+      assert.equal(processed.status, 'succeeded'); assert.equal(processed.attempts, 2);
+      const reviewed = await PendingItem.findOne({ messageId: 'native-mail-fixture' });
+      assert.equal(reviewed.status, 'accepted');
+      assert.equal(await StatusHistory.countDocuments({ jobId: reviewed.jobId }), 1);
+      assert.equal((await Job.findById(reviewed.jobId)).company, 'Native Mail Co');
+      assert.equal((await PendingItem.findOne({ messageId: 'ignore-fixture' })).status, 'ignored');
+      assert.equal((await MailAccount.findById(account._id)).lastSync.errorStages[0], 'ingest');
+      assert.equal(await Job.countDocuments({ userId: foreign._id }), 1);
+      console.log('PASS: native retry, partial sync result, explicit application review, ignore, relaunch persistence and mailbox owner isolation. No external provider calls.');
+    }
+    console.log('Running native reminder and web interoperability acceptance.');
+    const { job: reminderJob } = await createJob(user._id, { company: 'Native Reminder', position: 'Engineer', dateApplied: '2020-01-01' });
+    const { statusHistory: reminderEntry } = await addHistory(user._id, reminderJob._id, { status: 'interviewing', date: '2020-02-01', scheduledTime: new Date(Date.now() + 30 * 60000).toISOString(), deadline: new Date(Date.now() + 40 * 60000).toISOString() });
+    const { statusHistory: privateReminder } = await addHistory(foreign._id, foreignJob._id, { status: 'interviewing', scheduledTime: new Date(Date.now() + 30 * 60000).toISOString() });
+    await run('xcodebuild', ['test-without-building', '-xctestrun', runFile, '-destination', `platform=iOS Simulator,id=${device}`, '-parallel-testing-enabled', 'NO', '-only-testing:JobGenieUITests/JobGenieUITests/testRealRemindersBackend', '-resultBundlePath', join(work, 'reminders.xcresult')]);
+    const savedReminder = await StatusHistory.findById(reminderEntry._id);
+    assert.equal(savedReminder.reminderState.appointment.status, 'read');
+    assert.equal(savedReminder.reminderState.deadline.status, 'cancelled');
+    assert.equal((await User.findById(user._id)).reminderSettings.leadMinutes, 1440);
+    assert.equal((await Job.findById(reminderJob._id)).status, 'interviewing');
+    assert.equal((await StatusHistory.findById(privateReminder._id)).reminderState?.appointment?.status, undefined);
+    await verifyHistoryWeb({ base, jobID: String(reminderJob._id), foreignJobID: String(foreignJob._id), foreignHistoryID: String(privateReminder._id), work, reminder: { historyID: String(reminderEntry._id) } });
+    await run('xcodebuild', ['test-without-building', '-xctestrun', runFile, '-destination', `platform=iOS Simulator,id=${device}`, '-parallel-testing-enabled', 'NO', '-only-testing:JobGenieUITests/JobGenieUITests/testWebReminderRescheduleAndNativeClear', '-resultBundlePath', join(work, 'web-reminders-to-native.xcresult')]);
+    const clearedReminder = await StatusHistory.findById(reminderEntry._id);
+    assert.equal(clearedReminder.scheduledTime, null); assert.equal(clearedReminder.deadline, null);
+    assert.equal(clearedReminder.reminderRevision.appointment, 2);
+    assert.equal((await Job.findById(reminderJob._id)).status, 'interviewing');
+    console.log('PASS: native reminder read/snooze/cancel/relaunch, web interoperability, invalidation after rescheduling/clearing and owner isolation.');
   }
-  console.log('Running native reminder and web interoperability acceptance.');
-  const { job: reminderJob } = await createJob(user._id, { company: 'Native Reminder', position: 'Engineer', dateApplied: '2020-01-01' });
-  const { statusHistory: reminderEntry } = await addHistory(user._id, reminderJob._id, { status: 'interviewing', date: '2020-02-01', scheduledTime: new Date(Date.now() + 30 * 60000).toISOString(), deadline: new Date(Date.now() + 40 * 60000).toISOString() });
-  const { statusHistory: privateReminder } = await addHistory(foreign._id, foreignJob._id, { status: 'interviewing', scheduledTime: new Date(Date.now() + 30 * 60000).toISOString() });
-  await run('xcodebuild', ['test-without-building', '-xctestrun', runFile, '-destination', `platform=iOS Simulator,id=${device}`, '-parallel-testing-enabled', 'NO', '-only-testing:JobGenieUITests/JobGenieUITests/testRealRemindersBackend', '-resultBundlePath', join(work, 'reminders.xcresult')]);
-  const savedReminder = await StatusHistory.findById(reminderEntry._id);
-  assert.equal(savedReminder.reminderState.appointment.status, 'read');
-  assert.equal(savedReminder.reminderState.deadline.status, 'cancelled');
-  assert.equal((await User.findById(user._id)).reminderSettings.leadMinutes, 1440);
-  assert.equal((await Job.findById(reminderJob._id)).status, 'interviewing');
-  assert.equal((await StatusHistory.findById(privateReminder._id)).reminderState?.appointment?.status, undefined);
-  await verifyHistoryWeb({ base, jobID: String(reminderJob._id), foreignJobID: String(foreignJob._id), foreignHistoryID: String(privateReminder._id), work, reminder: { historyID: String(reminderEntry._id) } });
-  await run('xcodebuild', ['test-without-building', '-xctestrun', runFile, '-destination', `platform=iOS Simulator,id=${device}`, '-parallel-testing-enabled', 'NO', '-only-testing:JobGenieUITests/JobGenieUITests/testWebReminderRescheduleAndNativeClear', '-resultBundlePath', join(work, 'web-reminders-to-native.xcresult')]);
-  const clearedReminder = await StatusHistory.findById(reminderEntry._id);
-  assert.equal(clearedReminder.scheduledTime, null); assert.equal(clearedReminder.deadline, null);
-  assert.equal(clearedReminder.reminderRevision.appointment, 2);
-  assert.equal((await Job.findById(reminderJob._id)).status, 'interviewing');
-  console.log('PASS: native reminder read/snooze/cancel/relaunch, web interoperability, invalidation after rescheduling/clearing and owner isolation.');
   console.log(`Results: ${work}`);
 } catch (error) {
   console.error(`Acceptance failed. Logs: ${work}`);

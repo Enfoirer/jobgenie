@@ -16,6 +16,10 @@ struct AccountView: View {
                     VStack(alignment: .leading, spacing: 5) { accountName.font(.headline); Text(model.user?.email ?? "").font(.subheadline).foregroundStyle(.secondary) }
                 }.padding(.vertical, 10)
             }
+            Section("数据与文件") {
+                NavigationLink { AnalyticsView() } label: { Label("统计分析", systemImage: "chart.bar") }.accessibilityIdentifier("analytics.open")
+                NavigationLink { AttachmentsView() } label: { Label("附件", systemImage: "paperclip") }.accessibilityIdentifier("attachments.open")
+            }
             Section("偏好设置") {
                 LanguagePicker()
                 NavigationLink { RemindersView() } label: { Label("提醒", systemImage: "bell") }
@@ -23,7 +27,7 @@ struct AccountView: View {
             }
             Section("当前版本") {
                 LabeledContent("JobGenie for iPhone", value: "0.1.0")
-                Text("支持申请与历史管理、日程编辑、App 内提醒、邮箱同步、人工确认和邮箱授权。统计和后台推送将逐步加入。") .font(.subheadline).foregroundStyle(.secondary)
+                Text("支持申请与历史管理、日程编辑、App 内提醒、邮箱操作、统计分析和附件。后台推送将逐步加入。") .font(.subheadline).foregroundStyle(.secondary)
                 if model.isDemo { Text("演示数据只在本次体验中保留，不会写入真实账号。") .font(.footnote).foregroundStyle(Brand.teal) }
             }
             if !model.isDemo {

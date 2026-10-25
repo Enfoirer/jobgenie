@@ -7,7 +7,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
 
-export async function verifyHistoryWeb({ base, jobID, foreignJobID, foreignHistoryID, work, reminder }) {
+export async function verifyHistoryWeb({ base, jobID, foreignJobID, foreignHistoryID, work, reminder, resources }) {
   const profile = await mkdtemp(join(tmpdir(), 'jobgenie-native-web-'));
   let chrome, socket;
   const pending = new Map();
@@ -55,6 +55,24 @@ export async function verifyHistoryWeb({ base, jobID, foreignJobID, foreignHisto
     await send('Page.navigate', { url: `${base}/login` });
     await wait(`(() => { const f=document.querySelector('form'); return f && Object.keys(f).some(k => k.startsWith('__reactProps') && typeof f[k].onSubmit === 'function'); })()`, 'login hydration');
     await fill('#email', 'ios-acceptance@example.test'); await fill('#password', 'ios-local-test-password'); await click('Sign in');
+    if (resources) {
+      await wait(`location.pathname === '/dashboard/jobs'`, 'login redirect');
+      const stats = await evaluate(`fetch('/api/stats?days=30&timeZone=Asia%2FShanghai').then(r=>r.json())`);
+      assert.equal(stats.currentStatus.total, 2); assert.equal(stats.cohort.total, 1);
+      assert.equal(stats.cohort.conversion.interviewToOffer.percent, 100);
+      const files = await evaluate(`fetch('/api/uploads').then(r=>r.json())`);
+      assert.deepEqual(files.files.map(f=>f.id), [resources.fileID]);
+      const bytes = await evaluate(`fetch('/api/uploads/download/${resources.fileID}').then(r=>r.arrayBuffer()).then(b=>btoa(String.fromCharCode(...new Uint8Array(b))))`);
+      assert.equal(bytes, resources.bytes);
+      assert.equal(await evaluate(`fetch('/api/uploads/download/${resources.foreignFileID}').then(r=>r.status)`), 404);
+      for (const path of ['/api/uploads', '/api/stats', `/api/uploads/download/${resources.fileID}`]) assert.equal((await fetch(base + path)).status, 401);
+      await send('Page.navigate', { url: `${base}/dashboard/upload` });
+      await wait(`document.body.textContent.includes('native-resume.pdf')`, 'native attachment visible on web');
+      const screenshot = await send('Page.captureScreenshot', { format: 'png' });
+      await writeFile(join(work, 'web-attachments.png'), Buffer.from(screenshot.data, 'base64'));
+      console.log('PASS: native upload visible on web, exact file bytes, matching statistics and foreign/anonymous access rejected.');
+      return;
+    }
     if (reminder) {
       await wait(`location.pathname === '/dashboard/jobs'`, 'login redirect');
       await send('Page.navigate', { url: `${base}/dashboard/reminders` });

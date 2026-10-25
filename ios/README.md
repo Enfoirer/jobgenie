@@ -67,6 +67,8 @@ JobGenie/
     Mail.swift           同步结果、人工确认模型与接口
     MailAuthorization.swift 系统邮箱授权与回跳校验
     Reminders.swift      提醒模型、设置与操作接口
+    Analytics.swift      日期范围、统计模型和演示统计
+    Attachments.swift    附件上传下载、文件限制与预览缓存
   Features/              原生 SwiftUI 页面和组件
 JobGenieTests/           模型、接口、存储边界与状态测试
 JobGenieUITests/         模拟器交互及真实本地后端验收
@@ -87,7 +89,7 @@ xcodebuild -project ios/JobGenie.xcodeproj -scheme JobGenie \
   -parallel-testing-enabled NO test
 ```
 
-普通测试覆盖接口解码、日期边界、表单校验、Cookie 域名/过期/分片、401/429、HTML 响应拒绝、会话失效清理、邮箱授权、提醒和演示页面交互。`testRealBackend`、`testWebHistoryRefresh`、`testRealMailBackend`、`testRealRemindersBackend`、`testWebReminderRescheduleAndNativeClear` 在普通运行中显式跳过，须执行下述隔离集成命令：
+普通测试覆盖接口解码、日期边界、表单校验、Cookie 域名/过期/分片、401/429、HTML 响应拒绝、会话失效清理、邮箱授权、提醒和演示页面交互。`testRealBackend`、`testWebHistoryRefresh`、`testRealMailBackend`、`testRealRemindersBackend`、`testWebReminderRescheduleAndNativeClear`、`testRealResourcesUI` 和核心测试 `ResourceTests/testRealResourcesAPI` 在普通运行中显式跳过，须执行下述隔离集成命令：
 
 ```sh
 MONGODB_URI=mongodb://127.0.0.1:27017/jobgenie-build-only \
@@ -95,6 +97,8 @@ MONGODB_URI=mongodb://127.0.0.1:27017/jobgenie-build-only \
 IOS_SIMULATOR_ID="$IOS_SIMULATOR_ID" node ios/scripts/verify-backend.mjs
 # 仅复跑提醒及网页互通（仍创建独立临时后端）：
 IOS_SIMULATOR_ID="$IOS_SIMULATOR_ID" node ios/scripts/verify-backend.mjs --reminders-only
+# 仅复跑统计与附件：
+IOS_SIMULATOR_ID="$IOS_SIMULATOR_ID" node ios/scripts/verify-backend.mjs --resources-only
 ```
 
 脚本创建临时 MongoDB 副本集、临时用户及本地 Next.js 服务，将仅本次测试的 localhost 地址传给 Debug App。验证真实登录、历史和日程编辑、网页互通、重启持久化、失败邮件重试、人工确认与忽略、同步部分失败提示和权限隔离。数据库断言确认邮件只生成一条申请历史。测试不会连接生产数据库或真实邮箱服务。日志和 xcresult 保存在脚本输出的临时目录。
@@ -113,10 +117,12 @@ IOS_SIMULATOR_ID="$IOS_SIMULATOR_ID" node ios/scripts/verify-backend.mjs --remin
 
 2026-10-25 提醒增量验收：55 项核心测试、6 项演示/语言 UI、5 项真实隔离后端 UI，共 66 个不同测试分批通过；258 项服务端测试、Debug 和未签名 iPhone Release 构建通过。已验证网页/App 双向互通、重启持久化、改期和清除后失效、旧版本拒绝及账号隔离。详见 [提醒验收](../docs/ios-reminders-acceptance.md) 和 [界面截图](docs/iphone-reminders.png)。APNs 尚未接入。
 
+统计与附件已接入“我的 → 数据与文件”，沿用网页统计口径和账号级附件库，支持上传、原生预览和存储到“文件”。规则与验收见 [统计与附件文档](../docs/ios-statistics-attachments-acceptance.md)。
+
 ## 后续阶段
 
 1. 部署邮箱原生授权后端接口后，使用真实 Gmail / Outlook 账号验收系统授权、拒绝、取消和重连。自动测试使用隔离邮件与模拟提供商响应。
-2. APNs 后台推送、统计、文件上传；后台推送需要开发者配置、设备绑定、后端发送与去重配套。App 内提醒已实现，验收见 [提醒文档](../docs/ios-reminders-acceptance.md)，现阶段 App 不发送后台推送。
+2. APNs 后台推送；后台推送需要开发者配置、设备绑定、后端发送与去重配套。App 内提醒已实现，验收见 [提醒文档](../docs/ios-reminders-acceptance.md)，现阶段 App 不发送后台推送。
 3. 原生注册与账号删除、隐私政策、正式图标、开发者签名、真机验证和 TestFlight。
 
 目前为开发版本，尚未达到上架版本；没有离线业务数据库，也不在本地排队重试写操作。真实第三方邮箱授权、推送、签名和实机表现尚未验收。

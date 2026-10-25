@@ -88,7 +88,7 @@ final class JobGenieUITests: XCTestCase {
         reveal(deadline, in: app); deadline.tap()
         XCTAssertTrue(app.navigationBars["Edit assessment deadline"].exists)
         app.buttons["Cancel"].tap()
-        app.tabBars.buttons["Account"].tap(); app.buttons["account.signout"].tap(); app.buttons["Confirm sign out"].tap()
+        app.tabBars.buttons["Account"].tap(); reveal(app.buttons["account.signout"], in: app); app.buttons["account.signout"].tap(); app.buttons["Confirm sign out"].tap()
     }
     func testDemoMailSyncReviewIgnoreAndEnglish() {
         let app = XCUIApplication()
@@ -106,7 +106,7 @@ final class JobGenieUITests: XCTestCase {
         reveal(accept, in: app)
         let screenshot = XCTAttachment(screenshot: app.screenshot()); screenshot.name = "Mail review"; screenshot.lifetime = .keepAlways; add(screenshot)
         accept.tap(); XCTAssertTrue(app.staticTexts["没有待确认邮件"].waitForExistence(timeout: 10))
-        app.tabBars.buttons["我的"].tap(); app.buttons["account.signout"].tap(); app.buttons["确认退出"].tap()
+        app.tabBars.buttons["我的"].tap(); reveal(app.buttons["account.signout"], in: app); app.buttons["account.signout"].tap(); app.buttons["确认退出"].tap()
         app.buttons["login.demo"].tap(); app.tabBars.buttons["邮箱"].tap()
         app.buttons["mail.pending"].tap(); app.buttons["mail.review.demo-review"].tap()
         let ignore = app.buttons["review.ignore"]
@@ -118,7 +118,7 @@ final class JobGenieUITests: XCTestCase {
         app.navigationBars.buttons.firstMatch.tap()
         let connect = app.buttons["mail.connect.google"]
         reveal(connect, in: app); XCTAssertEqual(connect.label, "Connect Gmail"); XCTAssertFalse(connect.isEnabled)
-        app.tabBars.buttons["Account"].tap(); app.buttons["account.signout"].tap(); app.buttons["Confirm sign out"].tap()
+        app.tabBars.buttons["Account"].tap(); reveal(app.buttons["account.signout"], in: app); app.buttons["account.signout"].tap(); app.buttons["Confirm sign out"].tap()
     }
     func testDemoRemindersReadSnoozeCancelSettingsAndEnglish() {
         let app = XCUIApplication()
@@ -131,7 +131,7 @@ final class JobGenieUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["reminders.empty"].waitForExistence(timeout: 5))
         app.buttons["reminders.filter"].tap(); app.buttons["已处理"].tap()
         XCTAssertTrue(app.staticTexts["已读"].exists)
-        app.tabBars.buttons["我的"].tap(); app.buttons["account.signout"].tap(); app.buttons["确认退出"].tap()
+        app.tabBars.buttons["我的"].tap(); reveal(app.buttons["account.signout"], in: app); app.buttons["account.signout"].tap(); app.buttons["确认退出"].tap()
         app.buttons["login.demo"].tap(); app.tabBars.buttons["日程"].tap(); app.buttons["reminders.open"].tap()
         let snooze = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "reminder.snooze.")).firstMatch
         reveal(snooze, in: app); snooze.tap()
@@ -149,7 +149,7 @@ final class JobGenieUITests: XCTestCase {
         app.tabBars.buttons["我的"].tap(); app.buttons["language.picker"].tap(); app.buttons["English"].tap()
         app.tabBars.buttons["Schedule"].tap(); XCTAssertTrue(app.navigationBars["Reminders"].exists)
         XCTAssertTrue(app.staticTexts["Reminder cancelled"].exists)
-        app.tabBars.buttons["Account"].tap(); app.buttons["account.signout"].tap(); app.buttons["Confirm sign out"].tap()
+        app.tabBars.buttons["Account"].tap(); reveal(app.buttons["account.signout"], in: app); app.buttons["account.signout"].tap(); app.buttons["Confirm sign out"].tap()
     }
     private func reminderLogin() throws -> XCUIApplication {
         guard let url = ProcessInfo.processInfo.environment["JOBGENIE_TEST_BASE_URL"] else { throw XCTSkip("Run isolated backend acceptance") }
@@ -162,6 +162,60 @@ final class JobGenieUITests: XCTestCase {
         app.buttons["login.submit"].tap(); XCTAssertTrue(app.buttons["jobs.add"].waitForExistence(timeout: 20))
         app.tabBars.buttons["日程"].tap(); app.buttons["reminders.open"].tap()
         return app
+    }
+    func testDemoAnalyticsAttachmentsAndEnglish() {
+        let app = XCUIApplication()
+        app.launchArguments = ["-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN", "-jobgenie.language", "system"]
+        app.launchEnvironment["JOBGENIE_TEST_BASE_URL"] = "http://127.0.0.1:39998"
+        app.launch(); XCTAssertTrue(app.buttons["login.demo"].waitForExistence(timeout: 15)); app.buttons["login.demo"].tap()
+        app.tabBars.buttons["我的"].tap(); app.buttons["analytics.open"].tap()
+        XCTAssertTrue(app.staticTexts["当前状态分布"].waitForExistence(timeout: 10))
+        app.swipeUp(); XCTAssertTrue(app.staticTexts["阶段转化率"].exists)
+        let shot = XCTAttachment(screenshot: app.screenshot()); shot.name = "iphone-analytics"; shot.lifetime = .keepAlways; add(shot)
+        app.navigationBars.buttons.firstMatch.tap(); app.buttons["attachments.open"].tap()
+        XCTAssertTrue(app.staticTexts["attachments.empty"].waitForExistence(timeout: 10))
+        app.buttons["attachments.upload"].tap()
+        XCTAssertTrue(app.buttons["取消"].waitForExistence(timeout: 10)); app.buttons["取消"].tap()
+        XCTAssertTrue(app.buttons["attachments.upload"].exists)
+        app.navigationBars.buttons.firstMatch.tap(); app.buttons["language.picker"].tap(); app.buttons["English"].tap()
+        app.buttons["analytics.open"].tap(); XCTAssertTrue(app.navigationBars["Analytics"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["Current status distribution"].exists)
+        app.navigationBars.buttons.firstMatch.tap(); app.buttons["attachments.open"].tap()
+        XCTAssertTrue(app.navigationBars["Attachments"].waitForExistence(timeout: 10)); XCTAssertTrue(app.buttons["Upload attachment"].exists)
+        app.navigationBars.buttons.firstMatch.tap(); reveal(app.buttons["account.signout"], in: app); app.buttons["account.signout"].tap(); app.buttons["Confirm sign out"].tap()
+    }
+    func testRealResourcesUI() throws {
+        guard let url = ProcessInfo.processInfo.environment["JOBGENIE_TEST_BASE_URL"] else { throw XCTSkip("Run isolated resources acceptance") }
+        let app = XCUIApplication()
+        app.launchArguments = ["-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN", "-jobgenie.language", "system"]
+        app.launchEnvironment["JOBGENIE_TEST_BASE_URL"] = url
+        app.launch(); XCTAssertTrue(app.textFields["login.email"].waitForExistence(timeout: 15))
+        app.textFields["login.email"].tap(); app.textFields["login.email"].typeText("ios-acceptance@example.test")
+        app.secureTextFields["login.password"].tap(); app.secureTextFields["login.password"].typeText("ios-local-test-password")
+        app.buttons["login.submit"].tap(); XCTAssertTrue(app.buttons["jobs.add"].waitForExistence(timeout: 20))
+        app.tabBars.buttons["我的"].tap(); app.buttons["analytics.open"].tap()
+        XCTAssertTrue(app.staticTexts["当前状态分布"].waitForExistence(timeout: 15))
+        app.swipeUp(); XCTAssertTrue(app.staticTexts["阶段转化率"].exists)
+        app.navigationBars.buttons.firstMatch.tap(); app.buttons["attachments.open"].tap()
+        XCTAssertTrue(app.staticTexts["native-resume.pdf"].waitForExistence(timeout: 15))
+        XCTAssertFalse(app.staticTexts["private.pdf"].exists)
+        let view = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "attachment.view.")).firstMatch
+        view.tap(); XCTAssertTrue(app.navigationBars["native-resume"].waitForExistence(timeout: 10) || app.buttons["完成"].exists)
+        app.buttons["QLOverlayDoneButtonAccessibilityIdentifier"].tap()
+        let download = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "attachment.download.")).firstMatch
+        XCTAssertTrue(download.waitForExistence(timeout: 10)); download.tap()
+        XCTAssertTrue(app.buttons["保存"].waitForExistence(timeout: 10)); app.buttons["保存"].tap()
+        if app.buttons["替换"].waitForExistence(timeout: 2) { app.buttons["替换"].tap() }
+        XCTAssertTrue(app.buttons["保存"].waitForNonExistence(timeout: 10))
+        app.buttons["attachments.upload"].tap()
+        let savedFile = app.cells.matching(NSPredicate(format: "label CONTAINS %@", "native-resume")).firstMatch
+        XCTAssertTrue(savedFile.waitForExistence(timeout: 15), app.debugDescription); savedFile.tap()
+        XCTAssertTrue(app.staticTexts["附件已上传。"].waitForExistence(timeout: 15), app.debugDescription)
+        let shot = XCTAttachment(screenshot: app.screenshot()); shot.name = "iphone-attachments"; shot.lifetime = .keepAlways; add(shot)
+        app.terminate(); app.launch(); XCTAssertTrue(app.buttons["jobs.add"].waitForExistence(timeout: 15))
+        app.tabBars.buttons["我的"].tap(); app.buttons["attachments.open"].tap()
+        XCTAssertTrue(app.staticTexts["native-resume.pdf"].waitForExistence(timeout: 15))
+        app.navigationBars.buttons.firstMatch.tap(); reveal(app.buttons["account.signout"], in: app); app.buttons["account.signout"].tap(); app.buttons["确认退出"].tap()
     }
     func testRealRemindersBackend() throws {
         let app = try reminderLogin()
@@ -187,7 +241,7 @@ final class JobGenieUITests: XCTestCase {
         app.buttons["reminders.filter"].tap(); app.buttons["已处理"].tap()
         XCTAssertTrue(app.staticTexts["已读"].waitForExistence(timeout: 10)); XCTAssertTrue(app.staticTexts["已取消提醒"].exists)
         XCTAssertFalse(app.staticTexts["Private Other User"].exists)
-        app.tabBars.buttons["我的"].tap(); app.buttons["account.signout"].tap(); app.buttons["确认退出"].tap()
+        app.tabBars.buttons["我的"].tap(); reveal(app.buttons["account.signout"], in: app); app.buttons["account.signout"].tap(); app.buttons["确认退出"].tap()
     }
     func testWebReminderRescheduleAndNativeClear() throws {
         let app = try reminderLogin()
@@ -202,7 +256,7 @@ final class JobGenieUITests: XCTestCase {
         XCTAssertTrue(app.buttons["scheduleEditor.save"].waitForNonExistence(timeout: 15))
         app.navigationBars.buttons.firstMatch.tap()
         XCTAssertTrue(app.staticTexts["reminders.empty"].waitForExistence(timeout: 15))
-        app.tabBars.buttons["我的"].tap(); app.buttons["account.signout"].tap(); app.buttons["确认退出"].tap()
+        app.tabBars.buttons["我的"].tap(); reveal(app.buttons["account.signout"], in: app); app.buttons["account.signout"].tap(); app.buttons["确认退出"].tap()
     }
     func testRealMailBackend() throws {
         guard let url = ProcessInfo.processInfo.environment["JOBGENIE_TEST_BASE_URL"] else { throw XCTSkip("Run isolated backend acceptance") }
@@ -240,7 +294,7 @@ final class JobGenieUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["Native Mail Co"].waitForExistence(timeout: 20))
         app.tabBars.buttons["邮箱"].tap(); app.buttons["mail.pending"].tap()
         XCTAssertTrue(app.staticTexts["没有待确认邮件"].waitForExistence(timeout: 15))
-        app.tabBars.buttons["我的"].tap(); app.buttons["account.signout"].tap(); app.buttons["确认退出"].tap()
+        app.tabBars.buttons["我的"].tap(); reveal(app.buttons["account.signout"], in: app); app.buttons["account.signout"].tap(); app.buttons["确认退出"].tap()
     }
     func testDemoHistoryCRUDAndEnglishEditor() {
         let app = XCUIApplication()
@@ -255,7 +309,7 @@ final class JobGenieUITests: XCTestCase {
         XCTAssertTrue(app.navigationBars["Add status entry"].exists)
         XCTAssertTrue(app.staticTexts["Status event time"].exists)
         app.buttons["Cancel"].tap()
-        app.tabBars.buttons["Account"].tap(); app.buttons["account.signout"].tap(); app.buttons["Confirm sign out"].tap()
+        app.tabBars.buttons["Account"].tap(); reveal(app.buttons["account.signout"], in: app); app.buttons["account.signout"].tap(); app.buttons["Confirm sign out"].tap()
     }
     func testDemoNavigationCreateEditAndExit() {
         let app = XCUIApplication()
@@ -287,7 +341,7 @@ final class JobGenieUITests: XCTestCase {
         app.tabBars.buttons["邮箱"].tap()
         XCTAssertTrue(app.staticTexts["demo@example.com"].exists)
         app.tabBars.buttons["我的"].tap()
-        app.buttons["account.signout"].tap(); app.buttons["确认退出"].tap()
+        reveal(app.buttons["account.signout"], in: app); app.buttons["account.signout"].tap(); app.buttons["确认退出"].tap()
         XCTAssertTrue(app.buttons["login.demo"].waitForExistence(timeout: 5))
     }
     func testLanguageSwitchingAndPersistence() {
@@ -380,7 +434,7 @@ final class JobGenieUITests: XCTestCase {
         XCTAssertTrue(app.navigationBars["日程与待办"].exists)
         XCTAssertEqual(app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "schedule.edit.")).count, 2)
         app.tabBars.buttons["我的"].tap()
-        app.buttons["account.signout"].tap(); app.buttons["确认退出"].tap()
+        reveal(app.buttons["account.signout"], in: app); app.buttons["account.signout"].tap(); app.buttons["确认退出"].tap()
         XCTAssertTrue(app.buttons["login.submit"].waitForExistence(timeout: 10))
         app.terminate(); app.launch()
         XCTAssertTrue(app.buttons["login.submit"].waitForExistence(timeout: 10))
@@ -407,7 +461,7 @@ final class JobGenieUITests: XCTestCase {
         edit.tap(); app.buttons["scheduleEditor.clear"].tap(); app.buttons["scheduleEditor.save"].tap()
         XCTAssertTrue(app.buttons["scheduleEditor.save"].waitForNonExistence(timeout: 15))
         XCTAssertTrue(app.staticTexts["暂无此类日程"].waitForExistence(timeout: 10))
-        app.tabBars.buttons["我的"].tap(); app.buttons["account.signout"].tap(); app.buttons["确认退出"].tap()
+        app.tabBars.buttons["我的"].tap(); reveal(app.buttons["account.signout"], in: app); app.buttons["account.signout"].tap(); app.buttons["确认退出"].tap()
         XCTAssertTrue(app.buttons["login.submit"].waitForExistence(timeout: 10))
     }
 }

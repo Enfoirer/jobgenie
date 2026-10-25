@@ -1,7 +1,7 @@
 import Foundation
 
 enum APIError: LocalizedError, Equatable {
-    case unauthorized, credentials, rateLimited(Int), server, invalidResponse, secureStorage, configuration, invalidInput, notFound, conflict
+    case unauthorized, credentials, rateLimited(Int), server, invalidResponse, secureStorage, configuration, invalidInput, notFound, conflict, fileTooLarge, unsupportedFile
     var errorDescription: String? { userMessage.localized(locale: .current) }
     var userMessage: UserMessage {
         switch self {
@@ -14,6 +14,8 @@ enum APIError: LocalizedError, Equatable {
         case .configuration: .text("服务地址配置无效。")
         case .invalidInput: .text("提交内容无效，请检查后重试。")
         case .notFound: .text("记录已不存在或无权访问，请刷新后重试。")
+        case .fileTooLarge: .text("文件不能超过 4 MB。")
+        case .unsupportedFile: .text("请选择有效的 PDF、DOCX、PNG 或 JPG/JPEG 文件。")
         case .conflict: .text("记录已发生变化，请刷新后重试。")
         }
     }
@@ -139,12 +141,15 @@ final class APIClient {
     private func decode<T: Decodable>(_ type: T.Type, _ data: Data) throws -> T {
         do { return try JSONDecoder.jobGenie.decode(type, from: data) } catch { throw APIError.invalidResponse }
     }
-    func send(_ path: String, method: String = "GET", body: Data? = nil, contentType: String = "application/json") async throws -> Data {
+    func send(_ path: String, method: String = "GET", body: Data? = nil, contentType: String = "application/json", query: [URLQueryItem] = [], binary: Bool = false) async throws -> Data {
         guard !path.contains(".."), !path.contains("://"), !path.hasPrefix("/"),
               baseURL.scheme == "https" || ["127.0.0.1", "localhost"].contains(baseURL.host ?? "") else { throw APIError.configuration }
-        var request = URLRequest(url: baseURL.appendingPathComponent(path))
+        var components = URLComponents(url: baseURL.appendingPathComponent(path), resolvingAgainstBaseURL: false)!
+        if !query.isEmpty { components.queryItems = query }
+        guard let url = components.url else { throw APIError.configuration }
+        var request = URLRequest(url: url)
         request.httpMethod = method; request.httpBody = body
-        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.setValue(binary ? "application/octet-stream" : "application/json", forHTTPHeaderField: "Accept")
         request.setValue(baseURL.absoluteString, forHTTPHeaderField: "Origin")
         if body != nil { request.setValue(contentType, forHTTPHeaderField: "Content-Type") }
         let current = generation
@@ -157,10 +162,14 @@ final class APIClient {
         case 400, 422: throw APIError.invalidInput
         case 403, 404: throw APIError.notFound
         case 409: throw APIError.conflict
+        case 413: throw APIError.fileTooLarge
+        case 415: throw APIError.unsupportedFile
         case 429: throw APIError.rateLimited(Int(http.value(forHTTPHeaderField: "Retry-After") ?? "60") ?? 60)
         default: throw APIError.server
         }
-        guard http.value(forHTTPHeaderField: "Content-Type")?.lowercased().contains("application/json") == true else { throw APIError.invalidResponse }
+        let receivedType = http.value(forHTTPHeaderField: "Content-Type")?.lowercased().split(separator: ";").first.map(String.init)
+        guard receivedType == (binary ? "application/octet-stream" : "application/json") else { throw APIError.invalidResponse }
+        if binary && data.count > AttachmentPolicy.maxBytes { throw APIError.fileTooLarge }
         // A session GET may rotate the encrypted cookie without extending its lifetime.
         try saveSession()
         return data

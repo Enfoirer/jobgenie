@@ -38,6 +38,14 @@ final class AppModel: ObservableObject {
     @Published var jobsError: UserMessage?
     @Published var scheduleError: UserMessage?
     @Published var mailError: UserMessage?
+    @Published var analytics: AnalyticsResponse?
+    @Published var attachments: [Attachment] = []
+    @Published var attachmentNotice: UserMessage?
+    @Published var attachmentBusy = false
+    var analyticsRequest = UUID()
+    var attachmentsRequest = UUID()
+    let attachmentCache = AttachmentCache()
+    var demoAttachmentData: [String: Data] = [:]
     let api: APIClient
     private var generation = UUID()
     var sessionGeneration: UUID { generation }
@@ -55,13 +63,13 @@ final class AppModel: ObservableObject {
         guard !isSigningIn else { return }
         isSigningIn = true; authMessage = nil
         defer { isSigningIn = false }
-        do { user = try await api.signIn(email: email, password: password, remember: remember); generation = UUID(); resetReminders() }
+        do { user = try await api.signIn(email: email, password: password, remember: remember); generation = UUID(); resetResources(); resetReminders() }
         catch { authMessage = message(error) }
     }
     func useDemo() {
         do { try api.clearLocalSession() }
         catch { authMessage = message(error); return }
-        generation = UUID(); resetReminders(); isDemo = true; authMessage = nil
+        generation = UUID(); resetResources(); resetReminders(); isDemo = true; authMessage = nil
         user = SessionUser(id: "demo", name: "探索者", email: "demo@example.com")
         jobs = DemoData.jobs; events = DemoData.events; mailboxes = DemoData.mailboxes
         histories = Dictionary(uniqueKeysWithValues: jobs.map { job in
@@ -78,6 +86,7 @@ final class AppModel: ObservableObject {
     }
     func signOut() async {
         generation = UUID()
+        resetResources()
         resetReminders()
         do { try await api.signOut(); authMessage = nil } catch { authMessage = message(error) }
         user = nil; isDemo = false; jobs = []; events = []; mailboxes = []

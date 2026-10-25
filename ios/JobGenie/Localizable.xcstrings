@@ -3998,6 +3998,534 @@
           }
         }
       }
+    },
+    "文件不能超过 4 MB。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Files must be no larger than 4 MB."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "文件不能超过 4 MB。"
+          }
+        }
+      }
+    },
+    "请选择有效的 PDF、DOCX、PNG 或 JPG/JPEG 文件。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose a valid PDF, DOCX, PNG or JPG/JPEG file."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "请选择有效的 PDF、DOCX、PNG 或 JPG/JPEG 文件。"
+          }
+        }
+      }
+    },
+    "附件已上传。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Attachment uploaded."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "附件已上传。"
+          }
+        }
+      }
+    },
+    "统计日期": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Date range"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "统计日期"
+          }
+        }
+      }
+    },
+    "开始日期": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start date"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "开始日期"
+          }
+        }
+      }
+    },
+    "结束日期": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "End date"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "结束日期"
+          }
+        }
+      }
+    },
+    "最多选择 366 天，按手机时区统计。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose up to 366 days, using your phone’s time zone."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "最多选择 366 天，按手机时区统计。"
+          }
+        }
+      }
+    },
+    "应用日期范围": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apply date range"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "应用日期范围"
+          }
+        }
+      }
+    },
+    "正在加载统计…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loading analytics…"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正在加载统计…"
+          }
+        }
+      }
+    },
+    "当前状态分布": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Current status distribution"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "当前状态分布"
+          }
+        }
+      }
+    },
+    "全部申请的当前状态，不受所选日期范围影响。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Current status of all applications, independent of the selected date range."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "全部申请的当前状态，不受所选日期范围影响。"
+          }
+        }
+      }
+    },
+    "更新时间": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Updated"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "更新时间"
+          }
+        }
+      }
+    },
+    "阶段转化率": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stage conversion rates"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "阶段转化率"
+          }
+        }
+      }
+    },
+    "仅统计所选日期内提交的申请，并观察截至该范围结束时已发生的历史。没有面试记录的 Offer 不计入面试转 Offer。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Includes applications submitted in the selected range and their history through the end of that range. Offers without a prior interview are excluded from interview-to-offer conversion."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "仅统计所选日期内提交的申请，并观察截至该范围结束时已发生的历史。没有面试记录的 Offer 不计入面试转 Offer。"
+          }
+        }
+      }
+    },
+    "范围内申请": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Applications in range"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "范围内申请"
+          }
+        }
+      }
+    },
+    "申请 → 面试": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Application → Interview"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "申请 → 面试"
+          }
+        }
+      }
+    },
+    "面试 → Offer": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Interview → Offer"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "面试 → Offer"
+          }
+        }
+      }
+    },
+    "申请 → Offer": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Application → Offer"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "申请 → Offer"
+          }
+        }
+      }
+    },
+    "无先前面试记录的 Offer": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Offers without a prior interview"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无先前面试记录的 Offer"
+          }
+        }
+      }
+    },
+    "范围内无有效历史的申请": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Applications without history in range"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "范围内无有效历史的申请"
+          }
+        }
+      }
+    },
+    "— 表示没有可计算的分母，不代表 0%。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "— means there is no denominator, rather than a 0% conversion rate."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "— 表示没有可计算的分母，不代表 0%。"
+          }
+        }
+      }
+    },
+    "统计分析": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Analytics"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "统计分析"
+          }
+        }
+      }
+    },
+    "账号附件库与网页版共用，附件不绑定到单个申请。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your account’s file library is shared with the website. Files are not linked to individual applications."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "账号附件库与网页版共用，附件不绑定到单个申请。"
+          }
+        }
+      }
+    },
+    "支持 PDF、DOCX、PNG、JPG/JPEG，每次一个文件，最大 4 MB。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PDF, DOCX, PNG, JPG/JPEG · one file at a time · up to 4 MB."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "支持 PDF、DOCX、PNG、JPG/JPEG，每次一个文件，最大 4 MB。"
+          }
+        }
+      }
+    },
+    "上传附件": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Upload attachment"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "上传附件"
+          }
+        }
+      }
+    },
+    "正在处理附件…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Processing attachment…"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正在处理附件…"
+          }
+        }
+      }
+    },
+    "附件": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Attachments"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "附件"
+          }
+        }
+      }
+    },
+    "暂无附件": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No attachments yet"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "暂无附件"
+          }
+        }
+      }
+    },
+    "查看": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "View"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "查看"
+          }
+        }
+      }
+    },
+    "下载到文件": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save to Files"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "下载到文件"
+          }
+        }
+      }
+    },
+    "预览临时文件在离开页面或退出账号时清除。存储到“文件”的副本由你管理。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Temporary previews are cleared when you leave this screen or sign out. Copies saved to Files are managed by you."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "预览临时文件在离开页面或退出账号时清除。存储到“文件”的副本由你管理。"
+          }
+        }
+      }
+    },
+    "数据与文件": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Data and files"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "数据与文件"
+          }
+        }
+      }
+    },
+    "支持申请与历史管理、日程编辑、App 内提醒、邮箱操作、统计分析和附件。后台推送将逐步加入。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manage applications, history, schedules, in-app reminders, mail, analytics and attachments. Background push notifications are planned."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "支持申请与历史管理、日程编辑、App 内提醒、邮箱操作、统计分析和附件。后台推送将逐步加入。"
+          }
+        }
+      }
     }
   },
   "version": "1.1"
