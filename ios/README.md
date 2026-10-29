@@ -2,6 +2,12 @@
 
 原生 SwiftUI 应用，最低 iOS 17，使用现有 JobGenie 后端和数据库。代码与网页位于同一个仓库。邮箱授权新增专用后端接口，不新增第三方移动端依赖。
 
+## 设计原型与留痕
+
+[英文版 Figma 原型](https://www.figma.com/design/zHclDuiIWxO7Zjklt50YSC?node-id=3-33)包含 27 个页面及结果状态，点击 Figma 的 **Present** 可体验主要流程。设计采用 Inter 和矢量图标，操作使用示例状态，不连接真实账号。
+
+版本日期、页面范围与验收记录见 [iOS 设计归档](../docs/design/ios/README.md) 和 [设计更新日志](../docs/design/ios/CHANGELOG.md)。当前归档保存链接与说明，尚未配置自动同步或导出不可变设计快照。
+
 ## 本阶段交付
 
 - 四个独立导航页签：申请、日程、邮箱、我的。中英文界面，系统字体、深浅色和动态字号。
