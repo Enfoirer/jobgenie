@@ -20,7 +20,8 @@ struct Job: Codable, Identifiable, Equatable {
     var jobUrl: String?
     var status: ApplicationStatus
     var dateApplied: Date
-    enum CodingKeys: String, CodingKey { case id = "_id", company, position, location, notes, jobUrl, status, dateApplied }
+    var archivedAt: Date? = nil
+    enum CodingKeys: String, CodingKey { case id = "_id", company, position, location, notes, jobUrl, status, dateApplied, archivedAt }
 }
 struct JobDraft: Encodable {
     var company = ""

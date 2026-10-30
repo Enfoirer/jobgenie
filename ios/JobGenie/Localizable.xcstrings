@@ -4526,6 +4526,380 @@
           }
         }
       }
+    },
+    "批量选择": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "批量选择"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Select multiple"
+          }
+        }
+      }
+    },
+    "批量操作": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "批量操作"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bulk action"
+          }
+        }
+      }
+    },
+    "查看已归档申请": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "查看已归档申请"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show archived applications"
+          }
+        }
+      }
+    },
+    "归档所选申请": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "归档所选申请"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Archive selected applications"
+          }
+        }
+      }
+    },
+    "恢复所选申请": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "恢复所选申请"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restore selected applications"
+          }
+        }
+      }
+    },
+    "批量确认邮件": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "批量确认邮件"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accept selected emails"
+          }
+        }
+      }
+    },
+    "批量忽略邮件": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "批量忽略邮件"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ignore selected emails"
+          }
+        }
+      }
+    },
+    "选择当前列表（最多 50 项）": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "选择当前列表（最多 50 项）"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Select visible (up to 50)"
+          }
+        }
+      }
+    },
+    "清除选择": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "清除选择"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clear selection"
+          }
+        }
+      }
+    },
+    "已选择 %lld 项": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已选择 %lld 项"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld selected"
+          }
+        }
+      }
+    },
+    "确认将使用每封邮件当前的内容和目标申请；目标不明确的邮件会保留待确认，请逐封编辑。": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "确认将使用每封邮件当前的内容和目标申请；目标不明确的邮件会保留待确认，请逐封编辑。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acceptance uses each email’s current fields and target. Unresolved targets stay pending; edit them individually."
+          }
+        }
+      }
+    },
+    "归档保留历史和统计，隐藏日程与提醒，可随时恢复。修改状态会按需新增历史。": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "归档保留历史和统计，隐藏日程与提醒，可随时恢复。修改状态会按需新增历史。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Archive keeps history and analytics, hides schedules and reminders, and can be restored. Status changes add history when needed."
+          }
+        }
+      }
+    },
+    "应用到所选项目": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "应用到所选项目"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apply to selected"
+          }
+        }
+      }
+    },
+    "正在批量处理…": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正在批量处理…"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Processing selected items…"
+          }
+        }
+      }
+    },
+    "成功 %lld 项，失败 %lld 项": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "成功 %lld 项，失败 %lld 项"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld succeeded, %lld failed"
+          }
+        }
+      }
+    },
+    "失败项目仍被选中，可以修正后重试。": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "失败项目仍被选中，可以修正后重试。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Failed items remain selected. Correct them and retry."
+          }
+        }
+      }
+    },
+    "记录不存在或无权操作。": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "记录不存在或无权操作。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Record not found or access denied."
+          }
+        }
+      }
+    },
+    "请检查记录内容和目标，刷新后重试。": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "请检查记录内容和目标，刷新后重试。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check the record and target, refresh, then retry."
+          }
+        }
+      }
+    },
+    "确认批量操作？": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "确认批量操作？"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Confirm bulk action?"
+          }
+        }
+      }
+    },
+    "将处理所选的 %lld 项。每项独立保存，失败不会撤销已成功的项目。": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "将处理所选的 %lld 项。每项独立保存，失败不会撤销已成功的项目。"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Process %lld selected items? Each is saved independently; failures do not undo successful items."
+          }
+        }
+      }
+    },
+    "已选择": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已选择"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selected"
+          }
+        }
+      }
+    },
+    "未选择": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未选择"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not selected"
+          }
+        }
+      }
     }
   },
   "version": "1.1"

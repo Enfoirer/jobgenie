@@ -29,6 +29,7 @@ struct ScheduleDraft: Encodable {
 extension ScheduleEvent {
     // Mirrors lib/schedule/events.js for demo and confirmed mutation responses.
     static func project(_ entry: HistoryEntry, job: Job) -> [Self] {
+        guard job.archivedAt == nil else { return [] }
         let stage = (entry.interviewStage ?? "").trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
         let assessment = ["online assessment", "oa", "笔试"].contains(stage)
             || ((entry.interviewStage ?? "").isEmpty && entry.source?.eventType == "oa")

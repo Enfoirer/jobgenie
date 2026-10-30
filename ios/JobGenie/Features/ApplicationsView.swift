@@ -5,8 +5,12 @@ struct ApplicationsView: View {
     @State private var search = ""
     @State private var filter: ApplicationStatus?
     @State private var creating = false
+    @State private var selecting = false
+    @State private var selected: Set<String> = []
+    @State private var archived = false
+    private var visibleJobs: [Job] { model.jobs.filter { ($0.archivedAt != nil) == archived } }
     private var filtered: [Job] {
-        model.jobs.filter { job in
+        visibleJobs.filter { job in
             (filter == nil || job.status == filter) && (search.isEmpty || "\(job.company) \(job.position) \(job.location ?? "")".localizedCaseInsensitiveContains(search))
         }
     }
@@ -18,17 +22,24 @@ struct ApplicationsView: View {
                     Text("每一步，都算数。").font(.title2.bold())
                     Text("记录进展，把精力留给下一个机会。") .font(.subheadline).foregroundStyle(.secondary)
                     HStack(spacing: 20) {
-                        metric("全部申请", count: model.jobs.count)
-                        metric("面试中", count: model.jobs.filter { $0.status == .interviewing }.count)
-                        metric("Offer", count: model.jobs.filter { $0.status == .offer }.count)
+                        metric("全部申请", count: visibleJobs.count)
+                        metric("面试中", count: visibleJobs.filter { $0.status == .interviewing }.count)
+                        metric("Offer", count: visibleJobs.filter { $0.status == .offer }.count)
                     }.padding(.top, 6)
                 }.padding(.vertical, 8)
             }
             Section {
+                Toggle("查看已归档申请", isOn: $archived).disabled(model.bulkBusy)
+                    .accessibilityIdentifier("jobs.archived")
+                Toggle("批量选择", isOn: $selecting).disabled(model.bulkBusy)
+                    .accessibilityIdentifier("jobs.bulkMode")
                 Picker("状态", selection: $filter) {
                     Text("全部状态").tag(ApplicationStatus?.none)
                     ForEach(ApplicationStatus.allCases) { status in Text(LocalizedStringKey(status.title)).tag(Optional(status)) }
-                }.accessibilityIdentifier("jobs.filter")
+                }.accessibilityIdentifier("jobs.filter").disabled(model.bulkBusy)
+            }
+            if selecting {
+                Section { BulkControls(selected: $selected, records: filtered.map { ($0.id, "\($0.company) · \($0.position)") }, archived: archived) }
             }
             if let error = model.jobsError { Section { ErrorBanner(message: error) { Task { await model.refreshJobs() } } } }
             Section("申请记录 · \(filtered.count)") {
@@ -37,6 +48,8 @@ struct ApplicationsView: View {
                     ContentUnavailableView(LocalizedStringKey(search.isEmpty && filter == nil ? "还没有申请记录" : "没有匹配的申请"), systemImage: "tray", description: Text("点击右上角添加，或调整搜索条件。"))
                 } else {
                     ForEach(filtered) { job in
+                        HStack {
+                        if selecting { BulkSelectionToggle(selected: $selected, id: job.id, label: job.company).disabled(model.bulkBusy) }
                         NavigationLink { JobDetailView(jobID: job.id) } label: {
                             HStack(alignment: .top, spacing: 12) {
                                 CompanyMark(company: job.company)
@@ -47,14 +60,19 @@ struct ApplicationsView: View {
                                     StatusBadge(status: job.status)
                                 }
                             }.padding(.vertical, 6)
-                        }.accessibilityIdentifier("job.\(job.id)")
+                        }.accessibilityIdentifier("job.\(job.id)").disabled(model.bulkBusy)
+                        }
                     }
                 }
             }
         }
         .localizedNavigationTitle("我的申请")
         .searchable(text: $search, prompt: "搜索公司、职位或地点")
-        .toolbar { Button { creating = true } label: { Image(systemName: "plus") }.accessibilityLabel("添加申请").accessibilityIdentifier("jobs.add") }
+        .toolbar { Button { creating = true } label: { Image(systemName: "plus") }.accessibilityLabel("添加申请").accessibilityIdentifier("jobs.add").disabled(model.bulkBusy) }
+        .onChange(of: archived) { _, _ in selected = [] }
+        .onChange(of: filter) { _, _ in selected = [] }
+        .onChange(of: search) { _, _ in selected = [] }
+        .onChange(of: selecting) { _, value in if !value { selected = [] } }
         .sheet(isPresented: $creating) { JobEditor(job: nil) }
         .refreshable { await model.refreshJobs() }
         .task { await model.refreshJobs() }

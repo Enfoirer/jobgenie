@@ -54,6 +54,34 @@ final class JobGenieUITests: XCTestCase {
         app.buttons["scheduleEditor.save"].tap()
         XCTAssertTrue(app.buttons["scheduleEditor.save"].waitForNonExistence(timeout: 15))
     }
+    func testDemoBulkArchiveRestoreAndMailReview() {
+        let app = XCUIApplication()
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-jobgenie.language", "en"]
+        app.launchEnvironment["JOBGENIE_TEST_BASE_URL"] = "http://127.0.0.1:39998"
+        app.launch(); XCTAssertTrue(app.buttons["login.demo"].waitForExistence(timeout: 10)); app.buttons["login.demo"].tap()
+        func toggle(_ identifier: String) {
+            let control = app.switches[identifier]; reveal(control, in: app)
+            control.coordinate(withNormalizedOffset: CGVector(dx: 0.93, dy: 0.5)).tap()
+        }
+        toggle("jobs.bulkMode")
+        reveal(app.buttons["bulk.selectAll"], in: app); app.buttons["bulk.selectAll"].tap()
+        app.buttons["bulk.apply"].tap(); XCTAssertTrue(app.buttons.matching(identifier: "bulk.confirm").firstMatch.waitForExistence(timeout: 5)); app.buttons.matching(identifier: "bulk.confirm").firstMatch.tap()
+        XCTAssertTrue(app.staticTexts["bulk.result"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["bulk.result"].label.contains("4 succeeded"))
+        for _ in 0..<3 { app.swipeDown() }
+        toggle("jobs.archived")
+        reveal(app.buttons["bulk.selectAll"], in: app); app.buttons["bulk.selectAll"].tap()
+        app.buttons["bulk.apply"].tap(); XCTAssertTrue(app.buttons.matching(identifier: "bulk.confirm").firstMatch.waitForExistence(timeout: 5)); app.buttons.matching(identifier: "bulk.confirm").firstMatch.tap()
+        XCTAssertTrue(app.staticTexts["bulk.result"].label.contains("4 succeeded"))
+        app.tabBars.buttons["Email"].tap(); app.buttons["mail.pending"].tap()
+        toggle("mail.bulkMode"); app.buttons["bulk.selectAll"].tap()
+        app.buttons["bulk.apply"].tap(); XCTAssertTrue(app.buttons.matching(identifier: "bulk.confirm").firstMatch.waitForExistence(timeout: 5)); app.buttons.matching(identifier: "bulk.confirm").firstMatch.tap()
+        XCTAssertTrue(app.staticTexts["bulk.result"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["bulk.result"].label.contains("1 succeeded"))
+        let screenshot = XCTAttachment(screenshot: app.screenshot()); screenshot.name = "Bulk email review"; screenshot.lifetime = .keepAlways; add(screenshot)
+        app.tabBars.buttons["Account"].tap(); reveal(app.buttons["account.signout"], in: app)
+        app.buttons["account.signout"].tap(); app.buttons["Confirm sign out"].tap()
+    }
     func testDemoScheduleEditClearAndNavigation() {
         let app = XCUIApplication()
         app.launchArguments = ["-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN", "-jobgenie.language", "system"]

@@ -8,6 +8,7 @@ final class AppModel: ObservableObject {
     @Published var isSigningIn = false
     @Published var authMessage: UserMessage?
     @Published var jobs: [Job] = []
+    @Published private(set) var bulkBusy = false
     @Published var events: [ScheduleEvent] = []
     @Published var mailboxes: [Mailbox] = []
     @Published var pendingMail: [PendingMail] = []
@@ -89,7 +90,7 @@ final class AppModel: ObservableObject {
         resetResources()
         resetReminders()
         do { try await api.signOut(); authMessage = nil } catch { authMessage = message(error) }
-        user = nil; isDemo = false; jobs = []; events = []; mailboxes = []
+        user = nil; isDemo = false; bulkBusy = false; jobs = []; events = []; mailboxes = []
         histories = [:]; historyMutations = []; detailRequests = [:]
         pendingMail = []; mailBusy = false; mailNotice = nil; mailRequest = UUID()
         jobsError = nil; scheduleError = nil; mailError = nil
@@ -108,7 +109,7 @@ final class AppModel: ObservableObject {
         let request = UUID(); jobsRequest = request
         jobsLoading = true; jobsError = nil
         defer { if current == generation && request == jobsRequest { jobsLoading = false } }
-        do { let response: JobsResponse = try await api.get("api/jobs"); if current == generation && request == jobsRequest { jobs = response.jobs } }
+        do { let response = try await api.allJobs(); if current == generation && request == jobsRequest { jobs = response.jobs } }
         catch { if current == generation && request == jobsRequest { jobsError = await handle(error) } }
     }
     func refreshSchedule(force: Bool = false) async {
@@ -216,7 +217,12 @@ final class AppModel: ObservableObject {
         guard isDemo else { return }
         let settings = reminderSettings ?? ReminderSettings(); reminderSettings = settings
         reminderServerTime = now; reminderUptime = ProcessInfo.processInfo.systemUptime
-        let currentTimes = Dictionary(uniqueKeysWithValues: events.compactMap { event in event.time.map { (event.id, $0) } })
+        // Archiving hides reminders without changing the occurrence identity.
+        let archivedEvents = jobs.filter { $0.archivedAt != nil }.flatMap { job in
+            var active = job; active.archivedAt = nil
+            return (histories[job.id] ?? []).flatMap { ScheduleEvent.project($0, job: active) }
+        }
+        let currentTimes = Dictionary(uniqueKeysWithValues: (events + archivedEvents).compactMap { event in event.time.map { (event.id, $0) } })
         for id in Set(demoReminderTimes.keys).union(currentTimes.keys) where demoReminderTimes[id] != currentTimes[id] {
             if demoReminderTimes[id] != nil || demoReminderRevisions[id] != nil { demoReminderRevisions[id, default: 0] += 1 }
             else { demoReminderRevisions[id] = 0 }
@@ -436,7 +442,7 @@ final class AppModel: ObservableObject {
         }
     }
     private func applyJob(_ job: Job) {
-        if job.status == .offer || job.status == .rejected { invalidateReminders(jobID: job.id) }
+        if job.archivedAt != nil || job.status == .offer || job.status == .rejected { invalidateReminders(jobID: job.id) }
         for index in reminders.indices where reminders[index].jobId == job.id {
             reminders[index].company = job.company; reminders[index].position = job.position
         }
@@ -468,7 +474,7 @@ final class AppModel: ObservableObject {
             let d = draft.normalized
             let old = jobs.first { $0.id == id }
             job = Job(id: id ?? UUID().uuidString, company: d.company, position: d.position, location: d.location, notes: d.notes, jobUrl: d.jobUrl,
-                      status: old?.status ?? .applied, dateApplied: old?.dateApplied ?? .now)
+                      status: old?.status ?? .applied, dateApplied: old?.dateApplied ?? .now, archivedAt: old?.archivedAt)
         } else {
             do { job = try await api.save(draft, id: id) }
             catch { if error as? APIError == .unauthorized { await expire() }; throw error }
@@ -486,6 +492,70 @@ final class AppModel: ObservableObject {
             }
             rebuildDemoReminders()
         } else { await refreshSchedule() }
+    }
+    func performBulk(ids: Set<String>, action: String, status: ApplicationStatus? = nil, pending: Bool = false) async throws -> BulkResponse {
+        guard user != nil else { throw APIError.unauthorized }
+        guard !bulkBusy, !mailBusy, historyMutations.isEmpty else { throw APIError.conflict }
+        guard !ids.isEmpty, ids.count <= 50,
+              (pending ? ["accept", "ignore"] : ["archive", "restore", "status"]).contains(action),
+              action != "status" || status != nil else { throw APIError.invalidInput }
+        let current = generation
+        bulkBusy = true
+        defer { if current == generation { bulkBusy = false } }
+        do {
+            let response: BulkResponse
+            if isDemo {
+                var results: [BulkItemResult] = []
+                for id in ids.sorted() {
+                    do {
+                        if pending {
+                            guard let item = pendingMail.first(where: { $0.id == id }) else { throw APIError.conflict }
+                            try await reviewMail(item, draft: MailReviewDraft(item), ignore: action == "ignore")
+                            results.append(BulkItemResult(id: id, success: true))
+                        } else {
+                            guard let index = jobs.firstIndex(where: { $0.id == id }) else { throw APIError.conflict }
+                            if action == "status", let status, jobs[index].status != status {
+                                if let latest = histories[id]?.filter(\.affectsCurrentStatus).sorted(by: HistoryEntry.newestFirst).first,
+                                   latest.date > .now { throw APIError.conflict }
+                                try await saveHistory(HistoryDraft(status: status), jobID: id)
+                            } else if action != "status" {
+                                jobs[index].archivedAt = action == "archive" ? (jobs[index].archivedAt ?? .now) : nil
+                            }
+                            results.append(BulkItemResult(id: id, success: true, job: jobs.first { $0.id == id }))
+                        }
+                    } catch { results.append(BulkItemResult(id: id, success: false, status: 409)) }
+                    guard current == generation else { throw CancellationError() }
+                }
+                rebuildDemoSchedule()
+                response = BulkResponse(results: results)
+            } else {
+                if pending { mailBusy = true }
+                defer { if current == generation && pending { mailBusy = false } }
+                response = try await api.bulk(ids: ids, action: action, status: status, pending: pending)
+                guard current == generation else { throw CancellationError() }
+                for result in response.results where result.success {
+                    if let job = result.job { applyJob(job); histories[job.id] = nil; detailRequests[job.id] = nil }
+                    if let id = result.jobId { histories[id] = nil; detailRequests[id] = nil }
+                }
+                if pending {
+                    let completed = Set(response.results.filter(\.success).map(\.id))
+                    pendingMail.removeAll { completed.contains($0.id) }
+                    mailRequest = UUID(); mailLoading = false
+                    jobsRequest = UUID(); jobsLoading = false
+                    await refreshJobs()
+                    guard current == generation else { throw CancellationError() }
+                    await refreshMail(force: true)
+                }
+                guard current == generation else { throw CancellationError() }
+                await refreshSchedule(force: true)
+            }
+            guard current == generation else { throw CancellationError() }
+            analytics = nil
+            return response
+        } catch {
+            if current == generation && error as? APIError == .unauthorized { await expire() }
+            throw error
+        }
     }
     private func expire() async { await signOut(); authMessage = APIError.unauthorized.userMessage }
     private func handle(_ error: Error) async -> UserMessage? {

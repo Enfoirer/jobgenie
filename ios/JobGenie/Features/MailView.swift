@@ -35,7 +35,7 @@ struct MailView: View {
                             Spacer()
                             Button("重试失败邮件") { Task { await model.runMail(accountID: mailbox.id, retry: true) } }
                                 .disabled(mailbox.backlog?.failed == 0).accessibilityIdentifier("mail.retry.\(mailbox.id)")
-                        }.buttonStyle(.borderless).disabled(model.mailBusy || authorization.busy)
+                        }.buttonStyle(.borderless).disabled(model.mailBusy || model.bulkBusy || authorization.busy)
                         if mailbox.hasMore == true { Text("仍有邮件未拉取，可再次同步继续。") .font(.footnote).foregroundStyle(.orange) }
                         if let backlog = mailbox.backlog {
                             LabeledContent("待处理", value: backlog.pending.formatted())
@@ -78,19 +78,27 @@ struct MailView: View {
 
 struct PendingMailList: View {
     @EnvironmentObject private var model: AppModel
+    @State private var selecting = false
+    @State private var selected: Set<String> = []
     var body: some View {
         List {
             if let error = model.mailError { ErrorBanner(message: error) { Task { await model.refreshMail(force: true) } } }
+            Section { Toggle("批量选择", isOn: $selecting).disabled(model.bulkBusy).accessibilityIdentifier("mail.bulkMode") }
+            if selecting { Section { BulkControls(selected: $selected, records: model.pendingMail.map { ($0.id, $0.subject ?? "—") }, pending: true) } }
             if model.pendingMail.isEmpty { Text("没有待确认邮件") }
             ForEach(model.pendingMail) { item in
+                HStack {
+                if selecting { BulkSelectionToggle(selected: $selected, id: item.id, label: item.subject ?? "—").disabled(model.bulkBusy) }
                 NavigationLink { MailReviewView(item: item) } label: {
                     VStack(alignment: .leading, spacing: 5) {
                         Text(verbatim: item.subject ?? "—").font(.headline)
                         Text(verbatim: item.from ?? "—").font(.caption).foregroundStyle(.secondary)
                     }
-                }.accessibilityIdentifier("mail.review.\(item.id)")
+                }.accessibilityIdentifier("mail.review.\(item.id)").disabled(model.bulkBusy)
+                }
             }
         }.localizedNavigationTitle("待确认邮件")
+        .onChange(of: selecting) { _, value in if !value { selected = [] } }
         .refreshable { await model.refreshMail(force: true) }.task { await model.refreshMail() }
     }
 }
@@ -141,7 +149,7 @@ struct MailReviewView: View {
                 Button("忽略这封邮件", role: .destructive) { ignoring = true }.accessibilityIdentifier("review.ignore")
                 if saving { ProgressView() }
             }
-        }.disabled(saving || model.mailBusy)
+        }.disabled(saving || model.mailBusy || model.bulkBusy)
         .localizedNavigationTitle("人工确认")
         .task { await model.refreshJobs() }
         .confirmationDialog("忽略这封邮件？", isPresented: $ignoring, titleVisibility: .visible) {

@@ -7,6 +7,7 @@ import { COLUMNS, COLUMN_NAMES } from '@/lib/mockData';
 import StatusChangeModal from '@/components/StatusChangeModal';
 import JobTimeline from '@/components/JobTimeline';
 import EditJobModal from '@/components/EditJobModal';
+import BulkActions from '@/components/BulkActions';
 
 export default function JobsPage() {
   const [jobsData, setJobsData] = useState({ jobs: [] });
@@ -18,6 +19,13 @@ export default function JobsPage() {
   const [showEditModal, setShowEditModal] = useState(false);
   const [suggestedStatus, setSuggestedStatus] = useState(null);
   const [hideRejected, setHideRejected] = useState(false);
+  const [archived, setArchived] = useState(false);
+  const [selected, setSelected] = useState([]);
+  const [bulkBusy, setBulkBusy] = useState(false);
+  const viewJobs = jobsData.jobs.filter((job) => Boolean(job.archivedAt) === archived);
+  const selectable = viewJobs.filter((job) => !hideRejected || job.status !== 'rejected');
+  const toggle = (id) => setSelected((ids) => ids.includes(id) ? ids.filter((value) => value !== id) : ids.length < 50 ? [...ids, id] : ids);
+
 
   useEffect(() => {
     // Fetch jobs from API
@@ -26,7 +34,7 @@ export default function JobsPage() {
         console.log('Fetching jobs from API');
         setLoading(true);
         
-        const response = await fetch('/api/jobs');
+        const response = await fetch('/api/jobs?includeArchived=true');
         
         if (!response.ok) {
           throw new Error('Failed to fetch jobs');
@@ -47,6 +55,7 @@ export default function JobsPage() {
   }, []);
 
   const handleDragEnd = async (result) => {
+    if (bulkBusy || selected.length) return;
     const { destination, source, draggableId } = result;
 
     // If dropped outside a droppable area
@@ -112,10 +121,10 @@ export default function JobsPage() {
 
   // Group jobs by status
   const columns = {
-    [COLUMNS.APPLIED]: jobsData.jobs.filter(job => job.status === COLUMNS.APPLIED),
-    [COLUMNS.INTERVIEWING]: jobsData.jobs.filter(job => job.status === COLUMNS.INTERVIEWING),
-    [COLUMNS.OFFER]: jobsData.jobs.filter(job => job.status === COLUMNS.OFFER),
-    [COLUMNS.REJECTED]: jobsData.jobs.filter(job => job.status === COLUMNS.REJECTED),
+    [COLUMNS.APPLIED]: viewJobs.filter(job => job.status === COLUMNS.APPLIED),
+    [COLUMNS.INTERVIEWING]: viewJobs.filter(job => job.status === COLUMNS.INTERVIEWING),
+    [COLUMNS.OFFER]: viewJobs.filter(job => job.status === COLUMNS.OFFER),
+    [COLUMNS.REJECTED]: viewJobs.filter(job => job.status === COLUMNS.REJECTED),
   };
 
   // Filter out rejected column if hideRejected is true
@@ -124,9 +133,9 @@ export default function JobsPage() {
     : Object.keys(columns);
 
   // Count total applications
-  const totalApplications = jobsData.jobs.length;
+  const totalApplications = viewJobs.length;
   const visibleApplications = hideRejected 
-    ? jobsData.jobs.filter(job => job.status !== COLUMNS.REJECTED).length
+    ? viewJobs.filter(job => job.status !== COLUMNS.REJECTED).length
     : totalApplications;
 
   return (
@@ -144,7 +153,7 @@ export default function JobsPage() {
               <input 
                 type="checkbox" 
                 checked={hideRejected} 
-                onChange={() => setHideRejected(!hideRejected)}
+                disabled={bulkBusy} onChange={() => { setHideRejected(!hideRejected); setSelected([]); }}
                 className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
               />
               <span>Hide rejected applications</span>
@@ -161,6 +170,19 @@ export default function JobsPage() {
         </div>
       </div>
       
+      <div className="flex items-center gap-3">
+        <label><input type="checkbox" checked={archived} disabled={bulkBusy} onChange={(event) => { setArchived(event.target.checked); setSelected([]); }} /> Show archived applications</label>
+        <span className="text-sm text-gray-500">Archive preserves history and analytics, and hides schedules and reminders until restored.</span>
+      </div>
+      <BulkActions records={selectable} selected={selected} onSelect={setSelected} busy={bulkBusy} onBusy={setBulkBusy}
+        endpoint="/api/jobs/bulk" actions={[
+          { value: archived ? 'restore' : 'archive', label: archived ? 'Restore applications' : 'Archive applications' },
+          ...Object.keys(COLUMN_NAMES).map((status) => ({ value: status, action: 'status', status, label: `Set status: ${COLUMN_NAMES[status]}`, description: 'A history entry is added only when the status changes.' })),
+        ]} onComplete={async (data) => {
+          const changed = new Map(data.results.filter((item) => item.success).map((item) => [item.id, item.job]));
+          setJobsData((previous) => ({ jobs: previous.jobs.map((job) => changed.get(job._id) || job) }));
+          window.dispatchEvent(new Event('jobgenie:schedule-changed'));
+        }} />
       <DragDropContext onDragEnd={handleDragEnd}>
         <div className={`grid grid-cols-1 ${displayedColumns.length === 4 ? 'md:grid-cols-4' : 'md:grid-cols-3'} gap-6`}>
           {displayedColumns.map(columnId => (
@@ -194,7 +216,7 @@ export default function JobsPage() {
                     )}
                     
                     {columns[columnId].map((job, index) => (
-                      <Draggable key={job._id} draggableId={job._id} index={index}>
+                      <Draggable isDragDisabled={bulkBusy || selected.length > 0} key={job._id} draggableId={job._id} index={index}>
                         {(provided, snapshot) => (
                           <div
                             ref={provided.innerRef}
@@ -204,10 +226,14 @@ export default function JobsPage() {
                               snapshot.isDragging ? 'shadow-lg border-blue-300' : 'border-gray-200'
                             } p-4 mb-3 cursor-pointer hover:border-blue-300 hover:shadow-md transition-all duration-200`}
                             onClick={() => {
+                              if (bulkBusy) return;
                               setSelectedJob(job);
                               setShowTimeline(true);
                             }}
                           >
+                            <label onClick={(event) => event.stopPropagation()} className="mb-2 flex items-center gap-2 text-xs text-gray-600">
+                              <input aria-label={`Select ${job.company}`} type="checkbox" checked={selected.includes(job._id)} disabled={bulkBusy || (!selected.includes(job._id) && selected.length >= 50)} onChange={() => toggle(job._id)} /> Select
+                            </label>
                             <div className="flex justify-between items-start">
                               <div>
                                 <h3 className="font-medium text-gray-800">{job.company}</h3>
@@ -226,9 +252,9 @@ export default function JobsPage() {
                             <div className="mt-3 pt-3 border-t border-gray-100 flex justify-between items-center">
                               <p className="text-xs text-gray-500">Applied: {new Date(job.dateApplied).toLocaleDateString()}</p>
                               <div className="flex flex-wrap justify-end gap-2">
-                                <button onClick={(event) => { event.stopPropagation(); setSelectedJob(job); setShowEditModal(true); }}
+                                <button disabled={bulkBusy} onClick={(event) => { event.stopPropagation(); setSelectedJob(job); setShowEditModal(true); }}
                                   className="text-xs text-blue-600 hover:text-blue-800">Edit Job</button>
-                                <button 
+                                <button disabled={bulkBusy}
                                   onClick={(e) => {
                                     e.stopPropagation(); // Prevent opening timeline
                                     setSelectedJob(job);
@@ -239,7 +265,7 @@ export default function JobsPage() {
                                 >
                                   Update Status
                                 </button>
-                                <button 
+                                <button disabled={bulkBusy}
                                   onClick={(e) => {
                                     e.stopPropagation(); // Prevent opening timeline
                                     if (confirm('Are you sure you want to delete this job application?')) {

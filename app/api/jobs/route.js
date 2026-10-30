@@ -10,8 +10,8 @@ const dependencies = {
   connect: dbConnect,
 };
 
-export const GET = createJobRoute(async ({ userId }) => ({
-  jobs: await Job.find({ userId }).sort({ createdAt: -1 }),
+export const GET = createJobRoute(async ({ request, userId }) => ({
+  jobs: await Job.find({ userId, ...(new URL(request.url).searchParams.get('includeArchived') === 'true' ? {} : { archivedAt: null }) }).sort({ createdAt: -1 }),
 }), dependencies);
 export const POST = createJobRoute(async ({ request, userId }) =>
   createJob(userId, await readJobBody(request)), { ...dependencies, successStatus: 201 });

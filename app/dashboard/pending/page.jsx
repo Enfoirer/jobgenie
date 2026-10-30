@@ -2,6 +2,7 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
+import BulkActions from '@/components/BulkActions';
 
 const REVIEW_LABELS = {
   unverified_company: 'The company name could not be verified against the email.',
@@ -27,6 +28,8 @@ function localDateTime(value) {
 
 export default function PendingPage() {
   const [items, setItems] = useState([]);
+  const [selected, setSelected] = useState([]);
+  const [bulkBusy, setBulkBusy] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [savingId, setSavingId] = useState(null);
@@ -123,7 +126,7 @@ export default function PendingPage() {
         ].map((f) => (
           <button
             key={f.key}
-            onClick={() => setFilter(f.key)}
+            disabled={bulkBusy || savingId !== null} onClick={() => { setFilter(f.key); setSelected([]); }}
             className={`rounded-md px-3 py-1 text-sm ${
               filter === f.key
                 ? 'bg-blue-600 text-white'
@@ -135,7 +138,7 @@ export default function PendingPage() {
         ))}
         {filter !== 'pending' && (
           <button
-            onClick={clearProcessed}
+            disabled={bulkBusy || savingId !== null} onClick={clearProcessed}
             className="rounded-md border border-red-200 px-3 py-1 text-sm font-medium text-red-700 hover:bg-red-50"
           >
             Clear this view
@@ -143,6 +146,15 @@ export default function PendingPage() {
         )}
       </div>
 
+      <div className="mt-4"><BulkActions records={items.filter((item) => item.status === 'pending')} selected={selected} onSelect={setSelected}
+        endpoint="/api/pending/bulk" updates={edits} busy={bulkBusy || savingId !== null} onBusy={setBulkBusy}
+        actions={[{ value: 'accept', label: 'Accept selected emails', description: 'Uses each email’s current fields and target. Unresolved targets stay pending.' }, { value: 'ignore', label: 'Ignore selected emails' }]}
+        onComplete={async (data) => {
+          const done = data.results.filter((item) => item.success).map((item) => item.id);
+          setEdits((previous) => Object.fromEntries(Object.entries(previous).filter(([id]) => !done.includes(id))));
+          window.dispatchEvent(new Event('jobgenie:schedule-changed'));
+          await fetchItems(); await fetchJobs();
+        }} /></div>
       {error && (
         <div className="mt-4 rounded-md bg-red-50 p-3 text-sm text-red-700">
           {error}
@@ -157,6 +169,8 @@ export default function PendingPage() {
         <div className="mt-4 space-y-3">
           {items.map((item) => (
             <div key={item._id} className="rounded-lg border bg-white p-4 shadow-sm">
+              {item.status === 'pending' && <label className="mb-2 flex items-center gap-2 text-sm"><input type="checkbox" aria-label={`Select ${item.subject}`} checked={selected.includes(item._id)}
+                disabled={bulkBusy || savingId !== null || (!selected.includes(item._id) && selected.length >= 50)} onChange={() => setSelected((ids) => ids.includes(item._id) ? ids.filter((id) => id !== item._id) : [...ids, item._id])} /> Select</label>}
               <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <p className="text-sm font-medium text-gray-900">{item.subject}</p>
@@ -193,7 +207,7 @@ export default function PendingPage() {
                   )}
                   <button
                     onClick={() => setExpanded(expanded === item._id ? null : item._id)}
-                    disabled={savingId === item._id}
+                    disabled={bulkBusy || savingId !== null}
                     className="rounded-md border border-gray-300 px-3 py-1 text-xs font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-60"
                   >
                     {expanded === item._id ? 'Hide' : 'Details/Edit'}
@@ -202,14 +216,14 @@ export default function PendingPage() {
                     <>
                       <button
                         onClick={() => handleAction(item._id, 'accept')}
-                        disabled={savingId === item._id}
+                        disabled={bulkBusy || savingId !== null}
                         className="rounded-md bg-green-600 px-3 py-1 text-xs font-medium text-white hover:bg-green-700 disabled:opacity-60"
                       >
                         {savingId === item._id ? 'Processing...' : 'Accept'}
                       </button>
                       <button
                         onClick={() => handleAction(item._id, 'ignore')}
-                        disabled={savingId === item._id}
+                        disabled={bulkBusy || savingId !== null}
                         className="rounded-md border border-gray-300 px-3 py-1 text-xs font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-60"
                       >
                         Ignore
@@ -253,7 +267,7 @@ export default function PendingPage() {
                         [item._id]: { ...(previous[item._id] || {}), targetJobId: e.target.value === 'new' || !e.target.value ? null : e.target.value, createNew: e.target.value === 'new' },
                       }))}
                       className="mt-1 w-full rounded-md border-gray-300 text-sm"
-                      disabled={item.status !== 'pending'}
+                      disabled={bulkBusy || item.status !== 'pending'}
                     >
                       <option value="">Choose an application or use the extracted company and position</option>
                       <option value="new">Create a new application</option>
@@ -266,7 +280,7 @@ export default function PendingPage() {
                   <div className="grid gap-3 sm:grid-cols-2">
                     <div>
                       <label className="block text-xs text-gray-600">Company</label>
-                      <input
+                      <input disabled={bulkBusy}
                         type="text"
                         defaultValue={item.company || ''}
                         onChange={(e) =>
@@ -280,7 +294,7 @@ export default function PendingPage() {
                     </div>
                     <div>
                       <label className="block text-xs text-gray-600">Position</label>
-                      <input
+                      <input disabled={bulkBusy}
                         type="text"
                         defaultValue={item.position || ''}
                         onChange={(e) =>
@@ -294,7 +308,7 @@ export default function PendingPage() {
                     </div>
                     <div>
                       <label className="block text-xs text-gray-600">Event Type</label>
-                      <select
+                      <select disabled={bulkBusy}
                         defaultValue={item.eventType || 'other'}
                         onChange={(e) =>
                           setEdits((prev) => ({
@@ -315,7 +329,7 @@ export default function PendingPage() {
                     </div>
                     <div>
                       <label className="block text-xs text-gray-600">Interview/Event Time</label>
-                      <input
+                      <input disabled={bulkBusy}
                         type="datetime-local"
                         defaultValue={
                           localDateTime(item.interviewTime)
@@ -335,7 +349,7 @@ export default function PendingPage() {
                   </div>
                   <div>
                     <label className="block text-xs text-gray-600">Deadline</label>
-                    <input type="datetime-local" defaultValue={localDateTime(item.deadline)}
+                    <input disabled={bulkBusy} type="datetime-local" defaultValue={localDateTime(item.deadline)}
                       onChange={(e) => setEdits((previous) => ({ ...previous, [item._id]: { ...(previous[item._id] || {}), deadline: e.target.value ? new Date(e.target.value) : null } }))}
                       className="mt-1 w-full rounded-md border-gray-300 text-sm" />
                   </div>
@@ -343,14 +357,14 @@ export default function PendingPage() {
                     <div className="flex gap-2">
                       <button
                         onClick={() => handleAction(item._id, 'accept')}
-                        disabled={savingId === item._id}
+                        disabled={bulkBusy || savingId !== null}
                         className="rounded-md bg-green-600 px-3 py-1 text-xs font-medium text-white hover:bg-green-700 disabled:opacity-60"
                       >
                         {savingId === item._id ? 'Processing...' : 'Save & Accept'}
                       </button>
                       <button
                         onClick={() => handleAction(item._id, 'ignore')}
-                        disabled={savingId === item._id}
+                        disabled={bulkBusy || savingId !== null}
                         className="rounded-md border border-gray-300 px-3 py-1 text-xs font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-60"
                       >
                         Ignore
