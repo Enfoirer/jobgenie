@@ -10,6 +10,8 @@
 
 批量归档/恢复、状态修改及邮件审核的规则与验证见 [批量操作验收](../docs/bulk-actions-acceptance.md)。
 
+Safari 分享岗位入口及 App Group 签名说明见 [分享岗位验收](../docs/ios-share-acceptance.md)。
+
 ## 本阶段交付
 
 - 四个独立导航页签：申请、日程、邮箱、我的。中英文界面，系统字体、深浅色和动态字号。

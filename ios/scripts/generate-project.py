@@ -9,7 +9,7 @@ def ref(key): return uid(key)
 def add(key, value): objects.append(f'{uid(key)} = {{ {value} }};'); return uid(key)
 def array(values): return '(' + ', '.join(values) + (',' if values else '') + ')'
 def settings(values): return '{ ' + ' '.join(f'{k} = {v};' for k,v in values.items()) + ' }'
-targets = [('JobGenie','com.apple.product-type.application','app'), ('JobGenieTests','com.apple.product-type.bundle.unit-test','xctest'), ('JobGenieUITests','com.apple.product-type.bundle.ui-testing','xctest')]
+targets = [('JobGenie','com.apple.product-type.application','app'), ('JobGenieShare','com.apple.product-type.app-extension','appex'), ('JobGenieTests','com.apple.product-type.bundle.unit-test','xctest'), ('JobGenieUITests','com.apple.product-type.bundle.ui-testing','xctest')]
 groups=[]; products=[]
 for name, kind, suffix in targets:
     files=[]; builds=[]; resources=[]
@@ -17,22 +17,35 @@ for name, kind, suffix in targets:
         key = str(path.relative_to(root))
         files.append(add(key, f'isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "{path.relative_to(root/name)}"; sourceTree = "<group>";'))
         builds.append(add(key+'build', f'isa = PBXBuildFile; fileRef = {ref(key)};'))
+    if name in ['JobGenie', 'JobGenieShare']:
+        for path in sorted((root/'Shared').glob('*.swift')):
+            key = name + str(path.relative_to(root))
+            files.append(add(key, f'isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "../Shared/{path.name}"; sourceTree = "<group>";'))
+            builds.append(add(key+'build', f'isa = PBXBuildFile; fileRef = {ref(key)};'))
     if name == 'JobGenie': files.append(add('info', 'isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>";'))
     if name == 'JobGenie':
         files.append(add('localizations', 'isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>";'))
         resources.append(add('localizationsbuild', f'isa = PBXBuildFile; fileRef = {ref("localizations")};'))
 
+    if name == 'JobGenieShare':
+        files.append(add('sharelocalizations', 'isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = "../JobGenie/Localizable.xcstrings"; sourceTree = "<group>";'))
+        resources.append(add('sharelocalizationsbuild', f'isa = PBXBuildFile; fileRef = {ref("sharelocalizations")};'))
     groups.append(add(name+'group', f'isa = PBXGroup; path = {name}; sourceTree = "<group>"; children = {array(files)};'))
-    products.append(add(name+'product', f'isa = PBXFileReference; explicitFileType = {"wrapper.application" if suffix == "app" else "wrapper.cfbundle"}; path = {name}.{suffix}; sourceTree = BUILT_PRODUCTS_DIR;'))
+    products.append(add(name+'product', f'isa = PBXFileReference; explicitFileType = {"wrapper.application" if suffix == "app" else "wrapper.app-extension" if suffix == "appex" else "wrapper.cfbundle"}; path = {name}.{suffix}; sourceTree = BUILT_PRODUCTS_DIR;'))
     phases=[]
     for phase in ['Sources','Frameworks','Resources']:
         phases.append(add(name+phase, f'isa = PBX{phase}BuildPhase; buildActionMask = 2147483647; files = {array(builds if phase == "Sources" else resources if phase == "Resources" else [])}; runOnlyForDeploymentPostprocessing = 0;'))
+    if name == 'JobGenie':
+        embed = add('embedsharebuild', f'isa = PBXBuildFile; fileRef = {ref("JobGenieShareproduct")}; settings = {{ ATTRIBUTES = (RemoveHeadersOnCopy, ); }};')
+        phases.append(add('embedshare', f'isa = PBXCopyFilesBuildPhase; buildActionMask = 2147483647; dstPath = ""; dstSubfolderSpec = 13; files = ({embed},); name = "Embed App Extensions"; runOnlyForDeploymentPostprocessing = 0;'))
     configs=[]
     for mode in ['Debug','Release']:
         s={'PRODUCT_NAME':'"$(TARGET_NAME)"','PRODUCT_BUNDLE_IDENTIFIER':f'com.enfoirer.jobgenie{("."+name) if suffix != "app" else ""}', 'SWIFT_VERSION':'5.0','TARGETED_DEVICE_FAMILY':'1','IPHONEOS_DEPLOYMENT_TARGET':'17.0','SDKROOT':'iphoneos','SUPPORTED_PLATFORMS':'"iphoneos iphonesimulator"','CODE_SIGN_STYLE':'Automatic','MARKETING_VERSION':'0.1.0','CURRENT_PROJECT_VERSION':'1','SWIFT_EMIT_LOC_STRINGS':'YES','SWIFT_STRICT_CONCURRENCY':'complete'}
         if mode == 'Debug': s.update({'SWIFT_ACTIVE_COMPILATION_CONDITIONS':'"DEBUG $(inherited)"','SWIFT_OPTIMIZATION_LEVEL':'"-Onone"','ENABLE_TESTABILITY':'YES'})
         else: s.update({'SWIFT_COMPILATION_MODE':'wholemodule','SWIFT_OPTIMIZATION_LEVEL':'"-O"','VALIDATE_PRODUCT':'YES'})
-        if suffix == 'app': s.update({'INFOPLIST_FILE':'JobGenie/Info.plist','GENERATE_INFOPLIST_FILE':'NO','LD_RUNPATH_SEARCH_PATHS':'"$(inherited) @executable_path/Frameworks"'})
+        if name in ['JobGenie', 'JobGenieShare']: s['CODE_SIGN_ENTITLEMENTS'] = f'{name}/{name}.entitlements'
+        if suffix == 'appex': s.update({'INFOPLIST_FILE':'JobGenieShare/Info.plist','GENERATE_INFOPLIST_FILE':'NO','APPLICATION_EXTENSION_API_ONLY':'YES','SKIP_INSTALL':'YES','LD_RUNPATH_SEARCH_PATHS':'"$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks"'})
+        elif suffix == 'app': s.update({'INFOPLIST_FILE':'JobGenie/Info.plist','GENERATE_INFOPLIST_FILE':'NO','LD_RUNPATH_SEARCH_PATHS':'"$(inherited) @executable_path/Frameworks"'})
         else:
             s.update({'GENERATE_INFOPLIST_FILE':'YES','LD_RUNPATH_SEARCH_PATHS':'"$(inherited) @executable_path/Frameworks @loader_path/Frameworks"'})
             if name == 'JobGenieTests': s.update({'TEST_HOST':'"$(BUILT_PRODUCTS_DIR)/JobGenie.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/JobGenie"','BUNDLE_LOADER':'"$(TEST_HOST)"'})
@@ -40,7 +53,10 @@ for name, kind, suffix in targets:
         configs.append(add(name+mode, f'isa = XCBuildConfiguration; buildSettings = {settings(s)}; name = {mode};'))
     add(name+'configs', f'isa = XCConfigurationList; buildConfigurations = {array(configs)}; defaultConfigurationIsVisible = 0; defaultConfigurationName = Release;')
     deps=[]
-    if suffix != 'app':
+    if suffix == 'app':
+        proxy=add('shareproxy', f'isa = PBXContainerItemProxy; containerPortal = {ref("project")}; proxyType = 1; remoteGlobalIDString = {ref("JobGenieSharetarget")}; remoteInfo = JobGenieShare;')
+        deps.append(add('sharedep', f'isa = PBXTargetDependency; target = {ref("JobGenieSharetarget")}; targetProxy = {proxy};'))
+    if suffix == 'xctest':
         proxy=add(name+'proxy', f'isa = PBXContainerItemProxy; containerPortal = {ref("project")}; proxyType = 1; remoteGlobalIDString = {ref("JobGenietarget")}; remoteInfo = JobGenie;')
         deps.append(add(name+'dep', f'isa = PBXTargetDependency; target = {ref("JobGenietarget")}; targetProxy = {proxy};'))
     add(name+'target', f'isa = PBXNativeTarget; buildConfigurationList = {ref(name+"configs")}; buildPhases = {array(phases)}; buildRules = (); dependencies = {array(deps)}; name = {name}; productName = {name}; productReference = {ref(name+"product")}; productType = "{kind}";')

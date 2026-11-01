@@ -4900,6 +4900,326 @@
           }
         }
       }
+    },
+    "草稿已保存": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Draft saved"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "草稿已保存"
+          }
+        }
+      }
+    },
+    "打开 JobGenie，在“分享的岗位”中确认创建申请。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open JobGenie and create your application from Shared jobs."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "打开 JobGenie，在“分享的岗位”中确认创建申请。"
+          }
+        }
+      }
+    },
+    "公司和职位可稍后补充。草稿保存在本机，创建申请前需在 App 内确认账号。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You can add the company and position later. Drafts stay on this device until you confirm the account in JobGenie."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "公司和职位可稍后补充。草稿保存在本机，创建申请前需在 App 内确认账号。"
+          }
+        }
+      }
+    },
+    "分享岗位": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Share job"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "分享岗位"
+          }
+        }
+      }
+    },
+    "保存草稿": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save draft"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存草稿"
+          }
+        }
+      }
+    },
+    "最多保留 50 个分享草稿，请先在 App 中处理。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You can keep up to 50 shared drafts. Process some in JobGenie first."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "最多保留 50 个分享草稿，请先在 App 中处理。"
+          }
+        }
+      }
+    },
+    "无法保存草稿，请检查共享容器配置后重试。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unable to save. Check the App Group configuration and try again."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法保存草稿，请检查共享容器配置后重试。"
+          }
+        }
+      }
+    },
+    "请选择一个 http 或 https 岗位链接，也可以手动粘贴。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Share one HTTP or HTTPS job link, or paste one here."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "请选择一个 http 或 https 岗位链接，也可以手动粘贴。"
+          }
+        }
+      }
+    },
+    "Safari → 分享 → JobGenie，将岗位链接保存到这里。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save a job link here from Safari → Share → JobGenie."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Safari → 分享 → JobGenie，将岗位链接保存到这里。"
+          }
+        }
+      }
+    },
+    "草稿尚未提交。确认保存后才会创建申请，并同步到网页。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drafts have not been submitted. Confirm and save to create an application and sync it to the web."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "草稿尚未提交。确认保存后才会创建申请，并同步到网页。"
+          }
+        }
+      }
+    },
+    "演示模式不能导入分享草稿，请登录真实账号。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign in to import shared drafts. Import is unavailable in demo mode."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "演示模式不能导入分享草稿，请登录真实账号。"
+          }
+        }
+      }
+    },
+    "没有分享的岗位": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No shared jobs"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "没有分享的岗位"
+          }
+        }
+      }
+    },
+    "已有相同链接的申请，请确认是否仍需新建。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "An application already uses this link. Check whether you still need a new one."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已有相同链接的申请，请确认是否仍需新建。"
+          }
+        }
+      }
+    },
+    "补充并创建申请": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Review and create application"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "补充并创建申请"
+          }
+        }
+      }
+    },
+    "删除草稿": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete draft"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "删除草稿"
+          }
+        }
+      }
+    },
+    "分享的岗位": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shared jobs"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "分享的岗位"
+          }
+        }
+      }
+    },
+    "申请已保存，但草稿清理失败，请删除草稿以免重复创建。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Application saved, but the draft could not be removed. Delete the draft to avoid creating it again."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "申请已保存，但草稿清理失败，请删除草稿以免重复创建。"
+          }
+        }
+      }
+    },
+    "删除草稿？": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete draft?"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "删除草稿？"
+          }
+        }
+      }
+    },
+    "无法读取或删除分享草稿，请重试。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unable to read or delete shared drafts. Try again."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法读取或删除分享草稿，请重试。"
+          }
+        }
+      }
+    },
+    "保存到当前账号": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save to current account"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存到当前账号"
+          }
+        }
+      }
     }
   },
   "version": "1.1"

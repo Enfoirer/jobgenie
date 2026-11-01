@@ -427,6 +427,58 @@ final class JobGenieUITests: XCTestCase {
         app.launch()
         XCTAssertTrue(app.buttons["Explore the demo"].waitForExistence(timeout: 10))
     }
+    func testSafariSharedJob() throws {
+        guard let url = ProcessInfo.processInfo.environment["JOBGENIE_TEST_BASE_URL"] else { throw XCTSkip("Run isolated share acceptance") }
+        let app = XCUIApplication()
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-jobgenie.language", "en"]
+        app.launchEnvironment["JOBGENIE_TEST_BASE_URL"] = url
+        app.launch()
+        let safari = XCUIApplication(bundleIdentifier: "com.apple.mobilesafari")
+        safari.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        safari.launch()
+        for title in ["Continue", "Not Now", "Start Browsing", "Close"] {
+            if safari.buttons[title].waitForExistence(timeout: 2) { safari.buttons[title].tap() }
+        }
+        let address = safari.textFields.firstMatch
+        XCTAssertTrue(address.waitForExistence(timeout: 10), safari.debugDescription)
+        address.tap()
+        if safari.buttons["Clear text"].exists { safari.buttons["Clear text"].tap() }
+        address.typeText(url + "/login?shared-job=1\n")
+        if safari.buttons["Close"].waitForExistence(timeout: 2) { safari.buttons["Close"].tap() }
+        let share = safari.buttons["Share"]
+        if !share.exists { safari.buttons["More"].firstMatch.tap() }
+        XCTAssertTrue(share.waitForExistence(timeout: 15), safari.debugDescription); share.tap()
+        var destination = safari.cells["JobGenie"]
+        if !destination.waitForExistence(timeout: 3) {
+            let more = safari.cells["More"].firstMatch
+            XCTAssertTrue(more.exists, safari.debugDescription); more.tap()
+            destination = safari.cells["JobGenie"]
+        }
+        XCTAssertTrue(destination.waitForExistence(timeout: 5), safari.debugDescription); destination.tap()
+        let company = safari.textFields["share.company"]
+        XCTAssertTrue(company.waitForExistence(timeout: 10), safari.debugDescription)
+        company.tap(); company.typeText("Safari Acceptance")
+        safari.textFields["share.position"].tap(); safari.textFields["share.position"].typeText("iOS Engineer")
+        safari.buttons["share.save"].tap()
+        XCTAssertTrue(safari.staticTexts["Draft saved"].waitForExistence(timeout: 10), safari.debugDescription)
+        app.activate()
+        XCTAssertTrue(app.textFields["login.email"].waitForExistence(timeout: 10))
+        app.textFields["login.email"].tap(); app.textFields["login.email"].typeText("ios-acceptance@example.test")
+        app.secureTextFields["login.password"].tap(); app.secureTextFields["login.password"].typeText("ios-local-test-password")
+        app.buttons["login.submit"].tap()
+        XCTAssertTrue(app.buttons["jobs.shared"].waitForExistence(timeout: 25)); app.buttons["jobs.shared"].tap()
+        let create = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "shared.create.")).firstMatch
+        XCTAssertTrue(create.waitForExistence(timeout: 5)); create.tap()
+        XCTAssertEqual(app.textFields["editor.company"].value as? String, "Safari Acceptance")
+        XCTAssertEqual(app.textFields["editor.position"].value as? String, "iOS Engineer")
+        XCTAssertEqual(app.textFields["editor.url"].value as? String, url + "/login?shared-job=1")
+        app.buttons["editor.save"].tap()
+        XCTAssertTrue(app.staticTexts["No shared jobs"].waitForExistence(timeout: 15))
+        app.terminate(); app.launch()
+        XCTAssertTrue(app.staticTexts["Safari Acceptance"].waitForExistence(timeout: 15))
+        app.tabBars.buttons["Account"].tap(); reveal(app.buttons["account.signout"], in: app)
+        app.buttons["account.signout"].tap(); app.buttons["Confirm sign out"].tap()
+    }
     func testRealBackend() throws {
         guard let url = ProcessInfo.processInfo.environment["JOBGENIE_TEST_BASE_URL"] else { throw XCTSkip("Run ios/scripts/verify-backend.mjs for isolated NextAuth/Mongo integration") }
         let app = XCUIApplication()

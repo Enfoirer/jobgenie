@@ -80,7 +80,16 @@ def visit(node):
 visit(data)
 with open(sys.argv[2],'wb') as f: plistlib.dump(data,f)
 `, join(products, files[0]), runFile, base]);
-  if (process.argv.includes('--resources-only')) {
+  if (process.argv.includes('--share-only')) {
+    console.log('Running Safari share -> native creation -> database persistence acceptance.');
+    await run('xcodebuild', ['test-without-building', '-xctestrun', runFile, '-destination', `platform=iOS Simulator,id=${device}`, '-parallel-testing-enabled', 'NO', '-only-testing:JobGenieUITests/JobGenieUITests/testSafariSharedJob', '-resultBundlePath', join(work, 'share-ui.xcresult')]);
+    const jobs = await Job.find({ userId: user._id });
+    assert.equal(jobs.length, 1); assert.equal(jobs[0].company, 'Safari Acceptance');
+    assert.equal(jobs[0].position, 'iOS Engineer'); assert.equal(jobs[0].jobUrl, base + '/login?shared-job=1');
+    assert.equal(await StatusHistory.countDocuments({ jobId: jobs[0]._id, userId: user._id }), 1);
+    assert.equal(await Job.countDocuments({ userId: foreign._id }), 1);
+    console.log('PASS: Safari extension, shared container, native prefill/create, relaunch persistence and owner isolation.');
+  } else if (process.argv.includes('--resources-only')) {
     const { job } = await createJob(user._id, { company: 'Native Analytics', position: 'Engineer', dateApplied: new Date(Date.now() - 2 * 86400000).toISOString() });
     await addHistory(user._id, job._id, { status: 'interviewing', date: new Date(Date.now() - 86400000).toISOString() });
     await addHistory(user._id, job._id, { status: 'offer', date: new Date(Date.now() - 60000).toISOString() });

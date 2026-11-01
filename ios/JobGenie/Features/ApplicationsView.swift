@@ -17,6 +17,7 @@ struct ApplicationsView: View {
     var body: some View {
         List {
                 DemoNotice()
+            Section { NavigationLink { SharedJobsView() } label: { Label("分享的岗位", systemImage: "square.and.arrow.down") }.accessibilityIdentifier("jobs.shared") }
             Section {
                 VStack(alignment: .leading, spacing: 12) {
                     Text("每一步，都算数。").font(.title2.bold())
@@ -193,20 +194,29 @@ struct JobEditor: View {
     @EnvironmentObject private var model: AppModel
     @Environment(\.dismiss) private var dismiss
     let job: Job?
+    private var onSaved: (() -> Void)? = nil
+    private var fromShare = false
     @State private var draft: JobDraft
     @State private var saving = false
     @State private var error: UserMessage?
     init(job: Job?) { self.job = job; _draft = State(initialValue: JobDraft(job: job)) }
+    init(shared: SharedJobDraft, onSaved: @escaping () -> Void) {
+        job = nil; self.onSaved = onSaved; fromShare = true
+        var draft = JobDraft(); draft.jobUrl = shared.url; draft.company = shared.company; draft.position = shared.position
+        draft.notes = shared.title
+        _draft = State(initialValue: draft)
+    }
     var body: some View {
         NavigationStack {
             Form {
+                if fromShare, let user = model.user { Section("保存到当前账号") { Text(verbatim: user.email) } }
                 Section("必填信息") {
                     TextField("公司", text: $draft.company).accessibilityIdentifier("editor.company")
                     TextField("职位", text: $draft.position).accessibilityIdentifier("editor.position")
                 }
                 Section("更多信息") {
                     TextField("地点", text: $draft.location).accessibilityIdentifier("editor.location")
-                    TextField("岗位链接 · https://", text: $draft.jobUrl).keyboardType(.URL).textInputAutocapitalization(.never).autocorrectionDisabled()
+                    TextField("岗位链接 · https://", text: $draft.jobUrl).accessibilityIdentifier("editor.url").keyboardType(.URL).textInputAutocapitalization(.never).autocorrectionDisabled()
                     TextField("备注", text: $draft.notes, axis: .vertical).lineLimit(4...10).accessibilityIdentifier("editor.notes")
                 }
                 if let error { Section { ErrorBanner(message: error) } }
@@ -223,6 +233,11 @@ struct JobEditor: View {
         if let message = draft.validationMessage { error = .text(message); return }
         saving = true; error = nil
         defer { saving = false }
-        do { try await model.save(draft, id: job?.id); dismiss() } catch { self.error = model.message(error) }
+        do {
+            let generation = model.sessionGeneration
+            try await model.save(draft, id: job?.id)
+            guard generation == model.sessionGeneration else { return }
+            onSaved?(); dismiss()
+        } catch { self.error = model.message(error) }
     }
 }
