@@ -9,6 +9,7 @@ web app: https://jobgenie-six.vercel.app
 - Email agent: Gmail/Outlook OAuth, incremental fetch (Gmail historyId, Outlook receivedAt filter), rule+LLM parsing, relevance filtering, pending review queue, sync modes (auto/semi/strict), job/status auto-update.
 - Editable/deletable status history with atomic current-state maintenance; accept/ignore pending emails.
 - Batch archive/restore, status changes, and pending-email review on web and iPhone; [behavior and acceptance checks](docs/bulk-actions-acceptance.md).
+- Versioned application documents (resume, cover letter, portfolio) on web and iPhone; [usage and acceptance](docs/application-documents-acceptance.md).
 - File uploads stored in MongoDB per user.
 
 ## Quick Start

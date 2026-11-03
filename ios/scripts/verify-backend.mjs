@@ -14,6 +14,7 @@ import { MongoMemoryReplSet } from 'mongodb-memory-server';
 import UploadedFile from '../../lib/models/UploadedFile.js';
 import User from '../../lib/models/User.js';
 import Job from '../../lib/models/Job.js';
+import JobDocument from '../../lib/models/JobDocument.js';
 import StatusHistory from '../../lib/models/StatusHistory.js';
 import MailAccount from '../../lib/models/MailAccount.js';
 import ProcessedEmail from '../../lib/models/ProcessedEmail.js';
@@ -80,7 +81,19 @@ def visit(node):
 visit(data)
 with open(sys.argv[2],'wb') as f: plistlib.dump(data,f)
 `, join(products, files[0]), runFile, base]);
-  if (process.argv.includes('--share-only')) {
+  if (process.argv.includes('--documents-only')) {
+    await JobDocument.init();
+    console.log('Running native application document API and UI acceptance.');
+    await run('xcodebuild', ['test-without-building', '-xctestrun', runFile, '-destination', `platform=iOS Simulator,id=${device}`, '-parallel-testing-enabled', 'NO', '-only-testing:JobGenieTests/JobDocumentTests', '-resultBundlePath', join(work, 'documents-api.xcresult')]);
+    const job = await Job.findOne({ userId: user._id, company: 'Native Documents' });
+    assert(job); assert.equal(await JobDocument.countDocuments({ jobId: job._id }), 2);
+    assert.equal(await UploadedFile.countDocuments({ userId: user._id }), 0);
+    const snapshot = await JobDocument.findOne({ jobId: job._id }).select('+fileData');
+    await UploadedFile.create({ userId: user._id, name: 'ui-resume.pdf', type: snapshot.type, size: snapshot.size, fileData: snapshot.fileData });
+    await run('xcodebuild', ['test-without-building', '-xctestrun', runFile, '-destination', `platform=iOS Simulator,id=${device}`, '-parallel-testing-enabled', 'NO', '-only-testing:JobGenieUITests/JobGenieUITests/testRealDocumentsUI', '-resultBundlePath', join(work, 'documents-ui.xcresult')]);
+    assert.equal(await JobDocument.countDocuments({ jobId: job._id }), 3);
+    console.log('PASS: native document versions, retry deduplication, library deletion, snapshot download and details/preview UI.');
+  } else if (process.argv.includes('--share-only')) {
     console.log('Running Safari share -> native creation -> database persistence acceptance.');
     await run('xcodebuild', ['test-without-building', '-xctestrun', runFile, '-destination', `platform=iOS Simulator,id=${device}`, '-parallel-testing-enabled', 'NO', '-only-testing:JobGenieUITests/JobGenieUITests/testSafariSharedJob', '-resultBundlePath', join(work, 'share-ui.xcresult')]);
     const jobs = await Job.find({ userId: user._id });

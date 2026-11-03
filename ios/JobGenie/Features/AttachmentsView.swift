@@ -26,7 +26,7 @@ struct AttachmentsView: View {
         List {
             DemoNotice()
             Section {
-                Text("账号附件库与网页版共用，附件不绑定到单个申请。") .font(.footnote).foregroundStyle(.secondary)
+                Text("账号附件库与网页版共用，可在申请详情中关联材料并保留版本。") .font(.footnote).foregroundStyle(.secondary)
                 Text("支持 PDF、DOCX、PNG、JPG/JPEG，每次一个文件，最大 4 MB。") .font(.footnote)
                 Button { importing = true } label: { Label("上传附件", systemImage: "arrow.up.doc") }
                     .disabled(working || model.attachmentBusy).accessibilityIdentifier("attachments.upload")

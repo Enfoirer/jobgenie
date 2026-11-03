@@ -479,6 +479,31 @@ final class JobGenieUITests: XCTestCase {
         app.tabBars.buttons["Account"].tap(); reveal(app.buttons["account.signout"], in: app)
         app.buttons["account.signout"].tap(); app.buttons["Confirm sign out"].tap()
     }
+    func testRealDocumentsUI() throws {
+        guard let base = ProcessInfo.processInfo.environment["JOBGENIE_TEST_BASE_URL"] else { throw XCTSkip("Run isolated documents acceptance") }
+        let app = XCUIApplication()
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-jobgenie.language", "en"]
+        app.launchEnvironment["JOBGENIE_TEST_BASE_URL"] = base; app.launch()
+        XCTAssertTrue(app.textFields["login.email"].waitForExistence(timeout: 15))
+        app.textFields["login.email"].tap(); app.textFields["login.email"].typeText("ios-acceptance@example.test")
+        app.secureTextFields["login.password"].tap(); app.secureTextFields["login.password"].typeText("ios-local-test-password")
+        app.buttons["login.submit"].tap()
+        XCTAssertTrue(app.staticTexts["Native Documents"].waitForExistence(timeout: 25))
+        reveal(app.staticTexts["Native Documents"], in: app); app.staticTexts["Native Documents"].tap()
+        reveal(app.buttons["job.documents"], in: app); app.buttons["job.documents"].tap()
+        XCTAssertTrue(app.staticTexts["v2 · native-resume.pdf"].waitForExistence(timeout: 10))
+        app.buttons["documents.file"].tap()
+        app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "ui-resume.pdf")).firstMatch.tap()
+        app.textFields["documents.note"].tap(); app.textFields["documents.note"].typeText("UI submission")
+        app.buttons["documents.save"].tap()
+        XCTAssertTrue(app.staticTexts["v3 · ui-resume.pdf"].waitForExistence(timeout: 10))
+        reveal(app.staticTexts["v1 · native-resume.pdf"], in: app)
+        let view = app.buttons["View"].firstMatch; reveal(view, in: app); view.tap()
+        XCTAssertTrue(app.buttons["QLOverlayDoneButtonAccessibilityIdentifier"].waitForExistence(timeout: 10), app.debugDescription)
+        app.buttons["QLOverlayDoneButtonAccessibilityIdentifier"].tap()
+        app.tabBars.buttons["Account"].tap(); reveal(app.buttons["account.signout"], in: app)
+        app.buttons["account.signout"].tap(); app.buttons["Confirm sign out"].tap()
+    }
     func testRealBackend() throws {
         guard let url = ProcessInfo.processInfo.environment["JOBGENIE_TEST_BASE_URL"] else { throw XCTSkip("Run ios/scripts/verify-backend.mjs for isolated NextAuth/Mongo integration") }
         let app = XCUIApplication()

@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { COLUMN_NAMES } from '@/lib/mockData';
 import Modal from './Modal';
+import JobDocuments from './JobDocuments';
 import EditStatusHistoryModal from './EditStatusHistoryModal';
 
 export default function JobTimeline({ jobId, onClose, onJobUpdate }) {
@@ -54,6 +55,7 @@ export default function JobTimeline({ jobId, onClose, onJobUpdate }) {
           ))}
         </ol>
       )}
+      {job && <JobDocuments key={jobId} jobId={jobId} />}
       <div className="mt-5 flex justify-end"><button type="button" onClick={onClose} className="rounded border px-4 py-2">Close</button></div>
       {editing && <EditStatusHistoryModal key={editing._id} statusEntry={editing} jobId={jobId}
         onClose={() => setEditing(null)} onUpdate={changed} />}

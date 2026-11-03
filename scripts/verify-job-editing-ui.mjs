@@ -21,6 +21,7 @@ import { verifyMailAndAuth } from './verify-mail-auth-ui.mjs';
 import { verifyAccountSecurity } from './verify-account-security-ui.mjs';
 import { verifyUploads } from './verify-uploads-ui.mjs';
 import { verifyAnalytics } from './verify-analytics-ui.mjs';
+import { verifyDocuments } from './verify-documents-ui.mjs';
 import { verifyBulk } from './verify-bulk-ui.mjs';
 
 const chromePath = process.env.CHROME_BIN || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
@@ -145,7 +146,10 @@ try {
   await wait(`!!${card}`, 'authenticated board');
   console.log('PASS: real credential login and board load.');
 
-  if (process.argv.includes('--bulk-only')) {
+  if (process.argv.includes('--documents-only')) {
+    await verifyDocuments({ user, job, send, evaluate, wait, click, fill, base });
+    assert.deepEqual(exceptions, []);
+  } else if (process.argv.includes('--bulk-only')) {
     confirmDelete = true;
     await verifyBulk({ user, send, evaluate, wait, click, fill, base });
     assert.deepEqual(exceptions, []);

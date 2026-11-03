@@ -109,6 +109,7 @@ struct JobDetailView: View {
                         LabeledContent("申请日期") { Text(job.dateApplied, format: .dateTime.year().month(.abbreviated).day()).accessibilityIdentifier("job.appliedDate") }
                         if let raw = job.jobUrl, let url = JobDraft.safeURL(raw) { Link(destination: url) { Label("查看岗位链接", systemImage: "arrow.up.right.square") } }
                     }
+                    Section { NavigationLink { JobDocumentsView(jobID: jobID) } label: { Label("申请材料与版本", systemImage: "doc.on.doc") }.accessibilityIdentifier("job.documents") }
                     Section("备注") {
                         if let notes = job.notes, !notes.isEmpty { Text(verbatim: notes).textSelection(.enabled) }
                         else { Text("暂无备注") }

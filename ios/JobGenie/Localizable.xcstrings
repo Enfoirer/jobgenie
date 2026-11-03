@@ -5220,6 +5220,246 @@
           }
         }
       }
+    },
+    "简历": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resume"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "简历"
+          }
+        }
+      }
+    },
+    "求职信": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cover letter"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "求职信"
+          }
+        }
+      }
+    },
+    "作品集": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Portfolio"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "作品集"
+          }
+        }
+      }
+    },
+    "每次关联保存独立版本，附件库文件删除后仍可查看历史材料。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Each linked version keeps a separate snapshot, even if the library file is deleted."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每次关联保存独立版本，附件库文件删除后仍可查看历史材料。"
+          }
+        }
+      }
+    },
+    "请登录真实账号以关联申请材料。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign in to link application documents."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "请登录真实账号以关联申请材料。"
+          }
+        }
+      }
+    },
+    "材料类型": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Document type"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "材料类型"
+          }
+        }
+      }
+    },
+    "选择附件": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose attachment"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "选择附件"
+          }
+        }
+      }
+    },
+    "请选择附件": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Select an attachment"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "请选择附件"
+          }
+        }
+      }
+    },
+    "版本备注（可选）": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Version note (optional)"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "版本备注（可选）"
+          }
+        }
+      }
+    },
+    "上传新材料": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Upload new document"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "上传新材料"
+          }
+        }
+      }
+    },
+    "上传后请选择附件，再保存材料版本。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "After uploading, select the file and save a document version."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "上传后请选择附件，再保存材料版本。"
+          }
+        }
+      }
+    },
+    "保存材料版本": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save document version"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存材料版本"
+          }
+        }
+      }
+    },
+    "暂无关联材料": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No linked documents"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "暂无关联材料"
+          }
+        }
+      }
+    },
+    "申请材料与版本": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Application documents"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "申请材料与版本"
+          }
+        }
+      }
+    },
+    "账号附件库与网页版共用，可在申请详情中关联材料并保留版本。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your library is shared with the web. Link files and retain versions from application details."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "账号附件库与网页版共用，可在申请详情中关联材料并保留版本。"
+          }
+        }
+      }
     }
   },
   "version": "1.1"
