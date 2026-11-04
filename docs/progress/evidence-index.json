@@ -269,6 +269,44 @@
       "observedSourceMtime": "2026-11-04T13:27:02.800Z",
       "sha256": "c560df976cc3304a31af163a1e333cb5b31ebb7774209e52c964b49851b764d5",
       "originalSha256": "c560df976cc3304a31af163a1e333cb5b31ebb7774209e52c964b49851b764d5"
+    },
+    {
+      "task": "JG-024",
+      "kind": "test_log",
+      "file": "tests/2026-11-04/english-records-validation.log",
+      "outcome": "passed",
+      "description": "Actual English-records validation output, including workbook integrity and calculation checks",
+      "collectedAt": "2026-11-04T15:23:15.512960+00:00",
+      "originalSha256": "425757e098ca08dc11fe9cec5f00e21a4b739898e0e9a422a06c8ab4ca28dd71",
+      "sha256": "be98aae4c67c833beed1934842b86fe697ca419911f18fe8679791ab9a269338",
+      "redactions": [
+        "Local workspace/home/temp paths"
+      ],
+      "association": "Current English-records delivery. Generated workbook previews are not screenshots of a native spreadsheet application."
+    },
+    {
+      "task": "JG-024",
+      "kind": "screenshot",
+      "file": "visuals/2026-11-04/english-progress-gantt.png",
+      "outcome": "passed",
+      "description": "Artifact Tool render of the translated original progress workbook on 2026-11-04",
+      "collectedAt": "2026-11-04T15:23:15.512960+00:00",
+      "originalSha256": "dc7e956b1b4d9b47b94a2e1780ed029449a26ec6be022271cad41a731fdd71d2",
+      "sha256": "dc7e956b1b4d9b47b94a2e1780ed029449a26ec6be022271cad41a731fdd71d2",
+      "redactions": [],
+      "association": "Current English-records delivery. Generated workbook previews are not screenshots of a native spreadsheet application."
+    },
+    {
+      "task": "JG-024",
+      "kind": "screenshot",
+      "file": "visuals/2026-11-04/english-update-log.png",
+      "outcome": "passed",
+      "description": "Artifact Tool render of appended delivery history, including JG-024, on 2026-11-04",
+      "collectedAt": "2026-11-04T15:23:15.512960+00:00",
+      "originalSha256": "d005be93f6e88b967774e804725e0e3a16fa0f8960f21d5cfc51a492a75d7e0a",
+      "sha256": "d005be93f6e88b967774e804725e0e3a16fa0f8960f21d5cfc51a492a75d7e0a",
+      "redactions": [],
+      "association": "Current English-records delivery. Generated workbook previews are not screenshots of a native spreadsheet application."
     }
   ],
   "records": [
@@ -852,6 +890,35 @@
       ],
       "deploymentObservation": "deployments/2026-11-04-delivery-9990678.json",
       "translatedAt": "2026-11-04T15:15:24.093466+00:00"
+    },
+    {
+      "id": "JG-024",
+      "title": "Records: English documentation",
+      "scope": "Translate the single original workbook, milestone summaries, guides, evidence metadata and acceptance records. Preserve bilingual iOS and original evidence.",
+      "tests": "English record/link/hash checks, workbook calculations, historical-field preservation and visual review passed. No application test suite was rerun for this documentation-only task.",
+      "boundary": "Original-language historical logs remain unchanged. Push and deployment observations are distinct. Existing product acceptance gaps remain.",
+      "commit": "https://github.com/Enfoirer/jobgenie/commit/4046a69ac545a97fee44f68a5662a0b9bcc8afeb",
+      "document": "https://github.com/Enfoirer/jobgenie/blob/4046a69ac545a97fee44f68a5662a0b9bcc8afeb/docs/progress/README.md",
+      "commitSha": "4046a69ac545a97fee44f68a5662a0b9bcc8afeb",
+      "commitAt": "2026-11-04T23:21:45+08:00",
+      "preparedAt": "2026-11-04T15:23:15.512960+00:00",
+      "record": "records/2026-11-04-JG-024.md",
+      "sourceDocumentExistsAtCommit": true,
+      "rawLogs": [
+        "tests/2026-11-04/english-records-validation.log"
+      ],
+      "visuals": [
+        "visuals/2026-11-04/english-progress-gantt.png",
+        "visuals/2026-11-04/english-update-log.png"
+      ],
+      "observedChecks": [
+        {
+          "context": "Vercel",
+          "state": "success",
+          "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/2vr84zMMbTSLVfPPNrU7Vybkmuuo"
+        }
+      ],
+      "deploymentObservation": "deployments/2026-11-04-english-records-4046a69.json"
     }
   ],
   "translatedAt": "2026-11-04T15:15:24.093466+00:00",

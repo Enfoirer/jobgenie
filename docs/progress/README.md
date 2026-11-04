@@ -42,3 +42,9 @@ On 2026-11-03, Safari sharing (`68c1235`), application documents (`a0d5882`) and
 - JG-021: Safari extension and isolated-backend flows passed. Physical-device/TestFlight delivery still requires a developer Team, App Group and signing configuration.
 - iOS APNs background push is not implemented. Real mail-provider consent, third-party file providers and physical-device acceptance retain their documented limitations.
 - Historical counts describe their own runs and must not be added together. Completed milestones do not mean that the entire product or every production/device acceptance item is complete.
+
+## English records delivery on 2026-11-04
+
+[JG-024](records/2026-11-04-JG-024.md) records the English translation and validation. The original workbook now has 24 milestones. Implementation [`4046a69`](https://github.com/Enfoirer/jobgenie/commit/4046a69ac545a97fee44f68a5662a0b9bcc8afeb) was pushed and its remote SHA verified. See the [deployment observation](deployments/2026-11-04-english-records-4046a69.json) for the separately observed platform status.
+
+The JG-024 implementation Vercel check was subsequently observed as **success**. The saved response retains the initial pending check as well. This follow-up evidence update is a separate revision.

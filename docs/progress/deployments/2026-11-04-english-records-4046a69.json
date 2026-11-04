@@ -1,0 +1,38 @@
+{
+  "observedAt": "2026-11-04T15:23:52.955403+00:00",
+  "source": "GitHub combined commit status via connected GitHub tool",
+  "implementationCommit": "4046a69ac545a97fee44f68a5662a0b9bcc8afeb",
+  "remoteShaVerified": "4046a69ac545a97fee44f68a5662a0b9bcc8afeb",
+  "remoteRef": "refs/heads/main",
+  "remoteVerification": "git ls-remote origin refs/heads/main",
+  "statuses": [
+    {
+      "context": "Vercel",
+      "state": "success",
+      "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/2vr84zMMbTSLVfPPNrU7Vybkmuuo"
+    }
+  ],
+  "scope": "Documentation and record-validation changes only. Product code and iOS localization unchanged. A later records-only commit is not the revision associated with this check.",
+  "observations": [
+    {
+      "observedAt": "2026-11-04T15:23:15.512960+00:00",
+      "statuses": [
+        {
+          "context": "Vercel",
+          "state": "pending",
+          "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/2vr84zMMbTSLVfPPNrU7Vybkmuuo"
+        }
+      ]
+    },
+    {
+      "observedAt": "2026-11-04T15:23:52.955403+00:00",
+      "statuses": [
+        {
+          "context": "Vercel",
+          "state": "success",
+          "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/2vr84zMMbTSLVfPPNrU7Vybkmuuo"
+        }
+      ]
+    }
+  ]
+}
