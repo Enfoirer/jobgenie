@@ -1,0 +1,155 @@
+(node:20458) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://<HOME>/Documents/study%20and%20work/find_job/jobgenie/lib/models/UploadedFile.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to <WORKSPACE>/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Running Safari share -> native creation -> database persistence acceptance.
+Acceptance failed. Logs: <TEMP>/jobgenie-ios-acceptance-4Vgcrv
+   ▲ Next.js 15.3.1
+   - Local:        http://127.0.0.1:51685
+   - Network:      http://127.0.0.1:51685
+
+ ✓ Starting...
+ ✓ Ready in 222ms
+
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]:  {82.0, 30.3}}
+                                                  Other, 0x103f26700, {{298.0, 407.3}, {82.0, 30.3}}
+                                                    StaticText, 0x103f26820, {{298.0, 407.3}, {82.0, 30.3}}, identifier: 'cellTitleLabel', label: 'Add Bookmark to…'
+                                                Other, 0x103f26940, {{304.0, 331.3}, {70.0, 70.0}}
+                                                  Other, 0x103f26a60, {{304.0, 331.3}, {70.0, 70.0}}
+                                                  Other, 0x103f26b80, {{304.0, 331.3}, {70.0, 70.0}}
+                                                Image, 0x103f26ca0, {{323.0, 352.0}, {32.0, 28.7}}, identifier: 'activityImageView', label: 'bookmark'
+                                          Other, 0x103f26dc0, {{28.0, 314.3}, {346.0, 1.0}}, identifier: 'collectionView.footerView'
+                                          Cell, 0x103f26ee0, {{16.0, 463.7}, {370.0, 50.3}}, identifier: 'actionGroupCell', label: 'Add to Favorites'
+                                            Other, 0x103f27000, {{16.0, 463.7}, {370.0, 50.3}}
+                                              Other, 0x103f27120, {{16.0, 463.7}, {370.0, 50.3}}
+                                            Other, 0x103f27240, {{16.0, 463.7}, {370.0, 50.3}}
+                                              Other, 0x103f27360, {{16.0, 463.7}, {370.0, 50.3}}
+                                                Other, 0x103f27480, {{16.0, 463.7}, {370.0, 50.3}}
+                                                Other, 0x103f275a0, {{16.0, 463.7}, {370.0, 50.3}}
+                                              Other, 0x103f276c0, {{32.0, 473.0}, {32.0, 32.0}}, identifier: 'imageStackView'
+                                                Image, 0x103f277e0, {{32.0, 472.0}, {32.0, 32.0}}, identifier: 'activityImageView', label: 'favorite'
+                                              Other, 0x103f27900, {{32.0, 473.0}, {32.0, 32.0}}
+                                              Other, 0x103f27a20, {{72.0, 478.7}, {298.0, 20.3}}, identifier: 'titleStackView'
+                                                StaticText, 0x103f27b40, {{72.0, 478.7}, {298.0, 20.3}}, identifier: 'titleLabel', label: 'Add to Favorites'
+                                              Other, 0x103f27c60, {{72.0, 478.7}, {298.0, 20.3}}
+                                          Cell, 0x103f27d80, {{16.0, 514.0}, {370.0, 50.3}}, identifier: 'actionGroupCell', label: 'Find on Page'
+                                            Other, 0x103f27ea0, {{16.0, 514.0}, {370.0, 50.3}}
+                                              Other, 0x103f27fc0, {{16.0, 514.0}, {370.0, 50.3}}
+                                            Other, 0x103f280e0, {{16.0, 514.0}, {370.0, 50.3}}
+                                              Other, 0x103f28200, {{16.0, 514.0}, {370.0, 50.3}}
+                                                Other, 0x103f28320, {{16.0, 514.0}, {370.0, 50.3}}
+                                                Other, 0x103f28440, {{16.0, 514.0}, {370.0, 50.3}}
+                                              Other, 0x103f28560, {{32.0, 523.3}, {32.0, 32.0}}, identifier: 'imageStackView'
+                                                Image, 0x103f28680, {{32.0, 519.7}, {32.3, 42.0}}, identifier: 'activityImageView', label: 'search document'
+                                              Other, 0x103f287a0, {{72.0, 529.0}, {298.0, 20.3}}, identifier: 'titleStackView'
+                                                StaticText, 0x103f288c0, {{72.0, 529.0}, {298.0, 20.3}}, identifier: 'titleLabel', label: 'Find on Page'
+                                              Other, 0x103f289e0, {{72.0, 529.0}, {298.0, 20.3}}
+                                          Other, 0x103f28b00, {{72.0, 513.0}, {298.0, 1.0}}
+                                          Cell, 0x103f28c20, {{16.0, 564.3}, {370.0, 50.3}}, identifier: 'actionGroupCell', label: 'Add to Home Screen'
+                                            Other, 0x103f28d40, {{16.0, 564.3}, {370.0, 50.3}}
+                                              Other, 0x103f28e60, {{16.0, 564.3}, {370.0, 50.3}}
+                                            Other, 0x103f28f80, {{16.0, 564.3}, {370.0, 50.3}}
+                                              Other, 0x103f290a0, {{16.0, 564.3}, {370.0, 50.3}}
+                                                Other, 0x103f291c0, {{16.0, 564.3}, {370.0, 50.3}}
+                                                Other, 0x103f292e0, {{16.0, 564.3}, {370.0, 50.3}}
+                                              Other, 0x103f29400, {{32.0, 573.7}, {32.0, 32.0}}, identifier: 'imageStackView'
+                                                Image, 0x103f29520, {{32.0, 572.0}, {32.0, 35.3}}, identifier: 'activityImageView', label: 'Add to home screen'
+                                              Other, 0x103f29640, {{72.0, 579.3}, {298.0, 20.3}}, identifier: 'titleStackView'
+                                                StaticText, 0x103f29760, {{72.0, 579.3}, {298.0, 20.3}}, identifier: 'titleLabel', label: 'Add to Home Screen'
+                                              Other, 0x103f29880, {{72.0, 579.3}, {298.0, 20.3}}
+                                          Other, 0x103f299a0, {{72.0, 563.3}, {298.0, 1.0}}
+                                          Cell, 0x103f29ac0, {{16.0, 634.7}, {370.0, 50.3}}, identifier: 'actionGroupCell', label: 'Markup'
+                                            Other, 0x103f29be0, {{16.0, 634.7}, {370.0, 50.3}}
+                                              Other, 0x103f29d00, {{16.0, 634.7}, {370.0, 50.3}}
+                                            Other, 0x103f29e20, {{16.0, 634.7}, {370.0, 50.3}}
+                                              Other, 0x103f29f40, {{16.0, 634.7}, {370.0, 50.3}}
+                                                Other, 0x103f2a060, {{16.0, 634.7}, {370.0, 50.3}}
+                                                Other, 0x103f2a180, {{16.0, 634.7}, {370.0, 50.3}}
+                                              Other, 0x103f2a2a0, {{32.0, 644.0}, {32.0, 32.0}}, identifier: 'imageStackView'
+                                                Image, 0x103f2a3c0, {{32.0, 641.3}, {32.0, 37.3}}, identifier: 'activityImageView', label: 'Markup'
+                                              Other, 0x103f2a4e0, {{72.0, 649.7}, {298.0, 20.3}}, identifier: 'titleStackView'
+                                                StaticText, 0x103f2a600, {{72.0, 649.7}, {298.0, 20.3}}, identifier: 'titleLabel', label: 'Markup'
+                                              Other, 0x103f2a720, {{72.0, 649.7}, {298.0, 20.3}}
+                                          Cell, 0x103f2a840, {{16.0, 685.0}, {370.0, 50.3}}, identifier: 'actionGroupCell', label: 'Print'
+                                            Other, 0x103f2a960, {{16.0, 685.0}, {370.0, 50.3}}
+                                              Other, 0x103f2aa80, {{16.0, 685.0}, {370.0, 50.3}}
+                                            Other, 0x103f2aba0, {{16.0, 685.0}, {370.0, 50.3}}
+                                              Other, 0x103f2acc0, {{16.0, 685.0}, {370.0, 50.3}}
+                                                Other, 0x103f2ade0, {{16.0, 685.0}, {370.0, 50.3}}
+                                                Other, 0x103f2af00, {{16.0, 685.0}, {370.0, 50.3}}
+                                              Other, 0x103f2b020, {{32.0, 694.3}, {32.0, 32.0}}, identifier: 'imageStackView'
+                                                Image, 0x103f2b140, {{32.0, 691.3}, {32.0, 38.7}}, identifier: 'activityImageView', label: 'print'
+                                              Other, 0x103f2b260, {{72.0, 700.0}, {298.0, 20.3}}, identifier: 'titleStackView'
+                                                StaticText, 0x103f2b380, {{72.0, 700.0}, {298.0, 20.3}}, identifier: 'titleLabel', label: 'Print'
+                                              Other, 0x103f2b4a0, {{72.0, 700.0}, {298.0, 20.3}}
+                                          Other, 0x103f2b5c0, {{72.0, 684.0}, {298.0, 1.0}}
+                                          Cell, 0x103f2b6e0, {{16.0, 735.3}, {370.0, 50.3}}, identifier: 'actionGroupCell', label: 'Use as Ringtone'
+                                            Other, 0x103f2b800, {{16.0, 735.3}, {370.0, 50.3}}
+                                              Other, 0x103f2b920, {{16.0, 735.3}, {370.0, 50.3}}
+                                            Other, 0x103f2ba40, {{16.0, 735.3}, {370.0, 50.3}}
+                                              Other, 0x103f2bb60, {{16.0, 735.3}, {370.0, 50.3}}
+                                                Other, 0x103f2bc80, {{16.0, 735.3}, {370.0, 50.3}}
+                                                Other, 0x103f2bda0, {{16.0, 735.3}, {370.0, 50.3}}
+                                              Other, 0x103f2bec0, {{32.0, 744.7}, {32.0, 32.0}}, identifier: 'imageStackView'
+                                                Image, 0x103f2bfe0, {{32.0, 744.7}, {32.0, 32.0}}, identifier: 'activityImageView'
+                                              Other, 0x103f2c100, {{72.0, 750.3}, {298.0, 20.3}}, identifier: 'titleStackView'
+                                                StaticText, 0x103f2c220, {{72.0, 750.3}, {298.0, 20.3}}, identifier: 'titleLabel', label: 'Use as Ringtone'
+                                              Other, 0x103f2c340, {{72.0, 750.3}, {298.0, 20.3}}
+                                          Other, 0x103f2c460, {{72.0, 734.3}, {298.0, 1.0}}
+                                          Other, 0x103f2c580, {{16.0, 785.7}, {370.0, 74.3}}, identifier: 'collectionView.footerEditView'
+                                            Button, 0x103f2c6a0, {{143.7, 805.7}, {114.7, 34.3}}, identifier: 'editButton', label: 'Edit Actions'
+                                              StaticText, 0x103f2c7c0, {{155.7, 812.7}, {90.7, 20.3}}, label: 'Edit Actions'
+                                        Other, 0x103f2c8e0, {{28.0, 192.0}, {346.0, 1.0}}
+                                  Other, 0x103f2ca00, {{0.0, 63.0}, {402.0, 811.0}}
+                                    Other, 0x103f2cb20, {{0.0, 63.0}, {402.0, 811.0}}
+    Window, 0x103f2cc40, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x103f2cd60, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x103f2ce80, {{0.0, 0.0}, {402.0, 874.0}}
+Path to element:
+ →Application, 0x103f165d0, pid: 20955, label: 'Safari'
+Query chain:
+ →Find: Application 'com.apple.mobilesafari'
+  Output: {
+    Application, 0x103c30d90, pid: 20955, label: 'Safari'
+  }
+
+    t =    35.26s Tear Down
+Test Case '-[JobGenieUITests.JobGenieUITests testSafariSharedJob]' failed (35.509 seconds).
+Test Suite 'JobGenieUITests' failed at 2026-11-01 15:19:08.284.
+	 Executed 1 test, with 1 failure (0 unexpected) in 35.509 (35.510) seconds
+Test Suite 'JobGenieUITests.xctest' failed at 2026-11-01 15:19:08.285.
+	 Executed 1 test, with 1 failure (0 unexpected) in 35.509 (35.510) seconds
+Test Suite 'Selected tests' failed at 2026-11-01 15:19:08.285.
+	 Executed 1 test, with 1 failure (0 unexpected) in 35.509 (35.511) seconds
+2026-11-01 15:19:08.694 xcodebuild[20587:24515946]  IDETestOperationsObserverDebug: Failure collecting diagnostics from simulator: Process exited with error 72:
+ xcrun: error: unable to find utility "simctl", not a developer tool or in PATH
+
+2026-11-01 15:19:08.705 xcodebuild[20587:24515893] [MT] IDETestOperationsObserverDebug: 51.534 elapsed -- Testing started completed.
+2026-11-01 15:19:08.705 xcodebuild[20587:24515893] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-01 15:19:08.705 xcodebuild[20587:24515893] [MT] IDETestOperationsObserverDebug: 51.534 sec, +51.534 sec -- end
+
+Test session results, code coverage, and logs:
+	<TEMP>/jobgenie-ios-acceptance-4Vgcrv/share-ui.xcresult
+
+** TEST EXECUTE FAILED **
+
+Testing started
+
+
+65 !== 0
+
+    at run (file://<HOME>/Documents/study%20and%20work/find_job/jobgenie/ios/scripts/verify-backend.mjs:36:10)
+    at async file://<HOME>/Documents/study%20and%20work/find_job/jobgenie/ios/scripts/verify-backend.mjs:85:5 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 65,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v25.2.1

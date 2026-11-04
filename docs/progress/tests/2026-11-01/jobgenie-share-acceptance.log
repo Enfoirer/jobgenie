@@ -1,0 +1,162 @@
+(node:19273) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://<HOME>/Documents/study%20and%20work/find_job/jobgenie/lib/models/UploadedFile.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to <WORKSPACE>/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Running Safari share -> native creation -> database persistence acceptance.
+Acceptance failed. Logs: <TEMP>/jobgenie-ios-acceptance-Ir6Dfh
+   ▲ Next.js 15.3.1
+   - Local:        http://127.0.0.1:51044
+   - Network:      http://127.0.0.1:51044
+
+ ✓ Starting...
+ ✓ Ready in 224ms
+
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: 0}, {402.0, 874.0}}
+                                          Other, 0x105518670, {{0.0, 62.0}, {402.0, 874.0}}
+                                            Other, 0x105518790, {{0.0, 62.0}, {402.0, 754.0}}, label: 'JobTrack - Application Tracker', Focused
+                                              Other, 0x1055188b0, {{0.0, 158.0}, {402.0, 38.0}}, label: 'JobGenie', value: 2, Focused
+                                                StaticText, 0x1055189d0, {{130.0, 158.0}, {142.0, 38.0}}, label: 'JobGenie', value: JobGenie, Focused
+                                              Other, 0x105518af0, {{0.0, 203.0}, {402.0, 20.0}}, Focused
+                                                StaticText, 0x105518c10, {{70.0, 204.0}, {262.0, 18.0}}, label: 'Sign in to manage your job applications', value: Sign in to manage ..., Focused
+                                              Other, 0x105518d30, {{16.0, 287.0}, {370.0, 318.0}}, label: 'form', Focused
+                                                Other, 0x105518e50, {{16.0, 287.0}, {370.0, 20.0}}, label: 'Email address', Focused
+                                                  StaticText, 0x105518f70, {{16.0, 288.0}, {94.0, 18.0}}, label: 'Email address', value: Email address, Focused
+                                                TextField, 0x105519090, {{16.0, 311.0}, {370.0, 42.0}}, label: 'Email address', Focused
+                                                Other, 0x1055191b0, {{16.0, 377.0}, {370.0, 20.0}}, label: 'Password', Focused
+                                                  StaticText, 0x1055192d0, {{16.0, 378.0}, {66.0, 18.0}}, label: 'Password', value: Password, Focused
+                                                SecureTextField, 0x1055193f0, {{16.0, 401.0}, {370.0, 42.0}}, label: 'Password', Focused
+                                                Switch, 0x105519510, {{16.0, 467.0}, {120.0, 20.0}}, label: 'Remember me', value: 0, Focused
+                                                Other, 0x105519630, {{40.0, 467.0}, {96.0, 20.0}}, label: 'Remember me', Focused
+                                                  StaticText, 0x105519750, {{40.0, 468.0}, {97.0, 18.0}}, label: 'Remember me', value: Remember me, Focused
+                                                Other, 0x105519870, {{232.0, 467.0}, {155.0, 20.0}}, Focused
+                                                  Link, 0x105519990, {{232.0, 468.0}, {154.0, 18.0}}, label: 'Forgot your password?', Focused
+                                                    StaticText, 0x105519ab0, {{232.0, 468.0}, {154.0, 18.0}}, label: 'Forgot your password?', value: Forgot your passwo..., Focused
+                                                Other, 0x105519bd0, {{16.0, 511.0}, {370.0, 32.0}}, Focused
+                                                  StaticText, 0x105519cf0, {{16.0, 511.0}, {367.0, 31.0}}, label: 'Stay signed in for 30 days when checked, or 12 hours otherwise. Resetting your password signs out all devices.', value: Stay signed in for..., Focused
+                                                Button, 0x105519e10, {{16.0, 567.0}, {370.0, 38.0}}, label: 'Sign in', Focused
+                                              StaticText, 0x105519f30, {{29.0, 630.0}, {344.0, 18.0}}, label: 'Create an account (password: at least 8 characters)', value: Create an account ..., Focused
+                                              Button, 0x10551a050, {{16.0, 673.0}, {370.0, 38.0}}, label: 'Create Account', Focused
+                                              Other, 0x10551a170, {{0.0, 815.0}, {1.0, 1.0}}, label: 'alert', Focused
+                                    Other, 0x10551a290, {{0.0, 727.2}, {402.0, 146.8}}
+                                      Image, 0x10551a3b0, {{-120.0, 732.0}, {642.0, 284.0}}, identifier: 'AdditionalDimmingOverlay'
+                                      Other, 0x10551a4d0, {{0.0, 727.2}, {402.0, 146.8}}
+                                        Other, 0x10551a5f0, {{0.0, 727.2}, {402.0, 146.8}}
+                                      Other, 0x10551a710, {{0.0, 727.2}, {402.0, 146.8}}
+                                        Other, 0x10551a830, {{0.0, 727.2}, {402.0, 146.8}}
+                                        Other, 0x10551a950, {{0.0, 727.2}, {402.0, 146.8}}
+                                    Other, 0x10551aa70, {{369.0, 62.0}, {30.0, 750.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x10551ab90, {{396.0, 65.0}, {3.0, 711.3}}
+                                    Other, 0x10551acb0, {{62.0, 841.0}, {278.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x10551add0, {{65.0, 868.0}, {272.0, 3.0}}
+                                    Other, 0x10551aef0, {{369.0, 62.0}, {30.0, 750.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                      Other, 0x10551b010, {{396.0, 65.0}, {3.0, 711.3}}
+                                    Other, 0x10551b130, {{62.0, 841.0}, {278.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                      Other, 0x10551b250, {{65.0, 868.0}, {272.0, 3.0}}
+                              Other, 0x10551b370, {{62.0, 841.0}, {278.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                Other, 0x10551b490, {{65.0, 868.0}, {272.0, 3.0}}
+                              Other, 0x10551b5b0, {{62.0, 841.0}, {278.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                Other, 0x10551b6d0, {{65.0, 868.0}, {272.0, 3.0}}
+                        Other, 0x10551b7f0, {{0.0, 0.0}, {402.0, 874.0}}, identifier: 'CapsuleViewController'
+                          Other, 0x10551b910, {{0.0, 0.0}, {402.0, 62.0}}
+                            Other, 0x10551ba30, {{0.0, 0.0}, {402.0, 62.0}}
+                          Other, 0x10551bb50, {{0.0, 776.0}, {402.0, 98.0}}
+                            Other, 0x10551bc70, {{0.0, 776.0}, {402.0, 98.0}}
+                              Other, 0x10551bd90, {{0.0, 776.0}, {402.0, 98.0}}
+                                Other, 0x10551beb0, {{0.0, 776.0}, {402.0, 98.0}}
+                                  Other, 0x10551bfd0, {{0.0, 776.0}, {402.0, 98.0}}
+                                    Other, 0x10551c0f0, {{0.0, 776.0}, {402.0, 98.0}}
+                                      Other, 0x10551c210, {{0.0, 776.0}, {402.0, 98.0}}
+                                  Other, 0x10551c330, {{0.0, 776.0}, {402.0, 98.0}}
+                                    Other, 0x10551c450, {{0.0, 776.0}, {402.0, 98.0}}
+                            Other, 0x10551c570, {{34.0, 792.0}, {48.0, 48.0}}
+                              Other, 0x10551c690, {{34.0, 792.0}, {48.0, 48.0}}
+                                Button, 0x10551c7b0, {{34.0, 792.0}, {48.0, 48.0}}, label: 'Back', Disabled
+                            Other, 0x10551c8d0, {{90.0, 792.0}, {222.0, 48.0}}
+                              Other, 0x10551c9f0, {{90.0, 792.0}, {222.0, 48.0}}
+                                Other, 0x10551cb10, {{90.0, 792.0}, {222.0, 48.0}}
+                                  Other, 0x10551cc30, {{90.0, 792.0}, {222.0, 48.0}}, identifier: 'CapsuleNavigationBar?isSelected=true&isDistractionControlOverlayUp=false', Selected
+                                    Button, 0x10551cd50, {{94.0, 796.0}, {40.0, 40.0}}, identifier: 'PageFormatMenuButton', label: 'Page Menu'
+                                      StaticText, 0x10551ce70, {{94.0, 796.0}, {0.0, 0.0}}
+                                    TextField, 0x10551cf90, {{168.0, 806.0}, {66.0, 20.3}}, identifier: 'TabBarItemTitle', label: 'Address', value: ‎127.0.0.1
+                                    Button, 0x10551d0b0, {{281.3, 805.7}, {17.7, 21.0}}, identifier: 'ReloadButton', label: 'refresh'
+                            Other, 0x10551d1d0, {{320.0, 792.0}, {48.0, 48.0}}
+                              Other, 0x10551d2f0, {{320.0, 792.0}, {48.0, 48.0}}
+                                Button, 0x10551d410, {{320.0, 792.0}, {48.0, 48.0}}, label: 'More'
+                  Other, 0x10551d530, {{0.0, 0.0}, {402.0, 874.0}}
+                    Other, 0x10551d650, {{0.0, 0.0}, {402.0, 874.0}}
+            Other, 0x10551d770, {{0.0, 0.0}, {402.0, 874.0}}
+              Other, 0x10551d890, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x10551d9b0, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x10551dad0, {{0.0, 0.0}, {402.0, 874.0}}, identifier: 'PopoverDismissRegion', label: 'dismiss popup'
+        Popover, 0x10551dbf0, {{72.0, 593.0}, {320.0, 199.3}}
+          Image, 0x10551dd10, {{-78.0, 443.0}, {620.0, 486.3}}
+          Other, 0x10551de30, {{72.0, 593.0}, {320.0, 199.3}}
+            Other, 0x10551df50, {{72.0, 593.0}, {320.0, 199.3}}
+              Other, 0x10551e070, {{72.0, 593.0}, {320.0, 199.3}}
+                Other, 0x10551e190, {{72.0, 593.0}, {320.0, 199.3}}
+            Other, 0x10551e2b0, {{72.0, 593.0}, {320.0, 199.3}}
+              Other, 0x10551e3d0, {{72.0, 593.0}, {320.0, 199.3}}
+                Other, 0x10551e4f0, {{72.0, 593.0}, {320.0, 199.3}}
+                  Other, 0x10551e610, {{72.0, 593.0}, {320.0, 199.3}}
+                    Other, 0x10551e730, {{72.0, 593.2}, {320.0, 199.3}}, identifier: 'TipView'
+                      ScrollView, 0x10551e850, {{72.0, 593.0}, {320.0, 199.3}}
+                        Other, 0x10551e970, {{72.0, 593.3}, {320.0, 186.0}}
+                          StaticText, 0x10551ea90, {{152.0, 611.2}, {184.7, 64.3}}, label: 'View Bookmarks, Share Menu, and Open Tabs'
+                          StaticText, 0x10551ebb0, {{152.0, 679.6}, {218.0, 78.0}}, label: 'You can now view these items in the  menu.
+You can change this at any time in Safari settings.'
+                        Other, 0x10551ecd0, {{359.0, 627.0}, {30.0, 124.2}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                          Other, 0x10551edf0, {{386.0, 629.8}, {3.0, 118.3}}
+                        Other, 0x10551ef10, {{359.0, 627.0}, {30.0, 124.2}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                          Other, 0x10551f030, {{386.0, 629.8}, {3.0, 118.3}}
+                      Button, 0x10551f150, {{351.7, 607.0}, {26.0, 26.0}}, identifier: 'xmark.circle.fill', label: 'Close'
+    Window, 0x10551f270, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x10551f390, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x10551f4b0, {{0.0, 0.0}, {402.0, 874.0}}
+Path to element:
+ →Application, 0x105513360, pid: 19824, label: 'Safari'
+Query chain:
+ →Find: Application 'com.apple.mobilesafari'
+  Output: {
+    Application, 0x10500b270, pid: 19824, label: 'Safari'
+  }
+
+    t =    33.35s Tear Down
+Test Case '-[JobGenieUITests.JobGenieUITests testSafariSharedJob]' failed (33.608 seconds).
+Test Suite 'JobGenieUITests' failed at 2026-11-01 15:17:35.676.
+	 Executed 1 test, with 1 failure (0 unexpected) in 33.608 (33.609) seconds
+Test Suite 'JobGenieUITests.xctest' failed at 2026-11-01 15:17:35.677.
+	 Executed 1 test, with 1 failure (0 unexpected) in 33.608 (33.610) seconds
+Test Suite 'Selected tests' failed at 2026-11-01 15:17:35.677.
+	 Executed 1 test, with 1 failure (0 unexpected) in 33.608 (33.611) seconds
+2026-11-01 15:17:36.114 xcodebuild[19442:24503777]  IDETestOperationsObserverDebug: Failure collecting diagnostics from simulator: Process exited with error 72:
+ xcrun: error: unable to find utility "simctl", not a developer tool or in PATH
+
+2026-11-01 15:17:36.123 xcodebuild[19442:24503772] [MT] IDETestOperationsObserverDebug: 50.061 elapsed -- Testing started completed.
+2026-11-01 15:17:36.123 xcodebuild[19442:24503772] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-01 15:17:36.123 xcodebuild[19442:24503772] [MT] IDETestOperationsObserverDebug: 50.061 sec, +50.061 sec -- end
+
+Test session results, code coverage, and logs:
+	<TEMP>/jobgenie-ios-acceptance-Ir6Dfh/share-ui.xcresult
+
+** TEST EXECUTE FAILED **
+
+Testing started
+
+
+65 !== 0
+
+    at run (file://<HOME>/Documents/study%20and%20work/find_job/jobgenie/ios/scripts/verify-backend.mjs:36:10)
+    at async file://<HOME>/Documents/study%20and%20work/find_job/jobgenie/ios/scripts/verify-backend.mjs:85:5 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 65,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v25.2.1

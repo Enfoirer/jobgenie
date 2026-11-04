@@ -1,0 +1,620 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project ios/JobGenie.xcodeproj -scheme JobGenie -configuration Release -destination generic/platform=iOS -derivedDataPath /tmp/jobgenie-share-release CODE_SIGNING_ALLOWED=NO build
+
+Build settings from command line:
+    CODE_SIGNING_ALLOWED = NO
+
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (2 targets)
+    Target 'JobGenie' in project 'JobGenie'
+        ➜ Explicit dependency on target 'JobGenieShare' in project 'JobGenie'
+    Target 'JobGenieShare' in project 'JobGenie' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/xcstringstool compile --dry-run --output-directory /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build <WORKSPACE>/ios/JobGenie/Localizable.xcstrings
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/xcstringstool compile --dry-run --output-directory /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build <WORKSPACE>/ios/JobGenie/Localizable.xcstrings
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+Build description signature: e94ee213c747696c61d9df3c1d832e6c
+Build description path: /tmp/jobgenie-share-release/Build/Intermediates.noindex/XCBuildData/e94ee213c747696c61d9df3c1d832e6c.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk /tmp/jobgenie-share-release/SDKStatCaches.noindex/iphoneos26.0-23A339-81ce72e5b06c9602b9d30b56f2eed08a.sdkstatcache
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk -o /tmp/jobgenie-share-release/SDKStatCaches.noindex/iphoneos26.0-23A339-81ce72e5b06c9602b9d30b56f2eed08a.sdkstatcache
+
+CreateBuildDirectory /tmp/jobgenie-share-release/Build/Products
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie.xcodeproj
+    builtin-create-build-directory /tmp/jobgenie-share-release/Build/Products
+
+CreateBuildDirectory /tmp/jobgenie-share-release/Build/Intermediates.noindex
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie.xcodeproj
+    builtin-create-build-directory /tmp/jobgenie-share-release/Build/Intermediates.noindex
+
+CreateBuildDirectory /tmp/jobgenie-share-release/Build/Products/Release-iphoneos
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie.xcodeproj
+    builtin-create-build-directory /tmp/jobgenie-share-release/Build/Products/Release-iphoneos
+
+CreateBuildDirectory /tmp/jobgenie-share-release/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie.xcodeproj
+    builtin-create-build-directory /tmp/jobgenie-share-release/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+
+CreateBuildDirectory /tmp/jobgenie-share-release/Build/Intermediates.noindex/ExplicitPrecompiledModules
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie.xcodeproj
+    builtin-create-build-directory /tmp/jobgenie-share-release/Build/Intermediates.noindex/ExplicitPrecompiledModules
+
+WriteAuxiliaryFile /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie-eeb6de2d0470d784f606b943f52aea52-VFS-iphoneos/all-product-headers.yaml
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie.xcodeproj
+    write-file /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie-eeb6de2d0470d784f606b943f52aea52-VFS-iphoneos/all-product-headers.yaml
+
+CreateBuildDirectory /tmp/jobgenie-share-release/Build/Intermediates.noindex/EagerLinkingTBDs/Release-iphoneos
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie.xcodeproj
+    builtin-create-build-directory /tmp/jobgenie-share-release/Build/Intermediates.noindex/EagerLinkingTBDs/Release-iphoneos
+
+WriteAuxiliaryFile /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/JobGenieShare-all-non-framework-target-headers.hmap (in target 'JobGenieShare' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    write-file /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/JobGenieShare-all-non-framework-target-headers.hmap
+
+WriteAuxiliaryFile /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/JobGenie.DependencyStaticMetadataFileList (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    write-file /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/JobGenie.DependencyStaticMetadataFileList
+
+WriteAuxiliaryFile /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/JobGenieShare-all-target-headers.hmap (in target 'JobGenieShare' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    write-file /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/JobGenieShare-all-target-headers.hmap
+
+WriteAuxiliaryFile /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/JobGenieShare.hmap (in target 'JobGenieShare' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    write-file /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/JobGenieShare.hmap
+
+WriteAuxiliaryFile /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/JobGenieShare-project-headers.hmap (in target 'JobGenieShare' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    write-file /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/JobGenieShare-project-headers.hmap
+
+WriteAuxiliaryFile /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/JobGenie.hmap (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    write-file /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/JobGenie.hmap
+
+WriteAuxiliaryFile /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie.SwiftConstValuesFileList (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    write-file /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie_const_extract_protocols.json (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    write-file /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie_const_extract_protocols.json
+
+WriteAuxiliaryFile /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie.SwiftFileList (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    write-file /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie.SwiftFileList
+
+WriteAuxiliaryFile /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie-OutputFileMap.json (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    write-file /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie-OutputFileMap.json
+
+WriteAuxiliaryFile /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie.LinkFileList (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    write-file /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie.LinkFileList
+
+WriteAuxiliaryFile /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/JobGenieShare.DependencyStaticMetadataFileList (in target 'JobGenieShare' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    write-file /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/JobGenieShare.DependencyStaticMetadataFileList
+
+WriteAuxiliaryFile /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/JobGenieShare.DependencyMetadataFileList (in target 'JobGenieShare' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    write-file /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/JobGenieShare.DependencyMetadataFileList
+
+WriteAuxiliaryFile /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare-OutputFileMap.json (in target 'JobGenieShare' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    write-file /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare-OutputFileMap.json
+
+WriteAuxiliaryFile /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare.LinkFileList (in target 'JobGenieShare' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    write-file /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare.LinkFileList
+
+WriteAuxiliaryFile /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare.SwiftConstValuesFileList (in target 'JobGenieShare' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    write-file /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare_const_extract_protocols.json (in target 'JobGenieShare' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    write-file /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare_const_extract_protocols.json
+
+WriteAuxiliaryFile /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare.SwiftFileList (in target 'JobGenieShare' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    write-file /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare.SwiftFileList
+
+WriteAuxiliaryFile /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/JobGenieShare-own-target-headers.hmap (in target 'JobGenieShare' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    write-file /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/JobGenieShare-own-target-headers.hmap
+
+WriteAuxiliaryFile /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/JobGenieShare-generated-files.hmap (in target 'JobGenieShare' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    write-file /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/JobGenieShare-generated-files.hmap
+
+WriteAuxiliaryFile /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/JobGenie.DependencyMetadataFileList (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    write-file /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/JobGenie.DependencyMetadataFileList
+
+WriteAuxiliaryFile /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/JobGenie-project-headers.hmap (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    write-file /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/JobGenie-project-headers.hmap
+
+WriteAuxiliaryFile /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/JobGenie-own-target-headers.hmap (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    write-file /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/JobGenie-own-target-headers.hmap
+
+WriteAuxiliaryFile /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/JobGenie-generated-files.hmap (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    write-file /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/JobGenie-generated-files.hmap
+
+WriteAuxiliaryFile /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/JobGenie-all-target-headers.hmap (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    write-file /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/JobGenie-all-target-headers.hmap
+
+WriteAuxiliaryFile /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/JobGenie-all-non-framework-target-headers.hmap (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    write-file /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/JobGenie-all-non-framework-target-headers.hmap
+
+MkDir /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenieShare.appex (in target 'JobGenieShare' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    /bin/mkdir -p /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenieShare.appex
+
+MkDir /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app/PlugIns (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    /bin/mkdir -p /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app/PlugIns
+
+MkDir /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    /bin/mkdir -p /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app
+
+ProcessInfoPlistFile /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenieShare.appex/Info.plist <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenieShare/Info.plist (in target 'JobGenieShare' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    builtin-infoPlistUtility <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenieShare/Info.plist -producttype com.apple.product-type.app-extension -expandbuildsettings -format binary -platform iphoneos -requiredArchitecture arm64 -o /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenieShare.appex/Info.plist
+
+CompileXCStrings /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/ <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie/Localizable.xcstrings (in target 'JobGenieShare' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcstringstool compile --output-directory /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie/Localizable.xcstrings
+
+CopyStringsFile /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenieShare.appex/zh-Hans.lproj/Localizable.strings /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/zh-Hans.lproj/Localizable.strings (in target 'JobGenieShare' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    builtin-copyStrings --validate --outputencoding binary --outfilename Localizable.strings --outdir /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenieShare.appex/zh-Hans.lproj -- /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/zh-Hans.lproj/Localizable.strings
+/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/zh-Hans.lproj/Localizable.strings:1:1: note: detected encoding of input file as Unicode (UTF-8) (in target 'JobGenieShare' from project 'JobGenie')
+
+CopyStringsFile /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenieShare.appex/en.lproj/Localizable.strings /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/en.lproj/Localizable.strings (in target 'JobGenieShare' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    builtin-copyStrings --validate --outputencoding binary --outfilename Localizable.strings --outdir /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenieShare.appex/en.lproj -- /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/en.lproj/Localizable.strings
+/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/en.lproj/Localizable.strings:1:1: note: detected encoding of input file as Unicode (UTF-8) (in target 'JobGenieShare' from project 'JobGenie')
+
+SwiftDriver JobGenieShare normal arm64 com.apple.xcode.tools.swift.compiler (in target 'JobGenieShare' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name JobGenieShare -O -whole-module-optimization -enforce-exclusivity\=checked @/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare.SwiftFileList -enable-upcoming-feature StrictConcurrency -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk -target arm64-apple-ios17.0 -g -module-cache-path /tmp/jobgenie-share-release/ModuleCache.noindex -Xfrontend -serialize-debugging-options -application-extension -swift-version 5 -I /tmp/jobgenie-share-release/Build/Products/Release-iphoneos -F /tmp/jobgenie-share-release/Build/Products/Release-iphoneos -emit-localized-strings -emit-localized-strings-path /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64 -c -num-threads 12 -Xcc -ivfsstatcache -Xcc /tmp/jobgenie-share-release/SDKStatCaches.noindex/iphoneos26.0-23A339-81ce72e5b06c9602b9d30b56f2eed08a.sdkstatcache -output-file-map /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/jobgenie-share-release/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/jobgenie-share-release/ModuleCache.noindex -sdk-module-cache-path /tmp/jobgenie-share-release/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare.swiftmodule -validate-clang-modules-once -clang-build-session-file /tmp/jobgenie-share-release/ModuleCache.noindex/Session.modulevalidation -Xcc -I/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/JobGenieShare-generated-files.hmap -Xcc -I/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/JobGenieShare-own-target-headers.hmap -Xcc -I/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/JobGenieShare-all-target-headers.hmap -Xcc -iquote -Xcc /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/JobGenieShare-project-headers.hmap -Xcc -I/tmp/jobgenie-share-release/Build/Products/Release-iphoneos/include -Xcc -I/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/DerivedSources-normal/arm64 -Xcc -I/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/DerivedSources/arm64 -Xcc -I/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/DerivedSources -emit-objc-header -emit-objc-header-path /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare-Swift.h -working-directory <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios -no-emit-module-separately-wmo
+
+SwiftDriver\ Compilation JobGenieShare normal arm64 com.apple.xcode.tools.swift.compiler (in target 'JobGenieShare' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name JobGenieShare -O -whole-module-optimization -enforce-exclusivity\=checked @/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare.SwiftFileList -enable-upcoming-feature StrictConcurrency -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk -target arm64-apple-ios17.0 -g -module-cache-path /tmp/jobgenie-share-release/ModuleCache.noindex -Xfrontend -serialize-debugging-options -application-extension -swift-version 5 -I /tmp/jobgenie-share-release/Build/Products/Release-iphoneos -F /tmp/jobgenie-share-release/Build/Products/Release-iphoneos -emit-localized-strings -emit-localized-strings-path /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64 -c -num-threads 12 -Xcc -ivfsstatcache -Xcc /tmp/jobgenie-share-release/SDKStatCaches.noindex/iphoneos26.0-23A339-81ce72e5b06c9602b9d30b56f2eed08a.sdkstatcache -output-file-map /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/jobgenie-share-release/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/jobgenie-share-release/ModuleCache.noindex -sdk-module-cache-path /tmp/jobgenie-share-release/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare.swiftmodule -validate-clang-modules-once -clang-build-session-file /tmp/jobgenie-share-release/ModuleCache.noindex/Session.modulevalidation -Xcc -I/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/JobGenieShare-generated-files.hmap -Xcc -I/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/JobGenieShare-own-target-headers.hmap -Xcc -I/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/JobGenieShare-all-target-headers.hmap -Xcc -iquote -Xcc /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/JobGenieShare-project-headers.hmap -Xcc -I/tmp/jobgenie-share-release/Build/Products/Release-iphoneos/include -Xcc -I/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/DerivedSources-normal/arm64 -Xcc -I/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/DerivedSources/arm64 -Xcc -I/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/DerivedSources -emit-objc-header -emit-objc-header-path /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare-Swift.h -working-directory <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios -no-emit-module-separately-wmo
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/_AvailabilityInternal-4CWP3574TT9BIR4510IMN0UQ3.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/DeveloperToolsSupport-3QOAEFAOTL8FM1AC6G2J0JALR.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/_SwiftConcurrencyShims-6TRCT2XOLWIQHT0HQUXLEVHSV.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_stddef-5TA97LJAVFU7ZALRX9C9N9M9Y.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_stdbool-5BHUI8G8VLP2I3N5H6TA1Y54U.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/SwiftShims-B9RUIKALLTJRJMVQLVBXCIWGJ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_stdarg-782QK34SXSZBZNA9AKQ6QGEOY.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/ptrauth-2DWSDMIYOUJOBQNIFL9LQU04U.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_float-A468EOCTLF0GCUI2UPQ8U4KSD.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/ptrcheck-404PUL3GGOD5SWV5DPNUVXGLM.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/_DarwinFoundation1-50MX3JFBQPT955O1E4049K7KI.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_limits-6Z11GKGA3PFMHFA5GRPN51WZW.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/_DarwinFoundation2-3ABYHP190F21S19W5QT95O7E3.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_stdint-4NT8J62GOYBUXMWLTPI40XPK9.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/sys_types-3Q7L7DQTU7FZTKHIHD36Y5YRH.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_tgmath-6EUP1JDP47RBSS85J2C2J27TY.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_stdatomic-B9YB41OM4KMU4ZJAEATNAZXXH.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/_DarwinFoundation3-E1FZFG9DERE8C6AY0LC3GZJBZ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_intrinsics-EXWCYWQZ2JWNJOTE8OR1Q5UMC.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_inttypes-97M4TPA6MEHZM3DZJBMC3AI3Z.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/Darwin-TLVLN8UDOD4NQF4GDFHNLCUV.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/simd-BC0ZSNMYZGLCHEYGXI9KJGGYW.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/ObjectiveC-89OY940BN1YGOVEV0PMR1ORQE.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/MachO-C64VJCCG8M520ALY1V7U459OR.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/os_object-3VSZXK3TUV0SAJWWY9NLXOTFZ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/os_workgroup-IKN2EU699QYIE77M31WA4BWE.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/Dispatch-4CSR5VE5NWHBW9Z2EDUM3052G.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/Spatial-CSYHM3WP26QB1X28I6CBZ3YMS.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/XPC-9UYXS8J7JUVIV8WZH1FWEAZ08.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/CoreFoundation-E8HJPTPBV9EA6UKYQ2KA6T3N2.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/os-D1UU7YUGELE2ZUB2JPLMCO0X3.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/Security-2Y8P92EUCKW97HDXE3W5IHML0.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/CFNetwork-BV1MTPK7J2TZD4JR269F5SV16.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/CoreGraphics-63ZGTWX2M7S3ZRZ80B9IL03AX.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/Foundation-43KGYGQFEJD87CUSH170W68Y7.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/ImageIO-7HYB3VQPMGJA084WZV771Q82G.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/CoreText-573S7AIAGLOT1V6R6FWJ71IDR.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/OSLog-1BRQZM7J86TTPMUVK37O45HGN.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/Symbols-7G2GZFZSPSRH626I3YVIL10N3.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/IOSurface-C6KDK55TPZNWZIRK1C3EKCVAR.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/FileProvider-7H0VRG6B0BVDFSY3UR5C8LLH9.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/UIUtilities-6A65T786DCGYRQNQL2VQAT1FL.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/DataDetection-BEFO8IFVDCDM5RWLQJ346NGP7.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/CoreTransferable-4ZWYO8KJ8NTF20H50KV8C5270.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/UserNotifications-11AZUFKCRZUWJ4FZREVXK2E41.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/UniformTypeIdentifiers-3DJVRMJ9OAGZC6944ZLQF7EYZ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/CoreData-DHICFKKH4YZKXL9QMVTOIO6DV.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/Accessibility-EQQM4G23I6QB5FIZOET19MFL3.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/Metal-A3MWICWJP5N5CWGNK20VX4T1H.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/OpenGLES-56LAYZP9CKUS5VA7PV2WZ6DR9.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/CoreVideo-DCJQ0HV6MGPHMXWB14Z3XXOND.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/QuartzCore-DS1QLTVPHY444N8V2WAB2DONT.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/CoreImage-56ZLV2NKYI64YS44VHSX38I0E.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/SwiftUICore-2Z8Z9KAUAYC9KXNV9U80BSZGA.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/UIKit-K04G57AQSU77DL5YZQ0IUKPU.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/SwiftUI-39MAGSW16W7BWGJOPJXGGVM3V.pcm
+
+SwiftCompile normal arm64 Compiling\ ShareViewController.swift,\ SharedJobDraft.swift <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenieShare/ShareViewController.swift <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/Shared/SharedJobDraft.swift /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/System.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/CoreGraphics.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/Accessibility.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/UIKit.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/SwiftUICore.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/_DarwinFoundation2.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/simd.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/SwiftUI.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/CoreVideo.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/Metal.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/CoreData.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/CoreText.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/DeveloperToolsSupport.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/_DarwinFoundation3.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/Dispatch.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/CoreFoundation.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/Spatial.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/os.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/UniformTypeIdentifiers.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/QuartzCore.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/Combine.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/Darwin.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/Symbols.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/Swift.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/_Concurrency.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/DataDetection.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/_Builtin_float.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/CoreImage.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/Observation.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/Foundation.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/XPC.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/FileProvider.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/_StringProcessing.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/OSLog.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/CoreTransferable.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/_DarwinFoundation1.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/ObjectiveC.swiftmodule/arm64e-apple-ios.swiftmodule /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_stdarg-782QK34SXSZBZNA9AKQ6QGEOY.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_stdint-4NT8J62GOYBUXMWLTPI40XPK9.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/SwiftShims-B9RUIKALLTJRJMVQLVBXCIWGJ.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/os-D1UU7YUGELE2ZUB2JPLMCO0X3.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/ObjectiveC-89OY940BN1YGOVEV0PMR1ORQE.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/Metal-A3MWICWJP5N5CWGNK20VX4T1H.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/sys_types-3Q7L7DQTU7FZTKHIHD36Y5YRH.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/CoreTransferable-4ZWYO8KJ8NTF20H50KV8C5270.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/UIUtilities-6A65T786DCGYRQNQL2VQAT1FL.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/CoreText-573S7AIAGLOT1V6R6FWJ71IDR.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/ptrcheck-404PUL3GGOD5SWV5DPNUVXGLM.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/Dispatch-4CSR5VE5NWHBW9Z2EDUM3052G.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/os_object-3VSZXK3TUV0SAJWWY9NLXOTFZ.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/XPC-9UYXS8J7JUVIV8WZH1FWEAZ08.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/UniformTypeIdentifiers-3DJVRMJ9OAGZC6944ZLQF7EYZ.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/Foundation-43KGYGQFEJD87CUSH170W68Y7.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/_DarwinFoundation1-50MX3JFBQPT955O1E4049K7KI.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/ImageIO-7HYB3VQPMGJA084WZV771Q82G.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/CoreFoundation-E8HJPTPBV9EA6UKYQ2KA6T3N2.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/Spatial-CSYHM3WP26QB1X28I6CBZ3YMS.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/simd-BC0ZSNMYZGLCHEYGXI9KJGGYW.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_inttypes-97M4TPA6MEHZM3DZJBMC3AI3Z.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/_DarwinFoundation3-E1FZFG9DERE8C6AY0LC3GZJBZ.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/OpenGLES-56LAYZP9CKUS5VA7PV2WZ6DR9.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/ptrauth-2DWSDMIYOUJOBQNIFL9LQU04U.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/CoreGraphics-63ZGTWX2M7S3ZRZ80B9IL03AX.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/_SwiftConcurrencyShims-6TRCT2XOLWIQHT0HQUXLEVHSV.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/SwiftUI-39MAGSW16W7BWGJOPJXGGVM3V.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/_AvailabilityInternal-4CWP3574TT9BIR4510IMN0UQ3.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/CFNetwork-BV1MTPK7J2TZD4JR269F5SV16.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/UserNotifications-11AZUFKCRZUWJ4FZREVXK2E41.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_stdatomic-B9YB41OM4KMU4ZJAEATNAZXXH.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/Darwin-TLVLN8UDOD4NQF4GDFHNLCUV.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/_DarwinFoundation2-3ABYHP190F21S19W5QT95O7E3.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/CoreData-DHICFKKH4YZKXL9QMVTOIO6DV.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/UIKit-K04G57AQSU77DL5YZQ0IUKPU.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/DataDetection-BEFO8IFVDCDM5RWLQJ346NGP7.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/FileProvider-7H0VRG6B0BVDFSY3UR5C8LLH9.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/IOSurface-C6KDK55TPZNWZIRK1C3EKCVAR.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/Accessibility-EQQM4G23I6QB5FIZOET19MFL3.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/Security-2Y8P92EUCKW97HDXE3W5IHML0.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_tgmath-6EUP1JDP47RBSS85J2C2J27TY.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/SwiftUICore-2Z8Z9KAUAYC9KXNV9U80BSZGA.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_stdbool-5BHUI8G8VLP2I3N5H6TA1Y54U.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_float-A468EOCTLF0GCUI2UPQ8U4KSD.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/CoreVideo-DCJQ0HV6MGPHMXWB14Z3XXOND.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/MachO-C64VJCCG8M520ALY1V7U459OR.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/os_workgroup-IKN2EU699QYIE77M31WA4BWE.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/Symbols-7G2GZFZSPSRH626I3YVIL10N3.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_limits-6Z11GKGA3PFMHFA5GRPN51WZW.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/QuartzCore-DS1QLTVPHY444N8V2WAB2DONT.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/CoreImage-56ZLV2NKYI64YS44VHSX38I0E.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_intrinsics-EXWCYWQZ2JWNJOTE8OR1Q5UMC.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_stddef-5TA97LJAVFU7ZALRX9C9N9M9Y.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/DeveloperToolsSupport-3QOAEFAOTL8FM1AC6G2J0JALR.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/OSLog-1BRQZM7J86TTPMUVK37O45HGN.pcm /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare-dependencies-1.json (in target 'JobGenieShare' from project 'JobGenie')
+
+CompileSwift normal arm64 (in target 'JobGenieShare' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    
+
+SwiftDriverJobDiscovery normal arm64 Compiling ShareViewController.swift, SharedJobDraft.swift (in target 'JobGenieShare' from project 'JobGenie')
+
+SwiftDriver\ Compilation\ Requirements JobGenieShare normal arm64 com.apple.xcode.tools.swift.compiler (in target 'JobGenieShare' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name JobGenieShare -O -whole-module-optimization -enforce-exclusivity\=checked @/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare.SwiftFileList -enable-upcoming-feature StrictConcurrency -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk -target arm64-apple-ios17.0 -g -module-cache-path /tmp/jobgenie-share-release/ModuleCache.noindex -Xfrontend -serialize-debugging-options -application-extension -swift-version 5 -I /tmp/jobgenie-share-release/Build/Products/Release-iphoneos -F /tmp/jobgenie-share-release/Build/Products/Release-iphoneos -emit-localized-strings -emit-localized-strings-path /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64 -c -num-threads 12 -Xcc -ivfsstatcache -Xcc /tmp/jobgenie-share-release/SDKStatCaches.noindex/iphoneos26.0-23A339-81ce72e5b06c9602b9d30b56f2eed08a.sdkstatcache -output-file-map /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/jobgenie-share-release/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/jobgenie-share-release/ModuleCache.noindex -sdk-module-cache-path /tmp/jobgenie-share-release/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare.swiftmodule -validate-clang-modules-once -clang-build-session-file /tmp/jobgenie-share-release/ModuleCache.noindex/Session.modulevalidation -Xcc -I/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/JobGenieShare-generated-files.hmap -Xcc -I/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/JobGenieShare-own-target-headers.hmap -Xcc -I/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/JobGenieShare-all-target-headers.hmap -Xcc -iquote -Xcc /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/JobGenieShare-project-headers.hmap -Xcc -I/tmp/jobgenie-share-release/Build/Products/Release-iphoneos/include -Xcc -I/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/DerivedSources-normal/arm64 -Xcc -I/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/DerivedSources/arm64 -Xcc -I/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/DerivedSources -emit-objc-header -emit-objc-header-path /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare-Swift.h -working-directory <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios -no-emit-module-separately-wmo
+
+SwiftMergeGeneratedHeaders /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/DerivedSources/JobGenieShare-Swift.h /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare-Swift.h (in target 'JobGenieShare' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    builtin-swiftHeaderTool -arch arm64 /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare-Swift.h -o /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/DerivedSources/JobGenieShare-Swift.h
+
+Copy /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenieShare.swiftmodule/arm64-apple-ios.swiftmodule /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare.swiftmodule (in target 'JobGenieShare' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare.swiftmodule /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenieShare.swiftmodule/arm64-apple-ios.swiftmodule
+
+Copy /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenieShare.swiftmodule/arm64-apple-ios.abi.json /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare.abi.json (in target 'JobGenieShare' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare.abi.json /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenieShare.swiftmodule/arm64-apple-ios.abi.json
+
+Copy /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenieShare.swiftmodule/arm64-apple-ios.swiftdoc /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare.swiftdoc (in target 'JobGenieShare' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare.swiftdoc /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenieShare.swiftmodule/arm64-apple-ios.swiftdoc
+
+Copy /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenieShare.swiftmodule/Project/arm64-apple-ios.swiftsourceinfo /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare.swiftsourceinfo (in target 'JobGenieShare' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare.swiftsourceinfo /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenieShare.swiftmodule/Project/arm64-apple-ios.swiftsourceinfo
+
+Ld /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenieShare.appex/JobGenieShare normal (in target 'JobGenieShare' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios17.0 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk -Os -L/tmp/jobgenie-share-release/Build/Intermediates.noindex/EagerLinkingTBDs/Release-iphoneos -L/tmp/jobgenie-share-release/Build/Products/Release-iphoneos -F/tmp/jobgenie-share-release/Build/Intermediates.noindex/EagerLinkingTBDs/Release-iphoneos -F/tmp/jobgenie-share-release/Build/Products/Release-iphoneos -filelist /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare.LinkFileList -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -rpath -Xlinker @executable_path/../../Frameworks -dead_strip -Xlinker -object_path_lto -Xlinker /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare_lto.o -Xlinker -dependency_info -Xlinker /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare_dependency_info.dat -e _NSExtensionMain -fapplication-extension -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare.swiftmodule @/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare-linker-args.resp -o /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenieShare.appex/JobGenieShare
+
+SwiftDriver JobGenie normal arm64 com.apple.xcode.tools.swift.compiler (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name JobGenie -O -whole-module-optimization -enforce-exclusivity\=checked @/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie.SwiftFileList -enable-upcoming-feature StrictConcurrency -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk -target arm64-apple-ios17.0 -g -module-cache-path /tmp/jobgenie-share-release/ModuleCache.noindex -Xfrontend -serialize-debugging-options -swift-version 5 -I /tmp/jobgenie-share-release/Build/Products/Release-iphoneos -F /tmp/jobgenie-share-release/Build/Products/Release-iphoneos -emit-localized-strings -emit-localized-strings-path /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64 -c -num-threads 12 -Xcc -ivfsstatcache -Xcc /tmp/jobgenie-share-release/SDKStatCaches.noindex/iphoneos26.0-23A339-81ce72e5b06c9602b9d30b56f2eed08a.sdkstatcache -output-file-map /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/jobgenie-share-release/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/jobgenie-share-release/ModuleCache.noindex -sdk-module-cache-path /tmp/jobgenie-share-release/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie.swiftmodule -validate-clang-modules-once -clang-build-session-file /tmp/jobgenie-share-release/ModuleCache.noindex/Session.modulevalidation -Xcc -I/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/JobGenie-generated-files.hmap -Xcc -I/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/JobGenie-own-target-headers.hmap -Xcc -I/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/JobGenie-all-target-headers.hmap -Xcc -iquote -Xcc /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/JobGenie-project-headers.hmap -Xcc -I/tmp/jobgenie-share-release/Build/Products/Release-iphoneos/include -Xcc -I/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/DerivedSources-normal/arm64 -Xcc -I/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/DerivedSources/arm64 -Xcc -I/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/DerivedSources -emit-objc-header -emit-objc-header-path /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie-Swift.h -working-directory <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios -no-emit-module-separately-wmo
+
+ExtractAppIntentsMetadata (in target 'JobGenieShare' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name JobGenieShare --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk --xcode-version 17A400 --platform-family iOS --deployment-target 17.0 --bundle-identifier com.enfoirer.jobgenie.JobGenieShare --output /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenieShare.appex --target-triple arm64-apple-ios17.0 --binary-file /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenieShare.appex/JobGenieShare --dependency-file /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare_dependency_info.dat --stringsdata-file /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare.SwiftFileList --metadata-file-list /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/JobGenieShare.DependencyMetadataFileList --static-metadata-file-list /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/JobGenieShare.DependencyStaticMetadataFileList --swift-const-vals-list /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/Objects-normal/arm64/JobGenieShare.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2026-11-01 15:17:47.858 appintentsmetadataprocessor[20273:24513449] Starting appintentsmetadataprocessor export
+2026-11-01 15:17:47.859 appintentsmetadataprocessor[20273:24513449] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+
+GenerateDSYMFile /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenieShare.appex.dSYM /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenieShare.appex/JobGenieShare (in target 'JobGenieShare' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/dsymutil /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenieShare.appex/JobGenieShare -o /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenieShare.appex.dSYM
+
+AppIntentsSSUTraining (in target 'JobGenieShare' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsnltrainingprocessor --infoplist-path /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenieShare.appex/Info.plist --temp-dir-path /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/ssu --bundle-id com.enfoirer.jobgenie.JobGenieShare --product-path /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenieShare.appex --extracted-metadata-path /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenieShare.appex/Metadata.appintents --metadata-file-list /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenieShare.build/JobGenieShare.DependencyMetadataFileList --archive-ssu-assets
+2026-11-01 15:17:47.875 appintentsnltrainingprocessor[20275:24513452] Parsing options for appintentsnltrainingprocessor
+2026-11-01 15:17:47.875 appintentsnltrainingprocessor[20275:24513452] No AppShortcuts found - Skipping.
+
+SwiftDriver\ Compilation JobGenie normal arm64 com.apple.xcode.tools.swift.compiler (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name JobGenie -O -whole-module-optimization -enforce-exclusivity\=checked @/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie.SwiftFileList -enable-upcoming-feature StrictConcurrency -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk -target arm64-apple-ios17.0 -g -module-cache-path /tmp/jobgenie-share-release/ModuleCache.noindex -Xfrontend -serialize-debugging-options -swift-version 5 -I /tmp/jobgenie-share-release/Build/Products/Release-iphoneos -F /tmp/jobgenie-share-release/Build/Products/Release-iphoneos -emit-localized-strings -emit-localized-strings-path /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64 -c -num-threads 12 -Xcc -ivfsstatcache -Xcc /tmp/jobgenie-share-release/SDKStatCaches.noindex/iphoneos26.0-23A339-81ce72e5b06c9602b9d30b56f2eed08a.sdkstatcache -output-file-map /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/jobgenie-share-release/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/jobgenie-share-release/ModuleCache.noindex -sdk-module-cache-path /tmp/jobgenie-share-release/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie.swiftmodule -validate-clang-modules-once -clang-build-session-file /tmp/jobgenie-share-release/ModuleCache.noindex/Session.modulevalidation -Xcc -I/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/JobGenie-generated-files.hmap -Xcc -I/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/JobGenie-own-target-headers.hmap -Xcc -I/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/JobGenie-all-target-headers.hmap -Xcc -iquote -Xcc /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/JobGenie-project-headers.hmap -Xcc -I/tmp/jobgenie-share-release/Build/Products/Release-iphoneos/include -Xcc -I/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/DerivedSources-normal/arm64 -Xcc -I/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/DerivedSources/arm64 -Xcc -I/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/DerivedSources -emit-objc-header -emit-objc-header-path /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie-Swift.h -working-directory <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios -no-emit-module-separately-wmo
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_float-7NC6YZ81J1ATMC1XZ7G1U2D9N.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/ptrcheck-BBF78W9P578D72O7BO2U3PLMK.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_stdbool-8L2BXV58QI43NGTVYPPM0OY10.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/SwiftShims-1Q4IUPXL3HDVJ2U4M62PCG5FV.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/_AvailabilityInternal-BDEJ0DHJ0COKH8HB726HEGSVX.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/_SwiftConcurrencyShims-CVXITCF3Z3G7I9G10540JYOS0.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_stdarg-5RXO4DQSFA28EVZEHUK0TP279.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_stddef-MSHPBSL3M2KK6FQ84PLSPIME.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/ptrauth-5IN33E287VGAB2QXIJDZFT60E.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/DeveloperToolsSupport-2ZB2RMRZTS30J4VHMJB418BF2.pcm
+
+RegisterExecutionPolicyException /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenieShare.appex (in target 'JobGenieShare' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    builtin-RegisterExecutionPolicyException /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenieShare.appex
+
+Touch /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenieShare.appex (in target 'JobGenieShare' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    /usr/bin/touch -c /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenieShare.appex
+
+CompileXCStrings /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/ <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie/Localizable.xcstrings (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcstringstool compile --output-directory /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie/Localizable.xcstrings
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/_DarwinFoundation1-AC1XZFIKY50JDOOQS2LAYYKR7.pcm
+
+CopyStringsFile /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app/zh-Hans.lproj/Localizable.strings /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/zh-Hans.lproj/Localizable.strings (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    builtin-copyStrings --validate --outputencoding binary --outfilename Localizable.strings --outdir /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app/zh-Hans.lproj -- /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/zh-Hans.lproj/Localizable.strings
+/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/zh-Hans.lproj/Localizable.strings:1:1: note: detected encoding of input file as Unicode (UTF-8) (in target 'JobGenie' from project 'JobGenie')
+
+CopyStringsFile /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app/en.lproj/Localizable.strings /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/en.lproj/Localizable.strings (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    builtin-copyStrings --validate --outputencoding binary --outfilename Localizable.strings --outdir /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app/en.lproj -- /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/en.lproj/Localizable.strings
+/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/en.lproj/Localizable.strings:1:1: note: detected encoding of input file as Unicode (UTF-8) (in target 'JobGenie' from project 'JobGenie')
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_limits-D58GEH4PT4QIXES2YJHZ9P6ZM.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/ExtensionFoundation-7DR3Y533LDMOFY7QWJU4AFS2D.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/_DarwinFoundation2-EHV3LT4R70S86S26LCL1NDE3V.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_stdint-2SSQV3QFY3L3EJWY5693Y1LSA.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/sys_types-BLIQSS7SPBNH5VG8KYDIWDYUC.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_tgmath-CDDG8QI6E0B88PDYRRJRSO21V.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_intrinsics-94XEJP5DY1WKAPQ3AOUSX9T6Y.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_stdatomic-585RNZVSIYEIDP3I9BMAUC4M8.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/_DarwinFoundation3-38EOAQI5UA7VUZ419FNW7EB0S.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_inttypes-3ISL3BUVELC6G8RUKTHXCN1B.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/Darwin-BK4MS8OM65LGLGDYSHCRQT6UP.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/simd-89N9EIR70SAUIOEEN4I1NL6H3.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/MachO-EGJS63CG0KHDKSYGP913FU8VQ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/ObjectiveC-80T9BK7HME0RVSU5DJW3FUG42.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/os_object-8ZPOTZ5SCOBR76ZVZ37GSJSPU.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/os_workgroup-8FF5GMHHD2QNNT44X8CZ6WSDA.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/Dispatch-MS5L789LO7MGBCXVE2LUXR56.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/Spatial-6D7AN55JT3A9P8ZQUZAB5MQRI.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/dnssd-6SDAP3HR1TXULWJX8JP3MGF24.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/XPC-6PAXHSZINAKS4ZIL6Q8PXAM8.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/CoreFoundation-839T14AUR4VIZ05ZXEP3SD1R7.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/os-COYUD62SQS6WXQ1GYUQGWWW19.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/CoreGraphics-7MVYGBESC45XU71DXHR00E6W5.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/Security-99ZMKNFCT0YOQZWU5Y77CS7YC.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/CFNetwork-7UTF1GNBYKPP7YNSOQ9DC8J2K.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/Foundation-B7AL9WR1KS444VZZFMHJC17XY.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/CoreText-C431JAWYHJJ2H9UEGOQ1WZM5Y.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/ImageIO-EP89YGW4A5W10SNVIONC4E52V.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/DataDetection-A7VEG2B1HAOSJ6YMU3EGGHV8D.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/Network-82UKUXXK8WB5DWU9OEO19SCIE.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/IOSurface-8LZZLQ5IGQCDD56MQMRGXXE4Y.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/CoreData-1IQEQ7KWTD4OXMCQKRG6WUO47.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/LocalAuthentication-3JKI9E44P2X45RJSDDBW4MZ3Y.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/CoreTransferable-808MAI1DJ32OAIGV8GFWN7XWS.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/UserNotifications-E1K11OHZ5YKZ29EQ1E23AZZIO.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/Accessibility-O3PVJXJVIVI8SHASY3H1WHPJ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/UIUtilities-E6AF41ZLLE8T4RI8ZMHG4IPC2.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/FileProvider-5N6JNOC1JBCXWP9SIZY8CEBBU.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/UniformTypeIdentifiers-7T1XHDC5GV752UL2LCPRN9UUG.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/Symbols-8J3ZH4N9PB34A5UCJEZ1QU148.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/OSLog-BYDALAZNSU2SXPI39IT66DBVG.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/QuickLookThumbnailing-4MTT1DXVW2AEW5XDJZOFDS6OV.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/Metal-CQOY9R1Q5R5GFQAAELIF4N3Z2.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/OpenGLES-6N83IPZXH6PUMZ93SGGZAI27R.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/CoreVideo-2T5FBUGF0DLCOWH9KCR40WT7Y.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/CoreImage-EJCJUJ8RF5EJDUEZZI1L2IL1R.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/QuartzCore-DIIZT7NVMRPQHZ88KXOWYLPC8.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/SwiftUICore-A63CPLJQHNIYAU7PD3RH9ZGT9.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/UIKit-BOVTRUDZYDZXY84KDZFGEU7VI.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/PDFKit-5URL3VA87L3UJR9JPRVTK7OCK.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/AuthenticationServices-71CJDEL6C5ANMBWBYF0PPYWVJ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/ExtensionKit-AWTNVQH5PZOMQ343KMB8IF152.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/SwiftUI-ESZI79Z2OAGDX8RKI7DFBHB2K.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /tmp/jobgenie-share-release/ModuleCache.noindex/QuickLook-B8G4HZP0JZL108GWYKK5UH7HS.pcm
+
+SwiftCompile normal arm64 Compiling\ APIClient.swift,\ Analytics.swift,\ AppModel.swift,\ Attachments.swift,\ BulkActions.swift,\ History.swift,\ Localization.swift,\ Mail.swift,\ MailAuthorization.swift,\ Models.swift,\ Reminders.swift,\ Schedule.swift,\ SessionVault.swift,\ AccountView.swift,\ AnalyticsView.swift,\ ApplicationsView.swift,\ AttachmentsView.swift,\ BulkControls.swift,\ Components.swift,\ HistoryEditor.swift,\ MailView.swift,\ RemindersView.swift,\ ScheduleEditor.swift,\ ScheduleView.swift,\ SharedJobsView.swift,\ WelcomeView.swift,\ JobGenieApp.swift,\ SharedJobDraft.swift <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie/Core/APIClient.swift <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie/Core/Analytics.swift <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie/Core/AppModel.swift <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie/Core/Attachments.swift <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie/Core/BulkActions.swift <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie/Core/History.swift <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie/Core/Localization.swift <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie/Core/Mail.swift <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie/Core/MailAuthorization.swift <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie/Core/Models.swift <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie/Core/Reminders.swift <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie/Core/Schedule.swift <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie/Core/SessionVault.swift <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie/Features/AccountView.swift <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie/Features/AnalyticsView.swift <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie/Features/ApplicationsView.swift <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie/Features/AttachmentsView.swift <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie/Features/BulkControls.swift <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie/Features/Components.swift <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie/Features/HistoryEditor.swift <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie/Features/MailView.swift <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie/Features/RemindersView.swift <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie/Features/ScheduleEditor.swift <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie/Features/ScheduleView.swift <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie/Features/SharedJobsView.swift <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie/Features/WelcomeView.swift <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie/JobGenieApp.swift <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/Shared/SharedJobDraft.swift /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/Foundation.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/Combine.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/DeveloperToolsSupport.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/Accessibility.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/Darwin.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/_DarwinFoundation1.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/Swift.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/_Concurrency.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/UIKit.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/_DarwinFoundation2.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/Network.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/CoreData.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/_QuickLook_SwiftUI.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/QuartzCore.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/CoreFoundation.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/Spatial.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/CoreVideo.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/Distributed.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/System.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/CoreImage.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/Observation.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/ExtensionKit.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/_Builtin_float.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/FileProvider.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/CoreText.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/LocalAuthentication.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/_DarwinFoundation3.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/UniformTypeIdentifiers.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/OSLog.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/Symbols.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/Metal.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/CoreTransferable.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/DataDetection.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/PDFKit.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/_StringProcessing.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/CryptoKit.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/AuthenticationServices.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/CoreGraphics.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/os.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/ExtensionFoundation.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/QuickLookThumbnailing.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/SwiftUI.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/QuickLook.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/ObjectiveC.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/simd.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/Dispatch.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/SwiftUICore.swiftmodule/arm64e-apple-ios.swiftmodule /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/prebuilt-modules/26.0/XPC.swiftmodule/arm64e-apple-ios.swiftmodule /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_stddef-MSHPBSL3M2KK6FQ84PLSPIME.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/Security-99ZMKNFCT0YOQZWU5Y77CS7YC.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/CoreImage-EJCJUJ8RF5EJDUEZZI1L2IL1R.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/dnssd-6SDAP3HR1TXULWJX8JP3MGF24.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/UIKit-BOVTRUDZYDZXY84KDZFGEU7VI.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/IOSurface-8LZZLQ5IGQCDD56MQMRGXXE4Y.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/CoreGraphics-7MVYGBESC45XU71DXHR00E6W5.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/Foundation-B7AL9WR1KS444VZZFMHJC17XY.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/os-COYUD62SQS6WXQ1GYUQGWWW19.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_inttypes-3ISL3BUVELC6G8RUKTHXCN1B.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/Dispatch-MS5L789LO7MGBCXVE2LUXR56.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/MachO-EGJS63CG0KHDKSYGP913FU8VQ.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/simd-89N9EIR70SAUIOEEN4I1NL6H3.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/Metal-CQOY9R1Q5R5GFQAAELIF4N3Z2.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/ptrauth-5IN33E287VGAB2QXIJDZFT60E.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/QuartzCore-DIIZT7NVMRPQHZ88KXOWYLPC8.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/UIUtilities-E6AF41ZLLE8T4RI8ZMHG4IPC2.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/CoreTransferable-808MAI1DJ32OAIGV8GFWN7XWS.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/LocalAuthentication-3JKI9E44P2X45RJSDDBW4MZ3Y.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_stdint-2SSQV3QFY3L3EJWY5693Y1LSA.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/CFNetwork-7UTF1GNBYKPP7YNSOQ9DC8J2K.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/ExtensionFoundation-7DR3Y533LDMOFY7QWJU4AFS2D.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/QuickLookThumbnailing-4MTT1DXVW2AEW5XDJZOFDS6OV.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/_SwiftConcurrencyShims-CVXITCF3Z3G7I9G10540JYOS0.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_limits-D58GEH4PT4QIXES2YJHZ9P6ZM.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/UniformTypeIdentifiers-7T1XHDC5GV752UL2LCPRN9UUG.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_stdbool-8L2BXV58QI43NGTVYPPM0OY10.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/ObjectiveC-80T9BK7HME0RVSU5DJW3FUG42.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/Spatial-6D7AN55JT3A9P8ZQUZAB5MQRI.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/CoreVideo-2T5FBUGF0DLCOWH9KCR40WT7Y.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_stdarg-5RXO4DQSFA28EVZEHUK0TP279.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/_DarwinFoundation2-EHV3LT4R70S86S26LCL1NDE3V.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/OpenGLES-6N83IPZXH6PUMZ93SGGZAI27R.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/Darwin-BK4MS8OM65LGLGDYSHCRQT6UP.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_tgmath-CDDG8QI6E0B88PDYRRJRSO21V.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/_AvailabilityInternal-BDEJ0DHJ0COKH8HB726HEGSVX.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_float-7NC6YZ81J1ATMC1XZ7G1U2D9N.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/Network-82UKUXXK8WB5DWU9OEO19SCIE.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/SwiftUI-ESZI79Z2OAGDX8RKI7DFBHB2K.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/SwiftUICore-A63CPLJQHNIYAU7PD3RH9ZGT9.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_stdatomic-585RNZVSIYEIDP3I9BMAUC4M8.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/_DarwinFoundation1-AC1XZFIKY50JDOOQS2LAYYKR7.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/UserNotifications-E1K11OHZ5YKZ29EQ1E23AZZIO.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/SwiftShims-1Q4IUPXL3HDVJ2U4M62PCG5FV.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/os_object-8ZPOTZ5SCOBR76ZVZ37GSJSPU.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/Accessibility-O3PVJXJVIVI8SHASY3H1WHPJ.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/ptrcheck-BBF78W9P578D72O7BO2U3PLMK.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/ExtensionKit-AWTNVQH5PZOMQ343KMB8IF152.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/os_workgroup-8FF5GMHHD2QNNT44X8CZ6WSDA.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/CoreText-C431JAWYHJJ2H9UEGOQ1WZM5Y.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/QuickLook-B8G4HZP0JZL108GWYKK5UH7HS.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/FileProvider-5N6JNOC1JBCXWP9SIZY8CEBBU.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/ImageIO-EP89YGW4A5W10SNVIONC4E52V.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/_DarwinFoundation3-38EOAQI5UA7VUZ419FNW7EB0S.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/CoreFoundation-839T14AUR4VIZ05ZXEP3SD1R7.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/AuthenticationServices-71CJDEL6C5ANMBWBYF0PPYWVJ.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/XPC-6PAXHSZINAKS4ZIL6Q8PXAM8.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/DataDetection-A7VEG2B1HAOSJ6YMU3EGGHV8D.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/Symbols-8J3ZH4N9PB34A5UCJEZ1QU148.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/DeveloperToolsSupport-2ZB2RMRZTS30J4VHMJB418BF2.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/_Builtin_intrinsics-94XEJP5DY1WKAPQ3AOUSX9T6Y.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/sys_types-BLIQSS7SPBNH5VG8KYDIWDYUC.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/PDFKit-5URL3VA87L3UJR9JPRVTK7OCK.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/OSLog-BYDALAZNSU2SXPI39IT66DBVG.pcm /tmp/jobgenie-share-release/ModuleCache.noindex/CoreData-1IQEQ7KWTD4OXMCQKRG6WUO47.pcm /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie-dependencies-1.json (in target 'JobGenie' from project 'JobGenie')
+
+CompileSwift normal arm64 (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    
+
+SwiftDriverJobDiscovery normal arm64 Compiling APIClient.swift, Analytics.swift, AppModel.swift, Attachments.swift, BulkActions.swift, History.swift, Localization.swift, Mail.swift, MailAuthorization.swift, Models.swift, Reminders.swift, Schedule.swift, SessionVault.swift, AccountView.swift, AnalyticsView.swift, ApplicationsView.swift, AttachmentsView.swift, BulkControls.swift, Components.swift, HistoryEditor.swift, MailView.swift, RemindersView.swift, ScheduleEditor.swift, ScheduleView.swift, SharedJobsView.swift, WelcomeView.swift, JobGenieApp.swift, SharedJobDraft.swift (in target 'JobGenie' from project 'JobGenie')
+
+SwiftDriver\ Compilation\ Requirements JobGenie normal arm64 com.apple.xcode.tools.swift.compiler (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name JobGenie -O -whole-module-optimization -enforce-exclusivity\=checked @/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie.SwiftFileList -enable-upcoming-feature StrictConcurrency -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk -target arm64-apple-ios17.0 -g -module-cache-path /tmp/jobgenie-share-release/ModuleCache.noindex -Xfrontend -serialize-debugging-options -swift-version 5 -I /tmp/jobgenie-share-release/Build/Products/Release-iphoneos -F /tmp/jobgenie-share-release/Build/Products/Release-iphoneos -emit-localized-strings -emit-localized-strings-path /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64 -c -num-threads 12 -Xcc -ivfsstatcache -Xcc /tmp/jobgenie-share-release/SDKStatCaches.noindex/iphoneos26.0-23A339-81ce72e5b06c9602b9d30b56f2eed08a.sdkstatcache -output-file-map /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/jobgenie-share-release/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/jobgenie-share-release/ModuleCache.noindex -sdk-module-cache-path /tmp/jobgenie-share-release/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie.swiftmodule -validate-clang-modules-once -clang-build-session-file /tmp/jobgenie-share-release/ModuleCache.noindex/Session.modulevalidation -Xcc -I/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/JobGenie-generated-files.hmap -Xcc -I/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/JobGenie-own-target-headers.hmap -Xcc -I/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/JobGenie-all-target-headers.hmap -Xcc -iquote -Xcc /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/JobGenie-project-headers.hmap -Xcc -I/tmp/jobgenie-share-release/Build/Products/Release-iphoneos/include -Xcc -I/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/DerivedSources-normal/arm64 -Xcc -I/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/DerivedSources/arm64 -Xcc -I/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/DerivedSources -emit-objc-header -emit-objc-header-path /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie-Swift.h -working-directory <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios -no-emit-module-separately-wmo
+
+SwiftMergeGeneratedHeaders /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/DerivedSources/JobGenie-Swift.h /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie-Swift.h (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    builtin-swiftHeaderTool -arch arm64 /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie-Swift.h -o /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/DerivedSources/JobGenie-Swift.h
+
+Copy /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.swiftmodule/arm64-apple-ios.swiftdoc /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie.swiftdoc (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie.swiftdoc /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.swiftmodule/arm64-apple-ios.swiftdoc
+
+Copy /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.swiftmodule/arm64-apple-ios.abi.json /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie.abi.json (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie.abi.json /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.swiftmodule/arm64-apple-ios.abi.json
+
+Copy /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.swiftmodule/arm64-apple-ios.swiftmodule /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie.swiftmodule (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie.swiftmodule /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.swiftmodule/arm64-apple-ios.swiftmodule
+
+Copy /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.swiftmodule/Project/arm64-apple-ios.swiftsourceinfo /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie.swiftsourceinfo (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie.swiftsourceinfo /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.swiftmodule/Project/arm64-apple-ios.swiftsourceinfo
+
+Ld /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app/JobGenie normal (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios17.0 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk -Os -L/tmp/jobgenie-share-release/Build/Intermediates.noindex/EagerLinkingTBDs/Release-iphoneos -L/tmp/jobgenie-share-release/Build/Products/Release-iphoneos -F/tmp/jobgenie-share-release/Build/Intermediates.noindex/EagerLinkingTBDs/Release-iphoneos -F/tmp/jobgenie-share-release/Build/Products/Release-iphoneos -filelist /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie.LinkFileList -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker @executable_path/Frameworks -dead_strip -Xlinker -object_path_lto -Xlinker /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie_lto.o -Xlinker -dependency_info -Xlinker /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie.swiftmodule @/tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie-linker-args.resp -o /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app/JobGenie
+
+Copy /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app/PlugIns/JobGenieShare.appex /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenieShare.appex (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -remove-static-executable /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenieShare.appex /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app/PlugIns
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -D -S -no_atom_info /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenieShare.appex/JobGenieShare -o /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app/PlugIns/JobGenieShare.appex/JobGenieShare
+ProcessInfoPlistFile /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app/Info.plist <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie/Info.plist (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    builtin-infoPlistUtility <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios/JobGenie/Info.plist -producttype com.apple.product-type.application -genpkginfo /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app/PkgInfo -expandbuildsettings -format binary -platform iphoneos -scanforprivacyfile /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app/PlugIns/JobGenieShare.appex -requiredArchitecture arm64 -o /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app/Info.plist
+
+ExtractAppIntentsMetadata (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name JobGenie --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk --xcode-version 17A400 --platform-family iOS --deployment-target 17.0 --bundle-identifier com.enfoirer.jobgenie --output /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app --target-triple arm64-apple-ios17.0 --binary-file /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app/JobGenie --dependency-file /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie_dependency_info.dat --stringsdata-file /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie.SwiftFileList --metadata-file-list /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/JobGenie.DependencyMetadataFileList --static-metadata-file-list /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/JobGenie.DependencyStaticMetadataFileList --swift-const-vals-list /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/Objects-normal/arm64/JobGenie.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2026-11-01 15:17:57.825 appintentsmetadataprocessor[20397:24514164] Starting appintentsmetadataprocessor export
+2026-11-01 15:17:57.826 appintentsmetadataprocessor[20397:24514164] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+
+CopySwiftLibs /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app/JobGenie --scan-folder /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app/Frameworks --scan-folder /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app/PlugIns --scan-folder /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app/SystemExtensions --scan-folder /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app/Extensions --platform iphoneos --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os --back-deploy-swift-span
+Ignoring --strip-bitcode because --sign was not passed
+
+ValidateEmbeddedBinary /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app/PlugIns/JobGenieShare.appex (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    /Applications/Xcode.app/Contents/Developer/usr/bin/embeddedBinaryValidationUtility /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app/PlugIns/JobGenieShare.appex -info-plist-path /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app/Info.plist
+
+GenerateDSYMFile /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app.dSYM /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app/JobGenie (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/dsymutil /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app/JobGenie -o /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app.dSYM
+
+AppIntentsSSUTraining (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsnltrainingprocessor --infoplist-path /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app/Info.plist --temp-dir-path /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/ssu --bundle-id com.enfoirer.jobgenie --product-path /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app --extracted-metadata-path /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app/Metadata.appintents --metadata-file-list /tmp/jobgenie-share-release/Build/Intermediates.noindex/JobGenie.build/Release-iphoneos/JobGenie.build/JobGenie.DependencyMetadataFileList --archive-ssu-assets
+2026-11-01 15:17:57.836 appintentsnltrainingprocessor[20400:24514167] Parsing options for appintentsnltrainingprocessor
+2026-11-01 15:17:57.837 appintentsnltrainingprocessor[20400:24514167] No AppShortcuts found - Skipping.
+
+RegisterExecutionPolicyException /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    builtin-RegisterExecutionPolicyException /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app
+
+Validate /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    builtin-validationUtility /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app -validate-for-store -shallow-bundle -infoplist-subpath Info.plist
+
+Touch /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app (in target 'JobGenie' from project 'JobGenie')
+    cd <HOME>/Documents/study\ and\ work/find_job/jobgenie/ios
+    /usr/bin/touch -c /tmp/jobgenie-share-release/Build/Products/Release-iphoneos/JobGenie.app
+
+** BUILD SUCCEEDED **
+

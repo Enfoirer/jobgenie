@@ -1,0 +1,7 @@
+(node:37091) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://<HOME>/Documents/study%20and%20work/find_job/jobgenie/lib/models/UploadedFile.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to <WORKSPACE>/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Running native application document API and UI acceptance.
+PASS: native document versions, retry deduplication, library deletion, snapshot download and details/preview UI.
+Results: <TEMP>/jobgenie-ios-acceptance-aQtgU0

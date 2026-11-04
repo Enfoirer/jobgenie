@@ -1,8 +1,11 @@
 import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import UploadedFile from '../lib/models/UploadedFile.js';
 import JobDocument from '../lib/models/JobDocument.js';
 export async function verifyDocuments({ user, job, send, evaluate, wait, click, fill, base }) {
   await JobDocument.init();
+  if (process.env.PROGRESS_CAPTURE_DIR) await send('Emulation.setDeviceMetricsOverride', { width: 1280, height: 1100, deviceScaleFactor: 1, mobile: false });
   const pdf = Buffer.from('%PDF-1.4\n1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 200 200] >>\nendobj\ntrailer\n<< /Root 1 0 R >>\n%%EOF');
   const file = await UploadedFile.create({ userId: user._id, name: 'resume.pdf', type: 'application/pdf', size: '1 KB', fileData: pdf });
   const open = async () => {
@@ -16,6 +19,14 @@ export async function verifyDocuments({ user, job, send, evaluate, wait, click, 
   await wait('document.querySelector("section[aria-label=\\"Application documents\\"]").textContent.includes("v1")', 'first revision');
   await fill('input[aria-label="Version note"]', 'Updated submission'); await click('Save document version');
   await wait('document.querySelector("section[aria-label=\\"Application documents\\"]").textContent.includes("v2")', 'second revision');
+  if (process.env.PROGRESS_CAPTURE_DIR) {
+    // Opt-in delivery evidence from this disposable test, never a historical screenshot.
+    await evaluate('document.querySelector("section[aria-label=\\"Application documents\\"]").scrollIntoView({ block: "start" })');
+    await fs.mkdir(process.env.PROGRESS_CAPTURE_DIR, { recursive: true });
+    const { data } = await send('Page.captureScreenshot', { format: 'png' });
+    await fs.writeFile(path.join(process.env.PROGRESS_CAPTURE_DIR, 'application-document-versions.png'), Buffer.from(data, 'base64'));
+    console.log('CAPTURE: application-document-versions.png; current disposable test environment and fixture files.');
+  }
   await click('View', 'document.querySelector("section[aria-label=\\"Application documents\\"]")');
   await wait('document.querySelector("canvas[aria-label=\\"PDF document preview\\"]")?.width === 300 && !document.body.textContent.includes("Loading preview…")', 'safe PDF canvas');
   assert.equal(await evaluate('document.body.textContent.includes("Preview unavailable")'), false);

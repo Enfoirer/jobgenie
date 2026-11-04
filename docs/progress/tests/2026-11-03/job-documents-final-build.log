@@ -1,0 +1,80 @@
+
+> jobgenie@0.1.0 build
+> next build
+
+   ▲ Next.js 15.5.28
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 1583ms
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/42) ...
+   Generating static pages (10/42) 
+   Generating static pages (20/42) 
+   Generating static pages (31/42) 
+ ✓ Generating static pages (42/42)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                      Size  First Load JS
+┌ ○ /                                           570 B         104 kB
+├ ○ /_not-found                                  1 kB         104 kB
+├ ƒ /api/auth/[...nextauth]                     228 B         103 kB
+├ ƒ /api/auth/forgot-password                   228 B         103 kB
+├ ƒ /api/auth/register                          228 B         103 kB
+├ ƒ /api/auth/reset-password                    228 B         103 kB
+├ ƒ /api/jobs                                   228 B         103 kB
+├ ƒ /api/jobs/[id]                              228 B         103 kB
+├ ƒ /api/jobs/[id]/documents                    228 B         103 kB
+├ ƒ /api/jobs/[id]/documents/[documentId]       228 B         103 kB
+├ ƒ /api/jobs/[id]/status-history               228 B         103 kB
+├ ƒ /api/jobs/[id]/status-history/[statusId]    228 B         103 kB
+├ ƒ /api/jobs/bulk                              228 B         103 kB
+├ ƒ /api/mail                                   228 B         103 kB
+├ ƒ /api/mail/accounts                          228 B         103 kB
+├ ƒ /api/mail/accounts/[id]                     228 B         103 kB
+├ ƒ /api/mail/cron                              228 B         103 kB
+├ ƒ /api/mail/status                            228 B         103 kB
+├ ƒ /api/oauth/google/callback                  228 B         103 kB
+├ ƒ /api/oauth/google/native/cancel             228 B         103 kB
+├ ƒ /api/oauth/google/native/finish             228 B         103 kB
+├ ƒ /api/oauth/google/native/start              228 B         103 kB
+├ ƒ /api/oauth/google/start                     228 B         103 kB
+├ ƒ /api/oauth/outlook/callback                 228 B         103 kB
+├ ƒ /api/oauth/outlook/native/cancel            228 B         103 kB
+├ ƒ /api/oauth/outlook/native/finish            228 B         103 kB
+├ ƒ /api/oauth/outlook/native/start             228 B         103 kB
+├ ƒ /api/oauth/outlook/start                    228 B         103 kB
+├ ƒ /api/pending                                228 B         103 kB
+├ ƒ /api/pending/[id]                           228 B         103 kB
+├ ƒ /api/pending/bulk                           228 B         103 kB
+├ ƒ /api/pending/clear                          228 B         103 kB
+├ ƒ /api/reminders                              228 B         103 kB
+├ ƒ /api/reminders/settings                     228 B         103 kB
+├ ƒ /api/schedule                               228 B         103 kB
+├ ƒ /api/stats                                  228 B         103 kB
+├ ƒ /api/sync-settings                          228 B         103 kB
+├ ƒ /api/uploads                                228 B         103 kB
+├ ƒ /api/uploads/[id]                           228 B         103 kB
+├ ƒ /api/uploads/download/[id]                  228 B         103 kB
+├ ○ /dashboard                                  228 B         103 kB
+├ ○ /dashboard/add                            2.88 kB         106 kB
+├ ○ /dashboard/analytics                      4.57 kB         108 kB
+├ ○ /dashboard/jobs                           38.9 kB         142 kB
+├ ○ /dashboard/mail                           4.13 kB         110 kB
+├ ○ /dashboard/pending                        4.45 kB         107 kB
+├ ○ /dashboard/reminders                       3.5 kB         110 kB
+├ ○ /dashboard/todo                           5.09 kB         111 kB
+├ ○ /dashboard/upload                          3.2 kB         106 kB
+├ ○ /forgot-password                          1.61 kB         108 kB
+├ ○ /login                                    2.42 kB         118 kB
+└ ○ /reset-password                           1.61 kB         108 kB
++ First Load JS shared by all                  103 kB
+  ├ chunks/1255-dc3ddf72a1dc71a7.js           46.6 kB
+  ├ chunks/4bd1b696-f785427dddbba9fb.js       54.2 kB
+  └ other shared chunks (total)               2.13 kB
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

@@ -1,0 +1,303 @@
+{
+  "schemaVersion": 1,
+  "timezone": "Asia/Shanghai",
+  "source": "GitHub connected account combined commit status",
+  "recordingDate": "2026-11-04",
+  "note": "Observed check states at recording time, not original deployment timestamps; no production business writes or TestFlight releases implied.",
+  "commits": [
+    {
+      "sha": "1c61989831a7402390d7857adac79c3c96a35812",
+      "observedAt": "2026-11-04T13:22:48.096Z",
+      "result": {
+        "statuses": [
+          {
+            "context": "Vercel",
+            "state": "failure",
+            "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/AE5tSVHTkbCU6go9SS8AZeK5kVay"
+          }
+        ]
+      }
+    },
+    {
+      "sha": "80faa604561e30a69f48ea959a139f4c1b05a260",
+      "observedAt": "2026-11-04T13:22:47.818Z",
+      "result": {
+        "statuses": [
+          {
+            "context": "Vercel",
+            "state": "failure",
+            "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/D4fPhFeQijSfXVzQud3ibdTEiXYr"
+          }
+        ]
+      }
+    },
+    {
+      "sha": "cf0ea70440766d88e3fb7e76353dd9cac4c09c4e",
+      "observedAt": "2026-11-04T13:22:47.924Z",
+      "result": {
+        "statuses": [
+          {
+            "context": "Vercel",
+            "state": "success",
+            "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/6V8wsT42t7U2CQmhdQF4whsm2X4n"
+          }
+        ]
+      }
+    },
+    {
+      "sha": "f9ab75fd91ea3c62a211b1b7223fd25f6c9018f0",
+      "observedAt": "2026-11-04T13:22:47.826Z",
+      "result": {
+        "statuses": [
+          {
+            "context": "Vercel",
+            "state": "success",
+            "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/FvjQYaGEqpUDZjkoo2m81KnR8yG5"
+          }
+        ]
+      }
+    },
+    {
+      "sha": "27b2a6e1e7a1520f85c1f054a51b73ffa03b52b2",
+      "observedAt": "2026-11-04T13:22:48.871Z",
+      "result": {
+        "statuses": [
+          {
+            "context": "Vercel",
+            "state": "success",
+            "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/4B3SS2Uwoz1LK6ooWYqFVSTHfhES"
+          }
+        ]
+      }
+    },
+    {
+      "sha": "f6aeb68603920a04323306e3a840b852316189b6",
+      "observedAt": "2026-11-04T13:22:48.755Z",
+      "result": {
+        "statuses": [
+          {
+            "context": "Vercel",
+            "state": "success",
+            "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/ELrUCjS6twihu2GB8TWasgi7vzZk"
+          }
+        ]
+      }
+    },
+    {
+      "sha": "e747da2648e5457c9f4190d90646de97cf138531",
+      "observedAt": "2026-11-04T13:22:48.852Z",
+      "result": {
+        "statuses": [
+          {
+            "context": "Vercel",
+            "state": "success",
+            "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/6HsfagTRmmZte92MiKy6VWr12CyP"
+          }
+        ]
+      }
+    },
+    {
+      "sha": "f3ebf976a9d2da0ed8c66145a6ecb52d2866dc65",
+      "observedAt": "2026-11-04T13:22:48.757Z",
+      "result": {
+        "statuses": [
+          {
+            "context": "Vercel",
+            "state": "success",
+            "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/FirCHRKJYu3mLbPAbbCDPBp5Nn7Y"
+          }
+        ]
+      }
+    },
+    {
+      "sha": "9b6e44f5b85efc158295a46187aeff947ade7017",
+      "observedAt": "2026-11-04T13:22:49.544Z",
+      "result": {
+        "statuses": [
+          {
+            "context": "Vercel",
+            "state": "success",
+            "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/DeT1GftQmNHFp43SCEkX4vJwrwDm"
+          }
+        ]
+      }
+    },
+    {
+      "sha": "0eed69243f9a5c4409ee6a6f2f7ff93b667a84fa",
+      "observedAt": "2026-11-04T13:22:49.497Z",
+      "result": {
+        "statuses": [
+          {
+            "context": "Vercel",
+            "state": "success",
+            "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/Es3ywUv6UXtGDJmZr22aA5v6VW3L"
+          }
+        ]
+      }
+    },
+    {
+      "sha": "3bb3d2a083e71147e994a2f97f488c39c83eb23a",
+      "observedAt": "2026-11-04T13:22:49.546Z",
+      "result": {
+        "statuses": [
+          {
+            "context": "Vercel",
+            "state": "success",
+            "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/CjFt56qQbYxnsAtoGPnDg7iHo5yu"
+          }
+        ]
+      }
+    },
+    {
+      "sha": "d8adb33f7efb3c7df1e7d34771087869614f14ec",
+      "observedAt": "2026-11-04T13:22:49.512Z",
+      "result": {
+        "statuses": [
+          {
+            "context": "Vercel",
+            "state": "success",
+            "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/DaZWV2EKPFBAMiDhUybfzGUUwvRB"
+          }
+        ]
+      }
+    },
+    {
+      "sha": "14b1800df640ce33abef8474709c1af3191029c7",
+      "observedAt": "2026-11-04T13:22:50.314Z",
+      "result": {
+        "statuses": [
+          {
+            "context": "Vercel",
+            "state": "success",
+            "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/6gCPPxjvxdzXFMK74J9FLaegWjXC"
+          }
+        ]
+      }
+    },
+    {
+      "sha": "bfd7c1fad983ac836f28eec8c2b6fbee88840517",
+      "observedAt": "2026-11-04T13:22:50.442Z",
+      "result": {
+        "statuses": [
+          {
+            "context": "Vercel",
+            "state": "success",
+            "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/55GVREcohxeBXu4pMLnWfdGJiU7v"
+          }
+        ]
+      }
+    },
+    {
+      "sha": "d4caed2a6b62bbfe018de1b6a5cd47cae8d7c421",
+      "observedAt": "2026-11-04T13:22:50.245Z",
+      "result": {
+        "statuses": [
+          {
+            "context": "Vercel",
+            "state": "success",
+            "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/B4ZV8rGbVjAGz6CeQ1mQUnUYk1Ee"
+          }
+        ]
+      }
+    },
+    {
+      "sha": "873aef418d1d4c673fcbbe215a12e5f54ad9cfed",
+      "observedAt": "2026-11-04T13:22:50.183Z",
+      "result": {
+        "statuses": [
+          {
+            "context": "Vercel",
+            "state": "success",
+            "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/FqeT4fjtP6FDHTMTkgnwGbnxsyNL"
+          }
+        ]
+      }
+    },
+    {
+      "sha": "060580443992754c3173038bc4f0bfc653c3bf7f",
+      "observedAt": "2026-11-04T13:22:51.215Z",
+      "result": {
+        "statuses": [
+          {
+            "context": "Vercel",
+            "state": "success",
+            "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/FLQHDCGJyrgWoWHX7BtZ4rQGtbJK"
+          }
+        ]
+      }
+    },
+    {
+      "sha": "3176bff749a93781487096597e074c709fa682b3",
+      "observedAt": "2026-11-04T13:22:51.195Z",
+      "result": {
+        "statuses": [
+          {
+            "context": "Vercel",
+            "state": "success",
+            "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/BP4BojeAxkbAMEeM1ps1Xm1L2s54"
+          }
+        ]
+      }
+    },
+    {
+      "sha": "8fe312457ed508c82fe21ca997d0ce8361b46eb8",
+      "observedAt": "2026-11-04T13:22:51.122Z",
+      "result": {
+        "statuses": [
+          {
+            "context": "Vercel",
+            "state": "success",
+            "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/eu1jtCHtJ34oXt9uhREP33QAurpq"
+          }
+        ]
+      }
+    },
+    {
+      "sha": "2dd290615f234dd389123f0a28988296a8d4bb9a",
+      "observedAt": "2026-11-04T13:22:51.109Z",
+      "result": {
+        "statuses": [
+          {
+            "context": "Vercel",
+            "state": "success",
+            "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/6L9rsPSZnQ8dPDpxXKFMba183pmh"
+          }
+        ]
+      }
+    },
+    {
+      "sha": "68c1235ae789d19011d2c3352cf96d3dd70d4b81",
+      "observedAt": "2026-11-04T13:22:51.912Z",
+      "result": {
+        "statuses": []
+      }
+    },
+    {
+      "sha": "a0d5882b14f1b56d9b31f61e8476f77e44c8e437",
+      "observedAt": "2026-11-04T13:22:51.820Z",
+      "result": {
+        "statuses": []
+      }
+    },
+    {
+      "sha": "aea1914b16c34b1292d0e6171c3a97143e83c45b",
+      "observedAt": "2026-11-04T13:22:51.872Z",
+      "result": {
+        "statuses": [
+          {
+            "context": "Vercel",
+            "state": "success",
+            "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/2SdEVm575PsL8kncRQkWNhr31sjd"
+          }
+        ]
+      }
+    },
+    {
+      "sha": "52449c7dc883812320859131d33914fc78108639",
+      "observedAt": "2026-11-04T13:22:51.838Z",
+      "result": {
+        "statuses": []
+      }
+    }
+  ]
+}

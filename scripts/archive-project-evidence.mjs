@@ -24,8 +24,6 @@ await fs.writeFile(path.join(output, 'commit-subjects.txt'), git(['log', '--all'
 await fs.writeFile(path.join(output, 'head.txt'), head + '\n');
 execFileSync('git', ['bundle', 'create', path.join(output, 'repository.bundle'), 'main'], { cwd: repo, stdio: 'pipe' });
 execFileSync('git', ['archive', '--format=tar', '--output=' + path.join(output, 'tracked-source.tar'), head], { cwd: repo, stdio: 'pipe' });
-const workbook = 'docs/progress/JobGenie项目进展.xlsx';
-await fs.copyFile(path.join(repo, workbook), path.join(output, 'progress.xlsx'));
 const logs = [
   '/private/tmp/job-documents-all-tests2.log',
   '/private/tmp/job-documents-ios-regression.log',
@@ -64,6 +62,7 @@ async function collect(directory) {
 await collect(output);
 await fs.writeFile(path.join(output, 'manifest.json'), JSON.stringify({
   capturedAt, timezone: 'Asia/Shanghai', repository: remote, capturedHead: head,
+  maintainedWorkbook: 'docs/progress/JobGenie项目进展.xlsx; no separate workbook copy created',
   sourceArchiveScope: 'Tracked files at capturedHead; uncommitted files are excluded from tar and bundle.',
   timestampLimit: 'Git dates and file modification times are mutable metadata. Capture time and hashes are not third-party timestamp certificates, work-hour records or proof of business revenue.',
   copiedLogs, missingLogs, files,
