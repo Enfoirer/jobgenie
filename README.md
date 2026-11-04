@@ -4,9 +4,9 @@ Next.js 15 app for tracking job applications with email ingestion, status timeli
 
 web app: https://jobgenie-six.vercel.app
 
-[项目进展、甘特图与验收记录](docs/progress/README.md)
+[Project progress, Gantt chart and acceptance records](docs/progress/README.md)
 
-[项目记录与归档方法](docs/evidence/README.md)
+[Development records and archival workflow](docs/evidence/README.md)
 
 ## Key Features
 - Job board (drag-and-drop), add/edit application details and posting links, uploads, auth-protected dashboard.

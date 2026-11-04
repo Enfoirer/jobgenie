@@ -1,41 +1,35 @@
-# iOS 统计与附件验收
+# iOS statistics and attachments acceptance
 
-入口：我的 → 数据与文件 → 统计分析 / 附件。支持简体中文与英文。
+English translation prepared on 2026-11-04 (Asia/Shanghai). Historical results and acceptance boundaries below refer to the original delivery, not a new test run. The iOS app retains Chinese/English localization.
 
-## 统计口径
+Open Profile, Data and files, then Analytics or Attachments. Both UI languages are supported.
 
-- 直接调用网页共用的 `/api/stats`，不从当前状态反推历史阶段。
-- 当前状态分布覆盖账号全部申请，与日期选择无关。
-- 阶段转化率以范围内提交的申请为分母，观察范围内截至当前时间的有效历史；面试转 Offer 需先有面试记录。展示分子、分母和比率，无分母显示 `—`。
-- 默认最近 30 个日历日，支持自选起止日，最多 366 天。传递公历日期与手机 IANA 时区，由服务端计算包含起始日、不包含结束日次日零点的边界，包括夏令时。
-- 展示实际返回的日期、时区、统计更新时间；重新查询时清除旧结果，失败显示重试。进入页面、回到前台与下拉时刷新。
-- 演示统计根据本次演示申请和历史计算，不访问真实账号。
+## Statistics
 
-## 附件
+Use shared `/api/stats`, never infer historical stages from current status. Current distribution covers all account applications regardless of selected dates. Conversion uses applications submitted within the range and eligible history within that range up to now. Interview-to-offer requires an interview first. Show numerator/denominator/rate; no denominator displays an em dash.
 
-附件是账号级文件库，与网页一致，不新增申请与附件绑定关系。
+Default to the last 30 calendar days, with custom ranges up to 366 days. Send Gregorian dates and the phone's IANA timezone. Server uses inclusive start/exclusive next-day midnight, including DST. Display returned dates/timezone/update time. Clear stale results during new queries; offer retry on failure. Refresh on entry/foreground/pull-to-refresh. Demo calculates only its own history.
 
-- 上传：系统文件选择器读取一个 PDF、DOCX、PNG 或 JPG/JPEG 文件，最多 4 MB。客户端限制名称、扩展名和读取大小，服务端继续校验真实文件内容。multipart 请求只包含 `file`。
-- 查看：通过已有会话下载二进制到 App 临时目录，交给原生 Quick Look；不以内嵌网页打开上传内容。
-- 下载：再次经过服务端权限校验后，调用系统文件导出器，由用户选择存储位置。
-- 不信任响应中的 `filePath` 或下载地址；请求地址始终由固定服务地址和校验后的附件 ID 构造。二进制接口拒绝 HTML/JSON 成功响应及超过 4 MB 的文件。
-- 旧附件的类型或名称不受支持时禁用预览，下载保存为 `attachment.bin`。当前 App 不下载超过 4 MB 的旧文件。
-- 已确认上传的结果立即加入列表，刷新仍从同一个服务端文件库读取。不自动重试上传，避免未知网络结果下重复提交。
-- 临时预览使用随机子目录与完整文件保护；离开页面、退出账号和下次初始化时清理。用户主动导出到“文件”的副本由用户管理，退出不会删除该副本。
-- 退出使请求失效并清空统计、文件列表和演示附件。服务端仍负责文件所有权校验；App 不缓存会话到下载链接。
+## Attachments
 
-## 验收记录
+This milestone used the shared account-level library, without application binding (later delivered by JG-022).
 
-2026-10-26：统计与附件接口、网页一致性及系统文件操作联调通过。App 上传 PDF 后，网页读取同一文件，下载逐字节一致；在 App 中原生预览、保存到“文件”，再通过系统选择器上传，数据库确认两份文件内容一致。重启后文件仍可读取，其他账号和未登录请求不能访问。
+- Pick one PDF/DOCX/PNG/JPG/JPEG, maximum 4 MB. Validate client name/extension/read bounds; server validates content. Multipart includes only `file`.
+- Authenticated download to a temporary directory opens native Quick Look, not an embedded webpage. Export rechecks ownership and uses the system destination picker.
+- Ignore response `filePath`/URLs. Construct addresses from the fixed service base and validated ID. Reject HTML/JSON success responses or binaries over 4 MB.
+- Unsupported legacy type/name disables preview; export as `attachment.bin`. Do not download legacy files over 4 MB.
+- Add confirmed uploads immediately, then read the same server library on refresh. No automatic upload retry after an uncertain result.
+- Random preview subdirectories use complete file protection and are cleaned on leaving/logout/next initialization. User-exported Files copies remain user-managed.
+- Logout invalidates requests and clears statistics, lists and demo attachments. Server checks ownership; no sessions are cached in download links.
 
-65 项 iOS 核心测试分批通过，真实后端 API 测试独立补跑通过；新增中英文演示 UI 与真实后端 UI 通过。42 项统计与附件服务端回归通过，Debug、未签名 iPhone arm64 Release 构建通过。已有申请、历史、日程、邮箱、提醒和语言切换的 6 项 UI 回归全部通过。本轮合计 74 个不同 iOS 测试分批通过（65 核心、1 真实后端 API、7 演示/语言 UI、1 真实后端 UI），不重复计入复跑次数。
+## Results on 2026-10-26
 
-所有后端联调使用临时 MongoDB 与本地 Next.js，不读取生产文件。界面截图：[统计](../ios/docs/iphone-analytics.png)、[附件](../ios/docs/iphone-attachments.png)。
+Statistics/API, web consistency and system file flows passed. An App-uploaded PDF appeared on web with identical bytes. Native preview, Files export and picker reupload passed; database bytes matched for both files. Relaunch persistence and unauthenticated/other-user denial passed.
 
-单独复跑：先按 iOS README 构建本地 Next.js，再运行：
+65 core tests passed across runs; real-backend API acceptance ran separately. New bilingual demo and real-backend UI passed. 42 server statistics/attachment regressions, Debug and unsigned iPhone arm64 Release passed. Six existing application/history/schedule/mail/reminder/language UI regressions passed.
 
-```sh
-IOS_SIMULATOR_ID='<隔离模拟器 UUID>' node ios/scripts/verify-backend.mjs --resources-only
-```
+74 distinct iOS tests passed: 65 core, one real-backend API, seven demo/language UI and one real-backend UI. Reruns are not counted twice. Temporary MongoDB/local Next.js were used; production files were not read. Screenshots: [analytics](../ios/docs/iphone-analytics.png), [attachments](../ios/docs/iphone-attachments.png).
 
-系统文件选择、预览与导出使用 [Apple SwiftUI 系统呈现接口](https://developer.apple.com/documentation/SwiftUI/View-Presentation)。真机及第三方文件提供商（如 iCloud/企业网盘）的体验尚需实机验收。
+After the local build described in [iOS README](../ios/README.md), run `IOS_SIMULATOR_ID='<isolated-simulator-uuid>' node ios/scripts/verify-backend.mjs --resources-only`.
+
+File selection/preview/export use [Apple SwiftUI presentation APIs](https://developer.apple.com/documentation/SwiftUI/View-Presentation). Physical devices and third-party providers such as iCloud/enterprise storage still require device acceptance.

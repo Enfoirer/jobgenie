@@ -1,41 +1,37 @@
-# iOS App 内提醒验收
+# iOS in-app reminder acceptance
 
-本次接入 App 内提醒，复用网页已有的 `/api/reminders` 与 `/api/reminders/settings`。尚未接入 APNs 后台推送，不申请系统通知权限，App 关闭后不会发送系统通知。
+English translation prepared on 2026-11-04 (Asia/Shanghai). Historical results and acceptance boundaries below refer to the original delivery, not a new test run. The iOS app retains Chinese/English localization.
 
-## 入口与操作
+Reuse `/api/reminders` and `/api/reminders/settings`. APNs background push is not implemented; no system notification permission is requested and closing the App does not send system notifications.
 
-日程页右上角的铃铛以及“我的 → 提醒”均可打开提醒列表；日程页签显示未读数量。列表分为未读、已延后、已处理，可进入对应申请详情。支持标为已读、延后 10 分钟、取消本次提醒，以及提醒开关和提前时间设置。取消只影响本次提醒，保留申请与日程；操作与说明支持简体中文和英文。
+## Entry points and actions
 
-真实账号的数据和设置保存在服务端，与网页共用；重启或重新登录后读取同一份状态。演示模式只保留本次体验中的改动，退出重置，不调用真实提醒接口。演示面试设在 30 分钟后，便于直接体验提醒。
+Open reminders through the schedule bell or Profile. The schedule tab displays unread count. Unread, snoozed and handled lists link to application details. Support mark read, 10-minute snooze, cancellation, enable/disable and lead time. Cancellation preserves application/schedule. Both languages are supported.
 
-## 规则与一致性
+Real-account data/settings persist on the shared server across relaunch/login and web refresh. Demo changes last only for that demo session and use no real reminder API. Demo interviews are 30 minutes ahead.
 
-- 默认提前 1 小时，可选 15 分钟、30 分钟、1 小时、24 小时。到达预约或截止时刻后提醒失效，缺少时间不提醒。
-- 同一预约或截止时间只显示一条提醒；已读和取消状态不会因刷新、修改提前时间、关闭再开启而重置。
-- 延后固定 10 分钟，距离事件必须超过 10 分钟。重复提交同一次延后不会顺延；延后到期后下次刷新恢复同一条未读提醒。
-- 改期生成新版本，A → B → A 也不会复用旧提醒。清除时间、删除历史/申请后旧提醒失效；Offer/Rejected 停止提醒。预约和截止独立处理。
-- App 前台每 30 秒刷新，打开提醒页、回到前台、下拉刷新及日程/历史修改后也会刷新。后台暂停轮询；不承诺后台唤醒或系统推送。
-- 服务端决定提醒窗口。App 使用服务端时间与单调时钟过滤已过期项目，显示使用手机时区；页面每 10 秒检查过期，服务端在操作时再次校验。
-- 已处理页只包含仍在提醒窗口内的记录，并不是永久通知档案。
+## Rules
 
-## 异常与权限
+- Default lead time: one hour; options: 15 minutes, 30 minutes, one hour, 24 hours. Reminders expire at the event/deadline; missing times have no reminders.
+- One reminder per time/version. Refresh, lead-time changes and disable/re-enable preserve read/cancelled state.
+- Snooze is 10 minutes and requires more than 10 minutes until the event. Repeating the same snooze does not extend it again. After expiry, refresh restores the same unread reminder.
+- Rescheduling creates a new version, including A to B to A. Clearing/deleting history/application invalidates old reminders; Offer/Rejected stops reminders. Interview and deadline are independent.
+- Foreground polling every 30 seconds; also refresh on opening, foregrounding, pull-to-refresh and history/schedule edits. Polling pauses in background. No background wake/push guarantee.
+- Server defines the window. App filters expired items with server time and a monotonic clock, displays phone-local dates, checks expiry every 10 seconds and revalidates server-side on action.
+- Handled items remain only while their reminder window is active; this is not a permanent notification archive.
 
-操作只发送历史 ID、日程种类、提醒版本和动作；用户身份来自登录会话。服务端校验用户及父申请归属、提醒版本和有效窗口。旧版本返回 409，删除或无权访问返回 404，App 随即刷新并提示。重复读请求不会在服务端创建提醒或推送记录。
+## Failure and ownership
 
-写入失败保留列表供重试；写入已确认但后续刷新失败时移除过时副本并明确提示“操作已保存”。提醒设置的确认结果也在刷新失败时保留。初次加载失败显示未知数量，不假装没有提醒。
+Send only history ID, schedule kind, version and action. Server checks the signed-in user, parent ownership, current version and window. A stale version returns 409; missing/unauthorized returns 404; App refreshes with feedback. Repeated reads do not create reminder/push records.
 
-刷新使用请求编号，较旧响应不能覆盖新结果。退出时立即清空提醒、设置及提示并更换会话标记；延迟响应不能重新填充数据。401 清理登录状态。提醒页面与导航随账号切换重建，不跨账号复用操作状态。
+Write failure preserves retryable items. If a write succeeds but refresh fails, remove the stale copy and explicitly report the saved action. Confirmed settings also survive refresh failure. First-load failure displays an unknown count. Request sequencing prevents stale replacement. Logout clears reminders/settings/messages and changes the session marker; late responses cannot restore them. A 401 clears login. Rebuild navigation/state across accounts.
 
-## 验收结果
+## Results on 2026-10-25
 
-2026-10-25 完成验收：55 项 iOS 核心测试、6 项演示/语言 UI 测试、5 项真实隔离后端 UI 测试，共 66 个不同测试分批通过；258 项服务端测试通过。提醒核心测试在最终修改后重新通过，提醒与网页互通使用 `--reminders-only` 独立复跑通过。Debug 模拟器和未签名 iPhone arm64 Release 构建、脚本 ESLint、工程/plist 与差异检查通过。
+55 core, six demo/language UI and five isolated real-backend UI tests passed across runs: 66 distinct iOS tests. 258 server tests passed. Core reminder tests were rerun after final changes; reminder/web interoperability passed independently with `--reminders-only`. Debug simulator, unsigned arm64 Release, ESLint, project/plist and diff checks passed. Reviewed the [reminder screenshot](../ios/docs/iphone-reminders.png).
 
-已检查 [提醒界面截图](../ios/docs/iphone-reminders.png)。Release 构建通过不代表真机签名或 APNs 验收。
+Coverage includes field allowlists, server time, demo isolation, read/cancel retention, snooze idempotency, rescheduling versions, clearing/deletion, stale responses, recovery, 401 and account switching. Isolated integration checked database state after App actions, web reads/rescheduling, stale/unauthorized writes and App clearing. Commands: [iOS README](../ios/README.md). Only temporary MongoDB and local Next.js were used.
 
-核心测试覆盖请求字段白名单、服务端时间、演示隔离、已读和取消保留、延后幂等、改期版本、清除删除、旧响应、失败恢复、401 和退出后切换账号。隔离后端测试创建临时用户与日程，通过 App 操作后检查数据库，再由网页读取、改期、验证旧版本及越权操作，最后让 App 清除时间并再次检查数据库。
+## Background push remains outstanding
 
-复跑命令见 [iOS README](../ios/README.md)。所有联调使用临时 MongoDB 和本地 Next.js，不接触生产用户记录。
-
-## 后台推送的下一步
-
-APNs 仍需 Apple 开发者 Team、推送 Key ID/私钥、推送 entitlement 和真机签名配置。本次没有实现设备 token 注册、后台发送队列或推送去重，不能把 App 内列表幂等视为 APNs 验收。下一步须加入设备与账号绑定、退出解绑、失效版本检查、发送去重及真机切换账号测试；推送抵达前后都要重新校验当前日程和用户。
+APNs needs a developer Team, push Key ID/private key, entitlement and signed physical devices. Device-token registration, background delivery queue and push deduplication are not implemented. Future work must bind/unbind devices to accounts, invalidate stale versions, deduplicate delivery and test physical-device account switching, rechecking schedule/user before and after delivery. In-app idempotency and unsigned builds do not establish APNs acceptance.

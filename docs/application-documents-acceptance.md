@@ -1,46 +1,42 @@
-# 申请材料与版本
+# Versioned application documents acceptance
 
-日期：2026-11-03。范围：网页、iOS、共用后端。
+English translation prepared on 2026-11-04 (Asia/Shanghai). Historical results and acceptance boundaries below refer to the original delivery, not a new test run. The iOS app retains Chinese/English localization.
 
-## 使用
+Original delivery: 2026-11-03. Scope: web, iOS and shared backend.
 
-- 网页：点击申请卡片打开详情/时间线，在「Application documents」选择 Resume、Cover letter 或 Portfolio；选择附件库文件，填写可选版本备注，点击 Save document version。
-- iOS：申请详情 → 申请材料与版本；选择材料类型及附件，填写版本备注，保存材料版本。
-- 两端均可在该入口上传新文件到附件库，上传后选择文件，再保存材料版本。
-- 每种材料单独编号 v1、v2…，新版本排在前面；保存时间与备注帮助记录投递场景。更新材料不会改变申请状态或历史。
-- 网页 PDF 使用 PDF.js 画布预览，图片直接预览；DOCX 下载后用本机应用打开。iOS 使用 Quick Look，并支持存储到“文件”。
+## Usage
 
-## 留存与权限
+Web application details/timeline provide Application documents: choose Resume, Cover letter or Portfolio, select a library attachment, optionally label it and save a document version. The same controls are available in iOS application details. Both can upload to the library before selecting/saving a version.
 
-每次关联保存文件名称、类型、大小、备注、来源 ID 和独立字节快照。删除账号附件库原文件不会删除已关联版本；此页面不覆盖旧版本。删除申请时，在同一事务中清理该申请的所有材料快照；附件库文件继续保留。
+Each kind has independent v1/v2 numbering, newest first, with saved time/notes. Documents do not change status/history. Web PDF preview uses PDF.js canvas; images preview directly; DOCX downloads to a local app. iOS uses Quick Look and export to Files.
 
-同一类别最新版本的来源文件与备注均相同的重复请求直接返回已有版本，避免重复点击或网络重试产生多份。备注变化或选择其他文件会新增版本。每个申请最多 100 个材料版本，每份文件继续遵守现有 4 MB 及类型/内容校验。
+## Retention and ownership
 
-申请、来源文件和版本下载均校验当前用户；下载同时校验版本所属申请。新增接口拒绝受保护字段和跨站写入，返回值不包含文件字节；下载保持私有缓存、nosniff、attachment 和惰性 MIME，PDF 画布不执行文档脚本。
+Each association saves name/type/size/label/source ID and independent byte snapshot. Deleting the source library file preserves versions/downloads. Existing versions are not overwritten. Deleting an application transactionally removes its snapshots; library files remain.
 
-这些文件是材料留存记录，不代表已通过邮件或招聘平台实际投递。Demo 模式不连接真实材料，需登录账号操作。
+Repeated requests matching the latest source and label for that kind reuse the version. Different source/label creates another. Limit 100 versions per application; existing 4 MB/type/content rules still apply.
+
+Validate ownership of application, source and downloads, including version-parent matching. Reject protected fields/cross-site writes. Metadata excludes bytes. Downloads retain private/no-store, nosniff, attachment and inert MIME headers; canvas previews do not execute PDF scripts.
+
+Retained materials do not prove submission through a recruitment service/email. Demo does not access real documents; login is required.
 
 ## API
 
-- `GET /api/jobs/:id/documents`：版本元数据列表。
-- `POST /api/jobs/:id/documents`：`{ fileId, kind: "resume" | "coverLetter" | "portfolio", label? }`。
-- `GET /api/jobs/:id/documents/:documentId`：私有版本文件下载。
+- `GET /api/jobs/:id/documents`: metadata list.
+- `POST /api/jobs/:id/documents`: `{ fileId, kind: "resume" | "coverLetter" | "portfolio", label? }`.
+- `GET /api/jobs/:id/documents/:documentId`: private version download.
 
-快照存入独立 `JobDocument` 集合，通过既有用户事务锁串行分配版本，并建立 `(jobId, kind, version)` 唯一索引。不更改现有附件库集合。
+Separate `JobDocument` snapshots use the existing per-user transaction lock to allocate versions and unique `(jobId, kind, version)` index. The library collection is unchanged.
 
-## 验收
+## Acceptance and results
 
-- `tests/jobDocuments.test.js`：快照独立保存、源文件删除后下载、类别独立版本、并发重试去重、归属隔离、输入与内容校验、接口鉴权/来源校验、下载响应头及删除申请时的快照清理。
-- `node scripts/verify-job-editing-ui.mjs --documents-only`：真实浏览器创建两版材料、PDF 画布预览、删除源附件后下载、刷新后保留版本。
-- `IOS_SIMULATOR_ID=<id> IOS_DERIVED_DATA=/tmp/jobgenie-documents-build node ios/scripts/verify-backend.mjs --documents-only`：iOS 接口真实登录、关联版本、重复重试、源文件删除后字节校验，以及详情/原生预览界面。
+- `tests/jobDocuments.test.js`: independent snapshots, downloads after source deletion, per-kind versions, concurrent retry deduplication, ownership, input/content validation, authentication/origin, download headers and application-deletion cleanup.
+- `node scripts/verify-job-editing-ui.mjs --documents-only`: real browser saved two versions, rendered PDF canvas, downloaded after source deletion and retained versions after refresh.
+- `IOS_SIMULATOR_ID=<id> IOS_DERIVED_DATA=/tmp/jobgenie-documents-build node ios/scripts/verify-backend.mjs --documents-only`: real login/API, version linking/retry, byte checks after source deletion and native detail/preview UI.
+- Full backend suite: 272 passed, zero failures.
+- Three native model/API tests passed. Real API created two versions, deduplicated retry and verified downloaded bytes after source deletion.
+- iPhone UI created v3, displayed v1/v2, previewed natively and logged out successfully.
+- Final iOS regression: 80 passed, two independent-service tests skipped, zero failures. Real document API tests ran separately in isolated acceptance.
+- Final production web build, iOS compilation and diff checks passed.
 
-全部使用隔离数据库与测试账号，不操作生产数据。iOS 功能依赖上述后端接口先部署。
-
-## 本次结果
-
-- 完整后端测试：272 项通过，0 失败。
-- 网页真实浏览器：材料关联、两版留存、PDF 画布、删除源文件后的快照下载及刷新持久化通过。
-- iOS 隔离后端：材料模型/API 测试 3 项通过；真实 API 创建两版并重试去重，删除源文件后逐字节下载核对通过。
-- iPhone UI：从详情页新增 v3、查看 v1/v2 历史、原生预览和退出流程通过。
-- 最终 iOS 单元回归：80 项通过、2 项依赖独立服务的测试跳过，0 失败；材料真实 API 测试已在上述隔离验收中单独执行。
-- 最终网页生产构建、iOS 编译及 `git diff --check` 均通过。
+All used isolated databases/test accounts, without production writes. iOS depends on deployment of the shared APIs. Deployment observations are tracked separately in the progress evidence.

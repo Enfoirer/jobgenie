@@ -1,46 +1,38 @@
-# iOS 申请状态与历史管理
+# iOS application status and history acceptance
 
-## 操作与状态规则
+English translation prepared on 2026-11-04 (Asia/Shanghai). Historical results and acceptance boundaries below refer to the original delivery, not a new test run. The iOS app retains Chinese/English localization.
 
-- 申请详情的“更新状态 / 新增历史”支持已申请、面试/笔试、Offer、未通过。每次保存新增一条历史，不直接覆盖申请状态。
-- 时间线每条记录提供编辑与删除。编辑状态发生时间、阶段和备注；删除需要确认，服务端使用软删除。
-- 当前状态始终采用接口返回的 `job.status`。服务端按 `date`、`createdAt`、记录 ID 倒序选择最新有效记录；删除所有有效记录后回退到 `applied`。
-- `statusApplied: false` 的历史显示“仅保留历史，不影响当前状态”。编辑或删除这类记录不会把旧邮件变成当前状态。
-- 邮件主题/发件人、既有预约时间及截止时间只读展示。本阶段不编辑日程时间，状态发生时间不能替代预约或截止时间。
-- 保存请求只包含 `status/date/interviewStage/notes`，不会覆盖来源、资格标记、日程或提醒字段。日期发送含毫秒的 UTC ISO 时间，显示和选择使用手机时区。
-- 中英文文案随现有语言设置切换，业务文本保持原文。
+## Actions and status rules
 
-## 刷新、失败与权限
+- Application details support status updates/new history for applied, interviewing/assessment, offer and rejected. Each save creates a history entry instead of directly replacing application status.
+- Timeline entries can be edited or deleted with confirmation. Edit the event date, stage and notes. The server soft-deletes entries.
+- Use the returned `job.status`. The server selects the latest eligible active history by descending `date`, `createdAt` and ID. With no eligible history it falls back to `applied`.
+- History with `statusApplied: false` remains history-only. Editing/deleting it cannot turn old mail into the current status.
+- Mail subject/sender, existing appointment times and deadlines are read-only in this milestone. A status event date is not an appointment/deadline.
+- Save only `status/date/interviewStage/notes`. Preserve provenance, eligibility, schedule and reminder fields. Send millisecond UTC ISO dates; display/select in the phone timezone.
+- UI follows the existing language preference. User content keeps its original language.
 
-- 成功写入后立即使用服务端返回的申请和记录更新列表/详情，并重新拉取日程。较早发出的列表或详情响应不能覆盖已确认的修改。
-- 详情支持下拉刷新及回到前台刷新，同时重新读取申请和历史，获取网页端变更。不是后台实时推送。
-- 同一申请保存中禁止重复历史写入，编辑器保存中不可关闭。失败保留原始记录与表单，不先修改本地状态。
-- 新增请求如果发生网络或响应异常，提示先返回刷新确认结果，再决定是否新增。没有自动重试 POST，也没有新增服务端幂等键。
-- 400/404/409/429 分别显示内容校验、记录不可用、变更冲突、限流提示；401 清理用户、申请、历史及会话。404 不区分记录不存在与无权限。
-- 继续使用既有 NextAuth 和服务端用户/父申请权限检查，不传入或信任客户端用户 ID。
-- 演示模式的历史操作仅保留在内存，退出即重置，不请求真实后端。
+## Refresh, failure and ownership
 
-## 验收方法
+After a successful write, update lists/details with the server response and reload schedules. Older list/detail responses cannot overwrite confirmed edits. Pull-to-refresh and foreground refresh reload both application and history, including web edits; this is not background real-time push.
 
-`HistoryTests` 验证字段白名单、毫秒精度、UTF-16 长度边界、来源与旧邮件资格、排序/删除/空历史回退、服务端状态优先、错误处理、退出清理，以及列表和详情乱序响应。
+Disable repeated history writes for the same application and prevent dismissing a saving editor. Failures preserve the form and original data. An uncertain POST result instructs the user to refresh before creating another entry; no automatic POST retry or new server idempotency key was added.
 
-模拟器 UI 覆盖新增面试/笔试、填写阶段和备注、新增 Offer、编辑为拒绝、取消删除和确认删除后回退，以及英文编辑器。原有申请管理和语言切换测试一并运行。
+Map 400/404/409/429 to validation/unavailable/conflict/rate-limit feedback. A 401 clears user, applications, history and session. A 404 does not distinguish nonexistent from unauthorized records. Reuse NextAuth and server user/parent checks; never trust a client user ID. Demo history is memory-only and resets on exit.
 
-在本地生产构建后运行 `ios/scripts/verify-backend.mjs`：
+## Acceptance method
 
-1. 临时 MongoDB + NextAuth + iPhone 模拟器执行登录、申请创建/编辑、历史新增/编辑/删除。
-2. 重启 App 后验证 Keychain 恢复、状态与备注持久化，检查数据库活动/删除历史数量。
-3. 临时 Chrome 使用同一账号登录，验证 App 的状态和历史，再通过网页历史编辑器修改并刷新。
-4. App 再次读取，确认网页编辑的状态与备注可见。
-5. HTTP 验证未登录、其他用户、错误父申请和受保护字段写入被拒绝，数据库其他用户记录保持不变。
+`HistoryTests` cover field allowlists, millisecond precision, UTF-16 length boundaries, provenance/old-mail eligibility, sorting/deletion/fallback, server status authority, errors, logout cleanup and out-of-order list/detail responses. Simulator UI covers assessment/interview creation, stage/notes, offer creation, editing to rejected, cancelled/confirmed deletion and the English editor, plus existing application/language regressions.
 
-测试只使用临时账号、数据库和 Chrome 配置，不连接生产数据或真实邮箱。模拟器联调不替代真机、签名或 TestFlight 验收。
+After a local production build, `ios/scripts/verify-backend.mjs` uses temporary MongoDB, NextAuth and an iPhone simulator to log in, create/edit applications and perform history CRUD. Relaunch verifies Keychain recovery and persisted status/notes; database assertions inspect active/deleted history. An isolated Chrome profile reads App changes and edits history; App refresh sees those web changes. Direct HTTP attempts reject unauthenticated requests, other users, wrong parents and protected fields without changing another user's data.
 
-## 2026-10-19 验收结果
+## Results on 2026-10-19
 
-- 26 项 iOS 单元测试通过，其中新增 10 项历史/请求乱序测试。
-- 原有申请演示与语言 UI 测试通过。新增历史 CRUD / 英文编辑器 UI 测试修正控件定位后单独补跑通过。
-- 2 项真实后端 UI 测试及同库 Chrome 验收通过；包含重启、网页刷新、双向读取和直接 HTTP 越权尝试。共 31 个不同 iOS 测试完成，未把普通运行中跳过的集成项计为通过。
-- `node --test --test-concurrency=1 tests/jobEditing.test.js`：25 项服务端回归通过。
-- Debug 模拟器构建、未签名 iPhone arm64 Release 构建、Next.js 生产构建、脚本 ESLint、工程/plist 与差异检查通过。
-- 已检查[原生历史管理截图](../ios/docs/iphone-history.png)及网页时间线截图；本阶段未做真机、签名或 TestFlight 验收。
+- 26 iOS unit tests passed, including 10 new history/stale-response tests.
+- Existing application/demo/language UI tests passed. New history CRUD and English-editor UI tests passed after a locator fix and separate rerun.
+- Two real-backend UI tests and same-database Chrome acceptance passed, including relaunch, web refresh, bidirectional reads and direct unauthorized HTTP attempts. In total, 31 distinct iOS tests passed; skipped integration tests were not counted as passes.
+- `node --test --test-concurrency=1 tests/jobEditing.test.js`: 25 server regressions passed.
+- Debug simulator, unsigned iPhone arm64 Release, Next.js production build, script ESLint, project/plist and diff checks passed.
+- Reviewed the [native history screenshot](../ios/docs/iphone-history.png) and web timeline capture. Physical devices, signing and TestFlight were not accepted.
+
+Only temporary accounts/databases/browser profiles were used. No production data or real mailbox was accessed.

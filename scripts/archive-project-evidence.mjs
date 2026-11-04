@@ -62,7 +62,7 @@ async function collect(directory) {
 await collect(output);
 await fs.writeFile(path.join(output, 'manifest.json'), JSON.stringify({
   capturedAt, timezone: 'Asia/Shanghai', repository: remote, capturedHead: head,
-  maintainedWorkbook: 'docs/progress/JobGenie项目进展.xlsx; no separate workbook copy created',
+  maintainedWorkbook: 'docs/progress/project-progress.xlsx; no separate workbook copy created',
   sourceArchiveScope: 'Tracked files at capturedHead; uncommitted files are excluded from tar and bundle.',
   timestampLimit: 'Git dates and file modification times are mutable metadata. Capture time and hashes are not third-party timestamp certificates, work-hour records or proof of business revenue.',
   copiedLogs, missingLogs, files,

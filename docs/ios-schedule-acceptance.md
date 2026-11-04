@@ -1,33 +1,32 @@
-# iOS 日程编辑验收
+# iOS schedule editing acceptance
 
-## 使用方式
+English translation prepared on 2026-11-04 (Asia/Shanghai). Historical results and acceptance boundaries below refer to the original delivery, not a new test run. The iOS app retains Chinese/English localization.
 
-- 日程页每条记录提供“编辑面试时间”或“编辑笔试截止时间”，以及“查看申请详情”。
-- 申请详情的每条状态历史都提供两个时间编辑入口，因此没有日程的历史也可以补时间。
-- 打开“设置时间”选择日期、时刻；修改已有日期后保存即可改期。“清除时间”或关闭开关，再保存，才会清除服务器记录中的对应时间。取消或关闭弹窗不提交。
-- 中英文即时切换；日期按所选界面语言格式化，时区使用 iPhone 当前时区，接口使用 UTC ISO 时间并保留毫秒。
+## Usage
 
-![原生日程编辑](../ios/docs/iphone-schedule-editor.png)
+Schedule entries provide interview-time/assessment-deadline editing and application-detail navigation. Every history entry in details provides both time editors, including entries with no current schedule. Enable Set time and choose date/time to add or reschedule. Clear time or disable the switch, then save, to clear the server value. Cancelling/dismissing does not submit.
 
-## 一致性规则
+UI switches immediately between Chinese and English. Dates follow the selected UI locale and phone timezone; APIs use millisecond UTC ISO dates.
 
-使用现有 `PATCH /api/jobs/:jobId/status-history/:historyId`，每次只发送 `scheduledTime` 或 `deadline`，清除时发送显式 `null`。不会提交另一项时间、状态、历史发生日期、邮件来源或状态生效标记。服务端仍负责归属与父子关系校验，以及日程对应的提醒版本更新。
+![Native schedule editor](../ios/docs/iphone-schedule-editor.png)
 
-修改成功后用服务端返回的申请、历史更新 App，再强制刷新统一日程列表。列表刷新失败时保留已确认的修改并提供刷新错误提示。旧列表和详情请求不能覆盖已确认修改。保存失败保留编辑内容以便重试；401 清理会话。没有离线写入队列。
+## Consistency
 
-清除时间保留状态历史。仍处于 interviewing 的面试记录进入“时间待补充”；笔试以阶段 `Online Assessment` / `OA` / `笔试` 或无阶段时的邮件来源 `oa` 识别，缺截止时间时显示待补充。其他状态且两个时间都为空的历史不产生日程。演示投影与网页规则一致。
+Use `PATCH /api/jobs/:jobId/status-history/:historyId`, sending only `scheduledTime` or `deadline`; explicit `null` clears it. Preserve the other time, status, history date, email source and status eligibility. The server checks ownership/parent relationships and updates reminder versions.
 
-日程跳转详情不依赖申请列表预加载；详情自行读取申请和历史。下拉刷新及返回前台读取服务器变更。跨设备为刷新后一致，不声称实时推送。
+Apply confirmed server application/history results, then force-refresh unified schedules. If refreshing fails, keep the confirmed edit and show the refresh error. Stale list/detail responses cannot overwrite confirmed writes. Save failure retains edits; 401 clears the session. No offline write queue is implemented.
 
-## 自动化验收
+Clearing a time keeps history. An interviewing entry missing its interview time becomes a missing-time event. Assessment stages `Online Assessment`, `OA` or the supported Chinese assessment label, or source `oa` when no stage exists, identify an assessment missing a deadline. Other statuses with neither time produce no event. Demo projections follow web rules.
 
-2026-10-19：31 项 iOS 核心测试、4 项演示/语言 UI 测试、2 项真实后端/网页互通 UI 测试，合计 37 个不同测试分批通过。64 项服务端回归通过。Debug、未签名 iPhone arm64 Release、脚本 ESLint、工程 plist 及 diff 检查通过。日程 UI 首次运行因自动化点击落在开关标签处失败；调整到系统开关控件后重跑通过。
+Navigation loads details independently of a preloaded application list. Pull-to-refresh/foreground refresh reload server changes. Cross-device consistency requires refresh and is not real-time push.
 
-- `ScheduleTests`：单字段 PATCH、null 清除、另一字段与历史状态保留、毫秒及跨午夜时区、无效日期、面试/笔试缺失时间分类、演示改期与删除、未缓存申请详情、刷新失败时保留已确认修改、401 清理、中英文文案。
-- 模拟器日程 UI：清除后移出即将到来、待补充重新设置、跳转详情、补截止时间、取消清除不保存、真正清除、英文编辑标题。
-- 隔离联调：App 设置面试及截止时间，重启后日程保留；数据库确认两个时间及提醒版本；网页读取原生时间后清除面试时间、修改截止时间；App 刷新显示网页修改并再次清除截止时间，数据库确认清除且当前 Offer 状态保留。
-- 权限：使用另一用户的历史，及当前申请搭配他人的历史 ID 修改时间均为 404；未登录写入为 401。沿用现有 64 项历史、日程和提醒回归。
+## Results on 2026-10-19
 
-复现命令见 [iOS README](../ios/README.md)。真实后端验收使用 `ios/scripts/verify-backend.mjs`，创建临时 MongoDB 副本集、账号、Next.js 服务和全新浏览器配置。不使用生产账号、数据库或邮箱。
+31 iOS core tests, four demo/language UI tests and two real-backend/web interoperability UI tests passed across runs: 37 distinct tests. Also passed 64 server regressions, Debug, unsigned iPhone arm64 Release, script ESLint, project/plist and diff checks. The initial schedule UI run tapped the switch label; a corrected control locator passed on rerun.
 
-本次范围是原生日程编辑，不包含 APNs 推送、真机签名或 TestFlight 验收。
+- `ScheduleTests`: single-field PATCH, null clearing, preservation of other fields/status, milliseconds and cross-midnight timezones, invalid dates, missing-time classification, demo rescheduling/deletion, uncached details, keeping confirmed edits after refresh failure, 401 and both languages.
+- Simulator UI: clear upcoming time, restore missing time, open details, add deadline, cancel clearing, actually clear and verify English titles.
+- Isolated integration: App saves both times and survives relaunch; database confirms times/reminder versions. Web reads them, clears the interview and changes the deadline; App refresh sees changes and clears the deadline. The database confirms cleared times while Offer status remains.
+- Ownership: another user's history or wrong-parent history returns 404; unauthenticated writes return 401. Existing history/schedule/reminder regressions passed.
+
+Commands: [iOS README](../ios/README.md), using `ios/scripts/verify-backend.mjs` with temporary MongoDB replica set, accounts, Next.js and fresh browser profiles. No production accounts/data/mail. APNs, device signing and TestFlight are outside this milestone.

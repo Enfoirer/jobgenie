@@ -1,53 +1,46 @@
-# 同步操作与登录功能验收
+# Sync controls and authentication acceptance
 
-## 邮件操作
+English translation prepared on 2026-11-04 (Asia/Shanghai). Historical results and acceptance boundaries below refer to the original delivery, not a new test run. The iOS app retains Chinese/English localization.
 
-`/dashboard/mail` 提供全账户及单账户立即同步、失败重试、刷新状态、跳转人工确认。手动操作使用 `POST /api/mail`：
+## Mail operations
 
-- `{ "action": "sync", "accountId": "可选的邮箱 ID" }`：继续原同步游标；每账户默认最多拉取 10 封，处理最多 50 封已入库邮件。
-- `{ "action": "retry", "accountId": "可选的邮箱 ID" }`：仅领取失败项；不下载邮件、不推进游标、不重新处理成功项。仍然使用共享事务、处理租约和幂等逻辑。
-- 未登录返回 401；操作不属于自己的账户返回 404；非法动作、账户 ID 或额外参数返回 400；跨站请求返回 403。
-- 保留既有 GET 同步及定时同步兼容性。手动 POST 不返回邮件正文或供应商异常原文。
-- `/api/mail/status` 只读取当前用户的账户和邮件。提供实时待处理、处理中、失败、待确认数量，最近 10 封失败邮件主题/尝试次数，以及每账户最近一次同步/重试结果。
-- 最近结果保存在 MailAccount.lastSync；手动和定时处理共用保存逻辑。刷新页面可恢复，30 秒可见页面轮询也能看到定时同步结果。
-- “Succeeded” 是处理成功总数，包括自动应用、较旧历史、待人工确认和无关邮件；不等于创建申请数。队列数量是当前剩余，结果数量是单次执行数量。
-- 有分页游标时显示 Continue sync；剩余待处理项通过 Sync account 继续，剩余失败项可再次 Retry。请求断开不表示服务端回滚，应先刷新状态。过期 processing 租约仍由普通同步恢复。
-- 状态列表不暴露访问令牌、完整邮件内容、AI/供应商异常原文。错误展示处理阶段及相应恢复动作。
+`/dashboard/mail` offers global/per-account sync, retry, refresh and manual-review navigation. `POST /api/mail` accepts:
 
-## 记住我
+- `{ "action": "sync", "accountId": "optional-mailbox-id" }`: continue the saved cursor; defaults to fetching up to 10 and processing up to 50 stored messages per account.
+- `{ "action": "retry", "accountId": "optional-mailbox-id" }`: claim failed stored items only. No fetch/cursor movement or successful-item reprocessing. Reuse transactions, processing leases and idempotency.
 
-- 不勾选：从登录时开始固定 12 小时。
-- 勾选：从登录时开始固定 30 天。
-- 登录和注册后的自动登录都提交选择。刷新页面、查询 session、更新客户端 session 不延长绝对期限。
-- JWT 的加密载荷到期时间与实际会话期限一致；NextAuth 的 Cookie 容器最多保留 30 天，不能让已过期载荷恢复权限。不是“关闭浏览器立即退出”的承诺。
-- 已有会话保留原始 JWT 到期时间。数据库 authVersion 改变、用户删除或登录到期均拒绝后续受保护请求。
+Unauthenticated/other-user/invalid action-ID-extra fields/cross-site return 401/404/400/403 respectively. Existing GET and scheduled sync remain compatible. POST does not expose message bodies or provider errors.
 
-## 密码找回
+`/api/mail/status` reads only the current user's accounts/messages: current pending, processing, failed and manual-review counts; the last 10 failures with subject/attempts; latest per-account sync/retry result. Shared manual/scheduled logic saves `MailAccount.lastSync`; refresh and 30-second visible-page polling restore it.
 
-`/forgot-password` 发送恢复请求；`/reset-password#token=…` 设置新密码。新密码至少 8 字符、最多 72 UTF-8 字节，避免 bcrypt 截断；新注册同样校验，既有短密码仍能登录。
+Succeeded includes auto-applied, older history, manual review and irrelevant messages, not new applications alone. Queue counts are remaining backlog; result counts are per-run. Continue sync when pagination remains; retry failed items separately. A disconnected request does not imply server rollback: refresh first. Normal sync recovers expired processing leases. Never expose tokens, full messages or raw AI/provider exceptions; identify the failing stage and recovery action.
 
-- 使用 256 位随机秘密；数据库只保存 SHA-256 摘要。URL fragment 不进入服务端请求 URL；重置成功后清除 fragment。重置页禁止索引并设置 no-referrer。
-- 有效期 30 分钟，仅用一次。新的请求替换旧链接；并发提交只有一次原子修改成功。邮件预览/打开页面不消费链接。
-- 重置后 authVersion 加一，所有旧登录失效；用户必须以新密码重新登录。
-- 对存在与不存在的邮箱返回同一通用说明，不返回是否存在账户。规范化地址后每分钟最多一个发送请求、每小时最多五次。额外用 MongoDB 原子计数限制恢复接口每 IP/每动作每小时 20 次，并用 TTL 清理计数记录。
-- Vercel 使用其提供的 x-vercel-forwarded-for；其他部署默认共用保守的 anonymous 限流桶，需要独立接入可信代理 IP 才可按 IP 扩展。固定时间桶在边界可能允许相邻请求；已有用户另有精确 60 秒发信冷却。
-- 供应商失败会清除未送达链接的摘要，只记录不含地址/token 的运维错误；对用户仍返回同一通用说明以避免泄露账户存在性。API 接收不代表邮件最终投递成功。
+## Remember me
 
-### 生产配置
+Unchecked sessions last a fixed 12 hours from login; checked sessions last a fixed 30 days. Both login and post-registration login submit the choice. Refresh, session reads and client-session updates do not extend expiry.
 
-实现采用 [Resend Send Email API](https://resend.com/docs/api-reference/emails/send-email)，无新增运行时依赖。在 Vercel 服务端环境变量配置：
+Encrypted JWT expiry matches the session. The cookie container lasts at most 30 days and cannot revive an expired payload. This does not promise logout when the browser closes. Existing sessions keep original JWT expiry. Changed `authVersion`, deleted users and absolute expiry revoke protected access.
 
-| 变量 | 内容 |
-| --- | --- |
-| NEXTAUTH_URL | 实际公开站点的 HTTPS 地址（已有登录配置也使用此项） |
-| RESEND_API_KEY | Resend 的发送密钥；只放服务端环境变量 |
-| PASSWORD_RESET_FROM | 已在 Resend 验证域名下的发件地址，例如 `JobGenie <accounts@example.com>` |
+## Password recovery
 
-不要为这两个发送变量使用 NEXT_PUBLIC_ 前缀，不要将密钥写入 Git。配置后重新部署。没有有效配置时找回接口返回 503，页面明确提示暂不可用，不会假装已发送。真实投递仍需要用已注册且由操作者控制的邮箱验收；本轮自动化没有发送任何真实邮件。
+`/forgot-password` requests recovery; `/reset-password#token=…` sets a password of at least eight characters and at most 72 UTF-8 bytes. New registrations use the same rule; existing short passwords can still log in.
 
-## 验收覆盖
+- Use a 256-bit secret; store only SHA-256. Fragment tokens do not enter server request URLs and are cleared on success. Reset pages are no-index/no-referrer.
+- Single-use, 30-minute expiry. A new request replaces the old link. Atomic concurrent consumption allows one success; viewing/previews do not consume it.
+- Increment `authVersion`, revoke old sessions and require login with the new password.
+- Return the same generic response for existing/nonexistent accounts. Normalize addresses. Limit requests to one per minute/five per hour per address. MongoDB atomic per-IP/action quotas allow 20 per hour with TTL cleanup.
+- Vercel uses trusted `x-vercel-forwarded-for`; other deployments use a shared conservative anonymous bucket until trusted-proxy integration exists. Fixed windows can admit adjacent boundary bursts; existing users also have an exact 60-second sending cooldown.
+- Provider failure removes the undelivered token hash, logs no address/token and returns the generic response. API acceptance is not proof of delivery.
 
-- `npm test`：包含原有回归、失败重试不拉取/不重复写、失败批次继续、状态数据权限、敏感内容隐藏、恢复令牌过期/篡改/复用/并发、限流、发送失败、密码校验、固定会话期限及撤销。
-- `npm run build`：Next.js 生产构建。当前本机已有 node_modules 为 Next 15.3.1；Git 的 package.json/package-lock.json 固定 15.5.28，线上构建按锁文件验证。
-- `npm run test:ui`：真实 Chrome + 临时 MongoDB + Next 生产服务器，既有编辑/日程/提醒/统计全回归；新增邮箱操作、刷新恢复、失败反馈、越权重试、普通/记住我登录、过期会话、密码找回入口、未配置服务反馈、改密与旧登录撤销。
-- 浏览器测试使用过期的本地假邮箱令牌，使下载在出网前失败；密码恢复服务注入假发送器，验证真实改密流程。不会读取或修改生产数据库。
+## Production configuration
+
+Use the [Resend Send Email API](https://resend.com/docs/api-reference/emails/send-email) with no new runtime dependency. Server variables: `NEXTAUTH_URL` (public HTTPS site), `RESEND_API_KEY` (server-only key), `PASSWORD_RESET_FROM` (verified domain sender, such as `JobGenie <accounts@example.com>`). Never use `NEXT_PUBLIC_` for sending secrets or commit them. Redeploy after configuration.
+
+Missing configuration returns 503 with unavailable feedback rather than claiming delivery. Real delivery still requires an owner-controlled registered address. Automation sent no real email.
+
+## Acceptance coverage
+
+- `npm test`: retries without fetch/duplicate effects, failed-batch continuation, ownership/sensitive-data hiding, token expiry/tampering/replay/concurrency, limits, sender failure, password bounds, fixed sessions and revocation, plus regressions.
+- `npm run build` passed. At the recorded run local Next was 15.3.1; committed manifests pinned 15.5.28 for deployment.
+- `npm run test:ui`: real Chrome, temporary MongoDB and local production Next verified editing/schedules/reminders/statistics, mail outcomes/persistence/errors/unauthorized retry, normal/remembered login, expiry, recovery entry/unavailable feedback, password change and session revocation.
+- Expired local fake mailbox tokens failed before external retrieval; an injected sender tested the real password-change flow. Production data was not accessed.

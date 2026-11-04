@@ -4,14 +4,14 @@
   "timezone": "Asia/Shanghai",
   "earliestVerifiedCurrentWork": "2026-10-17",
   "earlierRecollection": "2026-10-15/16 mentioned from memory; original supporting record not located.",
-  "workbook": "JobGenie项目进展.xlsx",
+  "workbook": "project-progress.xlsx",
   "artifacts": [
     {
       "task": "JG-021",
       "kind": "test_log",
       "file": "tests/2026-11-01/jobgenie-share-tests.log",
       "outcome": "passed",
-      "description": "iOS 单元测试原始输出，包含跳过项目",
+      "description": "Original iOS unit-test output, including skipped tests",
       "collectedAt": "2026-11-04T13:27:52.830Z",
       "observedSourceMtime": "2026-11-01T07:16:34.323Z",
       "originalSha256": "9225b4e7c523be26ce9c232cb7de70c7e340623748f53abb3837f99e81cd14cc",
@@ -27,7 +27,7 @@
       "kind": "test_log",
       "file": "tests/2026-11-01/jobgenie-share-acceptance.log",
       "outcome": "failed",
-      "description": "Safari 首次验收失败，保留原输出",
+      "description": "First Safari acceptance failure, with original output retained",
       "collectedAt": "2026-11-04T13:27:52.830Z",
       "observedSourceMtime": "2026-11-01T07:17:39.617Z",
       "originalSha256": "506bd9a013c0d6a9e841de95457b915a85bc90e75fe943e409b38e34d177c062",
@@ -43,7 +43,7 @@
       "kind": "test_log",
       "file": "tests/2026-11-01/jobgenie-share-acceptance2.log",
       "outcome": "failed",
-      "description": "Safari 分享单元格定位失败，后续修正",
+      "description": "Safari share-cell locator failure, corrected in a later run",
       "collectedAt": "2026-11-04T13:27:52.830Z",
       "observedSourceMtime": "2026-11-01T07:19:12.141Z",
       "originalSha256": "ec0e2621f4a2d6d36a553189ab565ee1b458a2479acadfe0d5322c4d0f6475a3",
@@ -59,7 +59,7 @@
       "kind": "test_log",
       "file": "tests/2026-11-01/jobgenie-share-acceptance3.log",
       "outcome": "passed",
-      "description": "Safari 分享至原生创建的隔离验收",
+      "description": "Isolated acceptance from Safari sharing to native application creation",
       "collectedAt": "2026-11-04T13:27:52.830Z",
       "observedSourceMtime": "2026-11-01T07:20:51.957Z",
       "originalSha256": "9c1a95dffe478f9b0df382333c30c8dd77d74d46e1c5ef1697043e13aad2dc50",
@@ -75,7 +75,7 @@
       "kind": "test_log",
       "file": "tests/2026-11-01/jobgenie-share-release.log",
       "outcome": "passed",
-      "description": "未签名真机 Release 编译输出",
+      "description": "Unsigned device Release compilation output",
       "collectedAt": "2026-11-04T13:27:52.830Z",
       "observedSourceMtime": "2026-11-01T07:17:58.200Z",
       "originalSha256": "6fe3baf2d057c28a6244bc4b052162ea6125d25bf24d3aa6c30b9303e94d567c",
@@ -91,7 +91,7 @@
       "kind": "test_log",
       "file": "tests/2026-11-01/jobgenie-share-build.log",
       "outcome": "failed",
-      "description": "初始分享扩展编译失败，后续修正",
+      "description": "Initial share-extension compilation failure, corrected later",
       "collectedAt": "2026-11-04T13:27:52.830Z",
       "observedSourceMtime": "2026-11-01T07:15:35.421Z",
       "originalSha256": "7f888f29bd04500601bbc675f7ace57b9c2ffec2730b0235901879a12be90aef",
@@ -107,7 +107,7 @@
       "kind": "test_log",
       "file": "tests/2026-11-03/job-documents-all-tests2.log",
       "outcome": "passed",
-      "description": "272 项后端测试原始输出",
+      "description": "Original output from 272 backend tests",
       "collectedAt": "2026-11-04T13:27:52.830Z",
       "observedSourceMtime": "2026-11-03T15:23:47.072Z",
       "originalSha256": "fabee1b0af3ef17ed7102591b645334ca4dbae97422bbeb7fb589414beffe105",
@@ -123,7 +123,7 @@
       "kind": "test_log",
       "file": "tests/2026-11-03/job-documents-ios-regression.log",
       "outcome": "passed",
-      "description": "82 项 iOS 测试中 80 项通过、2 项跳过",
+      "description": "iOS regression: 80 passed and two skipped out of 82 tests",
       "collectedAt": "2026-11-04T13:27:52.830Z",
       "observedSourceMtime": "2026-11-03T15:24:37.632Z",
       "originalSha256": "f80b4d13051fe3180265c23e3a6feacb1e1ec2c6f2e4e47de9746720d82054b7",
@@ -139,7 +139,7 @@
       "kind": "test_log",
       "file": "tests/2026-11-03/job-documents-final-build.log",
       "outcome": "passed",
-      "description": "最终网页生产构建",
+      "description": "Final web production build",
       "collectedAt": "2026-11-04T13:27:52.830Z",
       "observedSourceMtime": "2026-11-03T15:24:19.957Z",
       "originalSha256": "ac2a375c184cc4b8f19425662b1e202e96142c006436a46f8468f47f210ed071",
@@ -155,7 +155,7 @@
       "kind": "test_log",
       "file": "tests/2026-11-03/job-documents-web-ui.log",
       "outcome": "passed",
-      "description": "真实浏览器材料版本和 PDF 预览验收",
+      "description": "Real-browser document version and PDF preview acceptance",
       "collectedAt": "2026-11-04T13:27:52.830Z",
       "observedSourceMtime": "2026-11-03T13:42:18.576Z",
       "originalSha256": "2b957da426614314c8eaa6a378ed45dde56d952e22315fdd9af41317fcb02e49",
@@ -171,7 +171,7 @@
       "kind": "test_log",
       "file": "tests/2026-11-03/job-documents-native2.log",
       "outcome": "passed",
-      "description": "原生 API 和材料 UI 验收",
+      "description": "Native API and document UI acceptance",
       "collectedAt": "2026-11-04T13:27:52.830Z",
       "observedSourceMtime": "2026-11-03T15:23:57.847Z",
       "originalSha256": "9bf901fac3d991fc7b8f7c9c289206d02b9a80a7a575e5d15d9f665f7e3a9a21",
@@ -187,7 +187,7 @@
       "kind": "test_log",
       "file": "tests/2026-11-03/job-documents-native.log",
       "outcome": "failed",
-      "description": "原生预览关闭按钮定位失败，后续修正",
+      "description": "Native preview close-button locator failure, corrected later",
       "collectedAt": "2026-11-04T13:27:52.830Z",
       "observedSourceMtime": "2026-11-03T13:43:23.561Z",
       "originalSha256": "471582308fb48cef877a268a570a0a80066215e48c1b3687384557832e9a751b",
@@ -203,7 +203,7 @@
       "kind": "test_log",
       "file": "tests/2026-11-03/job-documents-web-build.log",
       "outcome": "failed",
-      "description": "构建获取字体失败，后续代理构建通过",
+      "description": "Font-fetch build failure; a later build through the proxy passed",
       "collectedAt": "2026-11-04T13:27:52.830Z",
       "observedSourceMtime": "2026-11-03T13:41:42.604Z",
       "originalSha256": "167c9edb06ac49c4960b5d7c77e31311b7ab642bac805df00c07b655a15eee0a",
@@ -219,7 +219,7 @@
       "kind": "test_log",
       "file": "tests/2026-11-04/jobgenie-recording-2026-11-04.log",
       "outcome": "passed",
-      "description": "本次补拍所执行的当前浏览器验收，不是历史重跑结果",
+      "description": "Current browser acceptance for the 2026-11-04 capture, not a historical rerun",
       "collectedAt": "2026-11-04T13:27:52.830Z",
       "observedSourceMtime": "2026-11-04T13:27:03.290Z",
       "originalSha256": "0a883ab986e0389d18f717cb8a1713a71cbc1724a3a9da74989dd956613a3fdd",
@@ -234,7 +234,7 @@
       "task": "JG-021",
       "kind": "screenshot",
       "file": "visuals/2026-11-01/safari-acceptance-app.png",
-      "description": "历史模拟器调试截图，演示测试数据；不是完整流程录屏",
+      "description": "Historical simulator debugging screenshot with demo/test data, not a full-flow recording",
       "collectedAt": "2026-11-04T13:27:52.830Z",
       "observedSourceMtime": "2026-11-01T07:20:42.287Z",
       "sha256": "84343983a16e5758bcbee1c838fd25d438d44c5a7252999afd4a82e50ebc86a7",
@@ -244,7 +244,7 @@
       "task": null,
       "kind": "screenshot",
       "file": "visuals/2026-11-04/live-login.png",
-      "description": "2026-11-04 线上匿名登录页截图，不作为早期页面截图",
+      "description": "Anonymous live login-page capture on 2026-11-04, not an earlier-version screenshot",
       "collectedAt": "2026-11-04T13:27:52.830Z",
       "observedSourceMtime": "2026-11-04T13:09:05.770Z",
       "sha256": "440a8aa7f51c7c91b3a1a04893301d6a1b50fb99516bbe923298aaab6219f97d",
@@ -254,7 +254,7 @@
       "task": null,
       "kind": "screenshot",
       "file": "visuals/2026-11-04/root-loading-observation.png",
-      "description": "2026-11-04 根页面加载态观察，不代表已完成页面加载",
+      "description": "Root-page loading-state observation on 2026-11-04, not proof of completed page loading",
       "collectedAt": "2026-11-04T13:27:52.830Z",
       "observedSourceMtime": "2026-11-04T13:08:37.570Z",
       "sha256": "e9a799e0ae3654055817878db44d38d054d66d514ebedc30c89c7feb00ba17a8",
@@ -264,7 +264,7 @@
       "task": null,
       "kind": "screenshot",
       "file": "visuals/2026-11-04/application-document-versions.png",
-      "description": "2026-11-04 本次补拍：当前版本、隔离数据库、测试账号和 PDF 样例；不是 11 月 3 日历史截图",
+      "description": "Current-version capture on 2026-11-04 with an isolated database, test account and PDF fixture; not a 2026-11-03 screenshot",
       "collectedAt": "2026-11-04T13:27:52.830Z",
       "observedSourceMtime": "2026-11-04T13:27:02.800Z",
       "sha256": "c560df976cc3304a31af163a1e333cb5b31ebb7774209e52c964b49851b764d5",
@@ -274,10 +274,10 @@
   "records": [
     {
       "id": "JG-001",
-      "title": "网页：申请与历史编辑",
-      "scope": "公司、职位、地点、备注和链接编辑；历史编辑/删除后维护当前状态及权限。",
-      "tests": "122 项自动化测试通过。\n6 组浏览器验收及本地生产构建通过。",
-      "boundary": "已验收编辑、刷新持久化、看板/时间线一致性和用户隔离。",
+      "title": "Web: application and history editing",
+      "scope": "Edit company, role, location, notes and URL. Maintain current status and ownership after history edits or deletions.",
+      "tests": "122 automated tests passed.\nSix browser acceptance groups and the local production build passed.",
+      "boundary": "Editing, refresh persistence, board/timeline consistency and user isolation verified.",
       "commit": "https://github.com/Enfoirer/jobgenie/commit/27b2a6e1e7a1520f85c1f054a51b73ffa03b52b2",
       "document": "https://github.com/Enfoirer/jobgenie/blob/27b2a6e1e7a1520f85c1f054a51b73ffa03b52b2/docs/job-editing-acceptance.md",
       "commitSha": "27b2a6e1e7a1520f85c1f054a51b73ffa03b52b2",
@@ -293,14 +293,16 @@
           "state": "success",
           "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/4B3SS2Uwoz1LK6ooWYqFVSTHfhES"
         }
-      ]
+      ],
+      "decision": "Selectively integrate editing capabilities from testing. Let the server maintain current status and validate ownership.",
+      "translatedAt": "2026-11-04T15:15:24.093466+00:00"
     },
     {
       "id": "JG-002",
-      "title": "网页：日历与待办",
-      "scope": "统一预约与截止时间，展示即将到来、已过期和时间待补充；编辑、删除后刷新。",
-      "tests": "139 项自动化测试通过。\n浏览器日程验收及本地生产构建通过。",
-      "boundary": "跨窗口依赖刷新/轮询更新，无实时推送。",
+      "title": "Web: calendar and tasks",
+      "scope": "Unify scheduled interviews and assessment deadlines. Show upcoming, overdue and missing-time events. Refresh after edits or deletions.",
+      "tests": "139 automated tests passed.\nBrowser schedule acceptance and the local production build passed.",
+      "boundary": "Other windows update through refresh or polling. No real-time push.",
       "commit": "https://github.com/Enfoirer/jobgenie/commit/f6aeb68603920a04323306e3a840b852316189b6",
       "document": "https://github.com/Enfoirer/jobgenie/blob/f6aeb68603920a04323306e3a840b852316189b6/docs/calendar-acceptance.md",
       "commitSha": "f6aeb68603920a04323306e3a840b852316189b6",
@@ -316,14 +318,16 @@
           "state": "success",
           "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/ELrUCjS6twihu2GB8TWasgi7vzZk"
         }
-      ]
+      ],
+      "decision": "Keep interview times and assessment deadlines independent. Missing times remain explicit instead of reusing status dates.",
+      "translatedAt": "2026-11-04T15:15:24.093466+00:00"
     },
     {
       "id": "JG-003",
-      "title": "网页：站内提醒",
-      "scope": "支持提前 15/30 分钟、1/24 小时提醒，已读、延后 10 分钟、取消和改期重建。",
-      "tests": "161 项自动化测试通过。\n浏览器提醒验收及本地生产构建通过。",
-      "boundary": "当前为站内提醒；关闭应用后不发送邮件或系统推送。",
+      "title": "Web: in-app reminders",
+      "scope": "Support 15/30-minute and 1/24-hour lead times, read state, 10-minute snooze, cancellation and rescheduling.",
+      "tests": "161 automated tests passed.\nBrowser reminder acceptance and the local production build passed.",
+      "boundary": "In-app reminders only. Closing the app does not send email or system push notifications.",
       "commit": "https://github.com/Enfoirer/jobgenie/commit/e747da2648e5457c9f4190d90646de97cf138531",
       "document": "https://github.com/Enfoirer/jobgenie/blob/e747da2648e5457c9f4190d90646de97cf138531/docs/reminders-acceptance.md",
       "commitSha": "e747da2648e5457c9f4190d90646de97cf138531",
@@ -339,14 +343,16 @@
           "state": "success",
           "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/6HsfagTRmmZte92MiKy6VWr12CyP"
         }
-      ]
+      ],
+      "decision": "Build reminders on unified schedules. Rescheduling and deletion invalidate old reminders. Preserve read, snooze and cancellation state.",
+      "translatedAt": "2026-11-04T15:15:24.093466+00:00"
     },
     {
       "id": "JG-004",
-      "title": "网页：统计与分析",
-      "scope": "区分当前状态分布与申请批次阶段转化，修正日期/时区边界并整合分析页。",
-      "tests": "183 项自动化测试通过。\n浏览器分析验收及本地生产构建通过。",
-      "boundary": "历史仅含日期的数据无法恢复原始时区，按已存时间解释。",
+      "title": "Web: statistics and analytics",
+      "scope": "Separate current status distribution from application-cohort stage conversion. Correct date/timezone boundaries and integrate analytics.",
+      "tests": "183 automated tests passed.\nBrowser analytics acceptance and the local production build passed.",
+      "boundary": "Original timezones cannot be recovered for historical date-only values. Interpret the stored times.",
       "commit": "https://github.com/Enfoirer/jobgenie/commit/f3ebf976a9d2da0ed8c66145a6ecb52d2866dc65",
       "document": "https://github.com/Enfoirer/jobgenie/blob/f3ebf976a9d2da0ed8c66145a6ecb52d2866dc65/docs/analytics-acceptance.md",
       "commitSha": "f3ebf976a9d2da0ed8c66145a6ecb52d2866dc65",
@@ -362,14 +368,16 @@
           "state": "success",
           "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/FirCHRKJYu3mLbPAbbCDPBp5Nn7Y"
         }
-      ]
+      ],
+      "decision": "Display current status and cohort conversion separately, using complete local dates and an explicit timezone.",
+      "translatedAt": "2026-11-04T15:15:24.093466+00:00"
     },
     {
       "id": "JG-005",
-      "title": "网页：同步入口与登录补齐",
-      "scope": "立即同步、失败重试、队列及结果展示；找回密码与固定 12 小时/30 天登录期限。",
-      "tests": "同步、恢复令牌、限流、会话及浏览器流程验收；生产构建通过。",
-      "boundary": "真实密码恢复邮件未投递验收；需配置 Resend 密钥和发件域名。",
+      "title": "Web: sync controls and authentication",
+      "scope": "Add immediate sync, failed-item retry, queue/results display, password recovery and fixed 12-hour/30-day sessions.",
+      "tests": "Sync, recovery tokens, rate limits, sessions and browser flows verified. Production build passed.",
+      "boundary": "Real password-recovery email delivery remains unverified. Requires a Resend key and verified sender domain.",
       "commit": "https://github.com/Enfoirer/jobgenie/commit/9b6e44f5b85efc158295a46187aeff947ade7017",
       "document": "https://github.com/Enfoirer/jobgenie/blob/9b6e44f5b85efc158295a46187aeff947ade7017/docs/sync-and-auth-acceptance.md",
       "commitSha": "9b6e44f5b85efc158295a46187aeff947ade7017",
@@ -385,14 +393,16 @@
           "state": "success",
           "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/DeT1GftQmNHFp43SCEkX4vJwrwDm"
         }
-      ]
+      ],
+      "decision": "Expose sync/retry outcomes and backlog. Define Remember me through an absolute session duration and validate recovery tokens separately.",
+      "translatedAt": "2026-11-04T15:15:24.093466+00:00"
     },
     {
       "id": "JG-006",
-      "title": "网页：文件上传安全",
-      "scope": "限定 PDF/DOCX/PNG/JPEG、最大 4 MiB，校验内容；下载强制附件并核对所有权。",
-      "tests": "222 项自动化测试通过。\n浏览器上传下载验收及本地生产构建通过。",
-      "boundary": "旧的大文件仍受平台响应大小限制，尚未迁移到对象存储。",
+      "title": "Web: upload security",
+      "scope": "Allow PDF/DOCX/PNG/JPEG up to 4 MiB, validate content and require private attachment downloads with ownership checks.",
+      "tests": "222 automated tests passed.\nBrowser upload/download acceptance and the local production build passed.",
+      "boundary": "Legacy large files remain subject to platform response limits. Object-storage migration is not implemented.",
       "commit": "https://github.com/Enfoirer/jobgenie/commit/0eed69243f9a5c4409ee6a6f2f7ff93b667a84fa",
       "document": "https://github.com/Enfoirer/jobgenie/blob/0eed69243f9a5c4409ee6a6f2f7ff93b667a84fa/docs/upload-security-acceptance.md",
       "commitSha": "0eed69243f9a5c4409ee6a6f2f7ff93b667a84fa",
@@ -408,14 +418,16 @@
           "state": "success",
           "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/Es3ywUv6UXtGDJmZr22aA5v6VW3L"
         }
-      ]
+      ],
+      "decision": "Use a type allowlist, content validation and private downloads. Never execute uploaded content based on its declared MIME type.",
+      "translatedAt": "2026-11-04T15:15:24.093466+00:00"
     },
     {
       "id": "JG-007",
-      "title": "网页：账号与邮箱安全",
-      "scope": "邮箱 OAuth 一次性 state、会话绑定与 PKCE；登录、注册专门限流及错误提示。",
-      "tests": "248 项自动化测试通过。\nChrome 安全与既有功能回归、生产构建通过。",
-      "boundary": "真实 Gmail/Outlook 授权同意流程待验收，当前验证模拟回调与安全边界。",
+      "title": "Web: account and mailbox security",
+      "scope": "Add single-use OAuth state, session binding, PKCE, dedicated login/registration rate limits and error feedback.",
+      "tests": "248 automated tests passed.\nChrome security/regression acceptance and the production build passed.",
+      "boundary": "Real Gmail/Outlook consent remains unverified. Mock callbacks and security boundaries were tested.",
       "commit": "https://github.com/Enfoirer/jobgenie/commit/3bb3d2a083e71147e994a2f97f488c39c83eb23a",
       "document": "https://github.com/Enfoirer/jobgenie/blob/3bb3d2a083e71147e994a2f97f488c39c83eb23a/docs/account-security-acceptance.md",
       "commitSha": "3bb3d2a083e71147e994a2f97f488c39c83eb23a",
@@ -431,14 +443,16 @@
           "state": "success",
           "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/CjFt56qQbYxnsAtoGPnDg7iHo5yu"
         }
-      ]
+      ],
+      "decision": "Bind mailbox authorization to single-use state, the login session and PKCE. Apply dedicated authentication rate limits.",
+      "translatedAt": "2026-11-04T15:15:24.093466+00:00"
     },
     {
       "id": "JG-008",
-      "title": "iOS：骨架与申请管理",
-      "scope": "SwiftUI 四页签、登录、Keychain 会话、申请查看/创建/编辑、日程及邮箱概览。",
-      "tests": "当时 14 个独立测试通过；真实本地后端持久化、Debug 和未签名 Release 构建通过。",
-      "boundary": "后续：原生历史/日程编辑、邮箱授权/同步、推送、统计、文件及上架准备。",
+      "title": "iOS: foundation and applications",
+      "scope": "Add four SwiftUI tabs, login, Keychain sessions, application viewing/creation/editing, schedules and mailbox overview.",
+      "tests": "14 distinct tests passed at the time. Real local-backend persistence, Debug and unsigned Release builds passed.",
+      "boundary": "Remaining at this milestone: native history/schedule editing, mail authorization/sync, push, statistics, files and release preparation.",
       "commit": "https://github.com/Enfoirer/jobgenie/commit/d8adb33f7efb3c7df1e7d34771087869614f14ec",
       "document": "https://github.com/Enfoirer/jobgenie/blob/d8adb33f7efb3c7df1e7d34771087869614f14ec/ios/README.md",
       "commitSha": "d8adb33f7efb3c7df1e7d34771087869614f14ec",
@@ -454,14 +468,16 @@
           "state": "success",
           "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/DaZWV2EKPFBAMiDhUybfzGUUwvRB"
         }
-      ]
+      ],
+      "decision": "Reuse the existing backend and database in a SwiftUI iPhone client. Store credentials in Keychain and isolate demo data from real accounts.",
+      "translatedAt": "2026-11-04T15:15:24.093466+00:00"
     },
     {
       "id": "JG-009",
-      "title": "iOS：中英文切换",
-      "scope": "支持跟随系统、简体中文、English，即时切换且持久化；日期、错误和导航标题同步。",
-      "tests": "累计 19 个独立 iOS 测试通过；模拟器 UI、真实本地后端及 Debug/Release 构建通过。",
-      "boundary": "尚未验证真机、开发者签名或 TestFlight；业务文本保持原内容。",
+      "title": "iOS: Chinese and English switching",
+      "scope": "Support Follow system, Simplified Chinese and English with immediate persisted switching, including dates, errors and navigation titles.",
+      "tests": "19 distinct iOS tests passed cumulatively. Simulator UI, real local-backend and Debug/Release builds passed.",
+      "boundary": "Physical devices, developer signing and TestFlight remain unverified. User content retains its original language.",
       "commit": "https://github.com/Enfoirer/jobgenie/commit/14b1800df640ce33abef8474709c1af3191029c7",
       "document": "https://github.com/Enfoirer/jobgenie/blob/14b1800df640ce33abef8474709c1af3191029c7/ios/README.md",
       "commitSha": "14b1800df640ce33abef8474709c1af3191029c7",
@@ -477,14 +493,16 @@
           "state": "success",
           "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/6gCPPxjvxdzXFMK74J9FLaegWjXC"
         }
-      ]
+      ],
+      "decision": "Persist the language choice and update dates, errors and navigation consistently. The bilingual iOS product remains supported.",
+      "translatedAt": "2026-11-04T15:15:24.093466+00:00"
     },
     {
       "id": "JG-010",
-      "title": "iOS：申请状态与历史管理",
-      "scope": "原生状态历史新增、编辑、删除；服务端计算当前状态，保留邮件来源；中英文及请求乱序保护。",
-      "tests": "31 项 iOS 测试分批通过。\n25 项服务端回归、网页/App 双向联调及 Debug/Release 构建通过。",
-      "boundary": "日程时间仍只读，原生编辑为下一步；尚未验收真机、签名或 TestFlight。",
+      "title": "iOS: application status and history",
+      "scope": "Add, edit and delete native history. Use server-calculated status, preserve mail provenance and protect against stale responses. Support both UI languages.",
+      "tests": "31 distinct iOS tests passed across runs.\n25 server regressions, bidirectional web/app acceptance and Debug/Release builds passed.",
+      "boundary": "Schedule times were read-only at this milestone. Native time editing was next. Device, signing and TestFlight acceptance remained outstanding.",
       "commit": "https://github.com/Enfoirer/jobgenie/commit/bfd7c1fad983ac836f28eec8c2b6fbee88840517",
       "document": "https://github.com/Enfoirer/jobgenie/blob/bfd7c1fad983ac836f28eec8c2b6fbee88840517/docs/ios-history-acceptance.md",
       "commitSha": "bfd7c1fad983ac836f28eec8c2b6fbee88840517",
@@ -500,14 +518,16 @@
           "state": "success",
           "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/55GVREcohxeBXu4pMLnWfdGJiU7v"
         }
-      ]
+      ],
+      "decision": "Reuse web history APIs and server status calculation. Prevent stale native responses from replacing confirmed edits and preserve email provenance.",
+      "translatedAt": "2026-11-04T15:15:24.093466+00:00"
     },
     {
       "id": "JG-011",
-      "title": "iOS：日程编辑与详情跳转",
-      "scope": "补充、修改、清除面试及笔试截止时间，日程跳转详情。独立时间编辑保留申请状态，中英文交互。",
-      "tests": "37 项 iOS 测试分批通过。\n64 项服务端回归、网页/App 双向联调及 Debug/Release 构建通过。",
-      "boundary": "后续：原生邮箱授权与同步、提醒推送等。尚未验收真机、签名或 TestFlight。",
+      "title": "iOS: schedule editing and navigation",
+      "scope": "Set, change and clear interview times and assessment deadlines. Open application details from schedules. Independent time edits preserve status and support both UI languages.",
+      "tests": "37 distinct iOS tests passed across runs.\n64 server regressions, bidirectional web/app acceptance and Debug/Release builds passed.",
+      "boundary": "Native mailbox authorization/sync and push remained next. Device, signing and TestFlight acceptance remained outstanding.",
       "commit": "https://github.com/Enfoirer/jobgenie/commit/d4caed2a6b62bbfe018de1b6a5cd47cae8d7c421",
       "document": "https://github.com/Enfoirer/jobgenie/blob/d4caed2a6b62bbfe018de1b6a5cd47cae8d7c421/docs/ios-schedule-acceptance.md",
       "commitSha": "d4caed2a6b62bbfe018de1b6a5cd47cae8d7c421",
@@ -523,14 +543,16 @@
           "state": "success",
           "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/B4ZV8rGbVjAGz6CeQ1mQUnUYk1Ee"
         }
-      ]
+      ],
+      "decision": "Edit schedule fields independently so changing a time cannot accidentally change application status.",
+      "translatedAt": "2026-11-04T15:15:24.093466+00:00"
     },
     {
       "id": "JG-012",
-      "title": "iOS：邮箱操作与授权代码",
-      "scope": "立即同步、失败重试、结果展示与人工确认。新增 Gmail / Outlook 系统授权及安全回跳代码。",
-      "tests": "51 项 iOS 测试分批通过。\n258 项服务端测试、隔离接口联调及 Web / Debug / Release 构建通过。",
-      "boundary": "真实 Gmail / Outlook 账号授权同意与真实邮件拉取尚待实测。真机、签名和 TestFlight 尚未验收。",
+      "title": "iOS: mail controls and authorization",
+      "scope": "Add immediate sync, failed-item retry, results and manual review. Implement Gmail/Outlook system authorization and a secure native callback.",
+      "tests": "51 distinct iOS tests passed across runs.\n258 server tests, isolated API acceptance and Web/Debug/Release builds passed.",
+      "boundary": "Real Gmail/Outlook consent and mail retrieval remain unverified. Device, signing and TestFlight acceptance remain outstanding.",
       "commit": "https://github.com/Enfoirer/jobgenie/commit/873aef418d1d4c673fcbbe215a12e5f54ad9cfed",
       "document": "https://github.com/Enfoirer/jobgenie/blob/873aef418d1d4c673fcbbe215a12e5f54ad9cfed/docs/ios-mail-acceptance.md",
       "commitSha": "873aef418d1d4c673fcbbe215a12e5f54ad9cfed",
@@ -546,14 +568,16 @@
           "state": "success",
           "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/FqeT4fjtP6FDHTMTkgnwGbnxsyNL"
         }
-      ]
+      ],
+      "decision": "Reuse sync and review logic. Use system authorization and a dedicated secure native callback. Record real-provider consent as pending.",
+      "translatedAt": "2026-11-04T15:15:24.093466+00:00"
     },
     {
       "id": "JG-013",
-      "title": "iOS：App 内提醒与操作",
-      "scope": "接入提醒列表、未读、已读、延后、取消及设置。改期、清除、删除后旧提醒失效，退出清理提醒数据。",
-      "tests": "66 项 iOS 测试分批通过。\n258 项服务端测试、隔离接口联调及 Debug / Release 构建通过。",
-      "boundary": "APNs 后台推送尚未接入，需开发者配置、设备绑定和去重。真机、签名与 TestFlight 尚未验收。",
+      "title": "iOS: in-app reminders",
+      "scope": "Add reminder lists, unread/read state, snooze, cancellation and settings. Rescheduling/clearing/deletion invalidate old reminders. Clear data at logout.",
+      "tests": "66 distinct iOS tests passed across runs.\n258 server tests, isolated API acceptance and Debug/Release builds passed.",
+      "boundary": "APNs background push is not implemented. Developer configuration, device binding and push deduplication are required. Device, signing and TestFlight remain unverified.",
       "commit": "https://github.com/Enfoirer/jobgenie/commit/060580443992754c3173038bc4f0bfc653c3bf7f",
       "document": "https://github.com/Enfoirer/jobgenie/blob/060580443992754c3173038bc4f0bfc653c3bf7f/docs/ios-reminders-acceptance.md",
       "commitSha": "060580443992754c3173038bc4f0bfc653c3bf7f",
@@ -569,14 +593,16 @@
           "state": "success",
           "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/FLQHDCGJyrgWoWHX7BtZ4rQGtbJK"
         }
-      ]
+      ],
+      "decision": "First reuse shared reminder state and actions with foreground refresh. Keep background push explicitly outstanding.",
+      "translatedAt": "2026-11-04T15:15:24.093466+00:00"
     },
     {
       "id": "JG-014",
-      "title": "iOS：统计与附件",
-      "scope": "接入当前状态分布、阶段转化率和日期筛选。支持附件上传、原生预览与下载，网页共用数据。",
-      "tests": "74 项 iOS 测试分批通过。\n42 项统计与附件服务端测试、隔离联调及 Debug / Release 构建通过。",
-      "boundary": "真机及第三方文件提供商待验收。附件沿用账号级文件库，单文件最多 4 MB。",
+      "title": "iOS: statistics and attachments",
+      "scope": "Add current status distribution, stage conversion and date filtering. Upload, natively preview and export attachments using the same data as the web.",
+      "tests": "74 distinct iOS tests passed across runs.\n42 statistics/attachment server regressions, isolated acceptance and Debug/Release builds passed.",
+      "boundary": "Physical devices and third-party file providers remain unverified. This milestone used an account-level file library with a 4 MB per-file limit.",
       "commit": "https://github.com/Enfoirer/jobgenie/commit/3176bff749a93781487096597e074c709fa682b3",
       "document": "https://github.com/Enfoirer/jobgenie/blob/3176bff749a93781487096597e074c709fa682b3/docs/ios-statistics-attachments-acceptance.md",
       "commitSha": "3176bff749a93781487096597e074c709fa682b3",
@@ -592,14 +618,16 @@
           "state": "success",
           "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/BP4BojeAxkbAMEeM1ps1Xm1L2s54"
         }
-      ]
+      ],
+      "decision": "Use explicit ranges and the phone timezone for statistics. Reuse the account file library and handle native preview and export separately.",
+      "translatedAt": "2026-11-04T15:15:24.093466+00:00"
     },
     {
       "id": "JG-015",
-      "title": "邮件：可靠入库与失败重试",
-      "scope": "先入库再推进游标，区分待处理/成功/失败，支持重试和申请/历史去重。",
-      "tests": "已提交可靠同步代码；证据见提交及同期说明，不补造当时测试数量。",
-      "boundary": "真实邮箱及现有数据库上线需核对事务支持和索引。",
+      "title": "Mail: durable storage and retry",
+      "scope": "Store mail before advancing cursors. Distinguish pending, succeeded and failed items. Support retry and deduplicate applications/history.",
+      "tests": "Reliable-sync code was committed. See the commit and contemporaneous notes. No historical test count has been invented.",
+      "boundary": "Check transaction support and indexes before deploying against real mailboxes and the existing database.",
       "commit": "https://github.com/Enfoirer/jobgenie/commit/1c61989831a7402390d7857adac79c3c96a35812",
       "document": "https://github.com/Enfoirer/jobgenie/blob/1c61989831a7402390d7857adac79c3c96a35812/docs/mail-sync-reliability.md",
       "commitSha": "1c61989831a7402390d7857adac79c3c96a35812",
@@ -615,14 +643,16 @@
           "state": "failure",
           "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/AE5tSVHTkbCU6go9SS8AZeK5kVay"
         }
-      ]
+      ],
+      "decision": "Confirm durable storage with majority write acknowledgment before moving the cursor. Commit business effects and success marking together. Failed items remain retryable.",
+      "translatedAt": "2026-11-04T15:15:24.093466+00:00"
     },
     {
       "id": "JG-016",
-      "title": "邮件：分页续取与统一同步",
-      "scope": "补齐 Gmail/Outlook 分页、数量参数边界，统一手动及定时同步并返回处理统计。",
-      "tests": "已提交分页与共用同步逻辑；本次通过提交和说明补录。",
-      "boundary": "真实供应商分页行为与生产邮箱需持续观察。",
+      "title": "Mail: pagination and shared sync",
+      "scope": "Complete Gmail/Outlook pagination and sync-count bounds. Share manual/scheduled sync logic and return processing counts.",
+      "tests": "Pagination and shared sync code was committed. This retrospective entry is based on the commit and its notes.",
+      "boundary": "Continue observing real-provider pagination and production mailboxes.",
       "commit": "https://github.com/Enfoirer/jobgenie/commit/80faa604561e30a69f48ea959a139f4c1b05a260",
       "document": "https://github.com/Enfoirer/jobgenie/blob/80faa604561e30a69f48ea959a139f4c1b05a260/docs/mail-sync-reliability.md",
       "commitSha": "80faa604561e30a69f48ea959a139f4c1b05a260",
@@ -638,14 +668,16 @@
           "state": "failure",
           "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/D4fPhFeQijSfXVzQud3ibdTEiXYr"
         }
-      ]
+      ],
+      "decision": "Persist pagination continuation for both providers, share manual/scheduled processing and counters, and validate count bounds.",
+      "translatedAt": "2026-11-04T15:15:24.093466+00:00"
     },
     {
       "id": "JG-017",
-      "title": "网页：Vercel 部署修复",
-      "scope": "升级 Next.js 至安全版本，修复当时部署阻断。",
-      "tests": "提交记录可核对版本变更；2026-10-30 后续 Vercel 部署已确认成功。",
-      "boundary": "此行记录当时修复里程碑，不代表本次新增代码已经部署。",
+      "title": "Web: Vercel deployment fix",
+      "scope": "Upgrade Next.js to a secure version to resolve the deployment blocker at the time.",
+      "tests": "The commit documents the version change. A later Vercel deployment on 2026-10-30 was confirmed successful.",
+      "boundary": "This entry records the historical fix milestone. It does not establish deployment of newly added code.",
       "commit": "https://github.com/Enfoirer/jobgenie/commit/cf0ea70440766d88e3fb7e76353dd9cac4c09c4e",
       "document": "https://github.com/Enfoirer/jobgenie/blob/cf0ea70440766d88e3fb7e76353dd9cac4c09c4e/package.json",
       "commitSha": "cf0ea70440766d88e3fb7e76353dd9cac4c09c4e",
@@ -661,14 +693,16 @@
           "state": "success",
           "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/6V8wsT42t7U2CQmhdQF4whsm2X4n"
         }
-      ]
+      ],
+      "decision": "Upgrade Next.js in response to the deployment blocker. Retain checks for failed commits and the subsequent fix.",
+      "translatedAt": "2026-11-04T15:15:24.093466+00:00"
     },
     {
       "id": "JG-018",
-      "title": "邮件：AI 提取与申请匹配",
-      "scope": "拆分分类与提取，校验输出，改进匹配和旧邮件保护，落实 Semi/Strict 人工确认策略。",
-      "tests": "固定邮件样例覆盖申请、笔试、面试、拒信、Offer、营销及信息不足。",
-      "boundary": "真实邮件提取效果需继续观察，信息不足仍人工确认。",
+      "title": "Mail: AI extraction and matching",
+      "scope": "Separate classification/extraction, validate output, improve matching and protect newer status from old mail. Implement Semi/Strict review policies.",
+      "tests": "Fixed mail fixtures cover application confirmations, assessments, interviews, rejections, offers, marketing and incomplete information.",
+      "boundary": "Continue evaluating real-mail extraction. Incomplete information still requires manual review.",
       "commit": "https://github.com/Enfoirer/jobgenie/commit/f9ab75fd91ea3c62a211b1b7223fd25f6c9018f0",
       "document": "https://github.com/Enfoirer/jobgenie/blob/f9ab75fd91ea3c62a211b1b7223fd25f6c9018f0/docs/email-matching-acceptance.md",
       "commitSha": "f9ab75fd91ea3c62a211b1b7223fd25f6c9018f0",
@@ -684,14 +718,16 @@
           "state": "success",
           "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/FvjQYaGEqpUDZjkoo2m81KnR8yG5"
         }
-      ]
+      ],
+      "decision": "Semi automatically updates only clearly matched existing applications. New applications, offers, rejections and uncertainty require review. Strict requires review for every item.",
+      "translatedAt": "2026-11-04T15:15:24.093466+00:00"
     },
     {
       "id": "JG-019",
-      "title": "设计：英文 iPhone 原型归档",
-      "scope": "归档英文 Figma 原型链接、版本说明及设计验收。",
-      "tests": "27 个页面及结果状态、85 个导航动作已检查。",
-      "boundary": "原型为模拟交互；未配置不可变 Figma 快照自动导出。",
+      "title": "Design: English iPhone prototype archive",
+      "scope": "Archive the English Figma prototype link, version notes and design acceptance.",
+      "tests": "27 screens/result states and 85 navigation actions checked.",
+      "boundary": "Prototype interactions are simulated. Automatic immutable Figma snapshot export is not configured.",
       "commit": "https://github.com/Enfoirer/jobgenie/commit/8fe312457ed508c82fe21ca997d0ce8361b46eb8",
       "document": "https://github.com/Enfoirer/jobgenie/blob/8fe312457ed508c82fe21ca997d0ce8361b46eb8/docs/design/ios/CHANGELOG.md",
       "commitSha": "8fe312457ed508c82fe21ca997d0ce8361b46eb8",
@@ -707,14 +743,16 @@
           "state": "success",
           "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/eu1jtCHtJ34oXt9uhREP33QAurpq"
         }
-      ]
+      ],
+      "decision": "Use an English prototype, Inter and vector icons. Distinguish simulated interaction, design checks and real business acceptance.",
+      "translatedAt": "2026-11-04T15:15:24.093466+00:00"
     },
     {
       "id": "JG-020",
-      "title": "网页与 iOS：批量操作",
-      "scope": "批量归档/恢复、修改状态、确认/忽略邮件；逐项结果、失败保留选中和重试去重。",
-      "tests": "266 项后端测试通过；iOS 73 项通过、1 项跳过；浏览器、模拟器 UI 和构建通过。",
-      "boundary": "网页于 2026-10-30 部署成功；iOS 未发布 TestFlight。",
+      "title": "Web and iOS: bulk actions",
+      "scope": "Bulk archive/restore, change status and accept/ignore mail. Return per-item results, retain failed selections and deduplicate retries.",
+      "tests": "266 backend tests passed. iOS: 73 passed, one skipped. Browser, simulator UI and builds passed.",
+      "boundary": "Web deployment succeeded on 2026-10-30. iOS was not distributed through TestFlight.",
       "commit": "https://github.com/Enfoirer/jobgenie/commit/2dd290615f234dd389123f0a28988296a8d4bb9a",
       "document": "https://github.com/Enfoirer/jobgenie/blob/2dd290615f234dd389123f0a28988296a8d4bb9a/docs/bulk-actions-acceptance.md",
       "commitSha": "2dd290615f234dd389123f0a28988296a8d4bb9a",
@@ -730,14 +768,16 @@
           "state": "success",
           "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/6L9rsPSZnQ8dPDpxXKFMba183pmh"
         }
-      ]
+      ],
+      "decision": "Make archiving reversible and preserve history. Use independent per-item transactions, retain failed selections and never guess bulk mail targets.",
+      "translatedAt": "2026-11-04T15:15:24.093466+00:00"
     },
     {
       "id": "JG-021",
-      "title": "iOS：Safari 分享岗位",
-      "scope": "Safari 分享扩展保存离线岗位草稿，主 App 补全公司/职位并确认账号创建。",
-      "tests": "iOS 78 项通过、1 项跳过；真实 Safari 分享、重启、隔离数据库及 Release 编译通过。",
-      "boundary": "真机/TestFlight 仍需开发者签名及 App Group；本地已提交。",
+      "title": "iOS: Safari job sharing",
+      "scope": "Save offline job drafts through the Safari extension. Complete company/role and explicitly confirm the account in the main app before creation.",
+      "tests": "iOS: 78 passed, one skipped. Real Safari sharing, relaunch, isolated-database checks and Release compilation passed.",
+      "boundary": "Device/TestFlight distribution still requires developer signing and App Group configuration. The feature was committed locally at this milestone.",
       "commit": "https://github.com/Enfoirer/jobgenie/commit/68c1235ae789d19011d2c3352cf96d3dd70d4b81",
       "document": "https://github.com/Enfoirer/jobgenie/blob/68c1235ae789d19011d2c3352cf96d3dd70d4b81/docs/ios-share-acceptance.md",
       "commitSha": "68c1235ae789d19011d2c3352cf96d3dd70d4b81",
@@ -756,14 +796,16 @@
       "visuals": [
         "visuals/2026-11-01/safari-acceptance-app.png"
       ],
-      "observedChecks": []
+      "observedChecks": [],
+      "decision": "Keep credentials out of offline drafts. Use an App Group and confirm the account in the main app. Do not force-launch the main app.",
+      "translatedAt": "2026-11-04T15:15:24.093466+00:00"
     },
     {
       "id": "JG-022",
-      "title": "网页与 iOS：材料关联与版本",
-      "scope": "为申请关联简历/求职信/作品集，保存独立版本及文件快照，详情预览和下载。",
-      "tests": "272 项后端测试通过；iOS 80 项通过、2 项跳过；真实接口、浏览器与 iPhone UI 通过。",
-      "boundary": "源附件删除后快照保留，删除申请清理快照；本地已提交，生产接口待部署。",
+      "title": "Web and iOS: versioned application documents",
+      "scope": "Link resumes, cover letters and portfolios to applications. Retain independent versions and byte snapshots, with detail preview and download.",
+      "tests": "272 backend tests passed. iOS: 80 passed, two skipped. Real API, browser and iPhone UI acceptance passed.",
+      "boundary": "Snapshots survive source-file deletion and are cleaned up with the application. The feature was committed locally; production APIs awaited deployment at this milestone.",
       "commit": "https://github.com/Enfoirer/jobgenie/commit/a0d5882b14f1b56d9b31f61e8476f77e44c8e437",
       "document": "https://github.com/Enfoirer/jobgenie/blob/a0d5882b14f1b56d9b31f61e8476f77e44c8e437/docs/application-documents-acceptance.md",
       "commitSha": "a0d5882b14f1b56d9b31f61e8476f77e44c8e437",
@@ -781,11 +823,13 @@
         "tests/2026-11-03/job-documents-web-build.log"
       ],
       "visuals": [],
-      "observedChecks": []
+      "observedChecks": [],
+      "decision": "Number each document kind independently and retain immutable byte snapshots. Source deletion preserves downloads; application deletion cleans snapshots transactionally.",
+      "translatedAt": "2026-11-04T15:15:24.093466+00:00"
     },
     {
       "id": "JG-023",
-      "title": "记录：历史留痕与交付规范",
+      "title": "Records: historical evidence and delivery workflow",
       "commitSha": "22d81c69404a944e18564434808e180562ccaf29",
       "commitAt": "2026-11-04T21:28:38+08:00",
       "preparedAt": "2026-11-04T13:30:04.955430+00:00",
@@ -806,7 +850,15 @@
           "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/7QALPT8hb4dQuP1CWJkdRUwnr67J"
         }
       ],
-      "deploymentObservation": "deployments/2026-11-04-delivery-9990678.json"
+      "deploymentObservation": "deployments/2026-11-04-delivery-9990678.json",
+      "translatedAt": "2026-11-04T15:15:24.093466+00:00"
     }
-  ]
+  ],
+  "translatedAt": "2026-11-04T15:15:24.093466+00:00",
+  "languagePolicy": {
+    "authoredRecords": "English",
+    "iosProduct": "Existing Chinese/English localization retained",
+    "historicalArtifacts": "Original-language test output and historical evidence remain unchanged; English descriptions explain their provenance.",
+    "translation": "English records translated on the date in translatedAt. Existing dates, test results, artifact hashes and fixed historical commit links are preserved."
+  }
 }

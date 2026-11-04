@@ -1,32 +1,31 @@
-# 批量操作验收记录
+# Bulk actions acceptance
 
-日期：2026-10-30。范围：网页、iPhone 原生界面、共用后端。
+English translation prepared on 2026-11-04 (Asia/Shanghai). Historical results and acceptance boundaries below refer to the original delivery, not a new test run. The iOS app retains Chinese/English localization.
 
-## 行为与入口
+Original delivery: 2026-10-30. Scope: web, native iPhone UI and shared backend.
 
-- 网页申请看板直接多选；iPhone「我的申请」开启「批量选择」。支持批量归档、恢复和修改状态。查看已归档申请后可批量恢复。
-- 网页待确认邮件列表、iPhone 邮箱的待确认列表支持多选确认和忽略。
-- 每次最多 50 项，提交前确认。逐项独立事务，返回成功/失败数量及逐项错误；成功项取消选择，失败项保留以便重试。
-- 批量确认只接受明确目标申请或明确新建申请的邮件。信息不完整的邮件保留待确认，不猜测目标。网页提交当前表单修改；App 使用已存储内容，需修改内容时进入单封审核页处理。
-- 归档保留申请、历史和统计贡献，隐藏活动申请列表、日程和提醒。恢复后重新展示符合条件的日程和提醒，保留原有已读状态。邮件仍可匹配已归档申请，避免重复建档，但不会自动取消归档。
-- 修改状态复用现有历史维护逻辑；重复提交相同状态不新增重复历史。如未来生效的历史使当前状态不能变为目标状态，该项失败并回滚。
-- 接受邮件复用来源去重逻辑；忽略邮件不新增历史。每项都检查所有权，其他用户的记录与不存在的记录均返回 404。
+## Behavior
+
+- Web board selection and iPhone bulk selection support archive/restore/status changes, including restore from archived views. Web/native pending-mail lists support bulk accept/ignore.
+- Up to 50 items with confirmation. Independent per-item transactions return success/failure counts/errors. Clear successful selections; retain failures for retry.
+- Accept only explicit existing/new-application targets. Incomplete mail remains pending without guessing. Web submits current form edits; App uses stored review fields, with individual review for changes.
+- Archive preserves applications/history/statistical contribution but hides them from active lists/schedules/reminders. Restore shows eligible events/reminders and preserves read state. Mail can still match archived applications without auto-restoring them.
+- Status changes reuse history rules; repeated same-status submissions do not duplicate history. If future-effective history prevents the requested current status, roll back that item.
+- Accepted mail reuses source deduplication; ignoring creates no history. Check ownership per item; unauthorized/nonexistent both return 404.
 
 ## API
 
-- `POST /api/jobs/bulk`：`{ ids, action: "archive" | "restore" | "status", status? }`。
-- `POST /api/pending/bulk`：`{ ids, action: "accept" | "ignore", updates? }`；updates 为按邮件 ID 索引的审核字段。
-- 响应 `{ total, succeeded, failed, results }`。每项含 `id`、`success`，成功返回申请或关联申请 ID，失败返回状态码和错误。
-- `GET /api/jobs` 默认只返回未归档申请；`includeArchived=true` 包含归档记录，仍限制为当前用户。
+- `POST /api/jobs/bulk`: `{ ids, action: "archive" | "restore" | "status", status? }`.
+- `POST /api/pending/bulk`: `{ ids, action: "accept" | "ignore", updates? }`; updates are indexed by mail ID.
+- Response `{ total, succeeded, failed, results }`: per-item ID/success, application or linked ID on success, status/error on failure.
+- `GET /api/jobs` defaults to active applications; `includeArchived=true` includes archives, still only for the current user.
 
-## 自动验收
+## Recorded acceptance
 
-- `npm test`：266 项通过，覆盖权限、事务回滚、并发/重复提交、邮件来源去重、历史、日程、提醒及统计回归。
-- `node scripts/verify-job-editing-ui.mjs --bulk-only`：隔离数据库和真实浏览器，验证登录、多选修改状态、归档刷新持久化、恢复、邮件部分成功/失败保留选择、重试忽略及窄屏布局。
-- iOS 单元测试：73 项通过，1 项需要独立资源服务的既有测试跳过；其中新增 `BulkTests` 8 项全部通过。覆盖：归档恢复保留历史/提醒状态，部分失败和重复状态提交，邮件目标不明确时保留，数量与动作校验，返回值校验，旧数据兼容，API 契约和会话失效清理。
-- iOS `testDemoBulkArchiveRestoreAndMailReview`：通过。模拟器操作多选、归档、恢复、批量邮件确认及退出。
+- `npm test`: 266 passed. Ownership, transaction rollback, concurrency/retries, mail provenance and history/schedule/reminder/statistics regressions covered.
+- `node scripts/verify-job-editing-ui.mjs --bulk-only`: isolated database/real browser verified login, selection/status, archive refresh persistence, restore, partial mail failure/retained selection, retry ignore and narrow layout.
+- iOS units: 73 passed, one existing independent-service test skipped. All eight new `BulkTests` passed: archive/restore state, partial failures, duplicate status, uncertain targets, limits/actions/results, legacy data, API contract and logout cleanup.
+- `testDemoBulkArchiveRestoreAndMailReview` passed selection/archive/restore/mail confirmation/logout in the simulator.
+- Production build passed with local placeholder environment variables, without production database access. `git diff --check` passed.
 
-- `npm run build`：使用本地构建占位环境变量通过，不连接生产数据库。
-- `git diff --check`：通过。
-
-测试使用隔离数据库、原生演示数据与 API stub，未操作生产账号；不代表已部署到 Vercel 或发布到 TestFlight。
+Tests used isolated databases, native demo data and API stubs. These results alone do not establish Vercel deployment or TestFlight distribution; deployment observations are recorded separately.

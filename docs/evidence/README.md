@@ -1,7 +1,7 @@
-# 项目留痕入口
+# Development evidence
 
-项目的进展表和开发留痕统一保存在 [docs/progress](../progress/README.md)。继续使用原有 `JobGenie项目进展.xlsx`，不再维护其他进展表或独立表格快照。
+The original progress workbook and development evidence live together in [docs/progress](../progress/README.md). The single maintained workbook is `project-progress.xlsx`, translated and renamed from the original file. No additional progress workbook or standalone spreadsheet snapshot is maintained.
 
-每次开发同步保存四类记录：需求与关键决策、测试与构建日志、成果画面或接口示例、部署观察。见[记录规范](../progress/记录规范.md)及[历史索引](../progress/历史留痕索引.md)。
+Every delivery updates four categories: requirements and key decisions, tests and build logs, screenshots or API examples, and deployment observations. See the [guidelines](../progress/recording-guidelines.md) and [historical index](../progress/historical-records.md). Maintained records are in English. Original-language raw output remains unchanged.
 
-个人、学校、经营、财务原件仍留私人目录；公开日志和画面须先脱敏。早先生成的私人备份不作为另一套进展记录继续维护。
+Personal, school, business and financial originals remain private. Review and sanitize public logs and visuals before committing. Earlier private backups are not maintained as a second progress tracker.
