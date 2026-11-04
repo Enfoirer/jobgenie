@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-04T13:32:15.388Z",
+  "timezone": "Asia/Shanghai",
+  "source": "GitHub connected account combined commit status; git ls-remote origin refs/heads/main",
+  "commit": "9990678ca4d2f6efc52ea4b0c1148aba9c2a772b",
+  "remoteShaVerified": "9990678ca4d2f6efc52ea4b0c1148aba9c2a772b",
+  "statuses": [
+    {
+      "context": "Vercel",
+      "state": "success",
+      "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/7QALPT8hb4dQuP1CWJkdRUwnr67J"
+    }
+  ],
+  "note": "Delivery record commit and its observed Vercel check. This observation is not a production business regression or an iOS distribution record. A later metadata-only commit saves this response and is not claimed to be represented by this check."
+}

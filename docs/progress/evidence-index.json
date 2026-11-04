@@ -799,7 +799,14 @@
         "visuals/2026-11-04/live-login.png",
         "visuals/2026-11-04/root-loading-observation.png"
       ],
-      "observedChecks": []
+      "observedChecks": [
+        {
+          "context": "Vercel",
+          "state": "success",
+          "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/7QALPT8hb4dQuP1CWJkdRUwnr67J"
+        }
+      ],
+      "deploymentObservation": "deployments/2026-11-04-delivery-9990678.json"
     }
   ]
 }
