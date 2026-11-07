@@ -50,5 +50,7 @@ struct ScheduleView: View {
         .sheet(item: $editor) { ScheduleEditor(target: $0) }
         .onChange(of: scenePhase) { _, phase in if phase == .active { Task { await model.refreshSchedule() } } }
         .refreshable { await model.refreshSchedule() }.task { await model.refreshSchedule() }
+        .feedbackSurface(blocked: editor != nil || model.scheduleLoading)
+        .onChange(of: bucket) { _, _ in model.feedback.interacted() }
     }
 }

@@ -72,6 +72,7 @@ struct MailView: View {
         .refreshable { await model.refreshMail(force: true) }.task { await model.refreshMail() }
         .onChange(of: scenePhase) { _, phase in if phase == .active { Task { await model.refreshMail() } } }
         .onDisappear { authorization.cancel() }
+        .feedbackSurface(blocked: authorization.busy || model.mailLoading)
     }
     private func count(_ title: LocalizedStringKey, _ number: Int?) -> some View { LabeledContent(title, value: number?.formatted() ?? "—").font(.caption) }
 }

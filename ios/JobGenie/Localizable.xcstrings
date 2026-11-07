@@ -5460,6 +5460,448 @@
           }
         }
       }
+    },
+    "%lld 星（满分 5 星）": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld out of 5 stars"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld 星（满分 5 星）"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "1 星：非常不可能 · 5 星：非常可能": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 star: very unlikely. 5 stars: very likely."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 星：非常不可能 · 5 星：非常可能"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "1 星：非常不满意 · 5 星：非常满意": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 star: very dissatisfied. 5 stars: very satisfied."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 星：非常不满意 · 5 星：非常满意"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "你已完成这轮评价，不会再收到本轮自动邀请。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You have completed this survey and will not receive more automatic invitations for it."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "你已完成这轮评价，不会再收到本轮自动邀请。"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "你有多大可能向朋友推荐 JobGenie？": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How likely are you to recommend JobGenie to a friend?"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "你有多大可能向朋友推荐 JobGenie？"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "你的真实体验，帮助我们改进。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your honest experience helps us improve."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "你的真实体验，帮助我们改进。"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "关闭": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Close"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "关闭"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "关闭后仍可在“我的”中主动反馈。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You can still share feedback from Account after turning invitations off."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "关闭后仍可在“我的”中主动反馈。"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "反馈会与账号、App 版本和语言一起保存，用于产品分析。请勿填写密码、邮件正文或其他敏感信息。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Feedback is saved with your account, app version and language for product analysis. Please do not include passwords, email contents or other sensitive information."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "反馈会与账号、App 版本和语言一起保存，用于产品分析。请勿填写密码、邮件正文或其他敏感信息。"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "反馈暂时无法发送，请检查网络后重试。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Feedback could not be sent. Check your connection and try again."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "反馈暂时无法发送，请检查网络后重试。"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "已关闭自动评价邀请。离线时会在联网后同步，你仍可主动反馈。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatic feedback invitations are off. Offline choices sync when connected. You can still share feedback yourself."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已关闭自动评价邀请。离线时会在联网后同步，你仍可主动反馈。"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "帮助我们改进": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Help us improve"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "帮助我们改进"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "总体来说，你对 JobGenie 满意吗？": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overall, how satisfied are you with JobGenie?"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "总体来说，你对 JobGenie 满意吗？"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "感谢你的反馈，已保存。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Thank you. Your feedback has been saved."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "感谢你的反馈，已保存。"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "提交反馈": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send feedback"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "提交反馈"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "本轮反馈已收到，谢谢。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your feedback for this survey has been received. Thank you."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "本轮反馈已收到，谢谢。"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "正在提交反馈…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sending feedback…"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正在提交反馈…"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "永远不再自动显示": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Never show automatically again"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "永远不再自动显示"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "演示反馈未提交到真实数据库。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Demo feedback was not sent to the real database."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "演示反馈未提交到真实数据库。"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "演示选择不会保存到真实账号。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Demo choices are not saved to a real account."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "演示选择不会保存到真实账号。"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "稍后再说。至少 14 天内不会自动邀请，离线选择会在联网后同步。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not now. No automatic invitation for at least 14 days. Offline choices sync when connected."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "稍后再说。至少 14 天内不会自动邀请，离线选择会在联网后同步。"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "稍后回答": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not now"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "稍后回答"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "评价 JobGenie": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rate JobGenie"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "评价 JobGenie"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "还有什么建议或评价？（可选）": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Any suggestions or other feedback? (Optional)"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "还有什么建议或评价？（可选）"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "这是发给 JobGenie 的产品反馈，不是 App Store 评价。没有标准答案，也不会影响你的申请或服务。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This is product feedback for JobGenie, not an App Store review. There is no right answer, and your response will not affect your applications or service."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "这是发给 JobGenie 的产品反馈，不是 App Store 评价。没有标准答案，也不会影响你的申请或服务。"
+          }
+        }
+      },
+      "extractionState": "manual"
+    },
+    "完成": {
+      "extractionState": "manual",
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "完成"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Done"
+          }
+        }
+      }
     }
   },
   "version": "1.1"

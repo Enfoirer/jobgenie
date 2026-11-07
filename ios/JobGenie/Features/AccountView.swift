@@ -2,6 +2,8 @@ import SwiftUI
 
 struct AccountView: View {
     @EnvironmentObject private var model: AppModel
+    @EnvironmentObject private var feedback: FeedbackCoordinator
+    @Environment(\.locale) private var locale
     @State private var confirmingSignOut = false
     private var accountName: Text {
         if let name = model.user?.name { return Text(verbatim: name) }
@@ -25,6 +27,12 @@ struct AccountView: View {
                 NavigationLink { RemindersView() } label: { Label("提醒", systemImage: "bell") }
                     .accessibilityIdentifier("reminders.open")
             }
+            Section("帮助我们改进") {
+                Button { feedback.start(userID: model.user?.id, demo: model.isDemo); Task { await feedback.openManual(locale: locale.identifier) } } label: {
+                    Label("评价 JobGenie", systemImage: "star.bubble")
+                }.accessibilityIdentifier("feedback.open")
+                if let notice = feedback.notice { Text(notice.localized(locale: locale)).font(.footnote).accessibilityIdentifier("feedback.notice") }
+            }
             Section("当前版本") {
                 LabeledContent("JobGenie for iPhone", value: "0.1.0")
                 Text("支持申请与历史管理、日程编辑、App 内提醒、邮箱操作、统计分析和附件。后台推送将逐步加入。") .font(.subheadline).foregroundStyle(.secondary)
@@ -41,5 +49,7 @@ struct AccountView: View {
         .confirmationDialog(LocalizedStringKey(model.isDemo ? "退出后将清除演示改动" : "退出此设备的登录？"), isPresented: $confirmingSignOut, titleVisibility: .visible) {
             Button("确认退出", role: .destructive) { Task { await model.signOut() } }
         }
+        .feedbackSurface(blocked: confirmingSignOut)
+        .onChange(of: locale.identifier) { _, _ in feedback.interacted() }
     }
 }

@@ -70,13 +70,14 @@ struct ApplicationsView: View {
         .localizedNavigationTitle("我的申请")
         .searchable(text: $search, prompt: "搜索公司、职位或地点")
         .toolbar { Button { creating = true } label: { Image(systemName: "plus") }.accessibilityLabel("添加申请").accessibilityIdentifier("jobs.add").disabled(model.bulkBusy) }
-        .onChange(of: archived) { _, _ in selected = [] }
-        .onChange(of: filter) { _, _ in selected = [] }
-        .onChange(of: search) { _, _ in selected = [] }
+        .onChange(of: archived) { _, _ in selected = []; model.feedback.interacted() }
+        .onChange(of: filter) { _, _ in selected = []; model.feedback.interacted() }
+        .onChange(of: search) { _, _ in selected = []; model.feedback.interacted() }
         .onChange(of: selecting) { _, value in if !value { selected = [] } }
         .sheet(isPresented: $creating) { JobEditor(job: nil) }
         .refreshable { await model.refreshJobs() }
         .task { await model.refreshJobs() }
+        .feedbackSurface(blocked: creating || selecting || !search.isEmpty || model.jobsLoading)
     }
     private func metric(_ title: LocalizedStringKey, count: Int) -> some View {
         VStack(alignment: .leading, spacing: 4) { Text(count, format: .number).font(.title.bold()).foregroundStyle(Brand.teal); Text(title).font(.caption).foregroundStyle(.secondary) }

@@ -504,6 +504,62 @@ final class JobGenieUITests: XCTestCase {
         app.tabBars.buttons["Account"].tap(); reveal(app.buttons["account.signout"], in: app)
         app.buttons["account.signout"].tap(); app.buttons["Confirm sign out"].tap()
     }
+    func testDemoProductFeedbackAndEnglish() {
+        let app = XCUIApplication()
+        app.launchArguments = ["-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN", "-jobgenie.language", "system"]
+        app.launchEnvironment["JOBGENIE_TEST_BASE_URL"] = "http://127.0.0.1:39998"
+        app.launch(); XCTAssertTrue(app.buttons["login.demo"].waitForExistence(timeout: 15)); app.buttons["login.demo"].tap()
+        app.tabBars.buttons["我的"].tap(); reveal(app.buttons["feedback.open"], in: app); app.buttons["feedback.open"].tap()
+        XCTAssertTrue(app.buttons["feedback.overall.1"].waitForExistence(timeout: 5))
+        reveal(app.buttons["feedback.submit"], in: app); XCTAssertFalse(app.buttons["feedback.submit"].isEnabled)
+        app.swipeDown(); app.buttons["feedback.overall.1"].tap(); app.buttons["feedback.recommendation.5"].tap()
+        app.buttons["feedback.later"].tap(); XCTAssertTrue(app.buttons["feedback.open"].waitForExistence(timeout: 5))
+        app.buttons["feedback.open"].tap(); reveal(app.buttons["feedback.never"], in: app); app.buttons["feedback.never"].tap()
+        XCTAssertTrue(app.buttons["feedback.open"].waitForExistence(timeout: 5))
+        for _ in 0..<4 { app.swipeDown() }
+        app.buttons["language.picker"].tap(); app.buttons["English"].tap()
+        reveal(app.buttons["feedback.open"], in: app); app.buttons["feedback.open"].tap()
+        XCTAssertTrue(app.navigationBars["Rate JobGenie"].waitForExistence(timeout: 5))
+        app.buttons["feedback.overall.2"].tap(); app.buttons["feedback.recommendation.4"].tap()
+        let shot = XCTAttachment(screenshot: app.screenshot()); shot.name = "English product feedback"; shot.lifetime = .keepAlways; add(shot)
+        reveal(app.buttons["feedback.submit"], in: app); app.buttons["feedback.submit"].tap()
+        XCTAssertTrue(app.staticTexts["Demo feedback was not sent to the real database."].waitForExistence(timeout: 5))
+    }
+    func testRealFeedbackPromptAndPersistence() throws {
+        guard let base = ProcessInfo.processInfo.environment["JOBGENIE_TEST_BASE_URL"] else { throw XCTSkip("Run isolated feedback acceptance") }
+        let app = XCUIApplication()
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-jobgenie.language", "en"]
+        app.launchEnvironment["JOBGENIE_TEST_BASE_URL"] = base; app.launch()
+        XCTAssertTrue(app.textFields["login.email"].waitForExistence(timeout: 15))
+        app.textFields["login.email"].tap(); app.textFields["login.email"].typeText("ios-acceptance@example.test")
+        app.secureTextFields["login.password"].tap(); app.secureTextFields["login.password"].typeText("ios-local-test-password")
+        app.buttons["login.submit"].tap(); XCTAssertTrue(app.buttons["jobs.add"].waitForExistence(timeout: 25))
+        XCTAssertFalse(app.buttons["feedback.later"].exists, "Do not prompt immediately after login")
+        // Exercise the real two-minute foreground threshold, without production timing overrides.
+        XCTAssertTrue(app.buttons["feedback.later"].waitForExistence(timeout: 165), app.debugDescription)
+        XCTAssertTrue(app.navigationBars["Rate JobGenie"].exists)
+        reveal(app.buttons["feedback.submit"], in: app); XCTAssertFalse(app.buttons["feedback.submit"].isEnabled)
+        app.buttons["feedback.later"].tap(); XCTAssertTrue(app.buttons["jobs.add"].waitForExistence(timeout: 5))
+        app.tabBars.buttons["Account"].tap(); reveal(app.buttons["feedback.open"], in: app); app.buttons["feedback.open"].tap()
+        reveal(app.buttons["feedback.never"], in: app); app.buttons["feedback.never"].tap()
+        XCTAssertTrue(app.buttons["feedback.open"].waitForExistence(timeout: 5))
+        app.terminate(); app.launch(); XCTAssertTrue(app.buttons["jobs.add"].waitForExistence(timeout: 20))
+        app.tabBars.buttons["Account"].tap(); reveal(app.buttons["feedback.open"], in: app); app.buttons["feedback.open"].tap()
+        app.buttons["feedback.overall.2"].tap(); app.buttons["feedback.recommendation.4"].tap()
+        let comment = app.textViews["feedback.comment"]; reveal(comment, in: app); comment.tap(); comment.typeText("Please improve offline support.")
+        XCTAssertTrue(app.buttons["feedback.keyboardDone"].waitForExistence(timeout: 5)); app.buttons["feedback.keyboardDone"].tap()
+        app.swipeUp(); reveal(app.buttons["feedback.submit"], in: app)
+        let shot = XCTAttachment(screenshot: app.screenshot()); shot.name = "Native feedback before submission"; shot.lifetime = .keepAlways; add(shot)
+        app.buttons["feedback.submit"].tap()
+        XCTAssertTrue(app.staticTexts["Thank you. Your feedback has been saved."].waitForExistence(timeout: 15))
+        app.terminate(); app.launch(); XCTAssertTrue(app.buttons["jobs.add"].waitForExistence(timeout: 20))
+        app.tabBars.buttons["Account"].tap(); reveal(app.buttons["feedback.open"], in: app); app.buttons["feedback.open"].tap()
+        XCTAssertTrue(app.staticTexts["Your feedback for this survey has been received. Thank you."].waitForExistence(timeout: 10))
+        XCTAssertFalse(app.buttons["feedback.submit"].exists)
+        app.buttons["feedback.later"].tap()
+        reveal(app.buttons["account.signout"], in: app); app.buttons["account.signout"].tap(); app.buttons["Confirm sign out"].tap()
+        XCTAssertTrue(app.buttons["login.submit"].waitForExistence(timeout: 10))
+    }
     func testRealBackend() throws {
         guard let url = ProcessInfo.processInfo.environment["JOBGENIE_TEST_BASE_URL"] else { throw XCTSkip("Run ios/scripts/verify-backend.mjs for isolated NextAuth/Mongo integration") }
         let app = XCUIApplication()

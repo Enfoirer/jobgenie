@@ -146,3 +146,10 @@ IOS_SIMULATOR_ID="$IOS_SIMULATOR_ID" node ios/scripts/verify-backend.mjs --resou
 状态历史功能的规则、错误恢复和隔离联调方法见 [iOS 历史管理验收](../docs/ios-history-acceptance.md)。历史编辑中的“状态发生时间”用于排序；预约和截止时间通过独立入口编辑，验收见 [iOS 日程编辑](../docs/ios-schedule-acceptance.md)。
 
 参考：[Apple SwiftUI 导航](https://developer.apple.com/documentation/swiftui/understanding-the-navigation-stack)、[NextAuth REST API](https://next-auth.js.org/getting-started/rest-api)、[Apple 临时网络会话](https://developer.apple.com/documentation/foundation/urlsessionconfiguration/ephemeral)、[Keychain 访问级别](https://developer.apple.com/documentation/security/ksecattraccessiblewhenunlockedthisdeviceonly)。
+
+
+## Product feedback
+
+Open Account → Rate JobGenie for two five-star questions and optional suggestions. Real-account responses are saved through the authenticated shared backend; demo feedback stays local to the demo. Not now defers automatic invitations for at least 14 days, and Never show automatically again persists across devices after synchronization.
+
+Automatic invitations require seven days since first observed iOS use, three active UTC dates, two foreground minutes and a quiet root screen. See [feedback policy, storage and acceptance](../docs/ios-feedback-acceptance.md). After a local web build, run `IOS_SIMULATOR_ID=<device> IOS_DERIVED_DATA=/tmp/jobgenie-feedback-build node ios/scripts/verify-backend.mjs --feedback-only` for isolated API, real timing, UI and database checks.

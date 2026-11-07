@@ -48,12 +48,16 @@ final class AppModel: ObservableObject {
     let attachmentCache = AttachmentCache()
     var demoAttachmentData: [String: Data] = [:]
     let api: APIClient
+    let feedback: FeedbackCoordinator
     private var generation = UUID()
     var sessionGeneration: UUID { generation }
     private var jobsRequest = UUID()
     private var scheduleRequest = UUID()
     private var detailRequests: [String: UUID] = [:]
-    init(api: APIClient = APIClient(baseURL: APIClient.configuredURL())) { self.api = api }
+    init(api: APIClient = APIClient(baseURL: APIClient.configuredURL())) {
+        self.api = api; feedback = FeedbackCoordinator(api: api)
+        feedback.onUnauthorized = { [weak self] in Task { await self?.signOut() } }
+    }
 
     func restore() async {
         defer { isRestoring = false }
@@ -87,6 +91,7 @@ final class AppModel: ObservableObject {
     }
     func signOut() async {
         generation = UUID()
+        feedback.reset()
         resetResources()
         resetReminders()
         do { try await api.signOut(); authMessage = nil } catch { authMessage = message(error) }

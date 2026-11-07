@@ -19,6 +19,8 @@ import StatusHistory from '../../lib/models/StatusHistory.js';
 import MailAccount from '../../lib/models/MailAccount.js';
 import ProcessedEmail from '../../lib/models/ProcessedEmail.js';
 import PendingItem from '../../lib/models/PendingItem.js';
+import FeedbackProfile from '../../lib/models/FeedbackProfile.js';
+import ProductFeedback from '../../lib/models/ProductFeedback.js';
 import { createJob, addHistory } from '../../lib/jobs/jobMutations.js';
 import { verifyHistoryWeb } from './verify-history-web.mjs';
 
@@ -81,7 +83,32 @@ def visit(node):
 visit(data)
 with open(sys.argv[2],'wb') as f: plistlib.dump(data,f)
 `, join(products, files[0]), runFile, base]);
-  if (process.argv.includes('--documents-only')) {
+  if (process.argv.includes('--feedback-only')) {
+    await Promise.all([FeedbackProfile.init(), ProductFeedback.init()]);
+    console.log('Running real native feedback APIs and persistence acceptance.');
+    await run('xcodebuild', ['test-without-building', '-xctestrun', runFile, '-destination', `platform=iOS Simulator,id=${device}`, '-parallel-testing-enabled', 'NO', '-only-testing:JobGenieTests/FeedbackTests/testRealFeedbackAPI', '-resultBundlePath', join(work, 'feedback-api.xcresult')]);
+    const saved = await ProductFeedback.findOne({ userId: user._id });
+    assert.equal(saved.overall, 1); assert.equal(saved.recommendation, 2); assert.equal(saved.source, 'manual');
+    assert.equal(await ProductFeedback.countDocuments({ userId: user._id }), 1);
+    assert((await FeedbackProfile.findById(user._id)).disabledAt);
+    await ProductFeedback.deleteMany({ userId: user._id }); await FeedbackProfile.deleteOne({ _id: user._id });
+    const today = Date.now(); const day = 86400000;
+    await FeedbackProfile.create({ _id: user._id, campaign: 'ios-product-v1', firstSeenAt: new Date(today - 7 * day - 1000), activeDays: [-7, -2, 0].map(offset => new Date(today + offset * day).toISOString().slice(0, 10)) });
+    console.log('Running actual automatic invitation timing, later/never, relaunch and manual submission UI.');
+    await run('xcodebuild', ['test-without-building', '-xctestrun', runFile, '-destination', `platform=iOS Simulator,id=${device}`, '-parallel-testing-enabled', 'NO', '-only-testing:JobGenieUITests/JobGenieUITests/testRealFeedbackPromptAndPersistence', '-resultBundlePath', join(work, 'feedback-ui.xcresult')]);
+    const profile = await FeedbackProfile.findById(user._id);
+    assert(profile.disabledAt); assert(profile.submittedAt); assert.equal(profile.invitations.length, 1);
+    assert(profile.invitations[0].shownAt); assert.equal(profile.invitations[0].disposition, 'later');
+    const result = await ProductFeedback.findOne({ userId: user._id });
+    assert.equal(result.overall, 2); assert.equal(result.recommendation, 4);
+    assert.equal(result.comment, 'Please improve offline support.'); assert.equal(result.source, 'manual');
+    assert.equal(await ProductFeedback.countDocuments({ userId: user._id }), 1);
+    assert.equal(await ProductFeedback.countDocuments({ userId: foreign._id }), 0);
+    assert.equal(await FeedbackProfile.countDocuments({ _id: foreign._id }), 0);
+    await writeFile(join(work, 'feedback-api-example.json'), JSON.stringify({ environment: 'isolated local Next.js/MongoDB and iPhone simulator', campaign: result.campaign, overall: result.overall, recommendation: result.recommendation, comment: result.comment, source: result.source, appVersion: result.appVersion, locale: result.locale, submittedOnce: true, automaticInvitations: profile.invitations.map(item => ({ shown: Boolean(item.shownAt), disposition: item.disposition })), invitationsDisabled: Boolean(profile.disabledAt), foreignUserUnchanged: true }, null, 2));
+    console.log('PASS: real native ratings, actual two-minute prompt threshold, snooze/opt-out persistence, relaunch, one response and owner isolation.');
+    console.log(`Feedback acceptance evidence: ${work}`);
+  } else if (process.argv.includes('--documents-only')) {
     await JobDocument.init();
     console.log('Running native application document API and UI acceptance.');
     await run('xcodebuild', ['test-without-building', '-xctestrun', runFile, '-destination', `platform=iOS Simulator,id=${device}`, '-parallel-testing-enabled', 'NO', '-only-testing:JobGenieTests/JobDocumentTests', '-resultBundlePath', join(work, 'documents-api.xcresult')]);

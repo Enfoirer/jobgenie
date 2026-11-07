@@ -14,6 +14,7 @@ struct JobGenieApp: App {
             }
             .environmentObject(model)
             .environmentObject(language)
+            .environmentObject(model.feedback)
             .environment(\.locale, language.locale)
             .tint(Brand.teal)
             .task { await model.restore() }
@@ -25,6 +26,7 @@ struct JobGenieApp: App {
 }
 struct MainTabs: View {
     @EnvironmentObject private var model: AppModel
+    @EnvironmentObject private var feedback: FeedbackCoordinator
     @Environment(\.scenePhase) private var scenePhase
     var body: some View {
         TabView {
@@ -33,6 +35,12 @@ struct MainTabs: View {
             NavigationStack { MailView() }.tabItem { Label("邮箱", systemImage: "envelope") }
             NavigationStack { AccountView() }.tabItem { Label("我的", systemImage: "person.crop.circle") }
         }
+        .sheet(item: $feedback.presentation) { _ in FeedbackView() }
+        .task(id: model.sessionGeneration) {
+            feedback.start(userID: model.user?.id, demo: model.isDemo)
+            feedback.setForeground(scenePhase == .active)
+        }
+        .onChange(of: scenePhase) { _, phase in feedback.setForeground(phase == .active) }
         .task(id: scenePhase) {
             guard scenePhase == .active else { return }
             while !Task.isCancelled {
