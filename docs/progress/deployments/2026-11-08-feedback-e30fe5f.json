@@ -1,0 +1,30 @@
+{
+  "recordedAt": "2026-11-07T16:25:08.729068+00:00",
+  "observationDate": "2026-11-08",
+  "timezone": "Asia/Shanghai",
+  "source": "Connected GitHub combined commit status and git ls-remote origin refs/heads/main",
+  "implementationCommit": "e30fe5f6c7d1897595718e0e17fa4d8c86ee82b8",
+  "remoteShaVerified": "e30fe5f6c7d1897595718e0e17fa4d8c86ee82b8",
+  "remoteRef": "refs/heads/main",
+  "statuses": [
+    {
+      "context": "Vercel",
+      "state": "success",
+      "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/GJLSFCoF82MKdmrm7vqdS2VHz3zR"
+    }
+  ],
+  "unauthenticatedProductionRead": {
+    "status": 401,
+    "cacheControl": "private, no-store",
+    "body": {
+      "error": "Not authenticated"
+    },
+    "observedAt": "2026-11-07T16:23:41.109938+00:00",
+    "url": "https://jobgenie-six.vercel.app/api/feedback",
+    "authenticated": false
+  },
+  "productionBusinessWritesPerformed": false,
+  "nativeDistribution": "Simulator and unsigned iPhone Release verified; physical-device signing and TestFlight not performed.",
+  "scope": "This deployment observation belongs to the implementation revision. A later evidence-only commit is a different revision.",
+  "deliveryInterruption": "The Nov 7 push was not executed because automatic approval review was unavailable. The original push was retried with approval on Nov 8 and succeeded."
+}

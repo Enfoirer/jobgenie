@@ -1,0 +1,1054 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project ios/JobGenie.xcodeproj -scheme JobGenie -destination "platform=iOS Simulator,id=62A13C6B-C168-47E9-AA89-1922ED491512" -derivedDataPath <TEMP>/jobgenie-feedback-build -parallel-testing-enabled NO "-only-testing:JobGenieTests" "-only-testing:JobGenieUITests/JobGenieUITests/testDemoProductFeedbackAndEnglish" "-only-testing:JobGenieUITests/JobGenieUITests/testDemoNavigationCreateEditAndExit" test
+
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (4 targets)
+    Target 'JobGenieUITests' in project 'JobGenie'
+        ➜ Explicit dependency on target 'JobGenie' in project 'JobGenie'
+    Target 'JobGenieTests' in project 'JobGenie'
+        ➜ Explicit dependency on target 'JobGenie' in project 'JobGenie'
+    Target 'JobGenie' in project 'JobGenie'
+        ➜ Explicit dependency on target 'JobGenieShare' in project 'JobGenie'
+    Target 'JobGenieShare' in project 'JobGenie' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/xcstringstool compile --dry-run --output-directory <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build <WORKSPACE>/ios/JobGenie/Localizable.xcstrings
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/xcstringstool compile --dry-run --output-directory <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build <WORKSPACE>/ios/JobGenie/Localizable.xcstrings
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+Build description signature: 83261b30a2da132996af55217b835ec7
+Build description path: <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/XCBuildData/83261b30a2da132996af55217b835ec7.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk <TEMP>/jobgenie-feedback-build/SDKStatCaches.noindex/iphonesimulator26.0-23A339-26257891a6c027eb51374368541b8346.sdkstatcache
+    cd <WORKSPACE>/ios/JobGenie.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk -o <TEMP>/jobgenie-feedback-build/SDKStatCaches.noindex/iphonesimulator26.0-23A339-26257891a6c027eb51374368541b8346.sdkstatcache
+
+ProcessProductPackaging <WORKSPACE>/ios/JobGenieShare/JobGenieShare.entitlements <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/JobGenieShare.appex.xcent (in target 'JobGenieShare' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    
+    Entitlements:
+    
+    {
+}
+    
+    builtin-productPackagingUtility <WORKSPACE>/ios/JobGenieShare/JobGenieShare.entitlements -entitlements -format xml -o <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/JobGenieShare.appex.xcent
+
+ProcessProductPackaging <WORKSPACE>/ios/JobGenieShare/JobGenieShare.entitlements <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/JobGenieShare.appex-Simulated.xcent (in target 'JobGenieShare' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    
+    Entitlements:
+    
+    {
+    "application-identifier" = "FAKETEAMID.com.enfoirer.jobgenie.JobGenieShare";
+    "com.apple.security.application-groups" =     (
+        "group.com.enfoirer.jobgenie"
+    );
+}
+    
+    builtin-productPackagingUtility <WORKSPACE>/ios/JobGenieShare/JobGenieShare.entitlements -entitlements -format xml -o <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/JobGenieShare.appex-Simulated.xcent
+
+ProcessProductPackagingDER <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/JobGenieShare.appex.xcent <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/JobGenieShare.appex.xcent.der (in target 'JobGenieShare' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    /usr/bin/derq query -f xml -i <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/JobGenieShare.appex.xcent -o <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/JobGenieShare.appex.xcent.der --raw
+
+ProcessProductPackagingDER <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/JobGenieShare.appex-Simulated.xcent <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/JobGenieShare.appex-Simulated.xcent.der (in target 'JobGenieShare' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    /usr/bin/derq query -f xml -i <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/JobGenieShare.appex-Simulated.xcent -o <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/JobGenieShare.appex-Simulated.xcent.der --raw
+
+ProcessInfoPlistFile <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieShare.appex/Info.plist <WORKSPACE>/ios/JobGenieShare/Info.plist (in target 'JobGenieShare' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    builtin-infoPlistUtility <WORKSPACE>/ios/JobGenieShare/Info.plist -producttype com.apple.product-type.app-extension -expandbuildsettings -format binary -platform iphonesimulator -o <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieShare.appex/Info.plist
+
+CompileXCStrings <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/ <WORKSPACE>/ios/JobGenie/Localizable.xcstrings (in target 'JobGenieShare' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcstringstool compile --output-directory <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build <WORKSPACE>/ios/JobGenie/Localizable.xcstrings
+
+CopyStringsFile <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieShare.appex/zh-Hans.lproj/Localizable.strings <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/zh-Hans.lproj/Localizable.strings (in target 'JobGenieShare' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    builtin-copyStrings --validate --outputencoding binary --outfilename Localizable.strings --outdir <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieShare.appex/zh-Hans.lproj -- <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/zh-Hans.lproj/Localizable.strings
+<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/zh-Hans.lproj/Localizable.strings:1:1: note: detected encoding of input file as Unicode (UTF-8) (in target 'JobGenieShare' from project 'JobGenie')
+
+CopyStringsFile <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieShare.appex/en.lproj/Localizable.strings <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/en.lproj/Localizable.strings (in target 'JobGenieShare' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    builtin-copyStrings --validate --outputencoding binary --outfilename Localizable.strings --outdir <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieShare.appex/en.lproj -- <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/en.lproj/Localizable.strings
+<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/en.lproj/Localizable.strings:1:1: note: detected encoding of input file as Unicode (UTF-8) (in target 'JobGenieShare' from project 'JobGenie')
+
+ProcessProductPackaging <WORKSPACE>/ios/JobGenie/JobGenie.entitlements <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie.app-Simulated.xcent (in target 'JobGenie' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    
+    Entitlements:
+    
+    {
+    "application-identifier" = "FAKETEAMID.com.enfoirer.jobgenie";
+    "com.apple.security.application-groups" =     (
+        "group.com.enfoirer.jobgenie"
+    );
+}
+    
+    builtin-productPackagingUtility <WORKSPACE>/ios/JobGenie/JobGenie.entitlements -entitlements -format xml -o <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie.app-Simulated.xcent
+
+Ld <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/Objects-normal/x86_64/Binary/JobGenieShare.debug.dylib normal x86_64 (in target 'JobGenieShare' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target x86_64-apple-ios17.0-simulator -dynamiclib -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk -Os -L<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L<TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator -F<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F<TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator -filelist <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/Objects-normal/x86_64/JobGenieShare.LinkFileList -install_name @rpath/JobGenieShare.debug.dylib -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -rpath -Xlinker @executable_path/../../Frameworks -dead_strip -Xlinker -object_path_lto -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/Objects-normal/x86_64/JobGenieShare_lto.o -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/Objects-normal/x86_64/JobGenieShare_dependency_info.dat -fapplication-extension -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/Objects-normal/x86_64/JobGenieShare.swiftmodule @<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/Objects-normal/x86_64/JobGenieShare-linker-args.resp -Xlinker -alias -Xlinker _NSExtensionMain -Xlinker ___debug_main_executable_dylib_entry_point -Xlinker -no_adhoc_codesign -o <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/Objects-normal/x86_64/Binary/JobGenieShare.debug.dylib
+
+Ld <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/Objects-normal/arm64/Binary/JobGenieShare.debug.dylib normal arm64 (in target 'JobGenieShare' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios17.0-simulator -dynamiclib -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk -Os -L<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L<TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator -F<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F<TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator -filelist <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/Objects-normal/arm64/JobGenieShare.LinkFileList -install_name @rpath/JobGenieShare.debug.dylib -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -rpath -Xlinker @executable_path/../../Frameworks -dead_strip -Xlinker -object_path_lto -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/Objects-normal/arm64/JobGenieShare_lto.o -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/Objects-normal/arm64/JobGenieShare_dependency_info.dat -fapplication-extension -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/Objects-normal/arm64/JobGenieShare.swiftmodule @<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/Objects-normal/arm64/JobGenieShare-linker-args.resp -Xlinker -alias -Xlinker _NSExtensionMain -Xlinker ___debug_main_executable_dylib_entry_point -Xlinker -no_adhoc_codesign -o <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/Objects-normal/arm64/Binary/JobGenieShare.debug.dylib
+
+ProcessProductPackagingDER <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie.app-Simulated.xcent <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie.app-Simulated.xcent.der (in target 'JobGenie' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    /usr/bin/derq query -f xml -i <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie.app-Simulated.xcent -o <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie.app-Simulated.xcent.der --raw
+
+ProcessProductPackaging <WORKSPACE>/ios/JobGenie/JobGenie.entitlements <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie.app.xcent (in target 'JobGenie' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    
+    Entitlements:
+    
+    {
+}
+    
+    builtin-productPackagingUtility <WORKSPACE>/ios/JobGenie/JobGenie.entitlements -entitlements -format xml -o <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie.app.xcent
+
+ProcessProductPackagingDER <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie.app.xcent <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie.app.xcent.der (in target 'JobGenie' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    /usr/bin/derq query -f xml -i <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie.app.xcent -o <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie.app.xcent.der --raw
+
+SwiftDriver JobGenie normal x86_64 com.apple.xcode.tools.swift.compiler (in target 'JobGenie' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name JobGenie -Onone -enforce-exclusivity\=checked @<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64/JobGenie.SwiftFileList -DDEBUG -enable-upcoming-feature StrictConcurrency -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk -target x86_64-apple-ios17.0-simulator -g -module-cache-path <TEMP>/jobgenie-feedback-build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path <TEMP>/jobgenie-feedback-build/Index.noindex/DataStore -swift-version 5 -I <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator -F <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator -emit-localized-strings -emit-localized-strings-path <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64 -c -j12 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc <TEMP>/jobgenie-feedback-build/SDKStatCaches.noindex/iphonesimulator26.0-23A339-26257891a6c027eb51374368541b8346.sdkstatcache -output-file-map <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64/JobGenie-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path <TEMP>/jobgenie-feedback-build/ModuleCache.noindex -sdk-module-cache-path <TEMP>/jobgenie-feedback-build/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64/JobGenie.swiftmodule -validate-clang-modules-once -clang-build-session-file <TEMP>/jobgenie-feedback-build/ModuleCache.noindex/Session.modulevalidation -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64/JobGenie_const_extract_protocols.json -Xcc -iquote -Xcc <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie-generated-files.hmap -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie-own-target-headers.hmap -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie-all-target-headers.hmap -Xcc -iquote -Xcc <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie-project-headers.hmap -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/include -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/DerivedSources-normal/x86_64 -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/DerivedSources/x86_64 -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/DerivedSources -emit-objc-header -emit-objc-header-path <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64/JobGenie-Swift.h -working-directory <WORKSPACE>/ios -experimental-emit-module-separately -disable-cmo
+
+SwiftDriver JobGenie normal arm64 com.apple.xcode.tools.swift.compiler (in target 'JobGenie' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name JobGenie -Onone -enforce-exclusivity\=checked @<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64/JobGenie.SwiftFileList -DDEBUG -enable-upcoming-feature StrictConcurrency -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk -target arm64-apple-ios17.0-simulator -g -module-cache-path <TEMP>/jobgenie-feedback-build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path <TEMP>/jobgenie-feedback-build/Index.noindex/DataStore -swift-version 5 -I <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator -F <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator -emit-localized-strings -emit-localized-strings-path <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64 -c -j12 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc <TEMP>/jobgenie-feedback-build/SDKStatCaches.noindex/iphonesimulator26.0-23A339-26257891a6c027eb51374368541b8346.sdkstatcache -output-file-map <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64/JobGenie-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path <TEMP>/jobgenie-feedback-build/ModuleCache.noindex -sdk-module-cache-path <TEMP>/jobgenie-feedback-build/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64/JobGenie.swiftmodule -validate-clang-modules-once -clang-build-session-file <TEMP>/jobgenie-feedback-build/ModuleCache.noindex/Session.modulevalidation -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64/JobGenie_const_extract_protocols.json -Xcc -iquote -Xcc <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie-generated-files.hmap -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie-own-target-headers.hmap -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie-all-target-headers.hmap -Xcc -iquote -Xcc <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie-project-headers.hmap -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/include -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/DerivedSources-normal/arm64 -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/DerivedSources/arm64 -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/DerivedSources -emit-objc-header -emit-objc-header-path <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64/JobGenie-Swift.h -working-directory <WORKSPACE>/ios -experimental-emit-module-separately -disable-cmo
+
+ConstructStubExecutorLinkFileList <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/JobGenieShare-ExecutorLinkFileList-normal-x86_64.txt (in target 'JobGenieShare' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    construct-stub-executor-link-file-list <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/Objects-normal/x86_64/Binary/JobGenieShare.debug.dylib /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor_no_swift_entry_point.a /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor.a --output <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/JobGenieShare-ExecutorLinkFileList-normal-x86_64.txt
+note: Using stub executor library without Swift entry point. (in target 'JobGenieShare' from project 'JobGenie')
+
+CreateUniversalBinary <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieShare.appex/JobGenieShare.debug.dylib normal arm64\ x86_64 (in target 'JobGenieShare' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo -create <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/Objects-normal/arm64/Binary/JobGenieShare.debug.dylib <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/Objects-normal/x86_64/Binary/JobGenieShare.debug.dylib -output <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieShare.appex/JobGenieShare.debug.dylib
+
+ConstructStubExecutorLinkFileList <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/JobGenieShare-ExecutorLinkFileList-normal-arm64.txt (in target 'JobGenieShare' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    construct-stub-executor-link-file-list <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/Objects-normal/arm64/Binary/JobGenieShare.debug.dylib /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor_no_swift_entry_point.a /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor.a --output <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/JobGenieShare-ExecutorLinkFileList-normal-arm64.txt
+note: Using stub executor library without Swift entry point. (in target 'JobGenieShare' from project 'JobGenie')
+
+Ld <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/Objects-normal/x86_64/Binary/JobGenieShare normal x86_64 (in target 'JobGenieShare' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target x86_64-apple-ios17.0-simulator -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk -Os -L<TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator -F<TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator -Xlinker -rpath -Xlinker @executable_path -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -rpath -Xlinker @executable_path/../../Frameworks -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -e ___debug_blank_executor_main -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_dylib -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/JobGenieShare-DebugDylibPath-normal-x86_64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_entry -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/JobGenieShare-DebugEntryPoint-normal-x86_64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_instlnm -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/JobGenieShare-DebugDylibInstallName-normal-x86_64.txt -Xlinker -filelist -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/JobGenieShare-ExecutorLinkFileList-normal-x86_64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __entitlements -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/JobGenieShare.appex-Simulated.xcent -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __ents_der -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/JobGenieShare.appex-Simulated.xcent.der <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/Objects-normal/x86_64/Binary/JobGenieShare.debug.dylib -Xlinker -no_adhoc_codesign -o <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/Objects-normal/x86_64/Binary/JobGenieShare
+
+Ld <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/Objects-normal/arm64/Binary/JobGenieShare normal arm64 (in target 'JobGenieShare' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios17.0-simulator -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk -Os -L<TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator -F<TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator -Xlinker -rpath -Xlinker @executable_path -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -rpath -Xlinker @executable_path/../../Frameworks -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -e ___debug_blank_executor_main -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_dylib -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/JobGenieShare-DebugDylibPath-normal-arm64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_entry -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/JobGenieShare-DebugEntryPoint-normal-arm64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_instlnm -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/JobGenieShare-DebugDylibInstallName-normal-arm64.txt -Xlinker -filelist -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/JobGenieShare-ExecutorLinkFileList-normal-arm64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __entitlements -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/JobGenieShare.appex-Simulated.xcent -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __ents_der -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/JobGenieShare.appex-Simulated.xcent.der <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/Objects-normal/arm64/Binary/JobGenieShare.debug.dylib -Xlinker -no_adhoc_codesign -o <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/Objects-normal/arm64/Binary/JobGenieShare
+
+GenerateDSYMFile <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieShare.appex.dSYM <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieShare.appex/JobGenieShare.debug.dylib (in target 'JobGenieShare' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/dsymutil <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieShare.appex/JobGenieShare.debug.dylib -o <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieShare.appex.dSYM
+
+CreateUniversalBinary <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieShare.appex/JobGenieShare normal arm64\ x86_64 (in target 'JobGenieShare' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo -create <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/Objects-normal/arm64/Binary/JobGenieShare <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/Objects-normal/x86_64/Binary/JobGenieShare -output <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieShare.appex/JobGenieShare
+
+GenerateDSYMFile <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieShare.appex.dSYM <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieShare.appex/JobGenieShare (in target 'JobGenieShare' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/dsymutil -q <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieShare.appex/JobGenieShare -o <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieShare.appex.dSYM
+
+ExtractAppIntentsMetadata (in target 'JobGenieShare' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name JobGenieShare --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk --xcode-version 17A400 --platform-family iOS --deployment-target 17.0 --bundle-identifier com.enfoirer.jobgenie.JobGenieShare --output <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieShare.appex --target-triple arm64-apple-ios17.0-simulator --target-triple x86_64-apple-ios17.0-simulator --binary-file <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieShare.appex/JobGenieShare --dependency-file <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/Objects-normal/arm64/JobGenieShare_dependency_info.dat --dependency-file <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/Objects-normal/x86_64/JobGenieShare_dependency_info.dat --stringsdata-file <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --stringsdata-file <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/Objects-normal/x86_64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/Objects-normal/arm64/JobGenieShare.SwiftFileList --source-file-list <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/Objects-normal/x86_64/JobGenieShare.SwiftFileList --metadata-file-list <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/JobGenieShare.DependencyMetadataFileList --static-metadata-file-list <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/JobGenieShare.DependencyStaticMetadataFileList --swift-const-vals-list <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/Objects-normal/arm64/JobGenieShare.SwiftConstValuesFileList --swift-const-vals-list <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/Objects-normal/x86_64/JobGenieShare.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2026-11-07 21:46:11.827 appintentsmetadataprocessor[28676:44078131] Starting appintentsmetadataprocessor export
+2026-11-07 21:46:11.829 appintentsmetadataprocessor[28676:44078131] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+
+CodeSign <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieShare.appex/JobGenieShare.debug.dylib (in target 'JobGenieShare' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieShare.appex/JobGenieShare.debug.dylib
+
+CodeSign <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieShare.appex (in target 'JobGenieShare' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --entitlements <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieShare.build/JobGenieShare.appex.xcent --timestamp\=none --generate-entitlement-der <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieShare.appex
+
+SwiftEmitModule normal x86_64 Emitting\ module\ for\ JobGenie (in target 'JobGenie' from project 'JobGenie')
+
+EmitSwiftModule normal x86_64 (in target 'JobGenie' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ JobGenie (in target 'JobGenie' from project 'JobGenie')
+EmitSwiftModule normal arm64 (in target 'JobGenie' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    
+
+SwiftCompile normal arm64 Compiling\ Feedback.swift <WORKSPACE>/ios/JobGenie/Core/Feedback.swift (in target 'JobGenie' from project 'JobGenie')
+SwiftCompile normal arm64 <WORKSPACE>/ios/JobGenie/Core/Feedback.swift (in target 'JobGenie' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    
+
+SwiftCompile normal x86_64 Compiling\ Feedback.swift <WORKSPACE>/ios/JobGenie/Core/Feedback.swift (in target 'JobGenie' from project 'JobGenie')
+SwiftCompile normal x86_64 <WORKSPACE>/ios/JobGenie/Core/Feedback.swift (in target 'JobGenie' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    
+
+SwiftDriverJobDiscovery normal x86_64 Emitting module for JobGenie (in target 'JobGenie' from project 'JobGenie')
+
+SwiftDriver\ Compilation\ Requirements JobGenie normal x86_64 com.apple.xcode.tools.swift.compiler (in target 'JobGenie' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name JobGenie -Onone -enforce-exclusivity\=checked @<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64/JobGenie.SwiftFileList -DDEBUG -enable-upcoming-feature StrictConcurrency -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk -target x86_64-apple-ios17.0-simulator -g -module-cache-path <TEMP>/jobgenie-feedback-build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path <TEMP>/jobgenie-feedback-build/Index.noindex/DataStore -swift-version 5 -I <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator -F <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator -emit-localized-strings -emit-localized-strings-path <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64 -c -j12 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc <TEMP>/jobgenie-feedback-build/SDKStatCaches.noindex/iphonesimulator26.0-23A339-26257891a6c027eb51374368541b8346.sdkstatcache -output-file-map <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64/JobGenie-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path <TEMP>/jobgenie-feedback-build/ModuleCache.noindex -sdk-module-cache-path <TEMP>/jobgenie-feedback-build/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64/JobGenie.swiftmodule -validate-clang-modules-once -clang-build-session-file <TEMP>/jobgenie-feedback-build/ModuleCache.noindex/Session.modulevalidation -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64/JobGenie_const_extract_protocols.json -Xcc -iquote -Xcc <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie-generated-files.hmap -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie-own-target-headers.hmap -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie-all-target-headers.hmap -Xcc -iquote -Xcc <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie-project-headers.hmap -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/include -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/DerivedSources-normal/x86_64 -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/DerivedSources/x86_64 -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/DerivedSources -emit-objc-header -emit-objc-header-path <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64/JobGenie-Swift.h -working-directory <WORKSPACE>/ios -experimental-emit-module-separately -disable-cmo
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for JobGenie (in target 'JobGenie' from project 'JobGenie')
+
+Copy <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.swiftmodule/x86_64-apple-ios-simulator.abi.json <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64/JobGenie.abi.json (in target 'JobGenie' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64/JobGenie.abi.json <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.swiftmodule/x86_64-apple-ios-simulator.abi.json
+
+Copy <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.swiftmodule/Project/x86_64-apple-ios-simulator.swiftsourceinfo <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64/JobGenie.swiftsourceinfo (in target 'JobGenie' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64/JobGenie.swiftsourceinfo <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.swiftmodule/Project/x86_64-apple-ios-simulator.swiftsourceinfo
+
+SwiftDriver\ Compilation\ Requirements JobGenie normal arm64 com.apple.xcode.tools.swift.compiler (in target 'JobGenie' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name JobGenie -Onone -enforce-exclusivity\=checked @<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64/JobGenie.SwiftFileList -DDEBUG -enable-upcoming-feature StrictConcurrency -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk -target arm64-apple-ios17.0-simulator -g -module-cache-path <TEMP>/jobgenie-feedback-build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path <TEMP>/jobgenie-feedback-build/Index.noindex/DataStore -swift-version 5 -I <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator -F <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator -emit-localized-strings -emit-localized-strings-path <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64 -c -j12 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc <TEMP>/jobgenie-feedback-build/SDKStatCaches.noindex/iphonesimulator26.0-23A339-26257891a6c027eb51374368541b8346.sdkstatcache -output-file-map <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64/JobGenie-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path <TEMP>/jobgenie-feedback-build/ModuleCache.noindex -sdk-module-cache-path <TEMP>/jobgenie-feedback-build/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64/JobGenie.swiftmodule -validate-clang-modules-once -clang-build-session-file <TEMP>/jobgenie-feedback-build/ModuleCache.noindex/Session.modulevalidation -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64/JobGenie_const_extract_protocols.json -Xcc -iquote -Xcc <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie-generated-files.hmap -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie-own-target-headers.hmap -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie-all-target-headers.hmap -Xcc -iquote -Xcc <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie-project-headers.hmap -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/include -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/DerivedSources-normal/arm64 -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/DerivedSources/arm64 -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/DerivedSources -emit-objc-header -emit-objc-header-path <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64/JobGenie-Swift.h -working-directory <WORKSPACE>/ios -experimental-emit-module-separately -disable-cmo
+
+Copy <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.swiftmodule/arm64-apple-ios-simulator.abi.json <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64/JobGenie.abi.json (in target 'JobGenie' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64/JobGenie.abi.json <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.swiftmodule/arm64-apple-ios-simulator.abi.json
+
+Copy <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64/JobGenie.swiftsourceinfo (in target 'JobGenie' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64/JobGenie.swiftsourceinfo <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo
+
+SwiftDriverJobDiscovery normal arm64 Compiling Feedback.swift (in target 'JobGenie' from project 'JobGenie')
+
+SwiftDriver\ Compilation JobGenie normal arm64 com.apple.xcode.tools.swift.compiler (in target 'JobGenie' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name JobGenie -Onone -enforce-exclusivity\=checked @<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64/JobGenie.SwiftFileList -DDEBUG -enable-upcoming-feature StrictConcurrency -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk -target arm64-apple-ios17.0-simulator -g -module-cache-path <TEMP>/jobgenie-feedback-build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path <TEMP>/jobgenie-feedback-build/Index.noindex/DataStore -swift-version 5 -I <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator -F <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator -emit-localized-strings -emit-localized-strings-path <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64 -c -j12 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc <TEMP>/jobgenie-feedback-build/SDKStatCaches.noindex/iphonesimulator26.0-23A339-26257891a6c027eb51374368541b8346.sdkstatcache -output-file-map <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64/JobGenie-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path <TEMP>/jobgenie-feedback-build/ModuleCache.noindex -sdk-module-cache-path <TEMP>/jobgenie-feedback-build/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64/JobGenie.swiftmodule -validate-clang-modules-once -clang-build-session-file <TEMP>/jobgenie-feedback-build/ModuleCache.noindex/Session.modulevalidation -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64/JobGenie_const_extract_protocols.json -Xcc -iquote -Xcc <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie-generated-files.hmap -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie-own-target-headers.hmap -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie-all-target-headers.hmap -Xcc -iquote -Xcc <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie-project-headers.hmap -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/include -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/DerivedSources-normal/arm64 -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/DerivedSources/arm64 -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/DerivedSources -emit-objc-header -emit-objc-header-path <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64/JobGenie-Swift.h -working-directory <WORKSPACE>/ios -experimental-emit-module-separately -disable-cmo
+
+Ld <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64/Binary/JobGenie.debug.dylib normal arm64 (in target 'JobGenie' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios17.0-simulator -dynamiclib -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk -Os -L<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L<TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator -F<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F<TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator -filelist <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64/JobGenie.LinkFileList -install_name @rpath/JobGenie.debug.dylib -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker @executable_path/Frameworks -dead_strip -Xlinker -object_path_lto -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64/JobGenie_lto.o -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64/JobGenie_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64/JobGenie.swiftmodule @<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64/JobGenie-linker-args.resp -Xlinker -alias -Xlinker _main -Xlinker ___debug_main_executable_dylib_entry_point -Xlinker -no_adhoc_codesign -o <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64/Binary/JobGenie.debug.dylib
+
+SwiftDriverJobDiscovery normal x86_64 Compiling Feedback.swift (in target 'JobGenie' from project 'JobGenie')
+
+SwiftDriver\ Compilation JobGenie normal x86_64 com.apple.xcode.tools.swift.compiler (in target 'JobGenie' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name JobGenie -Onone -enforce-exclusivity\=checked @<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64/JobGenie.SwiftFileList -DDEBUG -enable-upcoming-feature StrictConcurrency -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk -target x86_64-apple-ios17.0-simulator -g -module-cache-path <TEMP>/jobgenie-feedback-build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path <TEMP>/jobgenie-feedback-build/Index.noindex/DataStore -swift-version 5 -I <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator -F <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator -emit-localized-strings -emit-localized-strings-path <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64 -c -j12 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc <TEMP>/jobgenie-feedback-build/SDKStatCaches.noindex/iphonesimulator26.0-23A339-26257891a6c027eb51374368541b8346.sdkstatcache -output-file-map <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64/JobGenie-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path <TEMP>/jobgenie-feedback-build/ModuleCache.noindex -sdk-module-cache-path <TEMP>/jobgenie-feedback-build/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64/JobGenie.swiftmodule -validate-clang-modules-once -clang-build-session-file <TEMP>/jobgenie-feedback-build/ModuleCache.noindex/Session.modulevalidation -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64/JobGenie_const_extract_protocols.json -Xcc -iquote -Xcc <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie-generated-files.hmap -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie-own-target-headers.hmap -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie-all-target-headers.hmap -Xcc -iquote -Xcc <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie-project-headers.hmap -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/include -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/DerivedSources-normal/x86_64 -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/DerivedSources/x86_64 -Xcc -I<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/DerivedSources -emit-objc-header -emit-objc-header-path <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64/JobGenie-Swift.h -working-directory <WORKSPACE>/ios -experimental-emit-module-separately -disable-cmo
+
+Ld <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64/Binary/JobGenie.debug.dylib normal x86_64 (in target 'JobGenie' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target x86_64-apple-ios17.0-simulator -dynamiclib -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk -Os -L<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L<TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator -F<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F<TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator -filelist <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64/JobGenie.LinkFileList -install_name @rpath/JobGenie.debug.dylib -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker @executable_path/Frameworks -dead_strip -Xlinker -object_path_lto -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64/JobGenie_lto.o -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64/JobGenie_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64/JobGenie.swiftmodule @<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64/JobGenie-linker-args.resp -Xlinker -alias -Xlinker _main -Xlinker ___debug_main_executable_dylib_entry_point -Xlinker -no_adhoc_codesign -o <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64/Binary/JobGenie.debug.dylib
+
+ConstructStubExecutorLinkFileList <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie-ExecutorLinkFileList-normal-arm64.txt (in target 'JobGenie' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    construct-stub-executor-link-file-list <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64/Binary/JobGenie.debug.dylib /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor_no_swift_entry_point.a /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor.a --output <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie-ExecutorLinkFileList-normal-arm64.txt
+note: Using stub executor library with Swift entry point. (in target 'JobGenie' from project 'JobGenie')
+
+Ld <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64/Binary/JobGenie normal arm64 (in target 'JobGenie' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios17.0-simulator -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk -Os -L<TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator -F<TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator -Xlinker -rpath -Xlinker @executable_path -Xlinker -rpath -Xlinker @executable_path/Frameworks -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -e ___debug_blank_executor_main -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_dylib -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie-DebugDylibPath-normal-arm64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_instlnm -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie-DebugDylibInstallName-normal-arm64.txt -Xlinker -filelist -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie-ExecutorLinkFileList-normal-arm64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __entitlements -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie.app-Simulated.xcent -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __ents_der -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie.app-Simulated.xcent.der <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64/Binary/JobGenie.debug.dylib -Xlinker -no_adhoc_codesign -o <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64/Binary/JobGenie
+
+ConstructStubExecutorLinkFileList <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie-ExecutorLinkFileList-normal-x86_64.txt (in target 'JobGenie' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    construct-stub-executor-link-file-list <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64/Binary/JobGenie.debug.dylib /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor_no_swift_entry_point.a /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor.a --output <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie-ExecutorLinkFileList-normal-x86_64.txt
+note: Using stub executor library with Swift entry point. (in target 'JobGenie' from project 'JobGenie')
+
+CreateUniversalBinary <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/JobGenie.debug.dylib normal arm64\ x86_64 (in target 'JobGenie' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo -create <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64/Binary/JobGenie.debug.dylib <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64/Binary/JobGenie.debug.dylib -output <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/JobGenie.debug.dylib
+
+Ld <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64/Binary/JobGenie normal x86_64 (in target 'JobGenie' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target x86_64-apple-ios17.0-simulator -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk -Os -L<TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator -F<TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator -Xlinker -rpath -Xlinker @executable_path -Xlinker -rpath -Xlinker @executable_path/Frameworks -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -e ___debug_blank_executor_main -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_dylib -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie-DebugDylibPath-normal-x86_64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_instlnm -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie-DebugDylibInstallName-normal-x86_64.txt -Xlinker -filelist -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie-ExecutorLinkFileList-normal-x86_64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __entitlements -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie.app-Simulated.xcent -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __ents_der -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie.app-Simulated.xcent.der <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64/Binary/JobGenie.debug.dylib -Xlinker -no_adhoc_codesign -o <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64/Binary/JobGenie
+
+CreateUniversalBinary <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/JobGenie normal arm64\ x86_64 (in target 'JobGenie' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo -create <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64/Binary/JobGenie <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64/Binary/JobGenie -output <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/JobGenie
+
+Copy <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/PlugIns/JobGenieShare.appex <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieShare.appex (in target 'JobGenie' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -remove-static-executable <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieShare.appex <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/PlugIns
+warning: not stripping binary because it is signed: <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieShare.appex/JobGenieSharewarning: not stripping binary because it is signed: <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieShare.appex/__preview.dylibwarning: not stripping binary because it is signed: <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieShare.appex/JobGenieShare.debug.dylib (in target 'JobGenie' from project 'JobGenie')
+
+ExtractAppIntentsMetadata (in target 'JobGenie' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name JobGenie --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk --xcode-version 17A400 --platform-family iOS --deployment-target 17.0 --bundle-identifier com.enfoirer.jobgenie --output <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app --target-triple arm64-apple-ios17.0-simulator --target-triple x86_64-apple-ios17.0-simulator --binary-file <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/JobGenie --dependency-file <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64/JobGenie_dependency_info.dat --dependency-file <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64/JobGenie_dependency_info.dat --stringsdata-file <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --stringsdata-file <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64/JobGenie.SwiftFileList --source-file-list <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64/JobGenie.SwiftFileList --metadata-file-list <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie.DependencyMetadataFileList --static-metadata-file-list <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie.DependencyStaticMetadataFileList --swift-const-vals-list <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/arm64/JobGenie.SwiftConstValuesFileList --swift-const-vals-list <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/Objects-normal/x86_64/JobGenie.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2026-11-07 21:46:12.855 appintentsmetadataprocessor[28701:44078278] Starting appintentsmetadataprocessor export
+2026-11-07 21:46:12.856 appintentsmetadataprocessor[28701:44078278] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+
+GenerateDSYMFile <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app.dSYM <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/JobGenie (in target 'JobGenie' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/dsymutil -q <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/JobGenie -o <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app.dSYM
+
+ProcessProductPackaging "" <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/JobGenieUITests.xctest-Simulated.xcent (in target 'JobGenieUITests' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    
+    Entitlements:
+    
+    {
+    "application-identifier" = "FAKETEAMID.com.enfoirer.jobgenie.JobGenieUITests.xctrunner";
+    "keychain-access-groups" =     (
+        "FAKETEAMID.com.enfoirer.jobgenie.JobGenieUITests.xctrunner"
+    );
+}
+    
+    builtin-productPackagingUtility -entitlements -format xml -o <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/JobGenieUITests.xctest-Simulated.xcent
+
+CopySwiftLibs <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app (in target 'JobGenie' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/JobGenie.debug.dylib --scan-folder <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/Frameworks --scan-folder <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/PlugIns --scan-folder <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/SystemExtensions --scan-folder <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+ProcessInfoPlistFile <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/Info.plist <WORKSPACE>/ios/JobGenie/Info.plist (in target 'JobGenie' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    builtin-infoPlistUtility <WORKSPACE>/ios/JobGenie/Info.plist -producttype com.apple.product-type.application -genpkginfo <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/PkgInfo -expandbuildsettings -format binary -platform iphonesimulator -scanforprivacyfile <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/PlugIns/JobGenieShare.appex -o <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/Info.plist
+
+ProcessProductPackagingDER <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/JobGenieUITests.xctest-Simulated.xcent <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/JobGenieUITests.xctest-Simulated.xcent.der (in target 'JobGenieUITests' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    /usr/bin/derq query -f xml -i <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/JobGenieUITests.xctest-Simulated.xcent -o <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/JobGenieUITests.xctest-Simulated.xcent.der --raw
+
+GenerateDSYMFile <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app.dSYM <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/JobGenie.debug.dylib (in target 'JobGenie' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/dsymutil <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/JobGenie.debug.dylib -o <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app.dSYM
+
+ProcessInfoPlistFile <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/PlugIns/JobGenieTests.xctest/Info.plist <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieTests.build/empty-JobGenieTests.plist (in target 'JobGenieTests' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    builtin-infoPlistUtility <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieTests.build/empty-JobGenieTests.plist -producttype com.apple.product-type.bundle.unit-test -expandbuildsettings -format binary -platform iphonesimulator -o <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/PlugIns/JobGenieTests.xctest/Info.plist
+
+Ld <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieTests.build/Objects-normal/arm64/Binary/JobGenieTests normal arm64 (in target 'JobGenieTests' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios17.0-simulator -bundle -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk -Os -L<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L<TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator -L/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F<TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk/Developer/Library/Frameworks -filelist <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieTests.build/Objects-normal/arm64/JobGenieTests.LinkFileList -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker @loader_path/Frameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -dead_strip -bundle_loader <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/JobGenie -Xlinker -object_path_lto -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieTests.build/Objects-normal/arm64/JobGenieTests_lto.o -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieTests.build/Objects-normal/arm64/JobGenieTests_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieTests.build/Objects-normal/arm64/JobGenieTests.swiftmodule @<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieTests.build/Objects-normal/arm64/JobGenieTests-linker-args.resp -Xlinker -needed_framework -Xlinker XCTest -framework XCTest -Xlinker -needed-lXCTestSwiftSupport -lXCTestSwiftSupport <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/JobGenie.debug.dylib -Xlinker -no_adhoc_codesign -o <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieTests.build/Objects-normal/arm64/Binary/JobGenieTests
+
+Ld <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieTests.build/Objects-normal/x86_64/Binary/JobGenieTests normal x86_64 (in target 'JobGenieTests' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target x86_64-apple-ios17.0-simulator -bundle -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk -Os -L<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L<TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator -L/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F<TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk/Developer/Library/Frameworks -filelist <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieTests.build/Objects-normal/x86_64/JobGenieTests.LinkFileList -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker @loader_path/Frameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -dead_strip -bundle_loader <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/JobGenie -Xlinker -object_path_lto -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieTests.build/Objects-normal/x86_64/JobGenieTests_lto.o -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieTests.build/Objects-normal/x86_64/JobGenieTests_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieTests.build/Objects-normal/x86_64/JobGenieTests.swiftmodule @<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieTests.build/Objects-normal/x86_64/JobGenieTests-linker-args.resp -Xlinker -needed_framework -Xlinker XCTest -framework XCTest -Xlinker -needed-lXCTestSwiftSupport -lXCTestSwiftSupport <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/JobGenie.debug.dylib -Xlinker -no_adhoc_codesign -o <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieTests.build/Objects-normal/x86_64/Binary/JobGenieTests
+
+CreateUniversalBinary <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/PlugIns/JobGenieTests.xctest/JobGenieTests normal arm64\ x86_64 (in target 'JobGenieTests' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo -create <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieTests.build/Objects-normal/arm64/Binary/JobGenieTests <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieTests.build/Objects-normal/x86_64/Binary/JobGenieTests -output <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/PlugIns/JobGenieTests.xctest/JobGenieTests
+
+GenerateDSYMFile <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/PlugIns/JobGenieTests.xctest.dSYM <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/PlugIns/JobGenieTests.xctest/JobGenieTests (in target 'JobGenieTests' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/dsymutil <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/PlugIns/JobGenieTests.xctest/JobGenieTests -o <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/PlugIns/JobGenieTests.xctest.dSYM
+
+CopySwiftLibs <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/PlugIns/JobGenieTests.xctest (in target 'JobGenieTests' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/PlugIns/JobGenieTests.xctest/JobGenieTests --scan-folder <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/PlugIns/JobGenieTests.xctest/Frameworks --scan-folder <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/PlugIns/JobGenieTests.xctest/PlugIns --scan-folder <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/PlugIns/JobGenieTests.xctest/SystemExtensions --scan-folder <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/PlugIns/JobGenieTests.xctest/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/PlugIns/JobGenieTests.xctest/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieTests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+ExtractAppIntentsMetadata (in target 'JobGenieTests' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name JobGenieTests --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk --xcode-version 17A400 --platform-family iOS --deployment-target 17.0 --bundle-identifier com.enfoirer.jobgenie.JobGenieTests --output <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/PlugIns/JobGenieTests.xctest --target-triple arm64-apple-ios17.0-simulator --target-triple x86_64-apple-ios17.0-simulator --binary-file <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/PlugIns/JobGenieTests.xctest/JobGenieTests --dependency-file <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieTests.build/Objects-normal/arm64/JobGenieTests_dependency_info.dat --dependency-file <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieTests.build/Objects-normal/x86_64/JobGenieTests_dependency_info.dat --stringsdata-file <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieTests.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --stringsdata-file <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieTests.build/Objects-normal/x86_64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieTests.build/Objects-normal/arm64/JobGenieTests.SwiftFileList --source-file-list <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieTests.build/Objects-normal/x86_64/JobGenieTests.SwiftFileList --metadata-file-list <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieTests.build/JobGenieTests.DependencyMetadataFileList --static-metadata-file-list <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieTests.build/JobGenieTests.DependencyStaticMetadataFileList --swift-const-vals-list <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieTests.build/Objects-normal/arm64/JobGenieTests.SwiftConstValuesFileList --swift-const-vals-list <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieTests.build/Objects-normal/x86_64/JobGenieTests.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2026-11-07 21:46:13.231 appintentsmetadataprocessor[28713:44078354] Starting appintentsmetadataprocessor export
+2026-11-07 21:46:13.233 appintentsmetadataprocessor[28713:44078354] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+
+CodeSign <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/PlugIns/JobGenieTests.xctest (in target 'JobGenieTests' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/PlugIns/JobGenieTests.xctest
+
+CodeSign <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/JobGenie.debug.dylib (in target 'JobGenie' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/JobGenie.debug.dylib
+
+CodeSign <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/__preview.dylib (in target 'JobGenie' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/__preview.dylib
+<TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/__preview.dylib: replacing existing signature
+
+CodeSign <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app (in target 'JobGenie' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --entitlements <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenie.build/JobGenie.app.xcent --timestamp\=none --generate-entitlement-der <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app
+
+Validate <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app (in target 'JobGenie' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    builtin-validationUtility <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app -shallow-bundle -infoplist-subpath Info.plist
+
+ValidateEmbeddedBinary <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/PlugIns/JobGenieShare.appex (in target 'JobGenie' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    /Applications/Xcode.app/Contents/Developer/usr/bin/embeddedBinaryValidationUtility <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/PlugIns/JobGenieShare.appex -signing-cert - -info-plist-path <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenie.app/Info.plist
+
+ProcessInfoPlistFile <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieUITests-Runner.app/PlugIns/JobGenieUITests.xctest/Info.plist <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/empty-JobGenieUITests.plist (in target 'JobGenieUITests' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    builtin-infoPlistUtility <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/empty-JobGenieUITests.plist -producttype com.apple.product-type.bundle.ui-testing -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/ProductTypeInfoPlistAdditions.plist -o <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieUITests-Runner.app/PlugIns/JobGenieUITests.xctest/Info.plist
+
+Ld <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/Objects-normal/x86_64/Binary/JobGenieUITests normal x86_64 (in target 'JobGenieUITests' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target x86_64-apple-ios17.0-simulator -bundle -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk -Os -L<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L<TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator -L/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F<TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk/Developer/Library/Frameworks -filelist <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/Objects-normal/x86_64/JobGenieUITests.LinkFileList -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker @loader_path/Frameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -dead_strip -Xlinker -object_path_lto -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/Objects-normal/x86_64/JobGenieUITests_lto.o -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/Objects-normal/x86_64/JobGenieUITests_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/Objects-normal/x86_64/JobGenieUITests.swiftmodule @<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/Objects-normal/x86_64/JobGenieUITests-linker-args.resp -Xlinker -needed_framework -Xlinker XCTest -framework XCTest -Xlinker -needed-lXCTestSwiftSupport -lXCTestSwiftSupport -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __entitlements -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/JobGenieUITests.xctest-Simulated.xcent -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __ents_der -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/JobGenieUITests.xctest-Simulated.xcent.der -Xlinker -no_adhoc_codesign -o <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/Objects-normal/x86_64/Binary/JobGenieUITests
+
+Ld <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/Objects-normal/arm64/Binary/JobGenieUITests normal arm64 (in target 'JobGenieUITests' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios17.0-simulator -bundle -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk -Os -L<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L<TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator -L/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F<TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk/Developer/Library/Frameworks -filelist <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/Objects-normal/arm64/JobGenieUITests.LinkFileList -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker @loader_path/Frameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -dead_strip -Xlinker -object_path_lto -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/Objects-normal/arm64/JobGenieUITests_lto.o -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/Objects-normal/arm64/JobGenieUITests_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/Objects-normal/arm64/JobGenieUITests.swiftmodule @<TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/Objects-normal/arm64/JobGenieUITests-linker-args.resp -Xlinker -needed_framework -Xlinker XCTest -framework XCTest -Xlinker -needed-lXCTestSwiftSupport -lXCTestSwiftSupport -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __entitlements -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/JobGenieUITests.xctest-Simulated.xcent -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __ents_der -Xlinker <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/JobGenieUITests.xctest-Simulated.xcent.der -Xlinker -no_adhoc_codesign -o <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/Objects-normal/arm64/Binary/JobGenieUITests
+
+CreateUniversalBinary <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieUITests-Runner.app/PlugIns/JobGenieUITests.xctest/JobGenieUITests normal arm64\ x86_64 (in target 'JobGenieUITests' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo -create <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/Objects-normal/arm64/Binary/JobGenieUITests <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/Objects-normal/x86_64/Binary/JobGenieUITests -output <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieUITests-Runner.app/PlugIns/JobGenieUITests.xctest/JobGenieUITests
+
+CopySwiftLibs <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieUITests-Runner.app/PlugIns/JobGenieUITests.xctest (in target 'JobGenieUITests' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieUITests-Runner.app/PlugIns/JobGenieUITests.xctest/JobGenieUITests --scan-folder <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieUITests-Runner.app/PlugIns/JobGenieUITests.xctest/Frameworks --scan-folder <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieUITests-Runner.app/PlugIns/JobGenieUITests.xctest/PlugIns --scan-folder <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieUITests-Runner.app/PlugIns/JobGenieUITests.xctest/SystemExtensions --scan-folder <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieUITests-Runner.app/PlugIns/JobGenieUITests.xctest/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieUITests-Runner.app/PlugIns/JobGenieUITests.xctest/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+ExtractAppIntentsMetadata (in target 'JobGenieUITests' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name JobGenieUITests --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.0.sdk --xcode-version 17A400 --platform-family iOS --deployment-target 17.0 --bundle-identifier com.enfoirer.jobgenie.JobGenieUITests --output <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieUITests-Runner.app/PlugIns/JobGenieUITests.xctest --target-triple arm64-apple-ios17.0-simulator --target-triple x86_64-apple-ios17.0-simulator --binary-file <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieUITests-Runner.app/PlugIns/JobGenieUITests.xctest/JobGenieUITests --dependency-file <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/Objects-normal/arm64/JobGenieUITests_dependency_info.dat --dependency-file <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/Objects-normal/x86_64/JobGenieUITests_dependency_info.dat --stringsdata-file <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --stringsdata-file <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/Objects-normal/x86_64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/Objects-normal/arm64/JobGenieUITests.SwiftFileList --source-file-list <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/Objects-normal/x86_64/JobGenieUITests.SwiftFileList --metadata-file-list <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/JobGenieUITests.DependencyMetadataFileList --static-metadata-file-list <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/JobGenieUITests.DependencyStaticMetadataFileList --swift-const-vals-list <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/Objects-normal/arm64/JobGenieUITests.SwiftConstValuesFileList --swift-const-vals-list <TEMP>/jobgenie-feedback-build/Build/Intermediates.noindex/JobGenie.build/Debug-iphonesimulator/JobGenieUITests.build/Objects-normal/x86_64/JobGenieUITests.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2026-11-07 21:46:13.904 appintentsmetadataprocessor[28725:44078435] Starting appintentsmetadataprocessor export
+2026-11-07 21:46:13.905 appintentsmetadataprocessor[28725:44078435] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+
+GenerateDSYMFile <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieUITests-Runner.app/PlugIns/JobGenieUITests.xctest.dSYM <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieUITests-Runner.app/PlugIns/JobGenieUITests.xctest/JobGenieUITests (in target 'JobGenieUITests' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/dsymutil <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieUITests-Runner.app/PlugIns/JobGenieUITests.xctest/JobGenieUITests -o <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieUITests-Runner.app/PlugIns/JobGenieUITests.xctest.dSYM
+
+CodeSign <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieUITests-Runner.app/PlugIns/JobGenieUITests.xctest (in target 'JobGenieUITests' from project 'JobGenie')
+    cd <WORKSPACE>/ios
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der <TEMP>/jobgenie-feedback-build/Build/Products/Debug-iphonesimulator/JobGenieUITests-Runner.app/PlugIns/JobGenieUITests.xctest
+
+Test Suite 'All tests' started at 2026-11-07 21:46:26.865.
+Test Suite 'JobGenieTests.xctest' started at 2026-11-07 21:46:26.865.
+Test Suite 'BulkTests' started at 2026-11-07 21:46:26.865.
+Test Case '-[JobGenieTests.BulkTests testArchiveRestorePreservesHistoryStatusAndReadReminder]' started.
+Test Case '-[JobGenieTests.BulkTests testArchiveRestorePreservesHistoryStatusAndReadReminder]' passed (0.006 seconds).
+Test Case '-[JobGenieTests.BulkTests testBulkLimitsAndInvalidActionsDoNotMutate]' started.
+Test Case '-[JobGenieTests.BulkTests testBulkLimitsAndInvalidActionsDoNotMutate]' passed (0.001 seconds).
+Test Case '-[JobGenieTests.BulkTests testBulkReviewLeavesUnresolvedEmailAndIgnoreDoesNotAddHistory]' started.
+Test Case '-[JobGenieTests.BulkTests testBulkReviewLeavesUnresolvedEmailAndIgnoreDoesNotAddHistory]' passed (0.004 seconds).
+Test Case '-[JobGenieTests.BulkTests testLegacyJobAndArchivedJobDecode]' started.
+Test Case '-[JobGenieTests.BulkTests testLegacyJobAndArchivedJobDecode]' passed (0.004 seconds).
+Test Case '-[JobGenieTests.BulkTests testLiveBulkContractDecodesPartialResultsAndLoadsArchivedJobs]' started.
+Test Case '-[JobGenieTests.BulkTests testLiveBulkContractDecodesPartialResultsAndLoadsArchivedJobs]' passed (0.007 seconds).
+Test Case '-[JobGenieTests.BulkTests testPartialStatusResultAndRetryDoNotDuplicateHistory]' started.
+Test Case '-[JobGenieTests.BulkTests testPartialStatusResultAndRetryDoNotDuplicateHistory]' passed (0.003 seconds).
+Test Case '-[JobGenieTests.BulkTests testResponseValidationRejectsMissingDuplicateAndForeignRecords]' started.
+Test Case '-[JobGenieTests.BulkTests testResponseValidationRejectsMissingDuplicateAndForeignRecords]' passed (0.000 seconds).
+Test Case '-[JobGenieTests.BulkTests testUnauthorizedBulkClearsAccountData]' started.
+Test Case '-[JobGenieTests.BulkTests testUnauthorizedBulkClearsAccountData]' passed (0.012 seconds).
+Test Suite 'BulkTests' passed at 2026-11-07 21:46:26.905.
+	 Executed 8 tests, with 0 failures (0 unexpected) in 0.038 (0.040) seconds
+Test Suite 'CoreTests' started at 2026-11-07 21:46:26.905.
+Test Case '-[JobGenieTests.CoreTests testBackendJobContractAndDates]' started.
+Test Case '-[JobGenieTests.CoreTests testBackendJobContractAndDates]' passed (0.001 seconds).
+Test Case '-[JobGenieTests.CoreTests testCookieScopeExpiryAndChunkNames]' started.
+Test Case '-[JobGenieTests.CoreTests testCookieScopeExpiryAndChunkNames]' passed (0.003 seconds).
+Test Case '-[JobGenieTests.CoreTests testDemoEditsStayLocalAndClearOnExit]' started.
+Test Case '-[JobGenieTests.CoreTests testDemoEditsStayLocalAndClearOnExit]' passed (0.001 seconds).
+Test Case '-[JobGenieTests.CoreTests testDraftValidationAndNoProtectedFields]' started.
+Test Case '-[JobGenieTests.CoreTests testDraftValidationAndNoProtectedFields]' passed (0.001 seconds).
+Test Case '-[JobGenieTests.CoreTests testExpiredSavedSessionClearsVaultWithoutNetwork]' started.
+Test Case '-[JobGenieTests.CoreTests testExpiredSavedSessionClearsVaultWithoutNetwork]' passed (0.002 seconds).
+Test Case '-[JobGenieTests.CoreTests testFormEscapesPasswordsAndUnicode]' started.
+Test Case '-[JobGenieTests.CoreTests testFormEscapesPasswordsAndUnicode]' passed (0.000 seconds).
+Test Case '-[JobGenieTests.CoreTests testRejectsHTMLAndUnsafeRoutes]' started.
+Test Case '-[JobGenieTests.CoreTests testRejectsHTMLAndUnsafeRoutes]' passed (0.001 seconds).
+Test Case '-[JobGenieTests.CoreTests testRevokedSessionClearsPrivateData]' started.
+Test Case '-[JobGenieTests.CoreTests testRevokedSessionClearsPrivateData]' passed (0.002 seconds).
+Test Case '-[JobGenieTests.CoreTests testScheduleBoundariesAndMissingTime]' started.
+Test Case '-[JobGenieTests.CoreTests testScheduleBoundariesAndMissingTime]' passed (0.002 seconds).
+Test Case '-[JobGenieTests.CoreTests testSignOutClearsVaultEvenWithoutNetwork]' started.
+Test Case '-[JobGenieTests.CoreTests testSignOutClearsVaultEvenWithoutNetwork]' passed (0.001 seconds).
+Test Case '-[JobGenieTests.CoreTests testSuccessfulReadUsesOriginAndSafeCookieStorage]' started.
+Test Case '-[JobGenieTests.CoreTests testSuccessfulReadUsesOriginAndSafeCookieStorage]' passed (0.001 seconds).
+Test Case '-[JobGenieTests.CoreTests testUnauthorizedAndRateLimit]' started.
+Test Case '-[JobGenieTests.CoreTests testUnauthorizedAndRateLimit]' passed (0.001 seconds).
+Test Suite 'CoreTests' passed at 2026-11-07 21:46:26.923.
+	 Executed 12 tests, with 0 failures (0 unexpected) in 0.016 (0.018) seconds
+Test Suite 'FeedbackTests' started at 2026-11-07 21:46:26.923.
+Test Case '-[JobGenieTests.FeedbackTests testAccountScopedOfflineNeverSurvivesRestartAndNeverBlocksManualEntry]' started.
+2026-11-07 21:46:26.928292+0800 JobGenie[28971:44080856] [Default] Task <D575832A-65A6-45F7-BC13-2B1B6EA0A50C>.<1> finished with error [-1009] Error Domain=NSURLErrorDomain Code=-1009 "(null)" UserInfo={_NSURLErrorRelatedURLSessionTaskErrorKey=(
+    "LocalDataTask <D575832A-65A6-45F7-BC13-2B1B6EA0A50C>.<1>"
+), _NSURLErrorFailingURLSessionTaskErrorKey=LocalDataTask <D575832A-65A6-45F7-BC13-2B1B6EA0A50C>.<1>}
+2026-11-07 21:46:26.932432+0800 JobGenie[28971:44080848] [Default] Task <7BF8EBC2-7D37-4C51-8B90-80AC4093E270>.<2> finished with error [-1009] Error Domain=NSURLErrorDomain Code=-1009 "(null)" UserInfo={_NSURLErrorRelatedURLSessionTaskErrorKey=(
+    "LocalDataTask <7BF8EBC2-7D37-4C51-8B90-80AC4093E270>.<2>"
+), _NSURLErrorFailingURLSessionTaskErrorKey=LocalDataTask <7BF8EBC2-7D37-4C51-8B90-80AC4093E270>.<2>}
+2026-11-07 21:46:26.933974+0800 JobGenie[28971:44080853] [Default] Task <04C64EDE-2F9C-44E7-B0DF-03696B02D154>.<1> finished with error [-1009] Error Domain=NSURLErrorDomain Code=-1009 "(null)" UserInfo={_NSURLErrorRelatedURLSessionTaskErrorKey=(
+    "LocalDataTask <04C64EDE-2F9C-44E7-B0DF-03696B02D154>.<1>"
+), _NSURLErrorFailingURLSessionTaskErrorKey=LocalDataTask <04C64EDE-2F9C-44E7-B0DF-03696B02D154>.<1>}
+2026-11-07 21:46:26.934532+0800 JobGenie[28971:44080856] [Default] Task <6FF9A094-ED44-416E-88D2-F3BBAA362186>.<2> finished with error [-1009] Error Domain=NSURLErrorDomain Code=-1009 "(null)" UserInfo={_NSURLErrorRelatedURLSessionTaskErrorKey=(
+    "LocalDataTask <6FF9A094-ED44-416E-88D2-F3BBAA362186>.<2>"
+), _NSURLErrorFailingURLSessionTaskErrorKey=LocalDataTask <6FF9A094-ED44-416E-88D2-F3BBAA362186>.<2>}
+Test Case '-[JobGenieTests.FeedbackTests testAccountScopedOfflineNeverSurvivesRestartAndNeverBlocksManualEntry]' passed (0.016 seconds).
+Test Case '-[JobGenieTests.FeedbackTests testChangedSurfaceDefersOfferAndAcknowledgesOnlyAfterPresentation]' started.
+Test Case '-[JobGenieTests.FeedbackTests testChangedSurfaceDefersOfferAndAcknowledgesOnlyAfterPresentation]' passed (0.005 seconds).
+Test Case '-[JobGenieTests.FeedbackTests testDemoNeverMakesFeedbackNetworkCallsOrPersistsChoices]' started.
+Test Case '-[JobGenieTests.FeedbackTests testDemoNeverMakesFeedbackNetworkCallsOrPersistsChoices]' passed (0.002 seconds).
+Test Case '-[JobGenieTests.FeedbackTests testFailedSubmissionKeepsFormOpenAndRetrySendsNoUserOrSourceOverride]' started.
+Test Case '-[JobGenieTests.FeedbackTests testFailedSubmissionKeepsFormOpenAndRetrySendsNoUserOrSourceOverride]' passed (0.004 seconds).
+Test Case '-[JobGenieTests.FeedbackTests testFeedbackEnglishAndChineseResources]' started.
+Test Case '-[JobGenieTests.FeedbackTests testFeedbackEnglishAndChineseResources]' passed (0.002 seconds).
+Test Case '-[JobGenieTests.FeedbackTests testIdleForegroundAndBlockedSurfaceBoundaries]' started.
+Test Case '-[JobGenieTests.FeedbackTests testIdleForegroundAndBlockedSurfaceBoundaries]' passed (0.002 seconds).
+Test Case '-[JobGenieTests.FeedbackTests testLateAccountResponseCannotPopulateNextAccount]' started.
+Test Case '-[JobGenieTests.FeedbackTests testLateAccountResponseCannotPopulateNextAccount]' passed (0.203 seconds).
+Test Case '-[JobGenieTests.FeedbackTests testLateReadCannotEraseConfirmedSubmission]' started.
+Test Case '-[JobGenieTests.FeedbackTests testLateReadCannotEraseConfirmedSubmission]' passed (0.315 seconds).
+Test Case '-[JobGenieTests.FeedbackTests testLaterPersistsAndOfflinePreferenceSyncIsRetriedWithoutRatings]' started.
+2026-11-07 21:46:27.479312+0800 JobGenie[28971:44080856] [Default] Task <C7729A60-044C-439D-B063-FE31C032CC7D>.<1> finished with error [-1009] Error Domain=NSURLErrorDomain Code=-1009 "(null)" UserInfo={_NSURLErrorRelatedURLSessionTaskErrorKey=(
+    "LocalDataTask <C7729A60-044C-439D-B063-FE31C032CC7D>.<1>"
+), _NSURLErrorFailingURLSessionTaskErrorKey=LocalDataTask <C7729A60-044C-439D-B063-FE31C032CC7D>.<1>}
+2026-11-07 21:46:27.481286+0800 JobGenie[28971:44080848] [Default] Task <1C767863-7969-4750-91CE-359D3A37E404>.<2> finished with error [-1009] Error Domain=NSURLErrorDomain Code=-1009 "(null)" UserInfo={_NSURLErrorRelatedURLSessionTaskErrorKey=(
+    "LocalDataTask <1C767863-7969-4750-91CE-359D3A37E404>.<2>"
+), _NSURLErrorFailingURLSessionTaskErrorKey=LocalDataTask <1C767863-7969-4750-91CE-359D3A37E404>.<2>}
+Test Case '-[JobGenieTests.FeedbackTests testLaterPersistsAndOfflinePreferenceSyncIsRetriedWithoutRatings]' passed (0.008 seconds).
+Test Case '-[JobGenieTests.FeedbackTests testNoDefaultStarsAndUTF16CommentValidation]' started.
+Test Case '-[JobGenieTests.FeedbackTests testNoDefaultStarsAndUTF16CommentValidation]' passed (0.001 seconds).
+Test Case '-[JobGenieTests.FeedbackTests testRealFeedbackAPI]' started.
+<WORKSPACE>/ios/JobGenieTests/FeedbackTests.swift:156: -[JobGenieTests.FeedbackTests testRealFeedbackAPI] : Test skipped - Run isolated feedback acceptance
+Test Case '-[JobGenieTests.FeedbackTests testRealFeedbackAPI]' skipped (0.004 seconds).
+Test Case '-[JobGenieTests.FeedbackTests testUnauthorizedClearsPresentationAndTriggersSessionCleanup]' started.
+Test Case '-[JobGenieTests.FeedbackTests testUnauthorizedClearsPresentationAndTriggersSessionCleanup]' passed (0.001 seconds).
+Test Suite 'FeedbackTests' passed at 2026-11-07 21:46:27.490.
+	 Executed 12 tests, with 1 test skipped and 0 failures (0 unexpected) in 0.561 (0.567) seconds
+Test Suite 'HistoryTests' started at 2026-11-07 21:46:27.490.
+Test Case '-[JobGenieTests.HistoryTests testDemoReordersHistoryAndFallsBackAfterDeletion]' started.
+Test Case '-[JobGenieTests.HistoryTests testDemoReordersHistoryAndFallsBackAfterDeletion]' passed (0.001 seconds).
+Test Case '-[JobGenieTests.HistoryTests testDraftOnlySendsEditableFieldsAndPreservesMilliseconds]' started.
+Test Case '-[JobGenieTests.HistoryTests testDraftOnlySendsEditableFieldsAndPreservesMilliseconds]' passed (0.003 seconds).
+Test Case '-[JobGenieTests.HistoryTests testFailureDoesNotOptimisticallyChangeDataAnd401ClearsHistory]' started.
+Test Case '-[JobGenieTests.HistoryTests testFailureDoesNotOptimisticallyChangeDataAnd401ClearsHistory]' passed (0.002 seconds).
+Test Case '-[JobGenieTests.HistoryTests testHistoryContractPreservesProvenanceAndEligibility]' started.
+Test Case '-[JobGenieTests.HistoryTests testHistoryContractPreservesProvenanceAndEligibility]' passed (0.001 seconds).
+Test Case '-[JobGenieTests.HistoryTests testHistoryMessagesHaveEnglishTranslations]' started.
+Test Case '-[JobGenieTests.HistoryTests testHistoryMessagesHaveEnglishTranslations]' passed (0.001 seconds).
+Test Case '-[JobGenieTests.HistoryTests testHistoryOnlyEditsAndDemoReset]' started.
+Test Case '-[JobGenieTests.HistoryTests testHistoryOnlyEditsAndDemoReset]' passed (0.001 seconds).
+Test Case '-[JobGenieTests.HistoryTests testMissingRecordRefreshAndErrorMapping]' started.
+Test Case '-[JobGenieTests.HistoryTests testMissingRecordRefreshAndErrorMapping]' passed (0.002 seconds).
+Test Case '-[JobGenieTests.HistoryTests testNativeRequestsUseCorrectMethodsAndServerStatus]' started.
+Test Case '-[JobGenieTests.HistoryTests testNativeRequestsUseCorrectMethodsAndServerStatus]' passed (0.004 seconds).
+Test Case '-[JobGenieTests.HistoryTests testOlderListResponseCannotOverwriteConfirmedMutation]' started.
+Test Case '-[JobGenieTests.HistoryTests testOlderListResponseCannotOverwriteConfirmedMutation]' passed (0.323 seconds).
+Test Case '-[JobGenieTests.HistoryTests testOutOfOrderDetailLoadsAndSessionExitDoNotRestoreOldData]' started.
+Test Case '-[JobGenieTests.HistoryTests testOutOfOrderDetailLoadsAndSessionExitDoNotRestoreOldData]' passed (0.310 seconds).
+Test Suite 'HistoryTests' passed at 2026-11-07 21:46:28.139.
+	 Executed 10 tests, with 0 failures (0 unexpected) in 0.646 (0.649) seconds
+Test Suite 'JobDocumentTests' started at 2026-11-07 21:46:28.139.
+Test Case '-[JobGenieTests.JobDocumentTests testDocumentDecodesSnapshotMetadata]' started.
+Test Case '-[JobGenieTests.JobDocumentTests testDocumentDecodesSnapshotMetadata]' passed (0.002 seconds).
+Test Case '-[JobGenieTests.JobDocumentTests testInvalidIDsNeverReachNetwork]' started.
+Test Case '-[JobGenieTests.JobDocumentTests testInvalidIDsNeverReachNetwork]' passed (0.001 seconds).
+Test Case '-[JobGenieTests.JobDocumentTests testRealApplicationDocuments]' started.
+<WORKSPACE>/ios/JobGenieTests/JobDocumentTests.swift:19: -[JobGenieTests.JobDocumentTests testRealApplicationDocuments] : Test skipped - Run isolated documents acceptance
+Test Case '-[JobGenieTests.JobDocumentTests testRealApplicationDocuments]' skipped (0.001 seconds).
+Test Suite 'JobDocumentTests' passed at 2026-11-07 21:46:28.144.
+	 Executed 3 tests, with 1 test skipped and 0 failures (0 unexpected) in 0.004 (0.004) seconds
+Test Suite 'LocalizationTests' started at 2026-11-07 21:46:28.144.
+Test Case '-[JobGenieTests.LocalizationTests testDynamicMessagesTranslateAtRenderTime]' started.
+Test Case '-[JobGenieTests.LocalizationTests testDynamicMessagesTranslateAtRenderTime]' passed (0.005 seconds).
+Test Case '-[JobGenieTests.LocalizationTests testLocalizedStatusResources]' started.
+Test Case '-[JobGenieTests.LocalizationTests testLocalizedStatusResources]' passed (0.001 seconds).
+Test Case '-[JobGenieTests.LocalizationTests testPreferencePersistsAndInvalidValueUsesSystem]' started.
+Test Case '-[JobGenieTests.LocalizationTests testPreferencePersistsAndInvalidValueUsesSystem]' passed (0.003 seconds).
+Test Case '-[JobGenieTests.LocalizationTests testSystemLanguageResolutionAndFallback]' started.
+Test Case '-[JobGenieTests.LocalizationTests testSystemLanguageResolutionAndFallback]' passed (0.000 seconds).
+Test Suite 'LocalizationTests' passed at 2026-11-07 21:46:28.154.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.009 (0.010) seconds
+Test Suite 'MailTests' started at 2026-11-07 21:46:28.154.
+Test Case '-[JobGenieTests.MailTests testAuthorizationCancellationInvalidatesAttemptWithoutFinishing]' started.
+Test Case '-[JobGenieTests.MailTests testAuthorizationCancellationInvalidatesAttemptWithoutFinishing]' passed (0.023 seconds).
+Test Case '-[JobGenieTests.MailTests testAuthorizationCoordinatorFinishesAndRefreshesOnlyAfterValidatedCallback]' started.
+Test Case '-[JobGenieTests.MailTests testAuthorizationCoordinatorFinishesAndRefreshesOnlyAfterValidatedCallback]' passed (0.022 seconds).
+Test Case '-[JobGenieTests.MailTests testAuthorizationRejectsWrongProviderAndNonHTTPSURL]' started.
+Test Case '-[JobGenieTests.MailTests testAuthorizationRejectsWrongProviderAndNonHTTPSURL]' passed (0.000 seconds).
+Test Case '-[JobGenieTests.MailTests testCancellationAfterFinishSubmissionDoesNotClaimBindingWasCancelled]' started.
+2026-11-07 21:46:28.202324+0800 JobGenie[28971:44080854] [Default] Task <8453AF2C-FF1A-4AB6-A62A-A242F422F687>.<2> finished with error [1] Error Domain=Swift.CancellationError Code=1 "(null)" UserInfo={_NSURLErrorRelatedURLSessionTaskErrorKey=(
+    "LocalDataTask <8453AF2C-FF1A-4AB6-A62A-A242F422F687>.<2>"
+), _NSURLErrorFailingURLSessionTaskErrorKey=LocalDataTask <8453AF2C-FF1A-4AB6-A62A-A242F422F687>.<2>}
+Test Case '-[JobGenieTests.MailTests testCancellationAfterFinishSubmissionDoesNotClaimBindingWasCancelled]' passed (0.022 seconds).
+Test Case '-[JobGenieTests.MailTests testDemoRetryConfirmAndIgnoreAreIsolatedAndDoNotDuplicate]' started.
+Test Case '-[JobGenieTests.MailTests testDemoRetryConfirmAndIgnoreAreIsolatedAndDoNotDuplicate]' passed (0.001 seconds).
+Test Case '-[JobGenieTests.MailTests testFailedReviewKeepsPendingAndUnauthorizedClearsPrivateData]' started.
+Test Case '-[JobGenieTests.MailTests testFailedReviewKeepsPendingAndUnauthorizedClearsPrivateData]' passed (0.003 seconds).
+Test Case '-[JobGenieTests.MailTests testLegacyAndUnknownBacklogDecodeWithoutInventingZero]' started.
+Test Case '-[JobGenieTests.MailTests testLegacyAndUnknownBacklogDecodeWithoutInventingZero]' passed (0.001 seconds).
+Test Case '-[JobGenieTests.MailTests testMailEnglishTranslations]' started.
+Test Case '-[JobGenieTests.MailTests testMailEnglishTranslations]' passed (0.001 seconds).
+Test Case '-[JobGenieTests.MailTests testPKCEKnownVectorRandomnessAndStrictCallback]' started.
+Test Case '-[JobGenieTests.MailTests testPKCEKnownVectorRandomnessAndStrictCallback]' passed (0.000 seconds).
+Test Case '-[JobGenieTests.MailTests testReviewRequiresExplicitTargetAndWhitelistsFields]' started.
+Test Case '-[JobGenieTests.MailTests testReviewRequiresExplicitTargetAndWhitelistsFields]' passed (0.001 seconds).
+Test Case '-[JobGenieTests.MailTests testSigningOutDuringAuthorizationNeverFinishesForAnotherSession]' started.
+Test Case '-[JobGenieTests.MailTests testSigningOutDuringAuthorizationNeverFinishesForAnotherSession]' passed (0.022 seconds).
+Test Case '-[JobGenieTests.MailTests testSyncConfirmedCountsSurviveFailedRefreshAndUsesPOST]' started.
+Test Case '-[JobGenieTests.MailTests testSyncConfirmedCountsSurviveFailedRefreshAndUsesPOST]' passed (0.004 seconds).
+Test Suite 'MailTests' passed at 2026-11-07 21:46:28.257.
+	 Executed 12 tests, with 0 failures (0 unexpected) in 0.101 (0.103) seconds
+Test Suite 'ReminderTests' started at 2026-11-07 21:46:28.257.
+Test Case '-[JobGenieTests.ReminderTests testConflictReloadsCanonicalRevisionAndUnauthorizedClearsSession]' started.
+Test Case '-[JobGenieTests.ReminderTests testConflictReloadsCanonicalRevisionAndUnauthorizedClearsSession]' passed (0.006 seconds).
+Test Case '-[JobGenieTests.ReminderTests testContractAndActionWhitelist]' started.
+Test Case '-[JobGenieTests.ReminderTests testContractAndActionWhitelist]' passed (0.001 seconds).
+Test Case '-[JobGenieTests.ReminderTests testDemoReadSettingsAndCancellationPersistWithinSession]' started.
+Test Case '-[JobGenieTests.ReminderTests testDemoReadSettingsAndCancellationPersistWithinSession]' passed (0.001 seconds).
+Test Case '-[JobGenieTests.ReminderTests testDemoSnoozeIsIdempotentAndCannotUndoRead]' started.
+Test Case '-[JobGenieTests.ReminderTests testDemoSnoozeIsIdempotentAndCannotUndoRead]' passed (0.001 seconds).
+Test Case '-[JobGenieTests.ReminderTests testEnglishReminderTranslations]' started.
+Test Case '-[JobGenieTests.ReminderTests testEnglishReminderTranslations]' passed (0.001 seconds).
+Test Case '-[JobGenieTests.ReminderTests testFailedWriteKeepsItemAndConfirmedWriteSurvivesFailedRefresh]' started.
+Test Case '-[JobGenieTests.ReminderTests testFailedWriteKeepsItemAndConfirmedWriteSurvivesFailedRefresh]' passed (0.003 seconds).
+Test Case '-[JobGenieTests.ReminderTests testLogoutDiscardsDelayedResponseBeforeAnotherAccount]' started.
+Test Case '-[JobGenieTests.ReminderTests testLogoutDiscardsDelayedResponseBeforeAnotherAccount]' passed (0.023 seconds).
+Test Case '-[JobGenieTests.ReminderTests testOlderReadCannotOverwriteNewerRefresh]' started.
+Test Case '-[JobGenieTests.ReminderTests testOlderReadCannotOverwriteNewerRefresh]' passed (0.163 seconds).
+Test Case '-[JobGenieTests.ReminderTests testRepeatedRefreshAndEquivalentTimeDoNotDuplicateOrReopen]' started.
+Test Case '-[JobGenieTests.ReminderTests testRepeatedRefreshAndEquivalentTimeDoNotDuplicateOrReopen]' passed (0.002 seconds).
+Test Case '-[JobGenieTests.ReminderTests testRescheduleABAInvalidatesOldRevisionAndClearDeleteRemoveReminder]' started.
+Test Case '-[JobGenieTests.ReminderTests testRescheduleABAInvalidatesOldRevisionAndClearDeleteRemoveReminder]' passed (0.002 seconds).
+Test Case '-[JobGenieTests.ReminderTests testServerTimeControlsVisibilityInsteadOfDeviceCalendar]' started.
+Test Case '-[JobGenieTests.ReminderTests testServerTimeControlsVisibilityInsteadOfDeviceCalendar]' passed (0.002 seconds).
+Test Case '-[JobGenieTests.ReminderTests testSettingsConfirmedResponseSurvivesFailedRefresh]' started.
+Test Case '-[JobGenieTests.ReminderTests testSettingsConfirmedResponseSurvivesFailedRefresh]' passed (0.002 seconds).
+Test Suite 'ReminderTests' passed at 2026-11-07 21:46:28.466.
+	 Executed 12 tests, with 0 failures (0 unexpected) in 0.206 (0.209) seconds
+Test Suite 'ResourceTests' started at 2026-11-07 21:46:28.466.
+Test Case '-[JobGenieTests.ResourceTests testBoundedFileReadAndProtectedPreviewFilename]' started.
+Test Case '-[JobGenieTests.ResourceTests testBoundedFileReadAndProtectedPreviewFilename]' passed (0.003 seconds).
+Test Case '-[JobGenieTests.ResourceTests testCalendarRangeUsesLocalDaysAcrossDSTAndLimits]' started.
+Test Case '-[JobGenieTests.ResourceTests testCalendarRangeUsesLocalDaysAcrossDSTAndLimits]' passed (0.001 seconds).
+Test Case '-[JobGenieTests.ResourceTests testDemoCurrentDistributionAndCohortAreDifferentAndNoInferredInterview]' started.
+Test Case '-[JobGenieTests.ResourceTests testDemoCurrentDistributionAndCohortAreDifferentAndNoInferredInterview]' passed (0.002 seconds).
+Test Case '-[JobGenieTests.ResourceTests testDownloadRejectsHTMLAndUnauthorizedClearsResources]' started.
+Test Case '-[JobGenieTests.ResourceTests testDownloadRejectsHTMLAndUnauthorizedClearsResources]' passed (0.002 seconds).
+Test Case '-[JobGenieTests.ResourceTests testFailedUploadDoesNotAddRecordAndSizeTypeErrorsAreSpecific]' started.
+Test Case '-[JobGenieTests.ResourceTests testFailedUploadDoesNotAddRecordAndSizeTypeErrorsAreSpecific]' passed (0.001 seconds).
+Test Case '-[JobGenieTests.ResourceTests testLogoutDropsDelayedFileListAndClearsAccountState]' started.
+Test Case '-[JobGenieTests.ResourceTests testLogoutDropsDelayedFileListAndClearsAccountState]' passed (0.022 seconds).
+Test Case '-[JobGenieTests.ResourceTests testNativeUploadAndBinaryDownloadIgnoreServerURL]' started.
+Test Case '-[JobGenieTests.ResourceTests testNativeUploadAndBinaryDownloadIgnoreServerURL]' passed (0.002 seconds).
+Test Case '-[JobGenieTests.ResourceTests testPreviewCacheAndDemoFilesClearedOnSignOut]' started.
+Test Case '-[JobGenieTests.ResourceTests testPreviewCacheAndDemoFilesClearedOnSignOut]' passed (0.002 seconds).
+Test Case '-[JobGenieTests.ResourceTests testQueryEncodingPreservesIanaTimeZoneAndJSONContract]' started.
+Test Case '-[JobGenieTests.ResourceTests testQueryEncodingPreservesIanaTimeZoneAndJSONContract]' passed (0.005 seconds).
+Test Case '-[JobGenieTests.ResourceTests testRealResourcesAPI]' started.
+<WORKSPACE>/ios/JobGenieTests/ResourceTests.swift:120: -[JobGenieTests.ResourceTests testRealResourcesAPI] : Test skipped - Run isolated resources acceptance
+Test Case '-[JobGenieTests.ResourceTests testRealResourcesAPI]' skipped (0.001 seconds).
+Test Case '-[JobGenieTests.ResourceTests testUploadWhitelistSizeAndMultipartInjection]' started.
+Test Case '-[JobGenieTests.ResourceTests testUploadWhitelistSizeAndMultipartInjection]' passed (0.000 seconds).
+Test Suite 'ResourceTests' passed at 2026-11-07 21:46:28.510.
+	 Executed 11 tests, with 1 test skipped and 0 failures (0 unexpected) in 0.041 (0.043) seconds
+Test Suite 'ScheduleTests' started at 2026-11-07 21:46:28.510.
+Test Case '-[JobGenieTests.ScheduleTests testConfirmedPatchSurvivesRefreshFailureAndHydratesUncachedJob]' started.
+Test Case '-[JobGenieTests.ScheduleTests testConfirmedPatchSurvivesRefreshFailureAndHydratesUncachedJob]' passed (0.004 seconds).
+Test Case '-[JobGenieTests.ScheduleTests testDemoSetRescheduleClearAndDeleteKeepHistoryAndStatus]' started.
+Test Case '-[JobGenieTests.ScheduleTests testDemoSetRescheduleClearAndDeleteKeepHistoryAndStatus]' passed (0.002 seconds).
+Test Case '-[JobGenieTests.ScheduleTests testEnglishScheduleEditorTranslations]' started.
+Test Case '-[JobGenieTests.ScheduleTests testEnglishScheduleEditorTranslations]' passed (0.001 seconds).
+Test Case '-[JobGenieTests.ScheduleTests testMissingDatesFollowInterviewAndAssessmentRules]' started.
+Test Case '-[JobGenieTests.ScheduleTests testMissingDatesFollowInterviewAndAssessmentRules]' passed (0.001 seconds).
+Test Case '-[JobGenieTests.ScheduleTests testPartialPatchAndExplicitClearPreserveOtherFields]' started.
+Test Case '-[JobGenieTests.ScheduleTests testPartialPatchAndExplicitClearPreserveOtherFields]' passed (0.001 seconds).
+Test Suite 'ScheduleTests' passed at 2026-11-07 21:46:28.518.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.008 (0.009) seconds
+Test Suite 'ShareTests' started at 2026-11-07 21:46:28.518.
+Test Case '-[JobGenieTests.ShareTests testLimitAndMalformedFilesDoNotLoseDrafts]' started.
+Test Case '-[JobGenieTests.ShareTests testLimitAndMalformedFilesDoNotLoseDrafts]' passed (0.064 seconds).
+Test Case '-[JobGenieTests.ShareTests testOnlyWebLinksWithoutCredentialsAreAccepted]' started.
+Test Case '-[JobGenieTests.ShareTests testOnlyWebLinksWithoutCredentialsAreAccepted]' passed (0.000 seconds).
+Test Case '-[JobGenieTests.ShareTests testPersistenceDeduplicationRemovalAndNoCredentials]' started.
+Test Case '-[JobGenieTests.ShareTests testPersistenceDeduplicationRemovalAndNoCredentials]' passed (0.001 seconds).
+Test Case '-[JobGenieTests.ShareTests testSharedContainerIsAvailableToHostApp]' started.
+Test Case '-[JobGenieTests.ShareTests testSharedContainerIsAvailableToHostApp]' passed (0.002 seconds).
+Test Case '-[JobGenieTests.ShareTests testTextExtractionRequiresOneDistinctWebLink]' started.
+Test Case '-[JobGenieTests.ShareTests testTextExtractionRequiresOneDistinctWebLink]' passed (0.007 seconds).
+Test Suite 'ShareTests' passed at 2026-11-07 21:46:28.594.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.074 (0.075) seconds
+Test Suite 'JobGenieTests.xctest' passed at 2026-11-07 21:46:28.594.
+	 Executed 94 tests, with 3 tests skipped and 0 failures (0 unexpected) in 1.705 (1.729) seconds
+Test Suite 'All tests' passed at 2026-11-07 21:46:28.594.
+	 Executed 94 tests, with 3 tests skipped and 0 failures (0 unexpected) in 1.705 (1.729) seconds
+2026-11-07 21:46:29.356628+0800 JobGenieUITests-Runner[29001:44081048] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-07 21:46:31.671.
+Test Suite 'JobGenieUITests.xctest' started at 2026-11-07 21:46:31.672.
+Test Suite 'JobGenieUITests' started at 2026-11-07 21:46:31.672.
+Test Case '-[JobGenieUITests.JobGenieUITests testDemoNavigationCreateEditAndExit]' started.
+    t =     0.00s Start Test at 2026-11-07 21:46:31.672
+    t =     0.18s Set Up
+    t =     0.19s Open com.enfoirer.jobgenie
+    t =     0.19s     Launch com.enfoirer.jobgenie
+    t =     0.40s         Setting up automation session
+    t =     0.99s         Wait for com.enfoirer.jobgenie to idle
+    t =     2.18s Waiting 10.0s for "login.demo" Button to exist
+    t =     3.21s     Checking `Expect predicate `existsNoRetry == 1` for object "login.demo" Button`
+    t =     3.21s         Checking existence of `"login.demo" Button`
+    t =     3.31s Tap "login.demo" Button
+    t =     3.31s     Wait for com.enfoirer.jobgenie to idle
+    t =     3.32s     Find the "login.demo" Button
+    t =     3.34s     Check for interrupting elements affecting "login.demo" Button
+    t =     3.36s     Synthesize event
+    t =     3.76s     Wait for com.enfoirer.jobgenie to idle
+    t =     4.06s Waiting 5.0s for "jobs.add" Button to exist
+    t =     5.10s     Checking `Expect predicate `existsNoRetry == 1` for object "jobs.add" Button`
+    t =     5.10s         Checking existence of `"jobs.add" Button`
+    t =     5.19s Find the Target Application 'com.enfoirer.jobgenie'
+    t =     5.29s Added attachment named 'Applications'
+    t =     5.29s Tap "jobs.add" Button
+    t =     5.29s     Wait for com.enfoirer.jobgenie to idle
+    t =     5.29s     Find the "jobs.add" Button
+    t =     5.33s     Check for interrupting elements affecting "jobs.add" Button
+    t =     5.36s     Synthesize event
+    t =     5.66s     Wait for com.enfoirer.jobgenie to idle
+    t =     6.48s Tap "editor.save" Button
+    t =     6.48s     Wait for com.enfoirer.jobgenie to idle
+    t =     6.48s     Find the "editor.save" Button
+    t =     6.57s     Check for interrupting elements affecting "editor.save" Button
+    t =     6.62s     Synthesize event
+    t =     6.91s     Wait for com.enfoirer.jobgenie to idle
+    t =     7.69s Checking existence of `"请填写公司和职位。" StaticText`
+    t =     7.76s Tap "editor.company" TextField
+    t =     7.76s     Wait for com.enfoirer.jobgenie to idle
+    t =     7.77s     Find the "editor.company" TextField
+    t =     7.82s     Check for interrupting elements affecting "editor.company" TextField
+    t =     7.88s     Synthesize event
+    t =     8.16s     Wait for com.enfoirer.jobgenie to idle
+    t =     8.57s Type 'Demo Acme' into "editor.company" TextField
+    t =     8.57s     Wait for com.enfoirer.jobgenie to idle
+    t =     8.95s     Find the "editor.company" TextField
+    t =     9.03s     Check for interrupting elements affecting "editor.company" TextField
+    t =     9.09s     Synthesize event
+    t =     9.43s     Wait for com.enfoirer.jobgenie to idle
+    t =     9.44s Tap "editor.position" TextField
+    t =     9.44s     Wait for com.enfoirer.jobgenie to idle
+    t =     9.44s     Find the "editor.position" TextField
+    t =     9.52s     Check for interrupting elements affecting "editor.position" TextField
+    t =     9.58s     Synthesize event
+    t =     9.87s     Wait for com.enfoirer.jobgenie to idle
+    t =     9.87s Type 'iOS Engineer' into "editor.position" TextField
+    t =     9.87s     Wait for com.enfoirer.jobgenie to idle
+    t =     9.87s     Find the "editor.position" TextField
+    t =     9.94s     Check for interrupting elements affecting "editor.position" TextField
+    t =    10.01s     Synthesize event
+    t =    10.40s     Wait for com.enfoirer.jobgenie to idle
+    t =    10.40s Tap "editor.save" Button
+    t =    10.40s     Wait for com.enfoirer.jobgenie to idle
+    t =    10.41s     Find the "editor.save" Button
+    t =    10.48s     Check for interrupting elements affecting "editor.save" Button
+    t =    10.54s     Synthesize event
+    t =    10.83s     Wait for com.enfoirer.jobgenie to idle
+    t =    11.63s Waiting 5.0s for "Demo Acme" StaticText to exist
+    t =    12.65s     Checking `Expect predicate `existsNoRetry == 1` for object "Demo Acme" StaticText`
+    t =    12.65s         Checking existence of `"Demo Acme" StaticText`
+    t =    12.71s Tap "Demo Acme" StaticText
+    t =    12.71s     Wait for com.enfoirer.jobgenie to idle
+    t =    12.72s     Find the "Demo Acme" StaticText
+    t =    12.76s     Check for interrupting elements affecting "Demo Acme" StaticText
+    t =    12.79s     Synthesize event
+    t =    12.80s         Scroll element to visible
+    t =    12.80s         Find the "Demo Acme" StaticText
+    t =    12.94s         Computed hit point {138, 368.16666666666669} after scrolling to visible
+    t =    13.23s     Wait for com.enfoirer.jobgenie to idle
+    t =    14.11s Tap "job.edit" Button
+    t =    14.11s     Wait for com.enfoirer.jobgenie to idle
+    t =    14.11s     Find the "job.edit" Button
+    t =    14.17s     Check for interrupting elements affecting "job.edit" Button
+    t =    14.21s     Synthesize event
+    t =    14.51s     Wait for com.enfoirer.jobgenie to idle
+    t =    14.95s Tap "editor.location" TextField
+    t =    14.95s     Wait for com.enfoirer.jobgenie to idle
+    t =    14.95s     Find the "editor.location" TextField
+    t =    15.03s     Check for interrupting elements affecting "editor.location" TextField
+    t =    15.09s     Synthesize event
+    t =    15.38s     Wait for com.enfoirer.jobgenie to idle
+    t =    15.65s Type 'Shanghai' into "editor.location" TextField
+    t =    15.65s     Wait for com.enfoirer.jobgenie to idle
+    t =    15.66s     Find the "editor.location" TextField
+    t =    15.73s     Check for interrupting elements affecting "editor.location" TextField
+    t =    15.79s     Synthesize event
+    t =    16.13s     Wait for com.enfoirer.jobgenie to idle
+    t =    16.13s Tap "editor.save" Button
+    t =    16.13s     Wait for com.enfoirer.jobgenie to idle
+    t =    16.13s     Find the "editor.save" Button
+    t =    16.21s     Check for interrupting elements affecting "editor.save" Button
+    t =    16.27s     Synthesize event
+    t =    16.57s     Wait for com.enfoirer.jobgenie to idle
+    t =    17.36s Waiting 5.0s for "Shanghai" StaticText to exist
+    t =    18.40s     Checking `Expect predicate `existsNoRetry == 1` for object "Shanghai" StaticText`
+    t =    18.40s         Checking existence of `"Shanghai" StaticText`
+    t =    18.47s Tap "日程" Button
+    t =    18.47s     Wait for com.enfoirer.jobgenie to idle
+    t =    18.47s     Find the "日程" Button
+    t =    18.52s     Check for interrupting elements affecting "calendar" Button
+    t =    18.56s     Synthesize event
+    t =    18.85s     Wait for com.enfoirer.jobgenie to idle
+    t =    19.93s Waiting 5.0s for "Northstar" StaticText to exist
+    t =    20.97s     Checking `Expect predicate `existsNoRetry == 1` for object "Northstar" StaticText`
+    t =    20.97s         Checking existence of `"Northstar" StaticText`
+    t =    21.02s Tap "schedule.filter" Button
+    t =    21.02s     Wait for com.enfoirer.jobgenie to idle
+    t =    21.02s     Find the "schedule.filter" Button
+    t =    21.05s     Check for interrupting elements affecting "schedule.filter" Button
+    t =    21.08s     Synthesize event
+    t =    21.37s     Wait for com.enfoirer.jobgenie to idle
+    t =    22.23s Tap "时间待补充" Button
+    t =    22.23s     Wait for com.enfoirer.jobgenie to idle
+    t =    22.23s     Find the "时间待补充" Button
+    t =    22.27s     Check for interrupting elements affecting "时间待补充" Button
+    t =    22.30s     Synthesize event
+    t =    22.59s     Wait for com.enfoirer.jobgenie to idle
+    t =    23.43s Checking existence of `"尚未安排时间" StaticText`
+    t =    23.48s Find the Target Application 'com.enfoirer.jobgenie'
+    t =    23.57s Added attachment named 'Schedule'
+    t =    23.57s Tap "邮箱" Button
+    t =    23.57s     Wait for com.enfoirer.jobgenie to idle
+    t =    23.57s     Find the "邮箱" Button
+    t =    23.61s     Check for interrupting elements affecting "envelope" Button
+    t =    23.64s     Synthesize event
+    t =    23.93s     Wait for com.enfoirer.jobgenie to idle
+    t =    25.13s Checking existence of `"demo@example.com" StaticText`
+    t =    25.20s Tap "我的" Button
+    t =    25.20s     Wait for com.enfoirer.jobgenie to idle
+    t =    25.20s     Find the "我的" Button
+    t =    25.23s     Check for interrupting elements affecting "person.crop.circle" Button
+    t =    25.26s     Synthesize event
+    t =    25.55s     Wait for com.enfoirer.jobgenie to idle
+    t =    26.98s Checking existence of `"account.signout" Button`
+    t =    27.03s Swipe up Target Application 'com.enfoirer.jobgenie'
+    t =    27.03s     Wait for com.enfoirer.jobgenie to idle
+    t =    27.04s     Find the Target Application 'com.enfoirer.jobgenie'
+    t =    27.06s     Check for interrupting elements affecting "JobGenie" Application
+    t =    27.09s     Synthesize event
+    t =    27.51s     Wait for com.enfoirer.jobgenie to idle
+    t =    28.64s Checking existence of `"account.signout" Button`
+    t =    28.69s Find the "account.signout" Button
+    t =    28.73s Tap "account.signout" Button
+    t =    28.73s     Wait for com.enfoirer.jobgenie to idle
+    t =    28.73s     Find the "account.signout" Button
+    t =    28.77s     Check for interrupting elements affecting "account.signout" Button
+    t =    28.81s     Synthesize event
+    t =    29.09s     Wait for com.enfoirer.jobgenie to idle
+    t =    29.55s Tap "确认退出" Button
+    t =    29.55s     Wait for com.enfoirer.jobgenie to idle
+    t =    29.56s     Find the "确认退出" Button
+    t =    29.62s     Check for interrupting elements affecting "确认退出" Button
+    t =    29.65s     Synthesize event
+    t =    29.94s     Wait for com.enfoirer.jobgenie to idle
+    t =    30.30s Waiting 5.0s for "login.demo" Button to exist
+    t =    31.33s     Checking `Expect predicate `existsNoRetry == 1` for object "login.demo" Button`
+    t =    31.33s         Checking existence of `"login.demo" Button`
+    t =    31.38s Tear Down
+Test Case '-[JobGenieUITests.JobGenieUITests testDemoNavigationCreateEditAndExit]' passed (31.668 seconds).
+Test Case '-[JobGenieUITests.JobGenieUITests testDemoProductFeedbackAndEnglish]' started.
+    t =     0.00s Start Test at 2026-11-07 21:47:03.341
+    t =     0.03s Set Up
+    t =     0.03s Open com.enfoirer.jobgenie
+    t =     0.03s     Launch com.enfoirer.jobgenie
+    t =     0.03s         Terminate com.enfoirer.jobgenie:29027
+    t =     1.30s         Setting up automation session
+    t =     1.90s         Wait for com.enfoirer.jobgenie to idle
+    t =     3.04s Waiting 15.0s for "login.demo" Button to exist
+    t =     4.07s     Checking `Expect predicate `existsNoRetry == 1` for object "login.demo" Button`
+    t =     4.07s         Checking existence of `"login.demo" Button`
+    t =     4.14s Tap "login.demo" Button
+    t =     4.14s     Wait for com.enfoirer.jobgenie to idle
+    t =     4.14s     Find the "login.demo" Button
+    t =     4.16s     Check for interrupting elements affecting "login.demo" Button
+    t =     4.17s     Synthesize event
+    t =     4.46s     Wait for com.enfoirer.jobgenie to idle
+    t =     4.53s Tap "我的" Button
+    t =     4.53s     Wait for com.enfoirer.jobgenie to idle
+    t =     5.58s     Find the "我的" Button
+    t =     5.66s     Check for interrupting elements affecting "person.crop.circle" Button
+    t =     5.70s     Synthesize event
+    t =     5.98s     Wait for com.enfoirer.jobgenie to idle
+    t =     7.47s Checking existence of `"feedback.open" Button`
+    t =     7.53s Find the "feedback.open" Button
+    t =     7.57s Tap "feedback.open" Button
+    t =     7.57s     Wait for com.enfoirer.jobgenie to idle
+    t =     7.57s     Find the "feedback.open" Button
+    t =     7.61s     Check for interrupting elements affecting "feedback.open" Button
+    t =     7.64s     Synthesize event
+    t =     7.93s     Wait for com.enfoirer.jobgenie to idle
+    t =     8.56s Waiting 5.0s for "feedback.overall.1" Button to exist
+    t =     9.58s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.overall.1" Button`
+    t =     9.58s         Checking existence of `"feedback.overall.1" Button`
+    t =     9.68s Checking existence of `"feedback.submit" Button`
+    t =     9.74s Swipe up Target Application 'com.enfoirer.jobgenie'
+    t =     9.74s     Wait for com.enfoirer.jobgenie to idle
+    t =     9.74s     Find the Target Application 'com.enfoirer.jobgenie'
+    t =     9.78s     Check for interrupting elements affecting "JobGenie" Application
+    t =     9.83s     Synthesize event
+    t =    10.25s     Wait for com.enfoirer.jobgenie to idle
+    t =    10.94s Checking existence of `"feedback.submit" Button`
+    t =    11.02s Find the "feedback.submit" Button
+    t =    11.09s Find the "feedback.submit" Button
+    t =    11.15s Swipe down Target Application 'com.enfoirer.jobgenie'
+    t =    11.15s     Wait for com.enfoirer.jobgenie to idle
+    t =    11.44s     Find the Target Application 'com.enfoirer.jobgenie'
+    t =    11.50s     Check for interrupting elements affecting "JobGenie" Application
+    t =    11.56s     Synthesize event
+    t =    11.97s     Wait for com.enfoirer.jobgenie to idle
+    t =    13.09s Tap "feedback.overall.1" Button
+    t =    13.09s     Wait for com.enfoirer.jobgenie to idle
+    t =    13.10s     Find the "feedback.overall.1" Button
+    t =    13.17s     Check for interrupting elements affecting "feedback.overall.1" Button
+    t =    13.23s     Synthesize event
+    t =    13.51s     Wait for com.enfoirer.jobgenie to idle
+    t =    13.52s Tap "feedback.recommendation.5" Button
+    t =    13.52s     Wait for com.enfoirer.jobgenie to idle
+    t =    13.52s     Find the "feedback.recommendation.5" Button
+    t =    13.59s     Check for interrupting elements affecting "feedback.recommendation.5" Button
+    t =    13.64s     Synthesize event
+    t =    13.93s     Wait for com.enfoirer.jobgenie to idle
+    t =    13.94s Tap "feedback.later" Button
+    t =    13.94s     Wait for com.enfoirer.jobgenie to idle
+    t =    13.94s     Find the "feedback.later" Button
+    t =    14.02s     Check for interrupting elements affecting "feedback.later" Button
+    t =    14.07s     Synthesize event
+    t =    14.36s     Wait for com.enfoirer.jobgenie to idle
+    t =    15.03s Waiting 5.0s for "feedback.open" Button to exist
+    t =    16.05s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.open" Button`
+    t =    16.05s         Checking existence of `"feedback.open" Button`
+    t =    16.11s Tap "feedback.open" Button
+    t =    16.11s     Wait for com.enfoirer.jobgenie to idle
+    t =    16.11s     Find the "feedback.open" Button
+    t =    16.15s     Check for interrupting elements affecting "feedback.open" Button
+    t =    16.18s     Synthesize event
+    t =    16.47s     Wait for com.enfoirer.jobgenie to idle
+    t =    17.08s Checking existence of `"feedback.never" Button`
+    t =    17.16s Swipe up Target Application 'com.enfoirer.jobgenie'
+    t =    17.16s     Wait for com.enfoirer.jobgenie to idle
+    t =    17.16s     Find the Target Application 'com.enfoirer.jobgenie'
+    t =    17.20s     Check for interrupting elements affecting "JobGenie" Application
+    t =    17.25s     Synthesize event
+    t =    17.66s     Wait for com.enfoirer.jobgenie to idle
+    t =    18.32s Checking existence of `"feedback.never" Button`
+    t =    18.40s Find the "feedback.never" Button
+    t =    18.47s Tap "feedback.never" Button
+    t =    18.47s     Wait for com.enfoirer.jobgenie to idle
+    t =    18.82s     Find the "feedback.never" Button
+    t =    18.88s     Check for interrupting elements affecting "feedback.never" Button
+    t =    18.94s     Synthesize event
+    t =    19.23s     Wait for com.enfoirer.jobgenie to idle
+    t =    19.62s Waiting 5.0s for "feedback.open" Button to exist
+    t =    20.64s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.open" Button`
+    t =    20.64s         Checking existence of `"feedback.open" Button`
+    t =    20.70s Swipe down Target Application 'com.enfoirer.jobgenie'
+    t =    20.70s     Wait for com.enfoirer.jobgenie to idle
+    t =    20.70s     Find the Target Application 'com.enfoirer.jobgenie'
+    t =    20.72s     Check for interrupting elements affecting "JobGenie" Application
+    t =    20.75s     Synthesize event
+    t =    21.17s     Wait for com.enfoirer.jobgenie to idle
+    t =    22.39s Swipe down Target Application 'com.enfoirer.jobgenie'
+    t =    22.39s     Wait for com.enfoirer.jobgenie to idle
+    t =    22.40s     Find the Target Application 'com.enfoirer.jobgenie'
+    t =    22.43s     Check for interrupting elements affecting "JobGenie" Application
+    t =    22.47s     Synthesize event
+    t =    22.89s     Wait for com.enfoirer.jobgenie to idle
+    t =    24.13s Swipe down Target Application 'com.enfoirer.jobgenie'
+    t =    24.13s     Wait for com.enfoirer.jobgenie to idle
+    t =    24.13s     Find the Target Application 'com.enfoirer.jobgenie'
+    t =    24.17s     Check for interrupting elements affecting "JobGenie" Application
+    t =    24.20s     Synthesize event
+    t =    24.62s     Wait for com.enfoirer.jobgenie to idle
+    t =    25.84s Swipe down Target Application 'com.enfoirer.jobgenie'
+    t =    25.84s     Wait for com.enfoirer.jobgenie to idle
+    t =    25.85s     Find the Target Application 'com.enfoirer.jobgenie'
+    t =    25.88s     Check for interrupting elements affecting "JobGenie" Application
+    t =    25.92s     Synthesize event
+    t =    26.34s     Wait for com.enfoirer.jobgenie to idle
+    t =    27.59s Tap "language.picker" Button
+    t =    27.59s     Wait for com.enfoirer.jobgenie to idle
+    t =    27.59s     Find the "language.picker" Button
+    t =    27.63s     Check for interrupting elements affecting "language.picker" Button
+    t =    27.66s     Synthesize event
+    t =    27.94s     Wait for com.enfoirer.jobgenie to idle
+    t =    29.02s Tap "English" Button
+    t =    29.02s     Wait for com.enfoirer.jobgenie to idle
+    t =    29.02s     Find the "English" Button
+    t =    29.08s     Check for interrupting elements affecting "English" Button
+    t =    29.11s     Synthesize event
+    t =    29.40s     Wait for com.enfoirer.jobgenie to idle
+    t =    30.23s Checking existence of `"feedback.open" Button`
+    t =    30.29s Find the "feedback.open" Button
+    t =    30.33s Tap "feedback.open" Button
+    t =    30.33s     Wait for com.enfoirer.jobgenie to idle
+    t =    30.33s     Find the "feedback.open" Button
+    t =    30.36s     Check for interrupting elements affecting "feedback.open" Button
+    t =    30.39s     Synthesize event
+    t =    30.68s     Wait for com.enfoirer.jobgenie to idle
+    t =    31.33s Waiting 5.0s for "Rate JobGenie" NavigationBar to exist
+    t =    32.36s     Checking `Expect predicate `existsNoRetry == 1` for object "Rate JobGenie" NavigationBar`
+    t =    32.36s         Checking existence of `"Rate JobGenie" NavigationBar`
+    t =    32.44s Tap "feedback.overall.2" Button
+    t =    32.44s     Wait for com.enfoirer.jobgenie to idle
+    t =    32.44s     Find the "feedback.overall.2" Button
+    t =    32.50s     Check for interrupting elements affecting "feedback.overall.2" Button
+    t =    32.54s     Synthesize event
+    t =    32.84s     Wait for com.enfoirer.jobgenie to idle
+    t =    32.84s Tap "feedback.recommendation.4" Button
+    t =    32.84s     Wait for com.enfoirer.jobgenie to idle
+    t =    32.85s     Find the "feedback.recommendation.4" Button
+    t =    32.92s     Check for interrupting elements affecting "feedback.recommendation.4" Button
+    t =    32.97s     Synthesize event
+    t =    33.26s     Wait for com.enfoirer.jobgenie to idle
+    t =    33.26s Find the Target Application 'com.enfoirer.jobgenie'
+    t =    33.39s Added attachment named 'English product feedback'
+    t =    33.39s Checking existence of `"feedback.submit" Button`
+    t =    33.45s Swipe up Target Application 'com.enfoirer.jobgenie'
+    t =    33.45s     Wait for com.enfoirer.jobgenie to idle
+    t =    33.45s     Find the Target Application 'com.enfoirer.jobgenie'
+    t =    33.48s     Check for interrupting elements affecting "JobGenie" Application
+    t =    33.53s     Synthesize event
+    t =    33.94s     Wait for com.enfoirer.jobgenie to idle
+    t =    35.63s Checking existence of `"feedback.submit" Button`
+    t =    35.70s Find the "feedback.submit" Button
+    t =    35.76s Tap "feedback.submit" Button
+    t =    35.76s     Wait for com.enfoirer.jobgenie to idle
+    t =    35.76s     Find the "feedback.submit" Button
+    t =    35.82s     Check for interrupting elements affecting "feedback.submit" Button
+    t =    35.86s     Synthesize event
+    t =    36.15s     Wait for com.enfoirer.jobgenie to idle
+    t =    36.54s Waiting 5.0s for "Demo feedback was not sent to the real database." StaticText to exist
+    t =    37.57s     Checking `Expect predicate `existsNoRetry == 1` for object "Demo feedback was not sent to the real database." StaticText`
+    t =    37.57s         Checking existence of `"Demo feedback was not sent to the real database." StaticText`
+    t =    37.63s Tear Down
+Test Case '-[JobGenieUITests.JobGenieUITests testDemoProductFeedbackAndEnglish]' passed (37.882 seconds).
+Test Suite 'JobGenieUITests' passed at 2026-11-07 21:47:41.223.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 69.550 (69.551) seconds
+Test Suite 'JobGenieUITests.xctest' passed at 2026-11-07 21:47:41.223.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 69.550 (69.551) seconds
+Test Suite 'Selected tests' passed at 2026-11-07 21:47:41.223.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 69.550 (69.552) seconds
+2026-11-07 21:47:41.547 xcodebuild[28627:44077868] [MT] IDETestOperationsObserverDebug: 87.581 elapsed -- Testing started completed.
+2026-11-07 21:47:41.547 xcodebuild[28627:44077868] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-07 21:47:41.547 xcodebuild[28627:44077868] [MT] IDETestOperationsObserverDebug: 87.581 sec, +87.581 sec -- end
+
+Test session results, code coverage, and logs:
+	<TEMP>/jobgenie-feedback-build/Logs/Test/Test-JobGenie-2026.11.07_21-46-09-+0800.xcresult
+
+** TEST SUCCEEDED **
+
+Testing started

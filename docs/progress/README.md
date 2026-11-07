@@ -1,6 +1,6 @@
 # Project progress and development evidence
 
-Updated: 2026-11-04 (Asia/Shanghai).
+Updated: 2026-11-08 (Asia/Shanghai).
 
 [Project progress and Gantt chart](project-progress.xlsx) is the single maintained workbook, with **Progress Gantt** and **Update Log** sheets. This is the original workbook translated and renamed in place, not a second tracker. Task IDs, historical dates, results and source references are retained. The language conversion is recorded separately. The iOS app continues to support Chinese and English.
 
@@ -48,3 +48,7 @@ On 2026-11-03, Safari sharing (`68c1235`), application documents (`a0d5882`) and
 [JG-024](records/2026-11-04-JG-024.md) records the English translation and validation. The original workbook now has 24 milestones. Implementation [`4046a69`](https://github.com/Enfoirer/jobgenie/commit/4046a69ac545a97fee44f68a5662a0b9bcc8afeb) was pushed and its remote SHA verified. See the [deployment observation](deployments/2026-11-04-english-records-4046a69.json) for the separately observed platform status.
 
 The JG-024 implementation Vercel check was subsequently observed as **success**. The saved response retains the initial pending check as well. This follow-up evidence update is a separate revision.
+
+## iOS product feedback
+
+[JG-025](records/2026-11-07-JG-025.md) was implemented and tested on 2026-11-07, with records and GitHub delivery completed on 2026-11-08. It adds native five-star feedback, suggestions and persistent later/never choices. The original workbook now has 25 milestones. See the record for actual test logs, captures/API assertions and the [deployment observation](deployments/2026-11-08-feedback-e30fe5f.json).

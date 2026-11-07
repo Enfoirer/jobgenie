@@ -1,0 +1,14 @@
+Current milestone count: 24
+{"kind":"notice","message":"Cell search matched 0 entries."}
+Inspect result written to file: <WORKSPACE>/docs/progress/project-progress.xlsx.inspect.ndjson
+PASS: JG-025 completed Nov 7 and recorded Nov 8; prior values retained; 25 milestones; status/date dependencies recompute; timeline extends through Nov 8.
+
+Saved-file verification on 2026-11-08 (Asia/Shanghai):
+{
+  "result": "passed",
+  "milestones": 25,
+  "historicalTaskAndLogValues": "preserved",
+  "frozenPanes": "preserved",
+  "timelineEnds": "2026-11-08",
+  "formulaErrors": 0
+}

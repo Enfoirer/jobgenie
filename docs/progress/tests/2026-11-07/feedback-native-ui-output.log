@@ -1,0 +1,644 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild test-without-building -xctestrun <TEMP>/jobgenie-feedback-build/Build/Products/native-1794058917160.xctestrun -destination "platform=iOS Simulator,id=62A13C6B-C168-47E9-AA89-1922ED491512" -parallel-testing-enabled NO "-only-testing:JobGenieUITests/JobGenieUITests/testRealFeedbackPromptAndPersistence" -resultBundlePath <TEMP>/jobgenie-ios-acceptance-wPKqRr/feedback-ui.xcresult
+
+2026-11-07 21:42:16.975 xcodebuild[27413:44066356] [MT] IDERunDestination: Supported platforms for the buildables in the current scheme is empty.
+Writing result bundle at path:
+	<TEMP>/jobgenie-ios-acceptance-wPKqRr/feedback-ui.xcresult
+
+2026-11-07 21:42:16.978 xcodebuild[27413:44066356] [MT] IDERunDestination: Supported platforms for the buildables in the current scheme is empty.
+2026-11-07 21:42:18.048 xcodebuild[27413:44066356] [MT] IDERunDestination: Supported platforms for the buildables in the current scheme is empty.
+2026-11-07 21:42:18.913 xcodebuild[27413:44066356] [MT] IDERunDestination: Supported platforms for the buildables in the current scheme is empty.
+2026-11-07 21:42:19.048 xcodebuild[27413:44066356] [MT] IDERunDestination: Supported platforms for the buildables in the current scheme is empty.
+2026-11-07 21:42:29.102979+0800 JobGenieUITests-Runner[27668:44068751] [Default] Running tests...
+2026-11-07 21:42:29.188797+0800 JobGenieUITests-Runner[27668:44068979] [General] Failed to send CA Event for app launch measurements for ca_event_type: 0 event_name: com.apple.app_launch_measurement.FirstFramePresentationMetric
+2026-11-07 21:42:29.226803+0800 JobGenieUITests-Runner[27668:44068979] [General] Failed to send CA Event for app launch measurements for ca_event_type: 1 event_name: com.apple.app_launch_measurement.ExtendedLaunchMetrics
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-07 21:42:31.681.
+Test Suite 'JobGenieUITests.xctest' started at 2026-11-07 21:42:31.682.
+Test Suite 'JobGenieUITests' started at 2026-11-07 21:42:31.682.
+Test Case '-[JobGenieUITests.JobGenieUITests testRealFeedbackPromptAndPersistence]' started.
+    t =     0.00s Start Test at 2026-11-07 21:42:31.683
+    t =     0.23s Set Up
+    t =     0.23s Open com.enfoirer.jobgenie
+    t =     0.23s     Launch com.enfoirer.jobgenie
+    t =     1.05s         Setting up automation session
+    t =     1.60s         Wait for com.enfoirer.jobgenie to idle
+    t =     2.98s Waiting 15.0s for "login.email" TextField to exist
+    t =     4.02s     Checking `Expect predicate `existsNoRetry == 1` for object "login.email" TextField`
+    t =     4.02s         Checking existence of `"login.email" TextField`
+    t =     4.09s Tap "login.email" TextField
+    t =     4.09s     Wait for com.enfoirer.jobgenie to idle
+    t =     4.09s     Find the "login.email" TextField
+    t =     4.11s     Check for interrupting elements affecting "login.email" TextField
+    t =     4.13s     Synthesize event
+    t =     4.53s     Wait for com.enfoirer.jobgenie to idle
+    t =     4.92s Type 'ios-acceptance@exa...' into "login.email" TextField
+    t =     4.92s     Wait for com.enfoirer.jobgenie to idle
+    t =     5.49s     Find the "login.email" TextField
+    t =     5.53s     Check for interrupting elements affecting "login.email" TextField
+    t =     5.56s     Synthesize event
+    t =     6.20s     Wait for com.enfoirer.jobgenie to idle
+    t =     6.20s Tap "login.password" SecureTextField
+    t =     6.20s     Wait for com.enfoirer.jobgenie to idle
+    t =     6.21s     Find the "login.password" SecureTextField
+    t =     6.23s     Check for interrupting elements affecting "login.password" SecureTextField
+    t =     6.26s     Synthesize event
+    t =     6.54s     Wait for com.enfoirer.jobgenie to idle
+    t =     6.90s Type 'ios-local-test-pas...' into "login.password" SecureTextField
+    t =     6.90s     Wait for com.enfoirer.jobgenie to idle
+    t =     6.90s     Find the "login.password" SecureTextField
+    t =     6.93s     Check for interrupting elements affecting "login.password" SecureTextField
+    t =     6.95s     Synthesize event
+    t =     7.54s     Wait for com.enfoirer.jobgenie to idle
+    t =     7.54s Tap "login.submit" Button
+    t =     7.54s     Wait for com.enfoirer.jobgenie to idle
+    t =     7.54s     Find the "login.submit" Button
+    t =     7.57s     Check for interrupting elements affecting "login.submit" Button
+    t =     7.60s     Synthesize event
+    t =     7.60s         Scroll element to visible
+    t =     7.60s         Find the "login.submit" Button
+    t =     7.64s         Computed hit point {201, 375.83333333333331} after scrolling to visible
+    t =     7.92s     Wait for com.enfoirer.jobgenie to idle
+    t =     8.26s Waiting 25.0s for "jobs.add" Button to exist
+    t =     9.29s     Checking `Expect predicate `existsNoRetry == 1` for object "jobs.add" Button`
+    t =     9.29s         Checking existence of `"jobs.add" Button`
+    t =     9.35s Checking existence of `"feedback.later" Button`
+    t =     9.38s Waiting 165.0s for "feedback.later" Button to exist
+    t =    10.42s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    10.42s         Checking existence of `"feedback.later" Button`
+    t =    10.46s         Capturing element debug description
+    t =    11.39s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    11.39s         Checking existence of `"feedback.later" Button`
+    t =    11.43s         Capturing element debug description
+    t =    12.46s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    12.46s         Checking existence of `"feedback.later" Button`
+    t =    12.52s         Capturing element debug description
+    t =    13.45s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    13.46s         Checking existence of `"feedback.later" Button`
+    t =    13.51s         Capturing element debug description
+    t =    14.43s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    14.43s         Checking existence of `"feedback.later" Button`
+    t =    14.49s         Capturing element debug description
+    t =    15.41s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    15.41s         Checking existence of `"feedback.later" Button`
+    t =    15.47s         Capturing element debug description
+    t =    16.39s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    16.39s         Checking existence of `"feedback.later" Button`
+    t =    16.46s         Capturing element debug description
+    t =    17.38s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    17.39s         Checking existence of `"feedback.later" Button`
+    t =    17.44s         Capturing element debug description
+    t =    18.46s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    18.46s         Checking existence of `"feedback.later" Button`
+    t =    18.51s         Capturing element debug description
+    t =    19.44s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    19.44s         Checking existence of `"feedback.later" Button`
+    t =    19.49s         Capturing element debug description
+    t =    20.42s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    20.42s         Checking existence of `"feedback.later" Button`
+    t =    20.46s         Capturing element debug description
+    t =    21.39s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    21.39s         Checking existence of `"feedback.later" Button`
+    t =    21.45s         Capturing element debug description
+    t =    22.38s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    22.39s         Checking existence of `"feedback.later" Button`
+    t =    22.45s         Capturing element debug description
+    t =    23.39s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    23.39s         Checking existence of `"feedback.later" Button`
+    t =    23.44s         Capturing element debug description
+    t =    24.48s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    24.48s         Checking existence of `"feedback.later" Button`
+    t =    24.54s         Capturing element debug description
+    t =    25.47s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    25.48s         Checking existence of `"feedback.later" Button`
+    t =    25.54s         Capturing element debug description
+    t =    26.48s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    26.48s         Checking existence of `"feedback.later" Button`
+    t =    26.52s         Capturing element debug description
+    t =    27.45s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    27.45s         Checking existence of `"feedback.later" Button`
+    t =    27.51s         Capturing element debug description
+    t =    28.45s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    28.45s         Checking existence of `"feedback.later" Button`
+    t =    28.51s         Capturing element debug description
+    t =    29.45s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    29.46s         Checking existence of `"feedback.later" Button`
+    t =    29.52s         Capturing element debug description
+    t =    30.45s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    30.45s         Checking existence of `"feedback.later" Button`
+    t =    30.48s         Capturing element debug description
+    t =    31.41s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    31.41s         Checking existence of `"feedback.later" Button`
+    t =    31.47s         Capturing element debug description
+    t =    32.40s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    32.41s         Checking existence of `"feedback.later" Button`
+    t =    32.47s         Capturing element debug description
+    t =    33.50s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    33.50s         Checking existence of `"feedback.later" Button`
+    t =    33.57s         Capturing element debug description
+    t =    34.50s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    34.50s         Checking existence of `"feedback.later" Button`
+    t =    34.56s         Capturing element debug description
+    t =    35.48s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    35.49s         Checking existence of `"feedback.later" Button`
+    t =    35.54s         Capturing element debug description
+    t =    36.47s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    36.47s         Checking existence of `"feedback.later" Button`
+    t =    36.54s         Capturing element debug description
+    t =    37.47s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    37.47s         Checking existence of `"feedback.later" Button`
+    t =    37.52s         Capturing element debug description
+    t =    38.43s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    38.44s         Checking existence of `"feedback.later" Button`
+    t =    38.49s         Capturing element debug description
+    t =    39.42s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    39.42s         Checking existence of `"feedback.later" Button`
+    t =    39.48s         Capturing element debug description
+    t =    40.51s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    40.51s         Checking existence of `"feedback.later" Button`
+    t =    40.55s         Capturing element debug description
+    t =    41.48s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    41.48s         Checking existence of `"feedback.later" Button`
+    t =    41.54s         Capturing element debug description
+    t =    42.46s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    42.46s         Checking existence of `"feedback.later" Button`
+    t =    42.52s         Capturing element debug description
+    t =    43.45s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    43.45s         Checking existence of `"feedback.later" Button`
+    t =    43.51s         Capturing element debug description
+    t =    44.44s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    44.44s         Checking existence of `"feedback.later" Button`
+    t =    44.50s         Capturing element debug description
+    t =    45.43s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    45.43s         Checking existence of `"feedback.later" Button`
+    t =    45.49s         Capturing element debug description
+    t =    46.42s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    46.42s         Checking existence of `"feedback.later" Button`
+    t =    46.48s         Capturing element debug description
+    t =    47.52s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    47.52s         Checking existence of `"feedback.later" Button`
+    t =    47.58s         Capturing element debug description
+    t =    48.51s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    48.51s         Checking existence of `"feedback.later" Button`
+    t =    48.57s         Capturing element debug description
+    t =    49.50s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    49.50s         Checking existence of `"feedback.later" Button`
+    t =    49.54s         Capturing element debug description
+    t =    50.47s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    50.48s         Checking existence of `"feedback.later" Button`
+    t =    50.53s         Capturing element debug description
+    t =    51.46s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    51.46s         Checking existence of `"feedback.later" Button`
+    t =    51.52s         Capturing element debug description
+    t =    52.45s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    52.45s         Checking existence of `"feedback.later" Button`
+    t =    52.50s         Capturing element debug description
+    t =    53.43s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    53.43s         Checking existence of `"feedback.later" Button`
+    t =    53.46s         Capturing element debug description
+    t =    54.49s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    54.49s         Checking existence of `"feedback.later" Button`
+    t =    54.54s         Capturing element debug description
+    t =    55.47s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    55.47s         Checking existence of `"feedback.later" Button`
+    t =    55.53s         Capturing element debug description
+    t =    56.46s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    56.46s         Checking existence of `"feedback.later" Button`
+    t =    56.51s         Capturing element debug description
+    t =    57.45s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    57.45s         Checking existence of `"feedback.later" Button`
+    t =    57.48s         Capturing element debug description
+    t =    58.51s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    58.52s         Checking existence of `"feedback.later" Button`
+    t =    58.57s         Capturing element debug description
+    t =    59.50s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    59.50s         Checking existence of `"feedback.later" Button`
+    t =    59.55s         Capturing element debug description
+    t =    60.47s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    60.47s         Checking existence of `"feedback.later" Button`
+    t =    60.52s         Capturing element debug description
+    t =    61.44s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    61.44s         Checking existence of `"feedback.later" Button`
+    t =    61.50s         Capturing element debug description
+    t =    62.43s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    62.43s         Checking existence of `"feedback.later" Button`
+    t =    62.49s         Capturing element debug description
+    t =    63.51s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    63.52s         Checking existence of `"feedback.later" Button`
+    t =    63.57s         Capturing element debug description
+    t =    64.50s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    64.51s         Checking existence of `"feedback.later" Button`
+    t =    64.56s         Capturing element debug description
+    t =    65.48s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    65.48s         Checking existence of `"feedback.later" Button`
+    t =    65.54s         Capturing element debug description
+    t =    66.47s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    66.47s         Checking existence of `"feedback.later" Button`
+    t =    66.53s         Capturing element debug description
+    t =    67.44s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    67.45s         Checking existence of `"feedback.later" Button`
+    t =    67.50s         Capturing element debug description
+    t =    68.52s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    68.52s         Checking existence of `"feedback.later" Button`
+    t =    68.58s         Capturing element debug description
+    t =    69.51s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    69.51s         Checking existence of `"feedback.later" Button`
+    t =    69.57s         Capturing element debug description
+    t =    70.49s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    70.49s         Checking existence of `"feedback.later" Button`
+    t =    70.53s         Capturing element debug description
+    t =    71.45s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    71.45s         Checking existence of `"feedback.later" Button`
+    t =    71.51s         Capturing element debug description
+    t =    72.43s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    72.43s         Checking existence of `"feedback.later" Button`
+    t =    72.47s         Capturing element debug description
+    t =    73.49s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    73.49s         Checking existence of `"feedback.later" Button`
+    t =    73.55s         Capturing element debug description
+    t =    74.48s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    74.48s         Checking existence of `"feedback.later" Button`
+    t =    74.53s         Capturing element debug description
+    t =    75.47s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    75.47s         Checking existence of `"feedback.later" Button`
+    t =    75.52s         Capturing element debug description
+    t =    76.44s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    76.44s         Checking existence of `"feedback.later" Button`
+    t =    76.50s         Capturing element debug description
+    t =    77.43s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    77.44s         Checking existence of `"feedback.later" Button`
+    t =    77.49s         Capturing element debug description
+    t =    78.52s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    78.53s         Checking existence of `"feedback.later" Button`
+    t =    78.58s         Capturing element debug description
+    t =    79.51s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    79.51s         Checking existence of `"feedback.later" Button`
+    t =    79.57s         Capturing element debug description
+    t =    80.50s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    80.50s         Checking existence of `"feedback.later" Button`
+    t =    80.56s         Capturing element debug description
+    t =    81.48s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    81.48s         Checking existence of `"feedback.later" Button`
+    t =    81.52s         Capturing element debug description
+    t =    82.45s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    82.45s         Checking existence of `"feedback.later" Button`
+    t =    82.51s         Capturing element debug description
+    t =    83.44s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    83.44s         Checking existence of `"feedback.later" Button`
+    t =    83.50s         Capturing element debug description
+    t =    84.43s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    84.43s         Checking existence of `"feedback.later" Button`
+    t =    84.48s         Capturing element debug description
+    t =    85.51s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    85.51s         Checking existence of `"feedback.later" Button`
+    t =    85.57s         Capturing element debug description
+    t =    86.50s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    86.50s         Checking existence of `"feedback.later" Button`
+    t =    86.55s         Capturing element debug description
+    t =    87.48s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    87.48s         Checking existence of `"feedback.later" Button`
+    t =    87.54s         Capturing element debug description
+    t =    88.47s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    88.47s         Checking existence of `"feedback.later" Button`
+    t =    88.52s         Capturing element debug description
+    t =    89.45s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    89.45s         Checking existence of `"feedback.later" Button`
+    t =    89.51s         Capturing element debug description
+    t =    90.44s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    90.44s         Checking existence of `"feedback.later" Button`
+    t =    90.50s         Capturing element debug description
+    t =    91.43s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    91.43s         Checking existence of `"feedback.later" Button`
+    t =    91.48s         Capturing element debug description
+    t =    92.51s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    92.51s         Checking existence of `"feedback.later" Button`
+    t =    92.56s         Capturing element debug description
+    t =    93.49s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    93.49s         Checking existence of `"feedback.later" Button`
+    t =    93.55s         Capturing element debug description
+    t =    94.48s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    94.48s         Checking existence of `"feedback.later" Button`
+    t =    94.55s         Capturing element debug description
+    t =    95.47s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    95.48s         Checking existence of `"feedback.later" Button`
+    t =    95.53s         Capturing element debug description
+    t =    96.47s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    96.47s         Checking existence of `"feedback.later" Button`
+    t =    96.52s         Capturing element debug description
+    t =    97.45s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    97.45s         Checking existence of `"feedback.later" Button`
+    t =    97.51s         Capturing element debug description
+2026-11-07 21:44:09.804 xcodebuild[27413:44066356] [MT] IDERunDestination: Supported platforms for the buildables in the current scheme is empty.
+    t =    98.44s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    98.44s         Checking existence of `"feedback.later" Button`
+    t =    98.49s         Capturing element debug description
+    t =    99.52s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =    99.52s         Checking existence of `"feedback.later" Button`
+    t =    99.58s         Capturing element debug description
+    t =   100.51s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =   100.51s         Checking existence of `"feedback.later" Button`
+    t =   100.57s         Capturing element debug description
+    t =   101.50s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =   101.50s         Checking existence of `"feedback.later" Button`
+    t =   101.56s         Capturing element debug description
+    t =   102.48s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =   102.48s         Checking existence of `"feedback.later" Button`
+    t =   102.54s         Capturing element debug description
+    t =   103.47s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =   103.47s         Checking existence of `"feedback.later" Button`
+    t =   103.53s         Capturing element debug description
+    t =   104.46s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =   104.46s         Checking existence of `"feedback.later" Button`
+    t =   104.52s         Capturing element debug description
+    t =   105.45s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =   105.45s         Checking existence of `"feedback.later" Button`
+    t =   105.51s         Capturing element debug description
+    t =   106.43s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =   106.44s         Checking existence of `"feedback.later" Button`
+    t =   106.50s         Capturing element debug description
+    t =   107.43s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =   107.43s         Checking existence of `"feedback.later" Button`
+    t =   107.49s         Capturing element debug description
+2026-11-07 21:44:20.072 xcodebuild[27413:44066356] [MT] IDERunDestination: Supported platforms for the buildables in the current scheme is empty.
+    t =   108.53s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =   108.53s         Checking existence of `"feedback.later" Button`
+    t =   108.59s         Capturing element debug description
+    t =   109.52s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =   109.52s         Checking existence of `"feedback.later" Button`
+    t =   109.58s         Capturing element debug description
+    t =   110.50s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =   110.51s         Checking existence of `"feedback.later" Button`
+    t =   110.57s         Capturing element debug description
+    t =   111.49s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =   111.49s         Checking existence of `"feedback.later" Button`
+    t =   111.55s         Capturing element debug description
+    t =   112.48s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =   112.48s         Checking existence of `"feedback.later" Button`
+    t =   112.54s         Capturing element debug description
+    t =   113.47s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =   113.47s         Checking existence of `"feedback.later" Button`
+    t =   113.52s         Capturing element debug description
+    t =   114.45s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =   114.45s         Checking existence of `"feedback.later" Button`
+    t =   114.52s         Capturing element debug description
+    t =   115.44s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =   115.45s         Checking existence of `"feedback.later" Button`
+    t =   115.51s         Capturing element debug description
+    t =   116.43s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =   116.44s         Checking existence of `"feedback.later" Button`
+    t =   116.47s         Capturing element debug description
+    t =   117.51s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =   117.51s         Checking existence of `"feedback.later" Button`
+    t =   117.57s         Capturing element debug description
+    t =   118.50s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =   118.50s         Checking existence of `"feedback.later" Button`
+    t =   118.56s         Capturing element debug description
+    t =   119.49s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =   119.49s         Checking existence of `"feedback.later" Button`
+    t =   119.55s         Capturing element debug description
+    t =   120.48s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =   120.48s         Checking existence of `"feedback.later" Button`
+    t =   120.52s         Capturing element debug description
+    t =   121.45s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =   121.45s         Checking existence of `"feedback.later" Button`
+    t =   121.49s         Capturing element debug description
+    t =   122.51s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =   122.51s         Checking existence of `"feedback.later" Button`
+    t =   122.57s         Capturing element debug description
+    t =   123.50s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =   123.50s         Checking existence of `"feedback.later" Button`
+    t =   123.56s         Capturing element debug description
+    t =   124.48s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =   124.49s         Checking existence of `"feedback.later" Button`
+    t =   124.54s         Capturing element debug description
+    t =   125.48s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =   125.48s         Checking existence of `"feedback.later" Button`
+    t =   125.53s         Capturing element debug description
+    t =   126.46s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =   126.46s         Checking existence of `"feedback.later" Button`
+    t =   126.52s         Capturing element debug description
+    t =   127.45s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =   127.45s         Checking existence of `"feedback.later" Button`
+    t =   127.51s         Capturing element debug description
+    t =   128.43s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =   128.43s         Checking existence of `"feedback.later" Button`
+    t =   128.49s         Capturing element debug description
+    t =   129.53s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =   129.53s         Checking existence of `"feedback.later" Button`
+    t =   129.59s         Capturing element debug description
+    t =   130.52s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =   130.52s         Checking existence of `"feedback.later" Button`
+    t =   130.58s         Capturing element debug description
+    t =   131.51s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =   131.51s         Checking existence of `"feedback.later" Button`
+    t =   131.55s         Capturing element debug description
+    t =   132.48s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =   132.48s         Checking existence of `"feedback.later" Button`
+    t =   132.53s         Capturing element debug description
+    t =   133.46s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.later" Button`
+    t =   133.46s         Checking existence of `"feedback.later" Button`
+    t =   133.55s Checking existence of `"Rate JobGenie" NavigationBar`
+    t =   133.61s Checking existence of `"feedback.submit" Button`
+    t =   133.68s Swipe up Target Application 'com.enfoirer.jobgenie'
+    t =   133.68s     Wait for com.enfoirer.jobgenie to idle
+    t =   133.82s     Find the Target Application 'com.enfoirer.jobgenie'
+    t =   133.87s     Check for interrupting elements affecting "JobGenie" Application
+    t =   133.92s     Synthesize event
+    t =   134.34s     Wait for com.enfoirer.jobgenie to idle
+    t =   135.22s Checking existence of `"feedback.submit" Button`
+    t =   135.29s Find the "feedback.submit" Button
+    t =   135.36s Find the "feedback.submit" Button
+    t =   135.41s Tap "feedback.later" Button
+    t =   135.41s     Wait for com.enfoirer.jobgenie to idle
+    t =   135.41s     Find the "feedback.later" Button
+    t =   135.47s     Check for interrupting elements affecting "feedback.later" Button
+    t =   135.52s     Synthesize event
+    t =   135.81s     Wait for com.enfoirer.jobgenie to idle
+    t =   136.47s Waiting 5.0s for "jobs.add" Button to exist
+    t =   137.50s     Checking `Expect predicate `existsNoRetry == 1` for object "jobs.add" Button`
+    t =   137.50s         Checking existence of `"jobs.add" Button`
+    t =   137.56s Tap "Account" Button
+    t =   137.56s     Wait for com.enfoirer.jobgenie to idle
+    t =   137.56s     Find the "Account" Button
+    t =   137.60s     Check for interrupting elements affecting "person.crop.circle" Button
+    t =   137.63s     Synthesize event
+    t =   137.92s     Wait for com.enfoirer.jobgenie to idle
+    t =   139.25s Checking existence of `"feedback.open" Button`
+    t =   139.31s Find the "feedback.open" Button
+    t =   139.36s Tap "feedback.open" Button
+    t =   139.36s     Wait for com.enfoirer.jobgenie to idle
+    t =   139.36s     Find the "feedback.open" Button
+    t =   139.39s     Check for interrupting elements affecting "feedback.open" Button
+    t =   139.44s     Synthesize event
+    t =   139.73s     Wait for com.enfoirer.jobgenie to idle
+    t =   140.35s Checking existence of `"feedback.never" Button`
+    t =   140.44s Swipe up Target Application 'com.enfoirer.jobgenie'
+    t =   140.44s     Wait for com.enfoirer.jobgenie to idle
+    t =   140.44s     Find the Target Application 'com.enfoirer.jobgenie'
+    t =   140.48s     Check for interrupting elements affecting "JobGenie" Application
+    t =   140.52s     Synthesize event
+    t =   140.94s     Wait for com.enfoirer.jobgenie to idle
+    t =   142.07s Checking existence of `"feedback.never" Button`
+    t =   142.15s Find the "feedback.never" Button
+    t =   142.21s Tap "feedback.never" Button
+    t =   142.21s     Wait for com.enfoirer.jobgenie to idle
+    t =   142.21s     Find the "feedback.never" Button
+    t =   142.27s     Check for interrupting elements affecting "feedback.never" Button
+    t =   142.32s     Synthesize event
+    t =   142.60s     Wait for com.enfoirer.jobgenie to idle
+    t =   143.00s Waiting 5.0s for "feedback.open" Button to exist
+    t =   144.03s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.open" Button`
+    t =   144.04s         Checking existence of `"feedback.open" Button`
+    t =   144.08s Terminate com.enfoirer.jobgenie:27762
+    t =   145.15s Open com.enfoirer.jobgenie
+    t =   145.15s     Launch com.enfoirer.jobgenie
+    t =   145.36s         Setting up automation session
+    t =   145.99s         Wait for com.enfoirer.jobgenie to idle
+    t =   147.12s Waiting 20.0s for "jobs.add" Button to exist
+    t =   148.16s     Checking `Expect predicate `existsNoRetry == 1` for object "jobs.add" Button`
+    t =   148.16s         Checking existence of `"jobs.add" Button`
+    t =   148.28s Tap "Account" Button
+    t =   148.28s     Wait for com.enfoirer.jobgenie to idle
+    t =   148.28s     Find the "Account" Button
+    t =   148.32s     Check for interrupting elements affecting "Account" Button
+    t =   148.36s     Synthesize event
+    t =   148.64s     Wait for com.enfoirer.jobgenie to idle
+    t =   150.14s Checking existence of `"feedback.open" Button`
+    t =   150.20s Find the "feedback.open" Button
+    t =   150.24s Tap "feedback.open" Button
+    t =   150.24s     Wait for com.enfoirer.jobgenie to idle
+    t =   150.24s     Find the "feedback.open" Button
+    t =   150.27s     Check for interrupting elements affecting "feedback.open" Button
+    t =   150.30s     Synthesize event
+    t =   150.59s     Wait for com.enfoirer.jobgenie to idle
+    t =   151.24s Tap "feedback.overall.2" Button
+    t =   151.24s     Wait for com.enfoirer.jobgenie to idle
+    t =   151.24s     Find the "feedback.overall.2" Button
+    t =   151.32s     Check for interrupting elements affecting "feedback.overall.2" Button
+    t =   151.37s     Synthesize event
+    t =   151.66s     Wait for com.enfoirer.jobgenie to idle
+    t =   151.66s Tap "feedback.recommendation.4" Button
+    t =   151.66s     Wait for com.enfoirer.jobgenie to idle
+    t =   151.66s     Find the "feedback.recommendation.4" Button
+    t =   151.73s     Check for interrupting elements affecting "feedback.recommendation.4" Button
+    t =   151.78s     Synthesize event
+    t =   152.06s     Wait for com.enfoirer.jobgenie to idle
+    t =   152.07s Checking existence of `"feedback.comment" TextView`
+    t =   152.14s Find the "feedback.comment" TextView
+    t =   152.20s Tap "feedback.comment" TextView
+    t =   152.20s     Wait for com.enfoirer.jobgenie to idle
+    t =   152.20s     Find the "feedback.comment" TextView
+    t =   152.25s     Check for interrupting elements affecting "feedback.comment" TextView
+    t =   152.30s     Synthesize event
+    t =   152.63s     Wait for com.enfoirer.jobgenie to idle
+    t =   152.96s Type 'Please improve off...' into "feedback.comment" TextView
+    t =   152.97s     Wait for com.enfoirer.jobgenie to idle
+    t =   152.97s     Find the "feedback.comment" TextView
+    t =   153.06s     Check for interrupting elements affecting "feedback.comment" TextView
+    t =   153.13s     Synthesize event
+    t =   153.85s     Wait for com.enfoirer.jobgenie to idle
+    t =   153.85s Waiting 5.0s for "feedback.keyboardDone" Button to exist
+    t =   154.88s     Checking `Expect predicate `existsNoRetry == 1` for object "feedback.keyboardDone" Button`
+    t =   154.88s         Checking existence of `"feedback.keyboardDone" Button`
+    t =   154.97s Tap "feedback.keyboardDone" Button
+    t =   154.97s     Wait for com.enfoirer.jobgenie to idle
+    t =   154.97s     Find the "feedback.keyboardDone" Button
+    t =   155.04s     Check for interrupting elements affecting "feedback.keyboardDone" Button
+    t =   155.09s     Synthesize event
+    t =   155.38s     Wait for com.enfoirer.jobgenie to idle
+    t =   156.19s Swipe up Target Application 'com.enfoirer.jobgenie'
+    t =   156.19s     Wait for com.enfoirer.jobgenie to idle
+    t =   156.19s     Find the Target Application 'com.enfoirer.jobgenie'
+    t =   156.25s     Check for interrupting elements affecting "JobGenie" Application
+    t =   156.30s     Synthesize event
+    t =   156.71s     Wait for com.enfoirer.jobgenie to idle
+    t =   157.72s Checking existence of `"feedback.submit" Button`
+    t =   157.80s Find the "feedback.submit" Button
+    t =   157.86s Find the Target Application 'com.enfoirer.jobgenie'
+    t =   157.97s Added attachment named 'Native feedback before submission'
+    t =   157.97s Tap "feedback.submit" Button
+    t =   157.97s     Wait for com.enfoirer.jobgenie to idle
+    t =   157.98s     Find the "feedback.submit" Button
+    t =   158.03s     Check for interrupting elements affecting "feedback.submit" Button
+    t =   158.08s     Synthesize event
+    t =   158.37s     Wait for com.enfoirer.jobgenie to idle
+    t =   158.78s Waiting 15.0s for "Thank you. Your feedback has been saved." StaticText to exist
+    t =   159.82s     Checking `Expect predicate `existsNoRetry == 1` for object "Thank you. Your feedback has been saved." StaticText`
+    t =   159.82s         Checking existence of `"Thank you. Your feedback has been saved." StaticText`
+    t =   159.86s Terminate com.enfoirer.jobgenie:28363
+    t =   160.91s Open com.enfoirer.jobgenie
+    t =   160.91s     Launch com.enfoirer.jobgenie
+    t =   161.12s         Setting up automation session
+    t =   161.71s         Wait for com.enfoirer.jobgenie to idle
+    t =   162.84s Waiting 20.0s for "jobs.add" Button to exist
+    t =   163.87s     Checking `Expect predicate `existsNoRetry == 1` for object "jobs.add" Button`
+    t =   163.87s         Checking existence of `"jobs.add" Button`
+    t =   163.99s Tap "Account" Button
+    t =   163.99s     Wait for com.enfoirer.jobgenie to idle
+    t =   164.00s     Find the "Account" Button
+    t =   164.03s     Check for interrupting elements affecting "Account" Button
+    t =   164.07s     Synthesize event
+    t =   164.35s     Wait for com.enfoirer.jobgenie to idle
+    t =   165.69s Checking existence of `"feedback.open" Button`
+    t =   165.75s Find the "feedback.open" Button
+    t =   165.79s Tap "feedback.open" Button
+    t =   165.79s     Wait for com.enfoirer.jobgenie to idle
+    t =   165.80s     Find the "feedback.open" Button
+    t =   165.83s     Check for interrupting elements affecting "feedback.open" Button
+    t =   165.86s     Synthesize event
+    t =   166.15s     Wait for com.enfoirer.jobgenie to idle
+    t =   166.77s Waiting 10.0s for "Your feedback for this survey has been received. Thank you." StaticText to exist
+    t =   167.80s     Checking `Expect predicate `existsNoRetry == 1` for object "Your feedback for this survey has been received. Thank you." StaticText`
+    t =   167.80s         Checking existence of `"Your feedback for this survey has been received. Thank you." StaticText`
+    t =   167.88s Checking existence of `"feedback.submit" Button`
+    t =   167.93s Tap "feedback.later" Button
+    t =   167.93s     Wait for com.enfoirer.jobgenie to idle
+    t =   167.93s     Find the "feedback.later" Button
+    t =   167.98s     Check for interrupting elements affecting "feedback.later" Button
+    t =   168.02s     Synthesize event
+    t =   168.31s     Wait for com.enfoirer.jobgenie to idle
+    t =   169.09s Checking existence of `"account.signout" Button`
+    t =   169.15s Swipe up Target Application 'com.enfoirer.jobgenie'
+    t =   169.15s     Wait for com.enfoirer.jobgenie to idle
+    t =   169.15s     Find the Target Application 'com.enfoirer.jobgenie'
+    t =   169.18s     Check for interrupting elements affecting "JobGenie" Application
+    t =   169.21s     Synthesize event
+    t =   169.63s     Wait for com.enfoirer.jobgenie to idle
+    t =   170.99s Checking existence of `"account.signout" Button`
+    t =   171.05s Find the "account.signout" Button
+    t =   171.09s Tap "account.signout" Button
+    t =   171.09s     Wait for com.enfoirer.jobgenie to idle
+    t =   171.09s     Find the "account.signout" Button
+    t =   171.13s     Check for interrupting elements affecting "account.signout" Button
+    t =   171.16s     Synthesize event
+    t =   171.45s     Wait for com.enfoirer.jobgenie to idle
+    t =   171.87s Tap "Confirm sign out" Button
+    t =   171.87s     Wait for com.enfoirer.jobgenie to idle
+    t =   171.87s     Find the "Confirm sign out" Button
+    t =   171.94s     Check for interrupting elements affecting "Confirm sign out" Button
+    t =   171.97s     Synthesize event
+    t =   172.26s     Wait for com.enfoirer.jobgenie to idle
+    t =   172.62s Waiting 10.0s for "login.submit" Button to exist
+    t =   173.65s     Checking `Expect predicate `existsNoRetry == 1` for object "login.submit" Button`
+    t =   173.65s         Checking existence of `"login.submit" Button`
+    t =   173.70s Tear Down
+Test Case '-[JobGenieUITests.JobGenieUITests testRealFeedbackPromptAndPersistence]' passed (174.100 seconds).
+Test Suite 'JobGenieUITests' passed at 2026-11-07 21:45:25.784.
+	 Executed 1 test, with 0 failures (0 unexpected) in 174.100 (174.102) seconds
+Test Suite 'JobGenieUITests.xctest' passed at 2026-11-07 21:45:25.785.
+	 Executed 1 test, with 0 failures (0 unexpected) in 174.100 (174.103) seconds
+Test Suite 'Selected tests' passed at 2026-11-07 21:45:25.786.
+	 Executed 1 test, with 0 failures (0 unexpected) in 174.100 (174.104) seconds
+2026-11-07 21:45:26.165 xcodebuild[27413:44066384]  IDETestOperationsObserverDebug: Failure collecting diagnostics from simulator: Process exited with error 72:
+ xcrun: error: unable to find utility "simctl", not a developer tool or in PATH
+
+2026-11-07 21:45:26.185 xcodebuild[27413:44066356] [MT] IDETestOperationsObserverDebug: 188.113 elapsed -- Testing started completed.
+2026-11-07 21:45:26.185 xcodebuild[27413:44066356] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-07 21:45:26.185 xcodebuild[27413:44066356] [MT] IDETestOperationsObserverDebug: 188.113 sec, +188.113 sec -- end
+
+Test session results, code coverage, and logs:
+	<TEMP>/jobgenie-ios-acceptance-wPKqRr/feedback-ui.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started

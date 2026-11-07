@@ -307,6 +307,255 @@
       "sha256": "d005be93f6e88b967774e804725e0e3a16fa0f8960f21d5cfc51a492a75d7e0a",
       "redactions": [],
       "association": "Current English-records delivery. Generated workbook previews are not screenshots of a native spreadsheet application."
+    },
+    {
+      "task": "JG-025",
+      "kind": "test_log",
+      "file": "tests/2026-11-07/feedback-backend-initial.log",
+      "outcome": "failed",
+      "description": "Initial feedback fixture used an inconsistent historical clock; corrected before the passing full regression.",
+      "collectedAt": "2026-11-07T16:25:08.829976+00:00",
+      "observedSourceMtime": "2026-11-07T13:28:14.917621+00:00",
+      "originalSha256": "74356f4335a28374198cab799e4ec997495c41278765a4693fa2a6f6a8771677",
+      "sha256": "7e92b863832b15ca4f7445673660bb977d4c0e96e7a648933f551c7747b8b91c",
+      "redactions": [
+        "Local home/workspace/temp paths",
+        "Credential and database URI assignments if present"
+      ],
+      "association": "Actual 2026-11-07 feedback implementation/acceptance. Temporary accounts and databases only."
+    },
+    {
+      "task": "JG-025",
+      "kind": "test_log",
+      "file": "tests/2026-11-07/feedback-backend-regression.log",
+      "outcome": "passed",
+      "description": "Full backend regression: 288 tests passed.",
+      "collectedAt": "2026-11-07T16:25:08.829976+00:00",
+      "observedSourceMtime": "2026-11-07T13:32:19.968101+00:00",
+      "originalSha256": "8b85a43dcf3c49cf8217984a9fd1a09deceaffad4077aeb05be9d494431d2f07",
+      "sha256": "b8fbb4efb3a117ae810e0216a3016ecd25adedc884c28195b727c9f029e3c928",
+      "redactions": [
+        "Local home/workspace/temp paths",
+        "Credential and database URI assignments if present"
+      ],
+      "association": "Actual 2026-11-07 feedback implementation/acceptance. Temporary accounts and databases only."
+    },
+    {
+      "task": "JG-025",
+      "kind": "test_log",
+      "file": "tests/2026-11-07/feedback-ios-test-build-initial.log",
+      "outcome": "failed",
+      "description": "Initial test property name collided with XCTest; renamed before passing builds.",
+      "collectedAt": "2026-11-07T16:25:08.829976+00:00",
+      "observedSourceMtime": "2026-11-07T13:30:12.025371+00:00",
+      "originalSha256": "80f2ce4e8b974c9001c70039ac820b03271eb6d79dec843d711154797e797d15",
+      "sha256": "895e2cfadae4aad31d7b50ea01488217de7d36da5108a8a6663ccbaf4afd7e86",
+      "redactions": [
+        "Local home/workspace/temp paths",
+        "Credential and database URI assignments if present"
+      ],
+      "association": "Actual 2026-11-07 feedback implementation/acceptance. Temporary accounts and databases only."
+    },
+    {
+      "task": "JG-025",
+      "kind": "test_log",
+      "file": "tests/2026-11-07/feedback-ios-fixture-initial.log",
+      "outcome": "failed",
+      "description": "URLProtocol test fixture assumed httpBody instead of reading streamed request bodies; corrected before the passing native suite.",
+      "collectedAt": "2026-11-07T16:25:08.829976+00:00",
+      "observedSourceMtime": "2026-11-07T13:32:11.223052+00:00",
+      "originalSha256": "1c12b1ae17bb4423f911d99186b06a309e595b689c8083b4386f9aad3d6c94e6",
+      "sha256": "72597404ac41435d5e84029fdeb35c740c825b628fde9dcb52a012182e9ec7d6",
+      "redactions": [
+        "Local home/workspace/temp paths",
+        "Credential and database URI assignments if present"
+      ],
+      "association": "Actual 2026-11-07 feedback implementation/acceptance. Temporary accounts and databases only."
+    },
+    {
+      "task": "JG-025",
+      "kind": "test_log",
+      "file": "tests/2026-11-07/feedback-ios-ui-initial.log",
+      "outcome": "failed",
+      "description": "Native core passed; initial root-list gesture observer interfered with opening feedback. Replaced before passing UI acceptance.",
+      "collectedAt": "2026-11-07T16:25:08.829976+00:00",
+      "observedSourceMtime": "2026-11-07T13:33:36.920162+00:00",
+      "originalSha256": "bb64f351e5bdc1f269b27de1ab318b2a65f7a5ee083e70fc3dd6374a91d46349",
+      "sha256": "5208dcda42831d25f0ddbda9c88f0be76bd0d990d2829eb7035288e1be0fe876",
+      "redactions": [
+        "Local home/workspace/temp paths",
+        "Credential and database URI assignments if present"
+      ],
+      "association": "Actual 2026-11-07 feedback implementation/acceptance. Temporary accounts and databases only."
+    },
+    {
+      "task": "JG-025",
+      "kind": "test_log",
+      "file": "tests/2026-11-07/feedback-native-ui-initial.log",
+      "outcome": "failed",
+      "description": "Initial real flow passed prompt/later/never/relaunch and reached comments; keyboard dismissal obstructed submission. Added explicit Done and scroll dismissal.",
+      "collectedAt": "2026-11-07T16:25:08.829976+00:00",
+      "observedSourceMtime": "2026-11-07T13:41:10.342966+00:00",
+      "originalSha256": "0cb78b8474cad2f6a3dba051c9c8dab4625af9aa05990b354e1b6361f334b93a",
+      "sha256": "9fd11f8000bfd20b396075f4e2782ae7d3a765d21e349e8e4b2792efc0292190",
+      "redactions": [
+        "Local home/workspace/temp paths",
+        "Credential and database URI assignments if present"
+      ],
+      "association": "Actual 2026-11-07 feedback implementation/acceptance. Temporary accounts and databases only."
+    },
+    {
+      "task": "JG-025",
+      "kind": "test_log",
+      "file": "tests/2026-11-07/feedback-ios-regression.log",
+      "outcome": "passed",
+      "description": "Final native core and bilingual feedback/application UI regressions.",
+      "collectedAt": "2026-11-07T16:25:08.829976+00:00",
+      "observedSourceMtime": "2026-11-07T13:47:44.773814+00:00",
+      "originalSha256": "dec124506168f2b60a317015fa4c3dfeb204e4183cc67ca0ebc2a0bb60a5c3ab",
+      "sha256": "654e8d90fc60f3a05e9f32d798155c6e48681e21e9f266abf48a32e1b089615f",
+      "redactions": [
+        "Local home/workspace/temp paths",
+        "Credential and database URI assignments if present"
+      ],
+      "association": "Actual 2026-11-07 feedback implementation/acceptance. Temporary accounts and databases only."
+    },
+    {
+      "task": "JG-025",
+      "kind": "test_log",
+      "file": "tests/2026-11-07/feedback-native-acceptance.log",
+      "outcome": "passed",
+      "description": "Real native API, actual two-minute invitation threshold, skip/opt-out, relaunch, database persistence and user isolation passed.",
+      "collectedAt": "2026-11-07T16:25:08.829976+00:00",
+      "observedSourceMtime": "2026-11-07T13:45:29.402286+00:00",
+      "originalSha256": "9b3a5f37c4f4563743811224097709978b003a4b33d97618b49f8d133f4e4a9d",
+      "sha256": "438820487a4c42ee9e4439119be4e9d9319ad537b53336c3f24c7e402aee96ed",
+      "redactions": [
+        "Local home/workspace/temp paths",
+        "Credential and database URI assignments if present"
+      ],
+      "association": "Actual 2026-11-07 feedback implementation/acceptance. Temporary accounts and databases only."
+    },
+    {
+      "task": "JG-025",
+      "kind": "test_log",
+      "file": "tests/2026-11-07/feedback-web-build.log",
+      "outcome": "passed",
+      "description": "Next.js production build including the new authenticated feedback endpoint.",
+      "collectedAt": "2026-11-07T16:25:08.829976+00:00",
+      "observedSourceMtime": "2026-11-07T13:30:25.678111+00:00",
+      "originalSha256": "1f91102487692e530aca54a9f1f739fe72e45f11fc34eaad114b1d4290313167",
+      "sha256": "1f91102487692e530aca54a9f1f739fe72e45f11fc34eaad114b1d4290313167",
+      "redactions": [
+        "Local home/workspace/temp paths",
+        "Credential and database URI assignments if present"
+      ],
+      "association": "Actual 2026-11-07 feedback implementation/acceptance. Temporary accounts and databases only."
+    },
+    {
+      "task": "JG-025",
+      "kind": "test_log",
+      "file": "tests/2026-11-07/feedback-ios-release.log",
+      "outcome": "passed",
+      "description": "Final unsigned iPhone arm64 Release build; not signed-device or TestFlight distribution.",
+      "collectedAt": "2026-11-07T16:25:08.829976+00:00",
+      "observedSourceMtime": "2026-11-07T13:46:31.458874+00:00",
+      "originalSha256": "3fb22d5b4d3d812b650c09642f972bd59d756c4011395b7da85567ff95d86d52",
+      "sha256": "8025f0fd7bdfa57fea082a19a5debc84fe9d88d717d446004e9192b563c46e20",
+      "redactions": [
+        "Local home/workspace/temp paths",
+        "Credential and database URI assignments if present"
+      ],
+      "association": "Actual 2026-11-07 feedback implementation/acceptance. Temporary accounts and databases only."
+    },
+    {
+      "task": "JG-025",
+      "kind": "test_log",
+      "file": "tests/2026-11-08/feedback-progress-validation.log",
+      "outcome": "passed",
+      "description": "Original workbook extension, retained history, formula/error and saved-file validation.",
+      "collectedAt": "2026-11-07T16:25:08.829976+00:00",
+      "observedSourceMtime": "2026-11-07T16:24:28.602724+00:00",
+      "originalSha256": "61c44c4661ec7fcee7032a9750304b26d33cb6790c7415daa9cd09e0ee26206b",
+      "sha256": "1807d19135ba1762fb249579ad57ecfe327d8483f58b95d9dc7ef15cd3968c61",
+      "redactions": [
+        "Local home/workspace/temp paths",
+        "Credential and database URI assignments if present"
+      ],
+      "association": "Actual 2026-11-07 feedback implementation/acceptance. Temporary accounts and databases only."
+    },
+    {
+      "task": "JG-025",
+      "kind": "test_log",
+      "file": "tests/2026-11-07/feedback-native-api-output.log",
+      "outcome": "passed",
+      "description": "Original xcodebuild output for passing isolated native feedback API acceptance.",
+      "collectedAt": "2026-11-07T16:25:08.829976+00:00",
+      "observedSourceMtime": "2026-11-07T13:42:15.612451+00:00",
+      "originalSha256": "854a929376617ad2c8506ca44b8cb8ab21091b155ab5ba370bf0bc68c5514ac0",
+      "sha256": "b0d9f987d029a2d6d95c89af8254639fc23cb33d1b7f499dcee9c09f60033908",
+      "redactions": [
+        "Local home/workspace/temp paths",
+        "Credential and database URI assignments if present"
+      ],
+      "association": "Actual 2026-11-07 feedback implementation/acceptance. Temporary accounts and databases only."
+    },
+    {
+      "task": "JG-025",
+      "kind": "test_log",
+      "file": "tests/2026-11-07/feedback-native-ui-output.log",
+      "outcome": "passed",
+      "description": "Original xcodebuild output for passing isolated native feedback UI acceptance.",
+      "collectedAt": "2026-11-07T16:25:08.829976+00:00",
+      "observedSourceMtime": "2026-11-07T13:45:29.381823+00:00",
+      "originalSha256": "02bb90b962d3a8c7c7be63c6ccae4cee7154c71868c62a078e48a517c659507e",
+      "sha256": "1f849d9940cf032b7eb6bd615961ee85b0b858ba09d428cc67adb014203f2621",
+      "redactions": [
+        "Local home/workspace/temp paths",
+        "Credential and database URI assignments if present"
+      ],
+      "association": "Actual 2026-11-07 feedback implementation/acceptance. Temporary accounts and databases only."
+    },
+    {
+      "task": "JG-025",
+      "kind": "api_example",
+      "file": "visuals/2026-11-07/feedback-api-example.json",
+      "outcome": "passed",
+      "description": "Sanitized isolated-database assertions: scores, comment, manual source, observed prompt dismissal, opt-out and user isolation.",
+      "collectedAt": "2026-11-07T16:25:08.829976+00:00",
+      "observedSourceMtime": "2026-11-07T13:45:29.401734+00:00",
+      "originalSha256": "94ab46e09f69b3e07349cb0f9f02cba62fcad35db0d057474b66081b03863f7c",
+      "sha256": "94ab46e09f69b3e07349cb0f9f02cba62fcad35db0d057474b66081b03863f7c",
+      "redactions": [],
+      "association": "Actual 2026-11-07 feedback implementation/acceptance. Temporary accounts and databases only."
+    },
+    {
+      "task": "JG-025",
+      "kind": "screenshot",
+      "file": "visuals/2026-11-07/feedback-comments-and-submit.png",
+      "outcome": "passed",
+      "description": "Reviewed real iPhone simulator form with test suggestions, submit and permanent opt-out. Captured after keyboard dismissal.",
+      "collectedAt": "2026-11-07T16:25:08.829976+00:00",
+      "observedSourceMtime": "2026-11-07T13:46:12.921574+00:00",
+      "originalSha256": "fed2ecefa8b7114876d4b37e654719c28327fd46f7ef61a1de3853234448734b",
+      "sha256": "fed2ecefa8b7114876d4b37e654719c28327fd46f7ef61a1de3853234448734b",
+      "redactions": [],
+      "association": "Actual 2026-11-07 feedback implementation/acceptance. Temporary accounts and databases only.",
+      "capturedAt": "2026-11-07T13:45:09.655000+00:00"
+    },
+    {
+      "task": "JG-025",
+      "kind": "screenshot",
+      "file": "visuals/2026-11-07/feedback-stars.png",
+      "outcome": "passed",
+      "description": "Reviewed English five-star form in demo UI acceptance; demo actions never write real feedback.",
+      "collectedAt": "2026-11-07T16:25:08.829976+00:00",
+      "observedSourceMtime": "2026-11-07T16:22:41.050983+00:00",
+      "originalSha256": "2aaafbded5216f6103d0ff2f45d1a43dfd7c72d054b6146ab6b83a4a9c841c68",
+      "sha256": "2aaafbded5216f6103d0ff2f45d1a43dfd7c72d054b6146ab6b83a4a9c841c68",
+      "redactions": [],
+      "association": "Actual 2026-11-07 feedback implementation/acceptance. Temporary accounts and databases only.",
+      "capturedAt": "2026-11-07T13:47:36.729000+00:00"
     }
   ],
   "records": [
@@ -919,6 +1168,48 @@
         }
       ],
       "deploymentObservation": "deployments/2026-11-04-english-records-4046a69.json"
+    },
+    {
+      "id": "JG-025",
+      "title": "iOS: product feedback",
+      "scope": "Two five-star questions, optional suggestions, neutral automatic invitations, voluntary entry and persisted later/permanent opt-out.",
+      "tests": "288 backend tests passed; 91 native core tests passed and three service-dependent tests skipped. Real feedback API/UI and bilingual feedback/application UI passed separately. Web and unsigned iPhone Release builds passed.",
+      "boundary": "Experienced-active-user sample retains nonresponse bias. No web survey/reporting dashboard. Offline choices synchronize when connected. Physical-device signing/TestFlight distribution remain outstanding.",
+      "commit": "https://github.com/Enfoirer/jobgenie/commit/e30fe5f6c7d1897595718e0e17fa4d8c86ee82b8",
+      "document": "https://github.com/Enfoirer/jobgenie/blob/e30fe5f6c7d1897595718e0e17fa4d8c86ee82b8/docs/ios-feedback-acceptance.md",
+      "commitSha": "e30fe5f6c7d1897595718e0e17fa4d8c86ee82b8",
+      "commitAt": "2026-11-07T21:48:26+08:00",
+      "preparedAt": "2026-11-07T16:25:08.829976+00:00",
+      "record": "records/2026-11-07-JG-025.md",
+      "sourceDocumentExistsAtCommit": true,
+      "rawLogs": [
+        "tests/2026-11-07/feedback-backend-initial.log",
+        "tests/2026-11-07/feedback-backend-regression.log",
+        "tests/2026-11-07/feedback-ios-test-build-initial.log",
+        "tests/2026-11-07/feedback-ios-fixture-initial.log",
+        "tests/2026-11-07/feedback-ios-ui-initial.log",
+        "tests/2026-11-07/feedback-native-ui-initial.log",
+        "tests/2026-11-07/feedback-ios-regression.log",
+        "tests/2026-11-07/feedback-native-acceptance.log",
+        "tests/2026-11-07/feedback-web-build.log",
+        "tests/2026-11-07/feedback-ios-release.log",
+        "tests/2026-11-08/feedback-progress-validation.log",
+        "tests/2026-11-07/feedback-native-api-output.log",
+        "tests/2026-11-07/feedback-native-ui-output.log"
+      ],
+      "visuals": [
+        "visuals/2026-11-07/feedback-api-example.json",
+        "visuals/2026-11-07/feedback-comments-and-submit.png",
+        "visuals/2026-11-07/feedback-stars.png"
+      ],
+      "observedChecks": [
+        {
+          "context": "Vercel",
+          "state": "success",
+          "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/GJLSFCoF82MKdmrm7vqdS2VHz3zR"
+        }
+      ],
+      "deploymentObservation": "deployments/2026-11-08-feedback-e30fe5f.json"
     }
   ],
   "translatedAt": "2026-11-04T15:15:24.093466+00:00",
@@ -927,5 +1218,6 @@
     "iosProduct": "Existing Chinese/English localization retained",
     "historicalArtifacts": "Original-language test output and historical evidence remain unchanged; English descriptions explain their provenance.",
     "translation": "English records translated on the date in translatedAt. Existing dates, test results, artifact hashes and fixed historical commit links are preserved."
-  }
+  },
+  "lastUpdatedAt": "2026-11-07T16:25:08.829976+00:00"
 }

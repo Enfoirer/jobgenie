@@ -1,0 +1,64 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild test-without-building -xctestrun <TEMP>/jobgenie-feedback-build/Build/Products/native-1794058917160.xctestrun -destination "platform=iOS Simulator,id=62A13C6B-C168-47E9-AA89-1922ED491512" -parallel-testing-enabled NO "-only-testing:JobGenieTests/FeedbackTests/testRealFeedbackAPI" -resultBundlePath <TEMP>/jobgenie-ios-acceptance-wPKqRr/feedback-api.xcresult
+
+2026-11-07 21:41:57.618 xcodebuild[27146:44063197] [MT] IDERunDestination: Supported platforms for the buildables in the current scheme is empty.
+Writing result bundle at path:
+	<TEMP>/jobgenie-ios-acceptance-wPKqRr/feedback-api.xcresult
+
+2026-11-07 21:41:57.622 xcodebuild[27146:44063197] [MT] IDERunDestination: Supported platforms for the buildables in the current scheme is empty.
+2026-11-07 21:41:58.796 xcodebuild[27146:44063197] [MT] IDERunDestination: Supported platforms for the buildables in the current scheme is empty.
+2026-11-07 21:41:59.663 xcodebuild[27146:44063197] [MT] IDERunDestination: Supported platforms for the buildables in the current scheme is empty.
+2026-11-07 21:41:59.810 xcodebuild[27146:44063197] [MT] IDERunDestination: Supported platforms for the buildables in the current scheme is empty.
+Test Suite 'Selected tests' started at 2026-11-07 21:42:11.747.
+Test Suite 'JobGenieTests.xctest' started at 2026-11-07 21:42:11.748.
+Test Suite 'FeedbackTests' started at 2026-11-07 21:42:11.748.
+Test Case '-[JobGenieTests.FeedbackTests testRealFeedbackAPI]' started.
+2026-11-07 21:42:11.782263+0800 JobGenie[27380:44065794] [connection] nw_socket_set_connection_idle [C1:2] setsockopt SO_CONNECTION_IDLE failed [42: Protocol not available]
+2026-11-07 21:42:11.782642+0800 JobGenie[27380:44065794] [connection] nw_socket_set_connection_idle [C1:2] setsockopt SO_CONNECTION_IDLE failed [42: Protocol not available]
+2026-11-07 21:42:11.785033+0800 JobGenie[27380:44065785] [connection] nw_socket_set_connection_idle [C1:2] setsockopt SO_CONNECTION_IDLE failed [42: Protocol not available]
+2026-11-07 21:42:11.785136+0800 JobGenie[27380:44065785] [connection] nw_socket_set_connection_idle [C1:2] setsockopt SO_CONNECTION_IDLE failed [42: Protocol not available]
+2026-11-07 21:42:11.963613+0800 JobGenie[27380:44065785] [connection] nw_socket_set_connection_idle [C1:2] setsockopt SO_CONNECTION_IDLE failed [42: Protocol not available]
+2026-11-07 21:42:11.964291+0800 JobGenie[27380:44065785] [connection] nw_socket_set_connection_idle [C1:2] setsockopt SO_CONNECTION_IDLE failed [42: Protocol not available]
+2026-11-07 21:42:11.965184+0800 JobGenie[27380:44065785] [connection] nw_socket_set_connection_idle [C1:2] setsockopt SO_CONNECTION_IDLE failed [42: Protocol not available]
+2026-11-07 21:42:11.965539+0800 JobGenie[27380:44065785] [connection] nw_socket_set_connection_idle [C1:2] setsockopt SO_CONNECTION_IDLE failed [42: Protocol not available]
+2026-11-07 21:42:11.971140+0800 JobGenie[27380:44065791] [connection] nw_socket_set_connection_idle [C1:2] setsockopt SO_CONNECTION_IDLE failed [42: Protocol not available]
+2026-11-07 21:42:11.972016+0800 JobGenie[27380:44065791] [connection] nw_socket_set_connection_idle [C1:2] setsockopt SO_CONNECTION_IDLE failed [42: Protocol not available]
+2026-11-07 21:42:11.974381+0800 JobGenie[27380:44065791] [connection] nw_socket_set_connection_idle [C1:2] setsockopt SO_CONNECTION_IDLE failed [42: Protocol not available]
+2026-11-07 21:42:11.974784+0800 JobGenie[27380:44065791] [connection] nw_socket_set_connection_idle [C1:2] setsockopt SO_CONNECTION_IDLE failed [42: Protocol not available]
+2026-11-07 21:42:11.983720+0800 JobGenie[27380:44065791] [connection] nw_socket_set_connection_idle [C1:2] setsockopt SO_CONNECTION_IDLE failed [42: Protocol not available]
+2026-11-07 21:42:11.985371+0800 JobGenie[27380:44065791] [connection] nw_socket_set_connection_idle [C1:2] setsockopt SO_CONNECTION_IDLE failed [42: Protocol not available]
+2026-11-07 21:42:11.987249+0800 JobGenie[27380:44065791] [connection] nw_socket_set_connection_idle [C1:2] setsockopt SO_CONNECTION_IDLE failed [42: Protocol not available]
+2026-11-07 21:42:11.987403+0800 JobGenie[27380:44065791] [connection] nw_socket_set_connection_idle [C1:2] setsockopt SO_CONNECTION_IDLE failed [42: Protocol not available]
+2026-11-07 21:42:12.020121+0800 JobGenie[27380:44065791] [connection] nw_socket_set_connection_idle [C1:2] setsockopt SO_CONNECTION_IDLE failed [42: Protocol not available]
+2026-11-07 21:42:12.020979+0800 JobGenie[27380:44065791] [connection] nw_socket_set_connection_idle [C1:2] setsockopt SO_CONNECTION_IDLE failed [42: Protocol not available]
+2026-11-07 21:42:12.021734+0800 JobGenie[27380:44065791] [connection] nw_socket_set_connection_idle [C1:2] setsockopt SO_CONNECTION_IDLE failed [42: Protocol not available]
+2026-11-07 21:42:12.022211+0800 JobGenie[27380:44065791] [connection] nw_socket_set_connection_idle [C1:2] setsockopt SO_CONNECTION_IDLE failed [42: Protocol not available]
+2026-11-07 21:42:12.028477+0800 JobGenie[27380:44065791] [connection] nw_socket_set_connection_idle [C1:2] setsockopt SO_CONNECTION_IDLE failed [42: Protocol not available]
+2026-11-07 21:42:12.028794+0800 JobGenie[27380:44065791] [connection] nw_socket_set_connection_idle [C1:2] setsockopt SO_CONNECTION_IDLE failed [42: Protocol not available]
+2026-11-07 21:42:12.029473+0800 JobGenie[27380:44065793] [connection] nw_socket_set_connection_idle [C1:2] setsockopt SO_CONNECTION_IDLE failed [42: Protocol not available]
+2026-11-07 21:42:12.029731+0800 JobGenie[27380:44065793] [connection] nw_socket_set_connection_idle [C1:2] setsockopt SO_CONNECTION_IDLE failed [42: Protocol not available]
+2026-11-07 21:42:12.059492+0800 JobGenie[27380:44065791] [connection] nw_socket_set_connection_idle [C1:2] setsockopt SO_CONNECTION_IDLE failed [42: Protocol not available]
+2026-11-07 21:42:12.059822+0800 JobGenie[27380:44065791] [connection] nw_socket_set_connection_idle [C1:2] setsockopt SO_CONNECTION_IDLE failed [42: Protocol not available]
+2026-11-07 21:42:12.061360+0800 JobGenie[27380:44065794] [connection] nw_socket_set_connection_idle [C1:2] setsockopt SO_CONNECTION_IDLE failed [42: Protocol not available]
+2026-11-07 21:42:12.061527+0800 JobGenie[27380:44065794] [connection] nw_socket_set_connection_idle [C1:2] setsockopt SO_CONNECTION_IDLE failed [42: Protocol not available]
+2026-11-07 21:42:12.079285+0800 JobGenie[27380:44065793] [connection] nw_socket_set_connection_idle [C1:2] setsockopt SO_CONNECTION_IDLE failed [42: Protocol not available]
+2026-11-07 21:42:12.079763+0800 JobGenie[27380:44065793] [connection] nw_socket_set_connection_idle [C1:2] setsockopt SO_CONNECTION_IDLE failed [42: Protocol not available]
+2026-11-07 21:42:12.080551+0800 JobGenie[27380:44065793] [connection] nw_protocol_socket_set_no_wake_from_sleep [C1:2] setsockopt SO_NOWAKEFROMSLEEP failed [22: Invalid argument]
+2026-11-07 21:42:12.080786+0800 JobGenie[27380:44065793] [] nw_protocol_socket_set_no_wake_from_sleep setsockopt SO_NOWAKEFROMSLEEP failed [22: Invalid argument]
+Test Case '-[JobGenieTests.FeedbackTests testRealFeedbackAPI]' passed (0.333 seconds).
+Test Suite 'FeedbackTests' passed at 2026-11-07 21:42:12.081.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.333 (0.333) seconds
+Test Suite 'JobGenieTests.xctest' passed at 2026-11-07 21:42:12.081.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.333 (0.334) seconds
+Test Suite 'Selected tests' passed at 2026-11-07 21:42:12.081.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.333 (0.334) seconds
+2026-11-07 21:42:12.388 xcodebuild[27146:44063197] [MT] IDETestOperationsObserverDebug: 13.569 elapsed -- Testing started completed.
+2026-11-07 21:42:12.388 xcodebuild[27146:44063197] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-07 21:42:12.388 xcodebuild[27146:44063197] [MT] IDETestOperationsObserverDebug: 13.569 sec, +13.569 sec -- end
+
+Test session results, code coverage, and logs:
+	<TEMP>/jobgenie-ios-acceptance-wPKqRr/feedback-api.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started
