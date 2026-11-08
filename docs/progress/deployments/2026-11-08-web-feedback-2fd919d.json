@@ -1,0 +1,29 @@
+{
+  "recordedAt": "2026-11-08T11:50:05.321Z",
+  "observationDate": "2026-11-08",
+  "timezone": "Asia/Shanghai",
+  "source": "Connected GitHub combined commit status and git ls-remote origin refs/heads/main",
+  "implementationCommit": "2fd919d8a70b2c781d5b0f04940d93793ee67ece",
+  "remoteShaVerified": "2fd919d8a70b2c781d5b0f04940d93793ee67ece",
+  "remoteRef": "refs/heads/main",
+  "statuses": [
+    {
+      "context": "Vercel",
+      "state": "success",
+      "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/HFvAnYAXStWdzPahNofkAXBRjR5a"
+    }
+  ],
+  "unauthenticatedProductionRead": {
+    "status": 401,
+    "cacheControl": "private, no-store",
+    "body": {
+      "error": "Not authenticated"
+    },
+    "responseDateHeader": "Sun, 08 Nov 2026 11:49:45 GMT",
+    "url": "https://jobgenie-six.vercel.app/api/feedback",
+    "authenticated": false
+  },
+  "productionBusinessWritesPerformed": false,
+  "nativeDistribution": "Native source/binaries unchanged. Legacy native API compatibility tested locally. No new physical-device signing or TestFlight acceptance.",
+  "scope": "Status belongs to the implementation revision. Local authenticated UI/database tests used disposable services; the production check was read-only and signed out. A later records-only commit is a distinct revision."
+}

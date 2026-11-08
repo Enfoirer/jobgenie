@@ -51,4 +51,8 @@ The JG-024 implementation Vercel check was subsequently observed as **success**.
 
 ## iOS product feedback
 
-[JG-025](records/2026-11-07-JG-025.md) was implemented and tested on 2026-11-07, with records and GitHub delivery completed on 2026-11-08. It adds native five-star feedback, suggestions and persistent later/never choices. The original workbook now has 25 milestones. See the record for actual test logs, captures/API assertions and the [deployment observation](deployments/2026-11-08-feedback-e30fe5f.json).
+[JG-025](records/2026-11-07-JG-025.md) was implemented and tested on 2026-11-07, with records and GitHub delivery completed on 2026-11-08. It adds native five-star feedback, suggestions and persistent later/never choices. That delivery brought the original workbook to 25 milestones. See the record for actual test logs, captures/API assertions and the [deployment observation](deployments/2026-11-08-feedback-e30fe5f.json).
+
+## Web product feedback
+
+[JG-026](records/2026-11-08-JG-026.md) adds the English web survey on 2026-11-08. Web and iOS share the same response and later/never preferences. The original workbook now has 26 milestones. The record links 304 passing automated tests, real browser acceptance, reviewed desktop/mobile captures and the [implementation deployment observation](deployments/2026-11-08-web-feedback-2fd919d.json).

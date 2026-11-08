@@ -1,0 +1,5 @@
+Existing milestones: 25
+{"kind":"notice","message":"Cell search matched 0 entries."}
+Inspect result written to file: <WORKSPACE>/docs/progress/project-progress.xlsx.inspect.ndjson
+PASS: JG-026 appended; 26 completed milestones; all previous task values, timeline formulas and update entries retained. Status/date dependencies recompute and restore correctly.
+PASS: saved workbook retains both sheet views/frozen panes, typed dates, English text, validated status, extended conditional formats, cached 26/26 counts and the Nov 8 timeline. No saved error cells.

@@ -46,3 +46,5 @@ The [deployment responses](deployments/2026-11-04-observed-statuses.json) retain
 [JG-024 English development records](records/2026-11-04-JG-024.md) translates the existing records and original workbook, retains the bilingual iOS product and adds the current validation/previews. The workbook now contains 24 milestones.
 
 [JG-025 iOS product feedback](records/2026-11-07-JG-025.md) was completed on 2026-11-07, with current acceptance evidence. The original workbook now contains 25 milestones.
+
+[JG-026 Web product feedback](records/2026-11-08-JG-026.md) was completed on 2026-11-08. The original workbook now contains 26 milestones.

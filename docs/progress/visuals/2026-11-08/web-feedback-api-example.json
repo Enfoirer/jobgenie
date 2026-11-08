@@ -1,0 +1,22 @@
+{
+  "environment": "temporary local Next.js/MongoDB and headless Chrome",
+  "webResponse": {
+    "overall": 1,
+    "recommendation": 2,
+    "source": "manual",
+    "platform": "web",
+    "comment": "Please improve keyboard navigation."
+  },
+  "webResponseCount": 1,
+  "legacyIosRetryPreservedWebResponse": true,
+  "nativeResponseReadByWeb": {
+    "overall": 4,
+    "recommendation": 5,
+    "platform": "ios"
+  },
+  "snoozeSharedWithIos": true,
+  "pendingOptOutSurvivedReload": true,
+  "optOutSynchronized": true,
+  "foreignAccountUnchanged": true,
+  "signedOutStatus": 401
+}

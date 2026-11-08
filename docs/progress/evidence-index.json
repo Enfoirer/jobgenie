@@ -556,6 +556,141 @@
       "redactions": [],
       "association": "Actual 2026-11-07 feedback implementation/acceptance. Temporary accounts and databases only.",
       "capturedAt": "2026-11-07T13:47:36.729000+00:00"
+    },
+    {
+      "task": "JG-026",
+      "kind": "test_log",
+      "file": "tests/2026-11-08/web-feedback-regression.log",
+      "outcome": "passed",
+      "description": "Full automated regression: 304 tests passed, zero failures or skips.",
+      "collectedAt": "2026-11-08T11:50:05.416385+00:00",
+      "observedSourceMtime": "2026-11-08T11:43:19.567763+00:00",
+      "originalSha256": "694e4aed6f8e9241789a98c8932cb7adc551a74f57a3df59f7ef986ddcd6d856",
+      "sha256": "3e22d912a2bbaefafe7d09d20c744ce475f2d6b32c0e0eacb7f11aa3d964a13d",
+      "redactions": [
+        "Local home/workspace/temp paths",
+        "Credential and database URI assignments if present"
+      ],
+      "association": "Actual 2026-11-08 web feedback delivery. Local tests use disposable accounts and databases. No production feedback writes."
+    },
+    {
+      "task": "JG-026",
+      "kind": "test_log",
+      "file": "tests/2026-11-08/web-feedback-build.log",
+      "outcome": "passed",
+      "description": "Final Next.js production build after the React effect cleanup lint correction.",
+      "collectedAt": "2026-11-08T11:50:05.416385+00:00",
+      "observedSourceMtime": "2026-11-08T11:48:05.284996+00:00",
+      "originalSha256": "fee81879aeef61345e870a49b084b25474c3b49593184b1d0e9fc70487366784",
+      "sha256": "fee81879aeef61345e870a49b084b25474c3b49593184b1d0e9fc70487366784",
+      "redactions": [
+        "Local home/workspace/temp paths",
+        "Credential and database URI assignments if present"
+      ],
+      "association": "Actual 2026-11-08 web feedback delivery. Local tests use disposable accounts and databases. No production feedback writes."
+    },
+    {
+      "task": "JG-026",
+      "kind": "test_log",
+      "file": "tests/2026-11-08/web-feedback-browser.log",
+      "outcome": "passed",
+      "description": "Real foreground/idle timing, editor deferral, submit failure/retry, one low-score response, legacy native compatibility, reload/mobile/focus, account switch, offline opt-out/reconnect and signed-out rejection.",
+      "collectedAt": "2026-11-08T11:50:05.416385+00:00",
+      "observedSourceMtime": "2026-11-08T11:47:35.677770+00:00",
+      "originalSha256": "54dee411cd0dc4a4cfa6227608a986b89adfa90a33436a42244021d2c7562817",
+      "sha256": "335232cbf991ee170f7db0dad942866c3cf5b542aa15efe9e6a564539ec77cc0",
+      "redactions": [
+        "Local home/workspace/temp paths",
+        "Credential and database URI assignments if present"
+      ],
+      "association": "Actual 2026-11-08 web feedback delivery. Local tests use disposable accounts and databases. No production feedback writes."
+    },
+    {
+      "task": "JG-026",
+      "kind": "test_log",
+      "file": "tests/2026-11-08/web-feedback-lint-initial.log",
+      "outcome": "warning",
+      "description": "Scoped lint initially reported a React ref cleanup warning; captured the stable Set inside the effect before final lint.",
+      "collectedAt": "2026-11-08T11:50:05.416385+00:00",
+      "observedSourceMtime": "2026-11-08T11:42:50.865902+00:00",
+      "originalSha256": "1e0ad8967a25e3d92ebafacafc762bc772b2d3b45d8852924f4e84b295a4231d",
+      "sha256": "c16fe3121507215d6095b04030f32a4d185eb93ab291d6182f28509c3d5f0c57",
+      "redactions": [
+        "Local home/workspace/temp paths",
+        "Credential and database URI assignments if present"
+      ],
+      "association": "Actual 2026-11-08 web feedback delivery. Local tests use disposable accounts and databases. No production feedback writes."
+    },
+    {
+      "task": "JG-026",
+      "kind": "test_log",
+      "file": "tests/2026-11-08/web-feedback-lint.log",
+      "outcome": "passed",
+      "description": "Final scoped ESLint with explicit JSX extension completed without warnings or errors.",
+      "collectedAt": "2026-11-08T11:50:05.416385+00:00",
+      "observedSourceMtime": "2026-11-08T11:48:16.441956+00:00",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "redactions": [
+        "Local home/workspace/temp paths",
+        "Credential and database URI assignments if present"
+      ],
+      "association": "Actual 2026-11-08 web feedback delivery. Local tests use disposable accounts and databases. No production feedback writes."
+    },
+    {
+      "task": "JG-026",
+      "kind": "test_log",
+      "file": "tests/2026-11-08/web-feedback-workbook.log",
+      "outcome": "passed",
+      "description": "Original workbook append, historical preservation, recalculation, rendered review and saved XML validation.",
+      "collectedAt": "2026-11-08T11:50:05.416385+00:00",
+      "observedSourceMtime": "2026-11-08T11:49:29.412669+00:00",
+      "originalSha256": "bd4431cd864346e9f36c0b222d9a97d21bf3b43cd596a40157e842a251548977",
+      "sha256": "ba7ce48b077f3c35206e5760f3fb57d77eaa1869b8b1c257a8790c574b631396",
+      "redactions": [
+        "Local home/workspace/temp paths",
+        "Credential and database URI assignments if present"
+      ],
+      "association": "Actual 2026-11-08 web feedback delivery. Local tests use disposable accounts and databases. No production feedback writes."
+    },
+    {
+      "task": "JG-026",
+      "kind": "screenshot",
+      "file": "visuals/2026-11-08/web-feedback-desktop.png",
+      "outcome": "passed",
+      "description": "Reviewed desktop survey with retained low scores/comment after a simulated save failure.",
+      "collectedAt": "2026-11-08T11:50:05.416385+00:00",
+      "observedSourceMtime": "2026-11-08T11:47:33.932062+00:00",
+      "originalSha256": "9cd94b66828ea4ddf944cbf75fc972cdf37bccd08f57c046f3af84787fcd87f8",
+      "sha256": "9cd94b66828ea4ddf944cbf75fc972cdf37bccd08f57c046f3af84787fcd87f8",
+      "redactions": [],
+      "association": "Actual 2026-11-08 web feedback delivery. Local tests use disposable accounts and databases. No production feedback writes."
+    },
+    {
+      "task": "JG-026",
+      "kind": "screenshot",
+      "file": "visuals/2026-11-08/web-feedback-mobile.png",
+      "outcome": "passed",
+      "description": "Reviewed 390-pixel mobile survey layout and scrolling after the simulated save failure.",
+      "collectedAt": "2026-11-08T11:50:05.416385+00:00",
+      "observedSourceMtime": "2026-11-08T11:47:33.990862+00:00",
+      "originalSha256": "ed4b3671d48f1460553fbd3c43dc83656a86946682cbb6f2b36917926ca36eaa",
+      "sha256": "ed4b3671d48f1460553fbd3c43dc83656a86946682cbb6f2b36917926ca36eaa",
+      "redactions": [],
+      "association": "Actual 2026-11-08 web feedback delivery. Local tests use disposable accounts and databases. No production feedback writes."
+    },
+    {
+      "task": "JG-026",
+      "kind": "api_example",
+      "file": "visuals/2026-11-08/web-feedback-api-example.json",
+      "outcome": "passed",
+      "description": "Actual temporary database/API assertions for web response, native compatibility, shared preferences and ownership.",
+      "collectedAt": "2026-11-08T11:50:05.416385+00:00",
+      "observedSourceMtime": "2026-11-08T11:47:35.677599+00:00",
+      "originalSha256": "51f1e47d35c94df2622cd7af10dff7ced38f6d70e74f8997f3eba8567f5e053f",
+      "sha256": "51f1e47d35c94df2622cd7af10dff7ced38f6d70e74f8997f3eba8567f5e053f",
+      "redactions": [],
+      "association": "Actual 2026-11-08 web feedback delivery. Local tests use disposable accounts and databases. No production feedback writes."
     }
   ],
   "records": [
@@ -1210,6 +1345,41 @@
         }
       ],
       "deploymentObservation": "deployments/2026-11-08-feedback-e30fe5f.json"
+    },
+    {
+      "id": "JG-026",
+      "title": "Web: shared product feedback",
+      "scope": "English dashboard survey, voluntary entry, safe automatic invitations, failed-save retry and account-scoped offline choices shared with iOS.",
+      "tests": "304 automated tests passed. Real browser/API acceptance, final Next.js production build and scoped JSX lint passed. Original workbook history, calculations and renders checked.",
+      "boundary": "Experienced-user/nonresponse bias remains. No analysis dashboard. No production authenticated feedback writes or new signed-device/TestFlight acceptance.",
+      "commit": "https://github.com/Enfoirer/jobgenie/commit/2fd919d8a70b2c781d5b0f04940d93793ee67ece",
+      "document": "https://github.com/Enfoirer/jobgenie/blob/2fd919d8a70b2c781d5b0f04940d93793ee67ece/docs/web-feedback-acceptance.md",
+      "commitSha": "2fd919d8a70b2c781d5b0f04940d93793ee67ece",
+      "commitAt": "2026-11-08T19:48:43+08:00",
+      "preparedAt": "2026-11-08T11:50:05.416385+00:00",
+      "record": "records/2026-11-08-JG-026.md",
+      "sourceDocumentExistsAtCommit": true,
+      "rawLogs": [
+        "tests/2026-11-08/web-feedback-regression.log",
+        "tests/2026-11-08/web-feedback-build.log",
+        "tests/2026-11-08/web-feedback-browser.log",
+        "tests/2026-11-08/web-feedback-lint-initial.log",
+        "tests/2026-11-08/web-feedback-lint.log",
+        "tests/2026-11-08/web-feedback-workbook.log"
+      ],
+      "visuals": [
+        "visuals/2026-11-08/web-feedback-desktop.png",
+        "visuals/2026-11-08/web-feedback-mobile.png",
+        "visuals/2026-11-08/web-feedback-api-example.json"
+      ],
+      "observedChecks": [
+        {
+          "context": "Vercel",
+          "state": "success",
+          "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/HFvAnYAXStWdzPahNofkAXBRjR5a"
+        }
+      ],
+      "deploymentObservation": "deployments/2026-11-08-web-feedback-2fd919d.json"
     }
   ],
   "translatedAt": "2026-11-04T15:15:24.093466+00:00",
@@ -1219,5 +1389,5 @@
     "historicalArtifacts": "Original-language test output and historical evidence remain unchanged; English descriptions explain their provenance.",
     "translation": "English records translated on the date in translatedAt. Existing dates, test results, artifact hashes and fixed historical commit links are preserved."
   },
-  "lastUpdatedAt": "2026-11-07T16:25:08.829976+00:00"
+  "lastUpdatedAt": "2026-11-08T11:50:05.416385+00:00"
 }
