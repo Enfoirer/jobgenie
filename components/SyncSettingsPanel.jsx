@@ -57,7 +57,7 @@ export default function SyncSettingsPanel() {
   };
 
   return (
-    <div className="rounded-lg border bg-white p-4 shadow-sm">
+    <div className="rounded-lg border bg-white p-4 shadow-sm" aria-busy={saving}>
       <div className="flex items-center justify-between">
         <div>
           <h3 className="text-lg font-medium text-gray-900">Sync mode</h3>

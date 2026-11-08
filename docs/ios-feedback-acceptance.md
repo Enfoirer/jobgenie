@@ -2,6 +2,8 @@
 
 Delivery date: 2026-11-07 (Asia/Shanghai). Scope: native iPhone UI and shared authenticated persistence API. No web survey UI or App Store review request is introduced.
 
+Follow-up on 2026-11-08: [web product feedback](web-feedback-acceptance.md) adds the same survey to the dashboard. The existing campaign, response, active-date history and later/never preferences are shared across web and iOS. The original native results below describe the November 7 delivery. The web extension records platform context and retains compatibility with native requests that omit it.
+
 ## Questions and choices
 
 Account → Rate JobGenie opens the same form used by automatic invitations. Ask, in order:

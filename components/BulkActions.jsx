@@ -24,7 +24,7 @@ export default function BulkActions({ records, selected, onSelect, endpoint, act
     } catch (error) { setError(error.message || 'Could not confirm completion. Refresh before retrying.'); }
     finally { onBusy(false); }
   }
-  return <section aria-label="Bulk actions" className="rounded-lg border bg-white p-4 space-y-3">
+  return <section aria-label="Bulk actions" aria-busy={busy} className="rounded-lg border bg-white p-4 space-y-3">
     <div className="flex flex-wrap items-center gap-3">
       <button type="button" disabled={busy} onClick={() => onSelect(records.slice(0, 50).map((item) => item._id))} className="text-sm text-blue-700 disabled:opacity-50">Select visible (up to 50)</button>
       <button type="button" disabled={busy} onClick={() => onSelect([])} className="text-sm text-gray-600">Clear selection</button>

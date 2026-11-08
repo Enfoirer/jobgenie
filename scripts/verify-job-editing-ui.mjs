@@ -23,6 +23,7 @@ import { verifyUploads } from './verify-uploads-ui.mjs';
 import { verifyAnalytics } from './verify-analytics-ui.mjs';
 import { verifyDocuments } from './verify-documents-ui.mjs';
 import { verifyBulk } from './verify-bulk-ui.mjs';
+import { verifyFeedback } from './verify-feedback-ui.mjs';
 
 const chromePath = process.env.CHROME_BIN || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const freePort = async () => {
@@ -146,7 +147,10 @@ try {
   await wait(`!!${card}`, 'authenticated board');
   console.log('PASS: real credential login and board load.');
 
-  if (process.argv.includes('--documents-only')) {
+  if (process.argv.includes('--feedback-only')) {
+    await verifyFeedback({ user, foreign, job, send, evaluate, wait, click, fill, escape, base, socket });
+    assert.deepEqual(exceptions, []);
+  } else if (process.argv.includes('--documents-only')) {
     await verifyDocuments({ user, job, send, evaluate, wait, click, fill, base });
     assert.deepEqual(exceptions, []);
   } else if (process.argv.includes('--bulk-only')) {

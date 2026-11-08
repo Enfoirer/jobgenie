@@ -22,6 +22,7 @@ export default function JobsPage() {
   const [archived, setArchived] = useState(false);
   const [selected, setSelected] = useState([]);
   const [bulkBusy, setBulkBusy] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const viewJobs = jobsData.jobs.filter((job) => Boolean(job.archivedAt) === archived);
   const selectable = viewJobs.filter((job) => !hideRejected || job.status !== 'rejected');
   const toggle = (id) => setSelected((ids) => ids.includes(id) ? ids.filter((value) => value !== id) : ids.length < 50 ? [...ids, id] : ids);
@@ -139,7 +140,7 @@ export default function JobsPage() {
     : totalApplications;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" data-feedback-busy={Boolean(selected.length || bulkBusy || deleting)}>
       <div className="border-b border-gray-200 pb-3">
         <div className="flex justify-between items-center">
           <div>
@@ -323,6 +324,7 @@ export default function JobsPage() {
 
   // Helper function to delete a job
   async function handleDeleteJob(jobId) {
+    setDeleting(true);
     try {
       const response = await fetch(`/api/jobs/${jobId}`, {
         method: 'DELETE'
@@ -341,6 +343,6 @@ export default function JobsPage() {
     } catch (error) {
       console.error('Error deleting job:', error);
       alert('Failed to delete job. Please try again.');
-    }
+    } finally { setDeleting(false); }
   }
 }

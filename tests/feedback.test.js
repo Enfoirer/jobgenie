@@ -160,3 +160,41 @@ test('API rate limits per account and returns no comments or internals on servic
   const failed = createFeedbackHandler({ authenticate: async () => String(user._id), connect: async () => { throw new Error('private database contents'); } });
   const result = await failed(request()); assert.equal(result.status, 503); assert(!JSON.stringify(await result.json()).includes('private database'));
 });
+test('web and legacy iOS visits share eligibility while retaining platform on offers and responses', async () => {
+  await action({ action: 'visit', platform: 'web' }, now - 7 * day);
+  await action({ action: 'visit' }, now - day);
+  assert.equal((await action({ action: 'visit', platform: 'web' })).eligible, true);
+  const offered = await action({ action: 'invite', requestId: randomUUID(), platform: 'web' });
+  await action({ action: 'shown', invitationId: offered.invitationId, platform: 'web' });
+  const response = await action(submit({ platform: 'web', invitationId: offered.invitationId }));
+  assert.equal(response.response.platform, 'web');
+  assert.equal((await FeedbackProfile.findById(user._id)).invitations[0].platform, 'web');
+  const nativeRead = await feedbackStatus(user._id, now);
+  assert.equal(nativeRead.campaign, 'ios-product-v1'); assert.equal(nativeRead.submitted, true);
+  assert.equal((await action(submit({ overall: 5 }))).response.overall, 1);
+  assert.equal(await ProductFeedback.countDocuments({ userId: user._id }), 1);
+});
+test('web cannot overwrite an existing legacy iOS answer and old rows retain their platform default', async () => {
+  await action(submit());
+  await ProductFeedback.collection.updateOne({ userId: user._id }, { $unset: { platform: '' } });
+  const response = await action(submit({ platform: 'web', overall: 5, comment: 'Changed' }));
+  assert.equal(response.response.overall, 1); assert.equal(response.response.platform, 'ios');
+  assert.equal(response.response.comment, 'Please improve offline support.');
+  await assert.rejects(action({ action: 'visit', platform: 'unknown' }), error => error.status === 400);
+});
+test('simultaneous web and iOS submissions retain exactly one unchanged account response', async () => {
+  const values = await Promise.all([action(submit({ platform: 'web', overall: 3 })), action(submit({ overall: 1 }))]);
+  assert.equal(await ProductFeedback.countDocuments(), 1);
+  assert.deepEqual(values[0].response, values[1].response);
+  assert(['web', 'ios'].includes(values[0].response.platform));
+});
+test('cross-platform manual later invalidates an unshown reserved offer without claiming an exposure', async () => {
+  await experienced(); const requestId = randomUUID();
+  const offered = await action({ action: 'invite', requestId, platform: 'web' }); assert(offered.invitationId);
+  await action(preference('later'), now + 1000); // A manual choice from the legacy iOS client.
+  assert.equal((await action({ action: 'invite', requestId, platform: 'web' }, now + 2000)).invitationId, null);
+  const row = await FeedbackProfile.findById(user._id);
+  assert.equal(row.invitations[0].disposition, 'later'); assert.equal(row.invitations[0].shownAt, undefined);
+  await action(preference('never', { platform: 'web' }));
+  assert.equal((await feedbackStatus(user._id, now)).disabled, true);
+});
