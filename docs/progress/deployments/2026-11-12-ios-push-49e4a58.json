@@ -1,0 +1,36 @@
+{
+  "task": "JG-027",
+  "implementationCommit": "49e4a585a14abf4dbd7acec4323c2681b9c609c2",
+  "observedAt": "2026-11-11T17:01:21.517Z",
+  "timezone": "Asia/Shanghai",
+  "source": "GitHub connected app get_commit_combined_status and git ls-remote origin refs/heads/main",
+  "verifiedRemoteMain": "49e4a585a14abf4dbd7acec4323c2681b9c609c2",
+  "statuses": [
+    {
+      "context": "Vercel",
+      "state": "success",
+      "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/8vdjouHYPaQB4Fqaz5tmP8q38MKu"
+    }
+  ],
+  "productionCheck": {
+    "url": "https://jobgenie-six.vercel.app/api/push/status",
+    "authenticated": false,
+    "method": "GET",
+    "status": 401,
+    "cacheControl": "private, no-store",
+    "body": {
+      "error": "Not authenticated"
+    },
+    "writes": false
+  },
+  "nativeDistribution": {
+    "unsignedReleaseBuild": "passed",
+    "appleDeveloperMembership": "not yet enrolled, as confirmed by owner",
+    "apnsCredentials": "not configured",
+    "scheduler": "not provisioned",
+    "realAPNsDelivery": "not tested",
+    "signedPhysicalDevices": "not tested",
+    "testFlight": "not submitted"
+  },
+  "boundary": "Successful Vercel build does not establish live Apple notification delivery. No production device was registered and no real push was sent."
+}

@@ -1,0 +1,3 @@
+PASS: xl/worksheets/sheet1.xml prior cell values/formulas, panes, merges, hyperlinks and conditional rules retained.
+PASS: xl/worksheets/sheet2.xml prior cell values/formulas, panes, merges, hyperlinks and conditional rules retained.
+PASS: saved workbook contains JG-027, date-driven November 12 bar, 27 completed/total scoped milestones and new status validation.

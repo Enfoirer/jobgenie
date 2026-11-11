@@ -1,0 +1,42 @@
+(node:81286) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://[HOME]/Documents/study%20and%20work/find_job/jobgenie/tests/push.test.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to [REPOSITORY]/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ configuration is opt-in and signing keys must be P-256 (1060.689333ms)
+✔ registration is private, idempotent and bound to a live authenticated session (49.766417ms)
+✔ logout tombstone rejects delayed registration; old revokes cannot disable newer bindings (66.246542ms)
+✔ offline logout before first registration also blocks a late request (39.101542ms)
+✔ new account on the same installation replaces previous ownership (65.740125ms)
+✔ the same APNs token cannot stay active under two installations/accounts (63.421791ms)
+✔ repeated/concurrent workers send a reminder once (112.551125ms)
+✔ token/locale refresh and same-account relogin do not resend an existing occurrence (121.230292ms)
+✔ reschedule A to B to A creates new versions; cleared/deleted versions cannot resolve (163.873958ms)
+✔ history deletion prevents old reminders from being sent (59.913833ms)
+✔ application deletion prevents old reminders from being sent (59.082292ms)
+✔ archive prevents old reminders from being sent (61.964708ms)
+✔ Offer prevents old reminders from being sent (57.076334ms)
+✔ rejection prevents old reminders from being sent (67.956375ms)
+✔ read prevents old reminders from being sent (64.983791ms)
+✔ cancel prevents old reminders from being sent (60.835417ms)
+✔ reminders disabled prevents old reminders from being sent (58.958917ms)
+✔ snooze suppresses delivery until due and sends only once for that snooze (129.858042ms)
+✔ missing dates, future windows and expired events cannot push (86.017833ms)
+✔ logout, session expiry, password reset and user deletion stop delivery (124.940083ms)
+✔ foreign users, other installations and old bindings cannot resolve a notification (80.493875ms)
+✔ only explicit temporary rejections retry, with backoff and three-attempt bound (154.482292ms)
+✔ transport timeout/ambiguous outcome is never replayed (83.9695ms)
+✔ stale crash claims are marked unknown, never retried (89.331459ms)
+✔ invalid APNs token disables only the binding used for that request (115.815667ms)
+✔ mutation during APNs IO invalidates delivery and tapping does not open old data (65.505917ms)
+✔ appointment and deadline are independent and device pagination continues (164.18625ms)
+✔ send-budget continuation does not lose remaining reminders on the same device (100.400584ms)
+✔ HTTP/2 transport sends signed generic alerts, no offline queue, and classifies responses (55.889833ms)
+✔ HTTP handlers enforce auth, origin, bounded JSON, cron secret and safe failures (52.385458ms)
+ℹ tests 30
+ℹ suites 0
+ℹ pass 30
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4119.089333

@@ -691,6 +691,161 @@
       "sha256": "51f1e47d35c94df2622cd7af10dff7ced38f6d70e74f8997f3eba8567f5e053f",
       "redactions": [],
       "association": "Actual 2026-11-08 web feedback delivery. Local tests use disposable accounts and databases. No production feedback writes."
+    },
+    {
+      "task": "JG-027",
+      "kind": "test_log",
+      "file": "tests/2026-11-12/push-regression.log",
+      "outcome": "passed",
+      "description": "334 passing backend tests, with disposable database fixtures.",
+      "collectedAt": "2026-11-11T17:00:58.869Z",
+      "observedSourceMtime": "2026-11-11T16:38:33.668Z",
+      "originalSha256": "2272ad14650f101e1808dddad6e299e2b570f6e6fc8f59150f3ba6175e8ffada",
+      "sha256": "aafd8bde85c75b9820f9bce1f36f9ccbe8f801a8b8d54aec73f9e7a1ddf5793a",
+      "redactions": [
+        "Repository/home paths and any credential assignments."
+      ],
+      "association": "Actual 2026-11-12 local APNs implementation acceptance. No real Apple push, production user writes, signing or TestFlight."
+    },
+    {
+      "task": "JG-027",
+      "kind": "test_log",
+      "file": "tests/2026-11-12/push-server-final.log",
+      "outcome": "passed",
+      "description": "Final 30 passing push policy, route and loopback HTTP/2 tests.",
+      "collectedAt": "2026-11-11T17:00:58.869Z",
+      "observedSourceMtime": "2026-11-11T16:55:35.901Z",
+      "originalSha256": "0167695188a31bdf8abcef38ecc94ffa7030492cf05e91369580780d0495bac8",
+      "sha256": "082f4ba60aa039d84153889916fc7388240f5f83940348cc0ffc564ede9c3a2b",
+      "redactions": [
+        "Repository/home paths and any credential assignments."
+      ],
+      "association": "Actual 2026-11-12 local APNs implementation acceptance. No real Apple push, production user writes, signing or TestFlight."
+    },
+    {
+      "task": "JG-027",
+      "kind": "test_log",
+      "file": "tests/2026-11-12/push-native-suite.log",
+      "outcome": "passed",
+      "description": "Initial complete native unit run (105 passed, three explicit environment skips) and two simulator UI flows.",
+      "collectedAt": "2026-11-11T17:00:58.869Z",
+      "observedSourceMtime": "2026-11-11T16:38:58.269Z",
+      "originalSha256": "7bc9c85fb68786c53cf3a3a025edd628fd12fae1eead4f887f0d937a5439923a",
+      "sha256": "4041af38502b486796a56fab3321320a9bdc8a4c5e29f45d7cc428fd650789ab",
+      "redactions": [
+        "Repository/home paths and any credential assignments."
+      ],
+      "association": "Actual 2026-11-12 local APNs implementation acceptance. No real Apple push, production user writes, signing or TestFlight."
+    },
+    {
+      "task": "JG-027",
+      "kind": "test_log",
+      "file": "tests/2026-11-12/push-native-final.log",
+      "outcome": "passed",
+      "description": "Final 27 passing native push/reminder tests (15 push) and bilingual simulator settings UI.",
+      "collectedAt": "2026-11-11T17:00:58.869Z",
+      "observedSourceMtime": "2026-11-11T16:51:47.064Z",
+      "originalSha256": "6c4aad83f556c9e95ba2c76e4bd4602127c419a4a953b6ed6eb539696f5e08fc",
+      "sha256": "921c06e9fd574d54986eece7437d660052967778bf564c5df4b4549b175d7ae2",
+      "redactions": [
+        "Repository/home paths and any credential assignments."
+      ],
+      "association": "Actual 2026-11-12 local APNs implementation acceptance. No real Apple push, production user writes, signing or TestFlight."
+    },
+    {
+      "task": "JG-027",
+      "kind": "test_log",
+      "file": "tests/2026-11-12/push-web-build.log",
+      "outcome": "passed",
+      "description": "Final production Next.js build.",
+      "collectedAt": "2026-11-11T17:00:58.869Z",
+      "observedSourceMtime": "2026-11-11T16:56:49.332Z",
+      "originalSha256": "964a29810fc2985cbf27a5b69bab0e0557f8b4a9970471e8ccdb39d31cf1a423",
+      "sha256": "964a29810fc2985cbf27a5b69bab0e0557f8b4a9970471e8ccdb39d31cf1a423",
+      "redactions": [],
+      "association": "Actual 2026-11-12 local APNs implementation acceptance. No real Apple push, production user writes, signing or TestFlight."
+    },
+    {
+      "task": "JG-027",
+      "kind": "test_log",
+      "file": "tests/2026-11-12/push-release-build.log",
+      "outcome": "passed",
+      "description": "Final unsigned iPhone arm64 Release build; not signing or TestFlight.",
+      "collectedAt": "2026-11-11T17:00:58.869Z",
+      "observedSourceMtime": "2026-11-11T16:52:43.863Z",
+      "originalSha256": "fbb9ae88599304994023336d4588b767196ed0cbe08575f3ffa80803abdafebc",
+      "sha256": "cde376536332e5f1322f0d0a154791d97ab7f04fb92255d85d12b396fbee2525",
+      "redactions": [
+        "Repository/home paths and any credential assignments."
+      ],
+      "association": "Actual 2026-11-12 local APNs implementation acceptance. No real Apple push, production user writes, signing or TestFlight."
+    },
+    {
+      "task": "JG-027",
+      "kind": "test_log",
+      "file": "tests/2026-11-12/push-lint.log",
+      "outcome": "passed",
+      "description": "Scoped ESLint exited zero with no diagnostic output.",
+      "collectedAt": "2026-11-11T17:00:58.869Z",
+      "observedSourceMtime": "2026-11-11T16:55:32.888Z",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "redactions": [],
+      "association": "Actual 2026-11-12 local APNs implementation acceptance. No real Apple push, production user writes, signing or TestFlight."
+    },
+    {
+      "task": "JG-027",
+      "kind": "test_log",
+      "file": "tests/2026-11-12/push-workbook.log",
+      "outcome": "passed",
+      "description": "Original workbook update, live count/date checks and formula error scan.",
+      "collectedAt": "2026-11-11T17:00:58.869Z",
+      "observedSourceMtime": "2026-11-11T16:58:41.630Z",
+      "originalSha256": "5f450133ae626c08bd9857b0ee4bab8cda4f011922f7abfb7fc8850143df4015",
+      "sha256": "210c116349f16939180d9419bba8fa7583f2d3add51dee67db60c2042d86c3f4",
+      "redactions": [
+        "Repository/home paths and any credential assignments."
+      ],
+      "association": "Actual 2026-11-12 local APNs implementation acceptance. No real Apple push, production user writes, signing or TestFlight."
+    },
+    {
+      "task": "JG-027",
+      "kind": "test_log",
+      "file": "tests/2026-11-12/push-workbook-preservation.log",
+      "outcome": "passed",
+      "description": "Saved XLSX comparison of prior cells, formulas, panes and conditional rules.",
+      "collectedAt": "2026-11-11T17:00:58.869Z",
+      "observedSourceMtime": "2026-11-11T17:00:00.715Z",
+      "originalSha256": "345170f83912a58e2912481d39790411db27b80492b4093051079371f2384693",
+      "sha256": "345170f83912a58e2912481d39790411db27b80492b4093051079371f2384693",
+      "redactions": [],
+      "association": "Actual 2026-11-12 local APNs implementation acceptance. No real Apple push, production user writes, signing or TestFlight."
+    },
+    {
+      "task": "JG-027",
+      "kind": "screenshot",
+      "file": "visuals/2026-11-12/push-settings-en.png",
+      "outcome": "passed",
+      "description": "Reviewed English iPhone simulator settings in demo mode. No device registration or permission prompt.",
+      "collectedAt": "2026-11-11T17:00:58.869Z",
+      "observedSourceMtime": "2026-11-11T16:56:30.764Z",
+      "originalSha256": "b5a7428d900789172abe48c781fe42b6de3d285e49d67d89f4d5218399c151da",
+      "sha256": "b5a7428d900789172abe48c781fe42b6de3d285e49d67d89f4d5218399c151da",
+      "redactions": [],
+      "association": "Actual final bilingual simulator UI capture, synthetic demo data; reviewed before publication."
+    },
+    {
+      "task": "JG-027",
+      "kind": "screenshot",
+      "file": "visuals/2026-11-12/push-settings-zh.png",
+      "outcome": "passed",
+      "description": "Reviewed Chinese iPhone simulator settings in demo mode. Product remains bilingual.",
+      "collectedAt": "2026-11-11T17:00:58.869Z",
+      "observedSourceMtime": "2026-11-11T16:56:30.764Z",
+      "originalSha256": "3f302dc6ec88e75fe690468e68e9f875978fea4e8eda6f10c4419f6dea245320",
+      "sha256": "3f302dc6ec88e75fe690468e68e9f875978fea4e8eda6f10c4419f6dea245320",
+      "redactions": [],
+      "association": "Actual final bilingual simulator UI capture, synthetic demo data; reviewed before publication."
     }
   ],
   "records": [
@@ -1380,6 +1535,43 @@
         }
       ],
       "deploymentObservation": "deployments/2026-11-08-web-feedback-2fd919d.json"
+    },
+    {
+      "id": "JG-027",
+      "title": "iOS: APNs code and local acceptance",
+      "scope": "Opt-in system notifications, session-bound devices, live schedule validation, durable deduplication, safe retries, stale-tap rejection and offline logout revocation.",
+      "tests": "334 backend tests passed. Final 30 push tests, 27 native push/reminder tests (15 push), bilingual simulator UI, Next.js production build, unsigned iPhone Release, scoped lint and workbook preservation/calculation checks passed.",
+      "boundary": "No Apple Developer enrollment/APNs credentials/scheduler provisioned. Real delivery, signed physical devices and TestFlight unaccepted. Already-accepted Apple alerts cannot be withdrawn instantly. No real push sent.",
+      "commit": "https://github.com/Enfoirer/jobgenie/commit/49e4a585a14abf4dbd7acec4323c2681b9c609c2",
+      "document": "https://github.com/Enfoirer/jobgenie/blob/49e4a585a14abf4dbd7acec4323c2681b9c609c2/docs/ios-push-acceptance.md",
+      "commitSha": "49e4a585a14abf4dbd7acec4323c2681b9c609c2",
+      "commitAt": "2026-11-12T00:58:16+08:00",
+      "preparedAt": "2026-11-11T17:02:42.676Z",
+      "record": "records/2026-11-12-JG-027.md",
+      "sourceDocumentExistsAtCommit": true,
+      "rawLogs": [
+        "tests/2026-11-12/push-regression.log",
+        "tests/2026-11-12/push-server-final.log",
+        "tests/2026-11-12/push-native-suite.log",
+        "tests/2026-11-12/push-native-final.log",
+        "tests/2026-11-12/push-web-build.log",
+        "tests/2026-11-12/push-release-build.log",
+        "tests/2026-11-12/push-lint.log",
+        "tests/2026-11-12/push-workbook.log",
+        "tests/2026-11-12/push-workbook-preservation.log"
+      ],
+      "visuals": [
+        "visuals/2026-11-12/push-settings-en.png",
+        "visuals/2026-11-12/push-settings-zh.png"
+      ],
+      "observedChecks": [
+        {
+          "context": "Vercel",
+          "state": "success",
+          "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/8vdjouHYPaQB4Fqaz5tmP8q38MKu"
+        }
+      ],
+      "deploymentObservation": "deployments/2026-11-12-ios-push-49e4a58.json"
     }
   ],
   "translatedAt": "2026-11-04T15:15:24.093466+00:00",
@@ -1389,5 +1581,5 @@
     "historicalArtifacts": "Original-language test output and historical evidence remain unchanged; English descriptions explain their provenance.",
     "translation": "English records translated on the date in translatedAt. Existing dates, test results, artifact hashes and fixed historical commit links are preserved."
   },
-  "lastUpdatedAt": "2026-11-08T11:50:05.416385+00:00"
+  "lastUpdatedAt": "2026-11-11T17:02:42.677Z"
 }

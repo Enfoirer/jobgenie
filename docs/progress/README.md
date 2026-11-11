@@ -1,6 +1,6 @@
 # Project progress and development evidence
 
-Updated: 2026-11-08 (Asia/Shanghai).
+Updated: 2026-11-12 (Asia/Shanghai).
 
 [Project progress and Gantt chart](project-progress.xlsx) is the single maintained workbook, with **Progress Gantt** and **Update Log** sheets. This is the original workbook translated and renamed in place, not a second tracker. Task IDs, historical dates, results and source references are retained. The language conversion is recorded separately. The iOS app continues to support Chinese and English.
 
@@ -40,7 +40,7 @@ On 2026-11-03, Safari sharing (`68c1235`), application documents (`a0d5882`) and
 
 - JG-022: 272 backend tests and 80 iOS unit tests passed; two environment-dependent tests were skipped. Real API, browser and iPhone simulator acceptance passed. A later commit containing the feature, `aea1914`, had a successful Vercel check when observed on 2026-11-04. Production business writes were not repeated during the evidence backfill.
 - JG-021: Safari extension and isolated-backend flows passed. Physical-device/TestFlight delivery still requires a developer Team, App Group and signing configuration.
-- iOS APNs background push is not implemented. Real mail-provider consent, third-party file providers and physical-device acceptance retain their documented limitations.
+- iOS APNs code and local acceptance were added in JG-027. Apple Developer/APNs configuration, a minute-level scheduler and signed physical-device/TestFlight delivery remain outstanding. Real mail-provider consent and third-party file providers retain their documented limitations.
 - Historical counts describe their own runs and must not be added together. Completed milestones do not mean that the entire product or every production/device acceptance item is complete.
 
 ## English records delivery on 2026-11-04
@@ -56,3 +56,7 @@ The JG-024 implementation Vercel check was subsequently observed as **success**.
 ## Web product feedback
 
 [JG-026](records/2026-11-08-JG-026.md) adds the English web survey on 2026-11-08. Web and iOS share the same response and later/never preferences. The original workbook now has 26 milestones. The record links 304 passing automated tests, real browser acceptance, reviewed desktop/mobile captures and the [implementation deployment observation](deployments/2026-11-08-web-feedback-2fd919d.json).
+
+## iOS APNs implementation and local acceptance
+
+[JG-027](records/2026-11-12-JG-027.md) adds opt-in device registration, HTTP/2 dispatch, live schedule/session checks, deduplication, safe retries, stale-tap rejection and durable offline logout revocation. The original workbook now has 27 scoped milestones and an appended Update Log entry. The record links 334 passing backend tests, final 30 push tests, 27 affected native tests (15 push), bilingual simulator UI, reviewed captures, production/unsigned Release builds and the [successful implementation deployment observation](deployments/2026-11-12-ios-push-49e4a58.json). Overlapping run counts are not added. Actual Apple delivery and TestFlight remain unaccepted while developer enrollment/configuration is unavailable.
