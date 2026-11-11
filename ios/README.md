@@ -21,7 +21,7 @@ Safari 分享岗位入口及 App Group 签名说明见 [分享岗位验收](../d
 - 申请列表、搜索、状态筛选、当前状态数量和详情；支持新增、编辑、删除状态历史，当前状态由服务端统一计算。
 - 新建申请，以及公司、职位、地点、备注、岗位链接编辑。保存使用现有 POST/PATCH 接口，不在客户端另算当前状态；编辑结果回写列表并刷新日程。
 - 统一日程接口，区分即将到来、已过时间、时间待补充；支持面试时间、笔试截止时间补充、修改、清除，从日程跳转申请详情。时间按手机时区显示，不用状态事件日期代替缺失的面试时间。
-- App 内提醒列表、未读数量、已读、延后 10 分钟、取消及提前时间设置，与网页共用状态。改期、清除和删除后旧提醒失效；前台每 30 秒刷新，尚不发送后台推送。
+- In-app reminders share read/snooze/cancel state and lead time with the web. Optional per-device APNs alerts are implemented; real delivery requires Apple signing, server credentials and a scheduler. See [system push acceptance](../docs/ios-push-acceptance.md).
 - 邮箱立即同步、失败邮件重试、队列数量和最近同步结果；人工确认支持核对公司、职位、事件、目标申请和时间，确认或忽略后刷新申请与日程。
 - Gmail / Outlook 原生授权入口，使用系统授权窗口，完成后安全回到 App；账户信息及退出。
 - 统计分析：当前状态分布、阶段转化率，自选日期范围，明确分子/分母并按手机时区统计。
@@ -138,7 +138,7 @@ IOS_SIMULATOR_ID="$IOS_SIMULATOR_ID" node ios/scripts/verify-backend.mjs --resou
 ## 后续阶段
 
 1. 部署邮箱原生授权后端接口后，使用真实 Gmail / Outlook 账号验收系统授权、拒绝、取消和重连。自动测试使用隔离邮件与模拟提供商响应。
-2. APNs 后台推送；后台推送需要开发者配置、设备绑定、后端发送与去重配套。App 内提醒已实现，验收见 [提醒文档](../docs/ios-reminders-acceptance.md)，现阶段 App 不发送后台推送。
+2. Complete Apple Developer/APNs configuration, minute-level worker scheduling and signed physical-device acceptance for the [system push implementation](../docs/ios-push-acceptance.md). Code and local tests are separate from actual Apple delivery.
 3. 原生注册与账号删除、隐私政策、正式图标、开发者签名、真机验证和 TestFlight。
 
 目前为开发版本，尚未达到上架版本；没有离线业务数据库，也不在本地排队重试写操作。真实第三方邮箱授权、推送、签名和实机表现尚未验收。

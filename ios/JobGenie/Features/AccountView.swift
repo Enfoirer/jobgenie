@@ -35,13 +35,13 @@ struct AccountView: View {
             }
             Section("当前版本") {
                 LabeledContent("JobGenie for iPhone", value: "0.1.0")
-                Text("支持申请与历史管理、日程编辑、App 内提醒、邮箱操作、统计分析和附件。后台推送将逐步加入。") .font(.subheadline).foregroundStyle(.secondary)
+                Text("支持申请与历史管理、日程编辑、邮箱操作、统计分析和附件。系统通知可在提醒设置中开启，需服务器和签名配置就绪。") .font(.subheadline).foregroundStyle(.secondary)
                 if model.isDemo { Text("演示数据只在本次体验中保留，不会写入真实账号。") .font(.footnote).foregroundStyle(Brand.teal) }
             }
             if !model.isDemo {
                 Section("更多功能") {
                     Link(destination: model.api.baseURL.appendingPathComponent("dashboard")) { Label("打开网页版", systemImage: "safari") }
-                    Text("网页版与 App 共用账号数据，浏览器需单独登录。当前 App 不发送后台推送。") .font(.footnote).foregroundStyle(.secondary)
+                    Text("网页版与 App 共用账号数据，浏览器需单独登录。系统通知按设备管理，退出账号会关闭此设备通知。") .font(.footnote).foregroundStyle(.secondary)
                 }
             }
             Section { Button(LocalizedStringKey(model.isDemo ? "退出演示" : "退出登录"), role: .destructive) { confirmingSignOut = true }.accessibilityIdentifier("account.signout") }

@@ -38,6 +38,7 @@ export const authOptions = {
     async session({ session, token }) {
       session.user.id = token.id;
       session.user.sessionId = sessionBinding(token);
+      session.user.authVersion = token.authVersion || 0;
       session.expires = new Date(token.authExpiresAt * 1000).toISOString();
       return session;
     },

@@ -5902,6 +5902,374 @@
           }
         }
       }
+    },
+    "App 内提醒在前台刷新。系统通知需在提醒设置中为此 iPhone 单独开启。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In-app reminders refresh in the foreground. Enable system notifications separately for this iPhone in Reminder settings."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App 内提醒在前台刷新。系统通知需在提醒设置中为此 iPhone 单独开启。"
+          }
+        }
+      }
+    },
+    "开启 App 内提醒": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enable in-app reminders"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "开启 App 内提醒"
+          }
+        }
+      }
+    },
+    "此 iPhone 的系统通知": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "System notifications on this iPhone"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "此 iPhone 的系统通知"
+          }
+        }
+      }
+    },
+    "系统通知遵循已保存的提醒开关和提前时间。关闭 App 后仍可接收；实际送达受网络、系统设置和专注模式影响。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "System notifications use your saved reminder preferences and lead time. They can arrive while the app is closed; delivery depends on connectivity, system settings and Focus."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "系统通知遵循已保存的提醒开关和提前时间。关闭 App 后仍可接收；实际送达受网络、系统设置和专注模式影响。"
+          }
+        }
+      }
+    },
+    "演示模式不会注册或发送系统通知。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Demo mode does not register devices or send system notifications."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "演示模式不会注册或发送系统通知。"
+          }
+        }
+      }
+    },
+    "关闭此设备的系统通知": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn off system notifications on this device"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "关闭此设备的系统通知"
+          }
+        }
+      }
+    },
+    "开启此设备的系统通知": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enable system notifications on this device"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "开启此设备的系统通知"
+          }
+        }
+      }
+    },
+    "刷新通知状态": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Refresh notification status"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "刷新通知状态"
+          }
+        }
+      }
+    },
+    "此版本的系统推送尚未配置，App 内提醒仍可使用。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "System push is not configured for this build. In-app reminders remain available."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "此版本的系统推送尚未配置，App 内提醒仍可使用。"
+          }
+        }
+      }
+    },
+    "通知不显示公司或职位。退出账号会关闭此设备通知；离线解绑会在联网后重试。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notifications do not show company or role details. Signing out disables notifications on this device; offline unlinking retries when connected."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通知不显示公司或职位。退出账号会关闭此设备通知；离线解绑会在联网后重试。"
+          }
+        }
+      }
+    },
+    "系统通知已被拒绝，请到 iPhone 设置中允许通知。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notifications are denied. Allow notifications in iPhone Settings."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "系统通知已被拒绝，请到 iPhone 设置中允许通知。"
+          }
+        }
+      }
+    },
+    "暂时无法连接通知服务，请重试。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cannot connect to the notification service. Please retry."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "暂时无法连接通知服务，请重试。"
+          }
+        }
+      }
+    },
+    "正在注册系统通知，请稍候。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Registering system notifications. Please wait."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正在注册系统通知，请稍候。"
+          }
+        }
+      }
+    },
+    "无法开启系统通知，请重试。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cannot enable system notifications. Please retry."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法开启系统通知，请重试。"
+          }
+        }
+      }
+    },
+    "此 iPhone 的系统通知已开启。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "System notifications are enabled on this iPhone."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "此 iPhone 的系统通知已开启。"
+          }
+        }
+      }
+    },
+    "设备注册尚未完成，请重试。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Device registration is incomplete. Please retry."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "设备注册尚未完成，请重试。"
+          }
+        }
+      }
+    },
+    "本机通知已关闭，服务器解绑尚未保存，请联网后重试。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notifications are off locally. Server unlinking was not saved; reconnect and retry."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "本机通知已关闭，服务器解绑尚未保存，请联网后重试。"
+          }
+        }
+      }
+    },
+    "此 iPhone 的系统通知已关闭。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "System notifications are off on this iPhone."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "此 iPhone 的系统通知已关闭。"
+          }
+        }
+      }
+    },
+    "本机通知已关闭，服务器将在联网后解绑。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notifications are off locally. Server unlinking will retry when connected."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "本机通知已关闭，服务器将在联网后解绑。"
+          }
+        }
+      }
+    },
+    "此提醒已失效或暂时无法验证，请查看最新日程。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This reminder expired or cannot be verified. Check your latest schedule."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "此提醒已失效或暂时无法验证，请查看最新日程。"
+          }
+        }
+      }
+    },
+    "支持申请与历史管理、日程编辑、邮箱操作、统计分析和附件。系统通知可在提醒设置中开启，需服务器和签名配置就绪。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manage applications, history, schedules, mail, analytics and attachments. Enable system notifications in Reminder settings once server and signing setup are ready."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "支持申请与历史管理、日程编辑、邮箱操作、统计分析和附件。系统通知可在提醒设置中开启，需服务器和签名配置就绪。"
+          }
+        }
+      }
+    },
+    "网页版与 App 共用账号数据，浏览器需单独登录。系统通知按设备管理，退出账号会关闭此设备通知。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The web and iPhone apps share account data. Sign in separately in your browser. System notifications are managed per device and disabled on sign-out."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "网页版与 App 共用账号数据，浏览器需单独登录。系统通知按设备管理，退出账号会关闭此设备通知。"
+          }
+        }
+      }
+    },
+    "开启日程提醒": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enable schedule reminders"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "开启日程提醒"
+          }
+        }
+      }
     }
   },
   "version": "1.1"

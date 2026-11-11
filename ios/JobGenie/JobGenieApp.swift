@@ -2,6 +2,7 @@ import SwiftUI
 
 @main
 struct JobGenieApp: App {
+    @UIApplicationDelegateAdaptor(PushAppDelegate.self) private var pushDelegate
     @StateObject private var model = AppModel()
     @StateObject private var language = LanguageSettings()
     @Environment(\.scenePhase) private var scenePhase
@@ -15,17 +16,29 @@ struct JobGenieApp: App {
             .environmentObject(model)
             .environmentObject(language)
             .environmentObject(model.feedback)
+            .environmentObject(model.push)
             .environment(\.locale, language.locale)
             .tint(Brand.teal)
-            .task { await model.restore() }
+            .task {
+                PushAppDelegate.attach(model.push)
+                await model.restore()
+            }
+            .task(id: "\(model.user?.id ?? "signed-out"):\(model.isDemo):\(language.locale.identifier)") {
+                guard !model.isRestoring else { return }
+                await model.push.context(userID: model.user?.id, demo: model.isDemo, locale: language.locale.identifier)
+            }
+            .onChange(of: model.isRestoring) { _, restoring in
+                if !restoring { Task { await model.push.context(userID: model.user?.id, demo: model.isDemo, locale: language.locale.identifier) } }
+            }
             .onChange(of: scenePhase) { _, phase in
-                if phase == .active { language.refreshSystemLanguages(); Task { await model.revalidate() } }
+                if phase == .active { language.refreshSystemLanguages(); Task { await model.revalidate(); await model.push.foreground() } }
             }
         }
     }
 }
 struct MainTabs: View {
     @EnvironmentObject private var model: AppModel
+    @EnvironmentObject private var push: PushCoordinator
     @EnvironmentObject private var feedback: FeedbackCoordinator
     @Environment(\.scenePhase) private var scenePhase
     var body: some View {
@@ -36,6 +49,9 @@ struct MainTabs: View {
             NavigationStack { AccountView() }.tabItem { Label("我的", systemImage: "person.crop.circle") }
         }
         .sheet(item: $feedback.presentation) { _ in FeedbackView() }
+        .sheet(item: $push.destination) { destination in
+            NavigationStack { JobDetailView(jobID: destination.jobID) }
+        }
         .task(id: model.sessionGeneration) {
             feedback.start(userID: model.user?.id, demo: model.isDemo)
             feedback.setForeground(scenePhase == .active)

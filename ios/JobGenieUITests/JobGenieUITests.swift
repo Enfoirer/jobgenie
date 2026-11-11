@@ -179,6 +179,23 @@ final class JobGenieUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["Reminder cancelled"].exists)
         app.tabBars.buttons["Account"].tap(); reveal(app.buttons["account.signout"], in: app); app.buttons["account.signout"].tap(); app.buttons["Confirm sign out"].tap()
     }
+    func testPushSettingsScopeAndBilingualDemo() {
+        let app = XCUIApplication()
+        app.launchArguments = ["-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN", "-jobgenie.language", "system"]
+        app.launchEnvironment["JOBGENIE_TEST_BASE_URL"] = "http://127.0.0.1:39998"
+        app.launch(); XCTAssertTrue(app.buttons["login.demo"].waitForExistence(timeout: 15)); app.buttons["login.demo"].tap()
+        app.tabBars.buttons["日程"].tap(); app.buttons["reminders.open"].tap(); app.buttons["reminders.settings"].tap()
+        let scope = app.staticTexts["演示模式不会注册或发送系统通知。"]
+        reveal(scope, in: app); XCTAssertTrue(scope.exists); XCTAssertFalse(app.buttons["push.toggle"].exists)
+        let chinese = XCTAttachment(screenshot: app.screenshot()); chinese.name = "Push settings Chinese demo"; chinese.lifetime = .keepAlways; add(chinese)
+        app.buttons["取消"].tap(); app.tabBars.buttons["我的"].tap()
+        app.buttons["language.picker"].tap(); app.buttons["English"].tap()
+        app.tabBars.buttons["Schedule"].tap(); app.buttons["reminders.settings"].tap()
+        let english = app.staticTexts["Demo mode does not register devices or send system notifications."]
+        reveal(english, in: app); XCTAssertTrue(english.exists)
+        let capture = XCTAttachment(screenshot: app.screenshot()); capture.name = "Push settings English demo"; capture.lifetime = .keepAlways; add(capture)
+        app.buttons["Cancel"].tap()
+    }
     private func reminderLogin() throws -> XCUIApplication {
         guard let url = ProcessInfo.processInfo.environment["JOBGENIE_TEST_BASE_URL"] else { throw XCTSkip("Run isolated backend acceptance") }
         let app = XCUIApplication()

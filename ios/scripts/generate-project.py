@@ -45,7 +45,7 @@ for name, kind, suffix in targets:
         else: s.update({'SWIFT_COMPILATION_MODE':'wholemodule','SWIFT_OPTIMIZATION_LEVEL':'"-O"','VALIDATE_PRODUCT':'YES'})
         if name in ['JobGenie', 'JobGenieShare']: s['CODE_SIGN_ENTITLEMENTS'] = f'{name}/{name}.entitlements'
         if suffix == 'appex': s.update({'INFOPLIST_FILE':'JobGenieShare/Info.plist','GENERATE_INFOPLIST_FILE':'NO','APPLICATION_EXTENSION_API_ONLY':'YES','SKIP_INSTALL':'YES','LD_RUNPATH_SEARCH_PATHS':'"$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks"'})
-        elif suffix == 'app': s.update({'INFOPLIST_FILE':'JobGenie/Info.plist','GENERATE_INFOPLIST_FILE':'NO','LD_RUNPATH_SEARCH_PATHS':'"$(inherited) @executable_path/Frameworks"'})
+        elif suffix == 'app': s.update({'INFOPLIST_FILE':'JobGenie/Info.plist','GENERATE_INFOPLIST_FILE':'NO','LD_RUNPATH_SEARCH_PATHS':'"$(inherited) @executable_path/Frameworks"','APNS_ENVIRONMENT': 'development' if mode == 'Debug' else 'production'})
         else:
             s.update({'GENERATE_INFOPLIST_FILE':'YES','LD_RUNPATH_SEARCH_PATHS':'"$(inherited) @executable_path/Frameworks @loader_path/Frameworks"'})
             if name == 'JobGenieTests': s.update({'TEST_HOST':'"$(BUILT_PRODUCTS_DIR)/JobGenie.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/JobGenie"','BUNDLE_LOADER':'"$(TEST_HOST)"'})

@@ -49,14 +49,16 @@ final class AppModel: ObservableObject {
     var demoAttachmentData: [String: Data] = [:]
     let api: APIClient
     let feedback: FeedbackCoordinator
+    let push: PushCoordinator
     private var generation = UUID()
     var sessionGeneration: UUID { generation }
     private var jobsRequest = UUID()
     private var scheduleRequest = UUID()
     private var detailRequests: [String: UUID] = [:]
     init(api: APIClient = APIClient(baseURL: APIClient.configuredURL())) {
-        self.api = api; feedback = FeedbackCoordinator(api: api)
+        self.api = api; feedback = FeedbackCoordinator(api: api); push = PushCoordinator(api: api)
         feedback.onUnauthorized = { [weak self] in Task { await self?.signOut() } }
+        push.onUnauthorized = { [weak self] in Task { await self?.signOut() } }
     }
 
     func restore() async {
@@ -72,6 +74,7 @@ final class AppModel: ObservableObject {
         catch { authMessage = message(error) }
     }
     func useDemo() {
+        push.detach()
         do { try api.clearLocalSession() }
         catch { authMessage = message(error); return }
         generation = UUID(); resetResources(); resetReminders(); isDemo = true; authMessage = nil
@@ -90,6 +93,7 @@ final class AppModel: ObservableObject {
         rebuildDemoSchedule()
     }
     func signOut() async {
+        push.detach()
         generation = UUID()
         feedback.reset()
         resetResources()
@@ -148,6 +152,7 @@ final class AppModel: ObservableObject {
             guard response.settings.isValid else { throw APIError.invalidResponse }
             reminderServerTime = response.serverTime; reminderUptime = ProcessInfo.processInfo.systemUptime
             reminders = response.reminders.sorted { $0.time == $1.time ? $0.id < $1.id : $0.time < $1.time }
+            await push.cleanDelivered(reminderIDs: Set(response.reminders.filter { $0.status == .unread }.map(\.id)))
             reminderSettings = response.settings
         } catch { if current == generation && request == reminderRequest { remindersError = await handle(error) } }
     }

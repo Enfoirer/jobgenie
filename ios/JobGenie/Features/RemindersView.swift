@@ -19,7 +19,7 @@ struct RemindersView: View {
                     }.accessibilityIdentifier("reminders.filter")
                     Text("提醒在日程开始或截止时失效；已处理列表仅保留当前提醒窗口内的记录。")
                         .font(.footnote).foregroundStyle(.secondary)
-                    Text("App 在前台时自动刷新提醒，后台推送尚未开启。")
+                    Text("App 内提醒在前台刷新。系统通知需在提醒设置中为此 iPhone 单独开启。")
                         .font(.footnote).foregroundStyle(.secondary)
                 }
                 if let error = model.remindersError {
@@ -97,6 +97,8 @@ struct RemindersView: View {
 
 struct ReminderSettingsView: View {
     @EnvironmentObject private var model: AppModel
+    @EnvironmentObject private var push: PushCoordinator
+    @Environment(\.locale) private var locale
     @Environment(\.dismiss) private var dismiss
     @State private var draft: ReminderSettings
     @State private var saving = false
@@ -106,16 +108,32 @@ struct ReminderSettingsView: View {
         NavigationStack {
             Form {
                 Section {
-                    Toggle("开启提醒", isOn: $draft.enabled).accessibilityIdentifier("reminders.enabled")
+                    Toggle("开启日程提醒", isOn: $draft.enabled).accessibilityIdentifier("reminders.enabled")
                     Picker("提前时间", selection: $draft.leadMinutes) {
                         ForEach(ReminderSettings.leadTimes, id: \.self) { Text(LocalizedStringKey(ReminderSettings.title($0))).tag($0) }
                     }.accessibilityIdentifier("reminders.lead")
                     Text("设置与网页版共用。修改提前时间或重新开启，不会重置已读和取消记录。") .font(.footnote).foregroundStyle(.secondary)
                     Text("延后固定为 10 分钟；距离日程不足 10 分钟时不能延后。") .font(.footnote).foregroundStyle(.secondary)
                 }
+                Section("此 iPhone 的系统通知") {
+                    Text("系统通知遵循已保存的提醒开关和提前时间。关闭 App 后仍可接收；实际送达受网络、系统设置和专注模式影响。")
+                        .font(.footnote).foregroundStyle(.secondary)
+                    if model.isDemo { Text("演示模式不会注册或发送系统通知。") }
+                    else {
+                        Button(LocalizedStringKey(push.enabled ? "关闭此设备的系统通知" : "开启此设备的系统通知")) {
+                            Task { if push.enabled { await push.disable() } else { await push.enable() } }
+                        }.disabled(push.busy).accessibilityIdentifier("push.toggle")
+                        Button("刷新通知状态") { Task { await push.foreground() } }.accessibilityIdentifier("push.refresh")
+                        if !push.available { Text("此版本的系统推送尚未配置，App 内提醒仍可使用。") }
+                        if let notice = push.notice { Text(notice.localized(locale: locale)).font(.footnote).accessibilityIdentifier("push.notice") }
+                    }
+                    Text("通知不显示公司或职位。退出账号会关闭此设备通知；离线解绑会在联网后重试。")
+                        .font(.footnote).foregroundStyle(.secondary)
+                }
                 if let error { ErrorBanner(message: error) }
             }.disabled(saving)
             .localizedNavigationTitle("提醒设置")
+            .task { if !model.isDemo { await push.foreground() } }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) { Button("取消") { dismiss() }.disabled(saving) }
                 ToolbarItem(placement: .confirmationAction) {

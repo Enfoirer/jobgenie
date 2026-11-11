@@ -2,7 +2,7 @@
 
 English translation prepared on 2026-11-04 (Asia/Shanghai). Historical results and acceptance boundaries below refer to the original delivery, not a new test run. The iOS app retains Chinese/English localization.
 
-Reuse `/api/reminders` and `/api/reminders/settings`. APNs background push is not implemented; no system notification permission is requested and closing the App does not send system notifications.
+Reuse `/api/reminders` and `/api/reminders/settings`. This document records the original in-app-only delivery. Follow-up on 2026-11-12 adds opt-in [APNs system notifications](ios-push-acceptance.md), with local tests and outstanding Apple configuration/physical-device acceptance tracked separately.
 
 ## Entry points and actions
 
@@ -32,6 +32,6 @@ Write failure preserves retryable items. If a write succeeds but refresh fails, 
 
 Coverage includes field allowlists, server time, demo isolation, read/cancel retention, snooze idempotency, rescheduling versions, clearing/deletion, stale responses, recovery, 401 and account switching. Isolated integration checked database state after App actions, web reads/rescheduling, stale/unauthorized writes and App clearing. Commands: [iOS README](../ios/README.md). Only temporary MongoDB and local Next.js were used.
 
-## Background push remains outstanding
+## Original background-push boundary and follow-up
 
-APNs needs a developer Team, push Key ID/private key, entitlement and signed physical devices. Device-token registration, background delivery queue and push deduplication are not implemented. Future work must bind/unbind devices to accounts, invalidate stale versions, deduplicate delivery and test physical-device account switching, rechecking schedule/user before and after delivery. In-app idempotency and unsigned builds do not establish APNs acceptance.
+At the original delivery, APNs, device registration, dispatch and push deduplication were not implemented. The [2026-11-12 follow-up](ios-push-acceptance.md) adds those code paths and local acceptance. A developer Team, APNs signing key, suitable scheduler, provisioning and signed physical-device tests are still required before claiming actual Apple delivery. Historical in-app results above are unchanged.
