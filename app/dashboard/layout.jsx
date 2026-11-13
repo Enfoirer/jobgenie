@@ -7,6 +7,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useSession, signOut } from 'next-auth/react';
 import ReminderProvider, { ReminderLink } from '@/components/ReminderProvider';
 import FeedbackProvider, { FeedbackButton } from '@/components/FeedbackProvider';
+import AdminFeedbackLink from '@/components/AdminFeedbackLink';
 
 export default function DashboardLayout({ children }) {
   const pathname = usePathname();
@@ -73,6 +74,7 @@ export default function DashboardLayout({ children }) {
               ))}
             </div>
             <div className="flex shrink-0 items-center">
+              <AdminFeedbackLink key={session?.user?.id} userId={session?.user?.id} />
               <FeedbackButton />
               <ReminderLink />
               <div className="hidden sm:flex-shrink-0 sm:flex">

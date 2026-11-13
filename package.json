@@ -10,6 +10,7 @@
     "test": "node --test --test-concurrency=1 tests/*.test.js",
     "test:ui": "node scripts/verify-job-editing-ui.mjs",
     "push:worker": "node --env-file-if-exists=.env.local scripts/run-push-worker.mjs",
+    "admin:manage": "node --env-file-if-exists=.env.local scripts/manage-admin.mjs",
     "db:mail-indexes": "node --env-file-if-exists=.env.local scripts/ensure-mail-indexes.mjs"
   },
   "dependencies": {
