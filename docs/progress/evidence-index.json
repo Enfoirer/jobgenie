@@ -846,6 +846,144 @@
       "sha256": "3f302dc6ec88e75fe690468e68e9f875978fea4e8eda6f10c4419f6dea245320",
       "redactions": [],
       "association": "Actual final bilingual simulator UI capture, synthetic demo data; reviewed before publication."
+    },
+    {
+      "task": "JG-028",
+      "kind": "test_log",
+      "file": "tests/2026-11-13/admin-regression.log",
+      "outcome": "passed",
+      "description": "342 passing backend regression tests.",
+      "collectedAt": "2026-11-13T13:35:15.297Z",
+      "observedSourceMtime": "2026-11-13T13:29:52.706Z",
+      "originalSha256": "822a7546e997393517fd9954c53f8d29ab2b9b286d2e7ac71facbcbf09c1e5b0",
+      "sha256": "3632b151ffb672d131d67bf0122ff7d5ad8b6d99db2667ee2cec2d772e5b22a2",
+      "redactions": [
+        "Home/repository paths and credential assignments"
+      ],
+      "association": "Actual isolated administrator feedback acceptance on 2026-11-13. No production feedback access or account role changes."
+    },
+    {
+      "task": "JG-028",
+      "kind": "test_log",
+      "file": "tests/2026-11-13/admin-tests.log",
+      "outcome": "passed",
+      "description": "Eight passing administrator access/filter/paging tests.",
+      "collectedAt": "2026-11-13T13:35:15.297Z",
+      "observedSourceMtime": "2026-11-13T13:28:09.802Z",
+      "originalSha256": "1c5a3952442cea05bc45994cd3257b47f4b5d10492f2e8242837f7a6ca76546c",
+      "sha256": "e2b133938edc952dfff169163f836b606ca700005e3f8599c3c5806600bca684",
+      "redactions": [
+        "Home/repository paths and credential assignments"
+      ],
+      "association": "Actual isolated administrator feedback acceptance on 2026-11-13. No production feedback access or account role changes."
+    },
+    {
+      "task": "JG-028",
+      "kind": "test_log",
+      "file": "tests/2026-11-13/admin-build-final.log",
+      "outcome": "passed",
+      "description": "Final Next.js production build.",
+      "collectedAt": "2026-11-13T13:35:15.297Z",
+      "observedSourceMtime": "2026-11-13T13:32:25.211Z",
+      "originalSha256": "8fd52cc27d5b4d7e8da3360df313d564df1246cc52b456a6534663382413b2dc",
+      "sha256": "8fd52cc27d5b4d7e8da3360df313d564df1246cc52b456a6534663382413b2dc",
+      "redactions": [],
+      "association": "Actual isolated administrator feedback acceptance on 2026-11-13. No production feedback access or account role changes."
+    },
+    {
+      "task": "JG-028",
+      "kind": "test_log",
+      "file": "tests/2026-11-13/admin-browser-verified.log",
+      "outcome": "passed",
+      "description": "Actual isolated NextAuth browser acceptance.",
+      "collectedAt": "2026-11-13T13:35:15.297Z",
+      "observedSourceMtime": "2026-11-13T13:32:59.414Z",
+      "originalSha256": "84b0fb982ee803af31ad200d9ad40c959dec851a1f4d8014cb6ff0df782ad851",
+      "sha256": "c758e6305a7c7e4fb7b923f6a7c6c2ebcbf98c63c833836127a3a138ed771b3e",
+      "redactions": [
+        "Home/repository paths and credential assignments"
+      ],
+      "association": "Actual isolated administrator feedback acceptance on 2026-11-13. No production feedback access or account role changes."
+    },
+    {
+      "task": "JG-028",
+      "kind": "test_log",
+      "file": "tests/2026-11-13/admin-lint-final.log",
+      "outcome": "passed",
+      "description": "Final scoped ESLint including JSX, zero exit and no diagnostics.",
+      "collectedAt": "2026-11-13T13:35:15.297Z",
+      "observedSourceMtime": "2026-11-13T13:32:56.562Z",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "redactions": [],
+      "association": "Actual isolated administrator feedback acceptance on 2026-11-13. No production feedback access or account role changes."
+    },
+    {
+      "task": "JG-028",
+      "kind": "test_log",
+      "file": "tests/2026-11-13/admin-lint.log",
+      "outcome": "initial failure, corrected",
+      "description": "Initial lint invocation failed on missing JSX extension and was corrected.",
+      "collectedAt": "2026-11-13T13:35:15.297Z",
+      "observedSourceMtime": "2026-11-13T13:28:28.190Z",
+      "originalSha256": "4dbd273e259214aaf4494ec9cebf80d1c2a608b8ebb672fd8ab8a5662204693e",
+      "sha256": "4dbd273e259214aaf4494ec9cebf80d1c2a608b8ebb672fd8ab8a5662204693e",
+      "redactions": [],
+      "association": "Actual isolated administrator feedback acceptance on 2026-11-13. No production feedback access or account role changes."
+    },
+    {
+      "task": "JG-028",
+      "kind": "test_log",
+      "file": "tests/2026-11-13/admin-workbook.log",
+      "outcome": "passed",
+      "description": "Original workbook update and live calculation checks.",
+      "collectedAt": "2026-11-13T13:35:15.297Z",
+      "observedSourceMtime": "2026-11-13T13:33:56.264Z",
+      "originalSha256": "72262a7aadc0bbcb5f7ff41c8821a82081b603ea4d9053175164bb783c217db3",
+      "sha256": "052cf992300ab9231467dd7198f6bad408247d9b1a4f6457f982673cfb39b75d",
+      "redactions": [
+        "Home/repository paths and credential assignments"
+      ],
+      "association": "Actual isolated administrator feedback acceptance on 2026-11-13. No production feedback access or account role changes."
+    },
+    {
+      "task": "JG-028",
+      "kind": "test_log",
+      "file": "tests/2026-11-13/admin-workbook-preservation.log",
+      "outcome": "passed",
+      "description": "Saved XLSX historical value/formula/format-rule preservation checks.",
+      "collectedAt": "2026-11-13T13:35:15.297Z",
+      "observedSourceMtime": "2026-11-13T13:35:15.016Z",
+      "originalSha256": "c3b795e03fc14de8c902041cbb9785545ee5634016eb1570967a56885d41735a",
+      "sha256": "c3b795e03fc14de8c902041cbb9785545ee5634016eb1570967a56885d41735a",
+      "redactions": [],
+      "association": "Actual isolated administrator feedback acceptance on 2026-11-13. No production feedback access or account role changes."
+    },
+    {
+      "task": "JG-028",
+      "kind": "screenshot",
+      "file": "visuals/2026-11-13/admin-feedback-desktop.png",
+      "outcome": "passed",
+      "description": "Reviewed actual administrator feedback page with synthetic low ratings and escaped HTML suggestion.",
+      "collectedAt": "2026-11-13T13:35:15.297Z",
+      "observedSourceMtime": "2026-11-13T13:32:59.209Z",
+      "originalSha256": "2d458d44919536f1796160211425159f0819b82f57cef303fb29535e2f8e54ac",
+      "sha256": "2d458d44919536f1796160211425159f0819b82f57cef303fb29535e2f8e54ac",
+      "redactions": [],
+      "association": "Local disposable NextAuth/MongoDB and isolated browser. No production user data."
+    },
+    {
+      "task": "JG-028",
+      "kind": "screenshot",
+      "file": "visuals/2026-11-13/admin-feedback-mobile.png",
+      "outcome": "passed",
+      "description": "Reviewed actual administrator feedback page with synthetic low ratings and escaped HTML suggestion.",
+      "collectedAt": "2026-11-13T13:35:15.297Z",
+      "observedSourceMtime": "2026-11-13T13:32:59.251Z",
+      "originalSha256": "6c89163c362d6a8d2356498d02df1742e7bade74b94f130cfc28dcf590988d2c",
+      "sha256": "6c89163c362d6a8d2356498d02df1742e7bade74b94f130cfc28dcf590988d2c",
+      "redactions": [],
+      "association": "Local disposable NextAuth/MongoDB and isolated browser. No production user data."
     }
   ],
   "records": [
@@ -1572,6 +1710,42 @@
         }
       ],
       "deploymentObservation": "deployments/2026-11-12-ios-push-49e4a58.json"
+    },
+    {
+      "id": "JG-028",
+      "title": "Web: administrator feedback review",
+      "scope": "Live database admin authorization, feedback listing, exact-version/platform/source/UTC-date filters and stable pagination.",
+      "tests": "342 backend tests passed including eight new cases. Actual browser access/filter/XSS/mobile/revocation acceptance, production build, scoped JSX lint and workbook checks passed.",
+      "boundary": "Production administrator awaits owner designation. Error monitoring and error reference IDs remain future work.",
+      "commit": "https://github.com/Enfoirer/jobgenie/commit/3d5c4e61a23ae7b23194ab9fd6d2175e52801051",
+      "document": "https://github.com/Enfoirer/jobgenie/blob/3d5c4e61a23ae7b23194ab9fd6d2175e52801051/docs/admin-feedback-acceptance.md",
+      "commitSha": "3d5c4e61a23ae7b23194ab9fd6d2175e52801051",
+      "commitAt": "2026-11-13T21:33:25+08:00",
+      "preparedAt": "2026-11-13T13:35:15.297Z",
+      "record": "records/2026-11-13-JG-028.md",
+      "sourceDocumentExistsAtCommit": true,
+      "rawLogs": [
+        "tests/2026-11-13/admin-regression.log",
+        "tests/2026-11-13/admin-tests.log",
+        "tests/2026-11-13/admin-build-final.log",
+        "tests/2026-11-13/admin-browser-verified.log",
+        "tests/2026-11-13/admin-lint-final.log",
+        "tests/2026-11-13/admin-lint.log",
+        "tests/2026-11-13/admin-workbook.log",
+        "tests/2026-11-13/admin-workbook-preservation.log"
+      ],
+      "visuals": [
+        "visuals/2026-11-13/admin-feedback-desktop.png",
+        "visuals/2026-11-13/admin-feedback-mobile.png"
+      ],
+      "observedChecks": [
+        {
+          "context": "Vercel",
+          "state": "success",
+          "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/FLAMJhan2LBodHtezgCezUXELEKZ"
+        }
+      ],
+      "deploymentObservation": "deployments/2026-11-13-admin-feedback-3d5c4e6.json"
     }
   ],
   "translatedAt": "2026-11-04T15:15:24.093466+00:00",
@@ -1581,5 +1755,5 @@
     "historicalArtifacts": "Original-language test output and historical evidence remain unchanged; English descriptions explain their provenance.",
     "translation": "English records translated on the date in translatedAt. Existing dates, test results, artifact hashes and fixed historical commit links are preserved."
   },
-  "lastUpdatedAt": "2026-11-11T17:02:42.677Z"
+  "lastUpdatedAt": "2026-11-13T13:35:15.297Z"
 }

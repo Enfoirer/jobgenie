@@ -1,0 +1,20 @@
+(node:31382) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://[HOME]/Documents/study%20and%20work/find_job/jobgenie/tests/admin-feedback.test.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to [REPOSITORY]/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ anonymous and ordinary/legacy users cannot read feedback; revoked administrators lose access immediately (1137.720792ms)
+✔ registration cannot grant an administrator role (24.287125ms)
+✔ responses use explicit fields and private no-store caching (27.995ms)
+✔ platform, exact version, source and inclusive UTC dates combine correctly (32.045ms)
+✔ missing legacy fields are Unknown and can be filtered separately from a literal version (27.274333ms)
+✔ duplicate/invalid filters, dates, cursors and injection strings are rejected (20.494958ms)
+✔ stable pagination retains identical timestamps without duplicates and preserves filters (63.864291ms)
+✔ unexpected server failures disclose no exception or feedback data (19.742ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2045.339042

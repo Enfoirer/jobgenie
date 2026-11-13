@@ -1,0 +1,4 @@
+{"tasks":[["JG-025","iOS: product feedback","Completed",1,"2026-11-07T00:00:00.000Z","2026-11-07T00:00:00.000Z"],["JG-026","Web: shared product feedback","Completed",1,"2026-11-08T00:00:00.000Z","2026-11-08T00:00:00.000Z"],["JG-027","iOS: APNs code and local acceptance","Completed",1,"2026-11-12T00:00:00.000Z","2026-11-12T00:00:00.000Z"]],"counts":[["Completed",27,"Tasks",27]]}
+{"kind":"notice","message":"Cell search matched 0 entries."}
+Inspect result written to file: [REPOSITORY]/docs/progress/project-progress.xlsx.inspect.ndjson
+PASS original workbook updated in place to 28 milestones. Prior task/log values retained, date bar and completion count recalculate.

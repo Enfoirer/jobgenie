@@ -1,6 +1,6 @@
 # Project progress and development evidence
 
-Updated: 2026-11-12 (Asia/Shanghai).
+Updated: 2026-11-13 (Asia/Shanghai).
 
 [Project progress and Gantt chart](project-progress.xlsx) is the single maintained workbook, with **Progress Gantt** and **Update Log** sheets. This is the original workbook translated and renamed in place, not a second tracker. Task IDs, historical dates, results and source references are retained. The language conversion is recorded separately. The iOS app continues to support Chinese and English.
 
@@ -60,3 +60,7 @@ The JG-024 implementation Vercel check was subsequently observed as **success**.
 ## iOS APNs implementation and local acceptance
 
 [JG-027](records/2026-11-12-JG-027.md) adds opt-in device registration, HTTP/2 dispatch, live schedule/session checks, deduplication, safe retries, stale-tap rejection and durable offline logout revocation. The original workbook now has 27 scoped milestones and an appended Update Log entry. The record links 334 passing backend tests, final 30 push tests, 27 affected native tests (15 push), bilingual simulator UI, reviewed captures, production/unsigned Release builds and the [successful implementation deployment observation](deployments/2026-11-12-ios-push-49e4a58.json). Overlapping run counts are not added. Actual Apple delivery and TestFlight remain unaccepted while developer enrollment/configuration is unavailable.
+
+## Administrator feedback review
+
+[JG-028](records/2026-11-13-JG-028.md) adds administrator-only feedback review with version/platform/source/UTC-date filters and cursor pagination. 342 backend tests, actual isolated browser acceptance, production build, scoped lint and original-workbook checks passed. The workbook now contains 28 scoped milestones. The production administrator awaits owner designation. Error monitoring and error reference IDs remain future work. See the [deployment observation](deployments/2026-11-13-admin-feedback-3d5c4e6.json).

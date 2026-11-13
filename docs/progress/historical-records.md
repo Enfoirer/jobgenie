@@ -50,3 +50,5 @@ The [deployment responses](deployments/2026-11-04-observed-statuses.json) retain
 [JG-026 Web product feedback](records/2026-11-08-JG-026.md) was completed on 2026-11-08. The original workbook now contains 26 milestones.
 
 [JG-027 iOS APNs implementation and local acceptance](records/2026-11-12-JG-027.md) was completed on 2026-11-12 for code and local tests. The original workbook now contains 27 scoped milestones. Apple enrollment, APNs credentials, scheduler setup, signed-device delivery and TestFlight remain outstanding.
+
+[JG-028 Administrator feedback review](records/2026-11-13-JG-028.md) adds the English, administrator-only feedback page on 2026-11-13. The original workbook now contains 28 scoped milestones. Production administrator designation remains pending.

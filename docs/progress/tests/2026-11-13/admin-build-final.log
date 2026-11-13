@@ -1,0 +1,92 @@
+
+> jobgenie@0.1.0 build
+> next build
+
+   ▲ Next.js 15.5.28
+
+   Creating an optimized production build ...
+Browserslist: browsers data (caniuse-lite) is 19 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+ ✓ Compiled successfully in 1960ms
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/45) ...
+   Generating static pages (11/45) 
+   Generating static pages (22/45) 
+   Generating static pages (33/45) 
+ ✓ Generating static pages (45/45)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                      Size  First Load JS
+┌ ○ /                                           570 B         104 kB
+├ ○ /_not-found                                  1 kB         104 kB
+├ ƒ /api/admin/access                           248 B         103 kB
+├ ƒ /api/admin/feedback                         248 B         103 kB
+├ ƒ /api/auth/[...nextauth]                     248 B         103 kB
+├ ƒ /api/auth/forgot-password                   248 B         103 kB
+├ ƒ /api/auth/register                          248 B         103 kB
+├ ƒ /api/auth/reset-password                    248 B         103 kB
+├ ƒ /api/feedback                               248 B         103 kB
+├ ƒ /api/jobs                                   248 B         103 kB
+├ ƒ /api/jobs/[id]                              248 B         103 kB
+├ ƒ /api/jobs/[id]/documents                    248 B         103 kB
+├ ƒ /api/jobs/[id]/documents/[documentId]       248 B         103 kB
+├ ƒ /api/jobs/[id]/status-history               248 B         103 kB
+├ ƒ /api/jobs/[id]/status-history/[statusId]    248 B         103 kB
+├ ƒ /api/jobs/bulk                              248 B         103 kB
+├ ƒ /api/mail                                   248 B         103 kB
+├ ƒ /api/mail/accounts                          248 B         103 kB
+├ ƒ /api/mail/accounts/[id]                     248 B         103 kB
+├ ƒ /api/mail/cron                              248 B         103 kB
+├ ƒ /api/mail/status                            248 B         103 kB
+├ ƒ /api/oauth/google/callback                  248 B         103 kB
+├ ƒ /api/oauth/google/native/cancel             248 B         103 kB
+├ ƒ /api/oauth/google/native/finish             248 B         103 kB
+├ ƒ /api/oauth/google/native/start              248 B         103 kB
+├ ƒ /api/oauth/google/start                     248 B         103 kB
+├ ƒ /api/oauth/outlook/callback                 248 B         103 kB
+├ ƒ /api/oauth/outlook/native/cancel            248 B         103 kB
+├ ƒ /api/oauth/outlook/native/finish            248 B         103 kB
+├ ƒ /api/oauth/outlook/native/start             248 B         103 kB
+├ ƒ /api/oauth/outlook/start                    248 B         103 kB
+├ ƒ /api/pending                                248 B         103 kB
+├ ƒ /api/pending/[id]                           248 B         103 kB
+├ ƒ /api/pending/bulk                           248 B         103 kB
+├ ƒ /api/pending/clear                          248 B         103 kB
+├ ƒ /api/push/cron                              248 B         103 kB
+├ ƒ /api/push/register                          248 B         103 kB
+├ ƒ /api/push/resolve                           248 B         103 kB
+├ ƒ /api/push/revoke                            248 B         103 kB
+├ ƒ /api/push/status                            248 B         103 kB
+├ ƒ /api/reminders                              248 B         103 kB
+├ ƒ /api/reminders/settings                     248 B         103 kB
+├ ƒ /api/schedule                               248 B         103 kB
+├ ƒ /api/stats                                  248 B         103 kB
+├ ƒ /api/sync-settings                          248 B         103 kB
+├ ƒ /api/uploads                                248 B         103 kB
+├ ƒ /api/uploads/[id]                           248 B         103 kB
+├ ƒ /api/uploads/download/[id]                  248 B         103 kB
+├ ○ /dashboard                                  248 B         103 kB
+├ ○ /dashboard/add                            2.88 kB         106 kB
+├ ƒ /dashboard/admin/feedback                 2.15 kB         105 kB
+├ ○ /dashboard/analytics                      4.57 kB         108 kB
+├ ○ /dashboard/jobs                             39 kB         142 kB
+├ ○ /dashboard/mail                           4.14 kB         110 kB
+├ ○ /dashboard/pending                        4.46 kB         107 kB
+├ ○ /dashboard/reminders                       3.5 kB         110 kB
+├ ○ /dashboard/todo                           5.09 kB         111 kB
+├ ○ /dashboard/upload                          3.2 kB         106 kB
+├ ○ /forgot-password                          1.61 kB         108 kB
+├ ○ /login                                    2.42 kB         118 kB
+└ ○ /reset-password                           1.61 kB         108 kB
++ First Load JS shared by all                  103 kB
+  ├ chunks/1255-dc3ddf72a1dc71a7.js           46.6 kB
+  ├ chunks/4bd1b696-f785427dddbba9fb.js       54.2 kB
+  └ other shared chunks (total)               2.13 kB
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
