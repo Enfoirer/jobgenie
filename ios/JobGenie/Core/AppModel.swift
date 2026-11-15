@@ -7,6 +7,7 @@ final class AppModel: ObservableObject {
     @Published var isRestoring = true
     @Published var isSigningIn = false
     @Published var authMessage: UserMessage?
+    @Published var lastErrorReference: String?
     @Published var jobs: [Job] = []
     @Published private(set) var bulkBusy = false
     @Published var events: [ScheduleEvent] = []
@@ -59,6 +60,7 @@ final class AppModel: ObservableObject {
         self.api = api; feedback = FeedbackCoordinator(api: api); push = PushCoordinator(api: api)
         feedback.onUnauthorized = { [weak self] in Task { await self?.signOut() } }
         push.onUnauthorized = { [weak self] in Task { await self?.signOut() } }
+        api.onDiagnostic = { [weak self] reference in self?.lastErrorReference = reference }
     }
 
     func restore() async {
@@ -70,10 +72,11 @@ final class AppModel: ObservableObject {
         guard !isSigningIn else { return }
         isSigningIn = true; authMessage = nil
         defer { isSigningIn = false }
-        do { user = try await api.signIn(email: email, password: password, remember: remember); generation = UUID(); resetResources(); resetReminders() }
+        do { user = try await api.signIn(email: email, password: password, remember: remember); lastErrorReference = nil; generation = UUID(); resetResources(); resetReminders() }
         catch { authMessage = message(error) }
     }
     func useDemo() {
+        lastErrorReference = nil
         push.detach()
         do { try api.clearLocalSession() }
         catch { authMessage = message(error); return }
@@ -93,6 +96,7 @@ final class AppModel: ObservableObject {
         rebuildDemoSchedule()
     }
     func signOut() async {
+        lastErrorReference = nil
         push.detach()
         generation = UUID()
         feedback.reset()

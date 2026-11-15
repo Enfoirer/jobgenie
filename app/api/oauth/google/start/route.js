@@ -1,2 +1,6 @@
+import { observeRoute } from '@/lib/monitoring/server';
 import { oauthHandler } from '@/lib/oauth/handlers';
-export const POST = oauthHandler('google', 'start');
+const POST = oauthHandler('google', 'start');
+
+const observedPOST = observeRoute(POST, '/api/oauth/google/start');
+export { observedPOST as POST };

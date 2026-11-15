@@ -1,7 +1,7 @@
 import Foundation
 
 enum APIError: LocalizedError, Equatable {
-    case unauthorized, credentials, rateLimited(Int), server, invalidResponse, secureStorage, configuration, invalidInput, notFound, conflict, fileTooLarge, unsupportedFile
+    case unauthorized, credentials, rateLimited(Int), server, tracked(String), invalidResponse, secureStorage, configuration, invalidInput, notFound, conflict, fileTooLarge, unsupportedFile
     var errorDescription: String? { userMessage.localized(locale: .current) }
     var userMessage: UserMessage {
         switch self {
@@ -9,6 +9,7 @@ enum APIError: LocalizedError, Equatable {
         case .credentials: .text("邮箱或密码不正确。")
         case .rateLimited(let seconds): .rateLimited(minutes: max(1, Int(ceil(Double(seconds) / 60))))
         case .server: .text("服务暂时不可用，请稍后重试。")
+        case .tracked(let reference): .errorReference(reference)
         case .invalidResponse: .text("未能读取服务器数据，请稍后重试。")
         case .secureStorage: .text("无法访问安全存储，请解锁设备后重试。")
         case .configuration: .text("服务地址配置无效。")
@@ -26,6 +27,7 @@ final class NoRedirects: NSObject, URLSessionTaskDelegate {
 }
 @MainActor
 final class APIClient {
+    var onDiagnostic: ((String) -> Void)?
     let baseURL: URL
     private var session: URLSession
     private var cookies: HTTPCookieStorage
@@ -33,6 +35,9 @@ final class APIClient {
     private var generation = UUID()
     private let vault: any SessionVault
     private var persistSession = false
+    private var diagnosticsEnabled = false
+    private var diagnosticTimes: [String: Date] = [:]
+    private var diagnosticReferences: [String: String] = [:]
     init(baseURL: URL, vault: (any SessionVault)? = nil, configuration: URLSessionConfiguration = .ephemeral) {
         self.baseURL = baseURL
         self.vault = vault ?? KeychainSessionVault(account: baseURL.absoluteString)
@@ -83,6 +88,7 @@ final class APIClient {
     func currentUser() async throws -> SessionUser {
         let response: SessionResponse = try await get("api/auth/session")
         guard let user = response.user, let expiry = response.expires, expiry > .now else { throw APIError.unauthorized }
+        diagnosticsEnabled = true
         return user
     }
     func signOut() async throws {
@@ -91,6 +97,7 @@ final class APIClient {
     }
     func clearLocalSession() throws {
         persistSession = false
+        diagnosticsEnabled = false; diagnosticTimes = [:]; diagnosticReferences = [:]
         generation = UUID()
         session.invalidateAndCancel()
         cookies.cookies?.forEach(cookies.deleteCookie)
@@ -149,11 +156,19 @@ final class APIClient {
         guard let url = components.url else { throw APIError.configuration }
         var request = URLRequest(url: url)
         request.httpMethod = method; request.httpBody = body
+        request.setValue("ios", forHTTPHeaderField: "X-JobGenie-Platform")
         request.setValue(binary ? "application/octet-stream" : "application/json", forHTTPHeaderField: "Accept")
         request.setValue(baseURL.absoluteString, forHTTPHeaderField: "Origin")
         if body != nil { request.setValue(contentType, forHTTPHeaderField: "Content-Type") }
         let current = generation
-        let (data, response) = try await session.data(for: request)
+        let data: Data, response: URLResponse
+        do { (data, response) = try await session.data(for: request) }
+        catch {
+            if current == generation, diagnosticsEnabled, (error as? URLError)?.code != .cancelled {
+                if let reference = await reportDiagnostic(kind: "network_failure", path: path, method: method), current == generation { onDiagnostic?(reference); throw APIError.tracked(reference) }
+            }
+            throw error
+        }
         guard current == generation else { throw CancellationError() }
         guard let http = response as? HTTPURLResponse else { throw APIError.invalidResponse }
         switch http.statusCode {
@@ -165,10 +180,15 @@ final class APIClient {
         case 413: throw APIError.fileTooLarge
         case 415: throw APIError.unsupportedFile
         case 429: throw APIError.rateLimited(Int(http.value(forHTTPHeaderField: "Retry-After") ?? "60") ?? 60)
-        default: throw APIError.server
+        default:
+            if http.statusCode >= 500, let reference = http.value(forHTTPHeaderField: "X-Error-Reference"), Self.validReference(reference) { onDiagnostic?(reference); throw APIError.tracked(reference) }
+            throw APIError.server
         }
         let receivedType = http.value(forHTTPHeaderField: "Content-Type")?.lowercased().split(separator: ";").first.map(String.init)
-        guard receivedType == (binary ? "application/octet-stream" : "application/json") else { throw APIError.invalidResponse }
+        guard receivedType == (binary ? "application/octet-stream" : "application/json") else {
+            if let reference = await reportDiagnostic(kind: "invalid_response", path: path, method: method), current == generation { onDiagnostic?(reference); throw APIError.tracked(reference) }
+            throw APIError.invalidResponse
+        }
         if binary && data.count > AttachmentPolicy.maxBytes { throw APIError.fileTooLarge }
         // A session GET may rotate the encrypted cookie without extending its lifetime.
         try saveSession()
@@ -179,5 +199,38 @@ final class APIClient {
         return values.sorted { $0.key < $1.key }.map { key, value in
             "\(key.addingPercentEncoding(withAllowedCharacters: allowed)!)=\(value.addingPercentEncoding(withAllowedCharacters: allowed)!)"
         }.joined(separator: "&").data(using: .utf8)!
+    }
+    static func validReference(_ value: String) -> Bool {
+        value.range(of: "^JG-[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$", options: .regularExpression) != nil
+    }
+    private func reportDiagnostic(kind: String, path: String, method: String) async -> String? {
+        guard diagnosticsEnabled, !path.hasPrefix("api/monitoring/") else { return nil }
+        // Only known route segments leave this process. No URL query, user ID,
+        // request/response body, cookie, error text or credential is sent.
+        let allowed = Set(["api", "jobs", "status-history", "documents", "uploads", "download", "mail", "accounts", "status", "pending", "bulk", "schedule", "reminders", "settings", "stats", "feedback", "push", "register", "revoke", "resolve", "oauth", "google", "outlook", "native", "start", "finish", "cancel"])
+        let parts = path.split(separator: "/").map(String.init)
+        var safe: [String] = []
+        for part in parts {
+            if allowed.contains(part) { safe.append(part) }
+            else if part.range(of: "^[a-f0-9]{24}$", options: .regularExpression) != nil { safe.append("[id]") }
+            else { return nil }
+        }
+        let route = "/" + safe.joined(separator: "/"), key = "\(kind):\(route):\(method)"
+        if let last = diagnosticTimes[key], Date.now.timeIntervalSince(last) < 60 { return diagnosticReferences[key] }
+        if diagnosticTimes.count > 100 { diagnosticTimes = [:]; diagnosticReferences = [:] }
+        diagnosticTimes[key] = .now
+        let current = generation
+        struct Body: Encodable { let platform = "ios"; let version = "0.1.0"; let kind: String; let route: String; let method: String }
+        struct Result: Decodable { let errorId: String }
+        do {
+            var request = URLRequest(url: baseURL.appendingPathComponent("api/monitoring/report")); request.httpMethod = "POST"; request.timeoutInterval = 3
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type"); request.setValue(baseURL.absoluteString, forHTTPHeaderField: "Origin")
+            request.httpBody = try JSONEncoder().encode(Body(kind: kind, route: route, method: method))
+            let (data, response) = try await session.data(for: request)
+            guard current == generation, (response as? HTTPURLResponse)?.statusCode == 200,
+                  let result = try? JSONDecoder().decode(Result.self, from: data), Self.validReference(result.errorId) else { return nil }
+            diagnosticReferences[key] = result.errorId
+            return result.errorId
+        } catch { return nil }
     }
 }

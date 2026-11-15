@@ -1,2 +1,6 @@
+import { observeRoute } from '@/lib/monitoring/server';
 import { uploadHandler } from '@/lib/uploads/handlers';
-export const DELETE = uploadHandler('delete');
+const DELETE = uploadHandler('delete');
+
+const observedDELETE = observeRoute(DELETE, '/api/uploads/[id]');
+export { observedDELETE as DELETE };

@@ -1,3 +1,4 @@
+import { observeRoute } from '@/lib/monitoring/server';
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { encode } from 'next-auth/jwt';
@@ -48,8 +49,14 @@ export const authOptions = {
 };
 
 const handler = NextAuth(authOptions);
-export { handler as GET };
-export async function POST(request, context) {
+const GET = handler;
+async function POST(request, context) {
   const response = await handler(request, context);
   return new URL(request.url).pathname.endsWith('/callback/credentials') ? credentialErrorResponse(response) : response;
 }
+
+const observedGET = observeRoute(GET, '/api/auth/[...nextauth]');
+export { observedGET as GET };
+
+const observedPOST = observeRoute(POST, '/api/auth/[...nextauth]');
+export { observedPOST as POST };

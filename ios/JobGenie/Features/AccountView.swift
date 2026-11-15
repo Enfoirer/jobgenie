@@ -38,6 +38,9 @@ struct AccountView: View {
                 Text("支持申请与历史管理、日程编辑、邮箱操作、统计分析和附件。系统通知可在提醒设置中开启，需服务器和签名配置就绪。") .font(.subheadline).foregroundStyle(.secondary)
                 if model.isDemo { Text("演示数据只在本次体验中保留，不会写入真实账号。") .font(.footnote).foregroundStyle(Brand.teal) }
             }
+            if let reference = model.lastErrorReference {
+                Section("最新错误编号") { Text(verbatim: reference).font(.caption.monospaced()).textSelection(.enabled) }
+            }
             if !model.isDemo {
                 Section("更多功能") {
                     Link(destination: model.api.baseURL.appendingPathComponent("dashboard")) { Label("打开网页版", systemImage: "safari") }

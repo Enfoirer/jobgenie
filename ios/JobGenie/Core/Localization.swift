@@ -41,11 +41,14 @@ enum L10n {
 enum UserMessage: Equatable {
     case text(String)
     case rateLimited(minutes: Int)
+    case errorReference(String)
     func localized(locale: Locale) -> String {
         switch self {
         case .text(let key): return L10n.string(key, locale: locale)
         case .rateLimited(let minutes):
             return String(format: L10n.string("操作过于频繁，请在 %lld 分钟后重试。", locale: locale), locale: locale, Int64(minutes))
+        case .errorReference(let reference):
+            return String(format: L10n.string("操作失败，请提供错误编号 %@ 以便排查。", locale: locale), locale: locale, reference)
         }
     }
 }

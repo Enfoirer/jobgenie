@@ -1,3 +1,4 @@
+import { observeRoute } from '@/lib/monitoring/server';
 // app/api/mail/accounts/route.js
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
@@ -5,7 +6,7 @@ import dbConnect from '@/lib/mongodb';
 import MailAccount from '@/lib/models/MailAccount';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
-export async function GET() {
+async function GET() {
   await dbConnect();
 
   const session = await getServerSession(authOptions);
@@ -34,3 +35,6 @@ export async function GET() {
     })),
   });
 }
+
+const observedGET = observeRoute(GET, '/api/mail/accounts');
+export { observedGET as GET };

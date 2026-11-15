@@ -1,3 +1,4 @@
+import { observeRoute } from '@/lib/monitoring/server';
 // app/api/sync-settings/route.js
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
@@ -5,7 +6,7 @@ import dbConnect from '@/lib/mongodb';
 import User from '@/lib/models/User';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
-export async function GET() {
+async function GET() {
   await dbConnect();
   const session = await getServerSession(authOptions);
   if (!session) {
@@ -18,7 +19,7 @@ export async function GET() {
   });
 }
 
-export async function PATCH(request) {
+async function PATCH(request) {
   await dbConnect();
   const session = await getServerSession(authOptions);
   if (!session) {
@@ -49,3 +50,9 @@ export async function PATCH(request) {
     autoThreshold: user.autoThreshold,
   });
 }
+
+const observedGET = observeRoute(GET, '/api/sync-settings');
+export { observedGET as GET };
+
+const observedPATCH = observeRoute(PATCH, '/api/sync-settings');
+export { observedPATCH as PATCH };

@@ -6270,6 +6270,38 @@
           }
         }
       }
+    },
+    "操作失败，请提供错误编号 %@ 以便排查。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Something went wrong. Share error reference %@ with support."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "操作失败，请提供错误编号 %@ 以便排查。"
+          }
+        }
+      }
+    },
+    "最新错误编号": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Latest error reference"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "最新错误编号"
+          }
+        }
+      }
     }
   },
   "version": "1.1"

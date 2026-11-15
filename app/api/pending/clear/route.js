@@ -1,3 +1,4 @@
+import { observeRoute } from '@/lib/monitoring/server';
 // app/api/pending/clear/route.js
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
@@ -5,7 +6,7 @@ import dbConnect from '@/lib/mongodb';
 import PendingItem from '@/lib/models/PendingItem';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
-export async function POST(request) {
+async function POST(request) {
   await dbConnect();
 
   const session = await getServerSession(authOptions);
@@ -35,3 +36,6 @@ export async function POST(request) {
 
   return NextResponse.json({ success: true, deleted: result.deletedCount || 0 });
 }
+
+const observedPOST = observeRoute(POST, '/api/pending/clear');
+export { observedPOST as POST };

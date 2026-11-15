@@ -1,3 +1,4 @@
+import { observeRoute } from '@/lib/monitoring/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import dbConnect from '@/lib/mongodb';
@@ -10,8 +11,11 @@ const load = createJobRoute(async ({ userId }) => ({ events: await listSchedule(
   connect: dbConnect,
 });
 
-export async function GET(request, context) {
+async function GET(request, context) {
   const response = await load(request, context);
   response.headers.set('Cache-Control', 'private, no-store');
   return response;
 }
+
+const observedGET = observeRoute(GET, '/api/schedule');
+export { observedGET as GET };

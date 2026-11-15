@@ -1,3 +1,4 @@
+import { observeRoute } from '@/lib/monitoring/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import dbConnect from '@/lib/mongodb';
@@ -8,5 +9,11 @@ const handler = createFeedbackHandler({
   authenticate: async () => (await getServerSession(authOptions))?.user?.id,
   connect: dbConnect,
 });
-export const GET = handler;
-export const POST = handler;
+const GET = handler;
+const POST = handler;
+
+const observedGET = observeRoute(GET, '/api/feedback');
+export { observedGET as GET };
+
+const observedPOST = observeRoute(POST, '/api/feedback');
+export { observedPOST as POST };

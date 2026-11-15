@@ -1,3 +1,4 @@
+import { observeRoute } from '@/lib/monitoring/server';
 import { getJob, updateJob, deleteJob } from '@/lib/jobs/jobMutations';
 import dbConnect from '@/lib/mongodb';
 import { getServerSession } from 'next-auth/next';
@@ -9,10 +10,19 @@ const dependencies = {
   connect: dbConnect,
 };
 
-export const GET = createJobRoute(async ({ userId, params }) => ({
+const GET = createJobRoute(async ({ userId, params }) => ({
   job: await getJob(userId, params.id),
 }), dependencies);
-export const PATCH = createJobRoute(async ({ request, userId, params }) =>
+const PATCH = createJobRoute(async ({ request, userId, params }) =>
   updateJob(userId, params.id, await readJobBody(request)), dependencies);
-export const DELETE = createJobRoute(async ({ userId, params }) =>
+const DELETE = createJobRoute(async ({ userId, params }) =>
   deleteJob(userId, params.id), dependencies);
+
+const observedGET = observeRoute(GET, '/api/jobs/[id]');
+export { observedGET as GET };
+
+const observedPATCH = observeRoute(PATCH, '/api/jobs/[id]');
+export { observedPATCH as PATCH };
+
+const observedDELETE = observeRoute(DELETE, '/api/jobs/[id]');
+export { observedDELETE as DELETE };

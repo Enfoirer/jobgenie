@@ -1,3 +1,4 @@
+import { observeRoute } from '@/lib/monitoring/server';
 // app/api/pending/route.js
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
@@ -5,7 +6,7 @@ import dbConnect from '@/lib/mongodb';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import PendingItem from '@/lib/models/PendingItem';
 
-export async function GET(request) {
+async function GET(request) {
   await dbConnect();
 
   const session = await getServerSession(authOptions);
@@ -30,3 +31,6 @@ export async function GET(request) {
 
   return NextResponse.json({ items });
 }
+
+const observedGET = observeRoute(GET, '/api/pending');
+export { observedGET as GET };

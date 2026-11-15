@@ -1,3 +1,4 @@
+import { observeRoute } from '@/lib/monitoring/server';
 // app/api/mail/accounts/[id]/route.js
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
@@ -5,7 +6,7 @@ import dbConnect from '@/lib/mongodb';
 import MailAccount from '@/lib/models/MailAccount';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
-export async function DELETE(request, { params }) {
+async function DELETE(request, { params }) {
   await dbConnect();
 
   const session = await getServerSession(authOptions);
@@ -28,3 +29,6 @@ export async function DELETE(request, { params }) {
 
   return NextResponse.json({ success: true });
 }
+
+const observedDELETE = observeRoute(DELETE, '/api/mail/accounts/[id]');
+export { observedDELETE as DELETE };

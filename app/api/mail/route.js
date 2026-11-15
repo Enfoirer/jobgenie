@@ -1,9 +1,10 @@
+import { observeRoute } from '@/lib/monitoring/server';
 import { getServerSession } from 'next-auth/next';
 import dbConnect from '@/lib/mongodb';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { createMailSyncHandler } from '@/lib/pipeline/mailSyncHandler';
 
-export const GET = createMailSyncHandler({
+const GET = createMailSyncHandler({
   connect: dbConnect,
   unauthorizedMessage: 'Not authenticated',
   authenticate: async () => {
@@ -13,4 +14,10 @@ export const GET = createMailSyncHandler({
 });
 
 // Manual actions use POST; GET remains compatible with existing integrations.
-export const POST = GET;
+const POST = GET;
+
+const observedGET = observeRoute(GET, '/api/mail');
+export { observedGET as GET };
+
+const observedPOST = observeRoute(POST, '/api/mail');
+export { observedPOST as POST };

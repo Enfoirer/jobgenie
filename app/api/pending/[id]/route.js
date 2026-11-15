@@ -1,10 +1,11 @@
+import { observeRoute } from '@/lib/monitoring/server';
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import dbConnect from '@/lib/mongodb';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { reviewPendingItem } from '@/lib/pipeline/pendingReview';
 
-export async function PATCH(request, { params }) {
+async function PATCH(request, { params }) {
   const session = await getServerSession(authOptions);
   if (!session) {
     return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
@@ -20,3 +21,6 @@ export async function PATCH(request, { params }) {
     return NextResponse.json({ error: error.message }, { status: error.status || 500 });
   }
 }
+
+const observedPATCH = observeRoute(PATCH, '/api/pending/[id]');
+export { observedPATCH as PATCH };

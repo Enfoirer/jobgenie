@@ -1,3 +1,7 @@
+import { observeRoute } from '@/lib/monitoring/server';
 import dbConnect from '@/lib/mongodb';
 import { createResetHandler } from '@/lib/auth/resetHandler';
-export const POST = createResetHandler({ connect: dbConnect, action: 'request' });
+const POST = createResetHandler({ connect: dbConnect, action: 'request' });
+
+const observedPOST = observeRoute(POST, '/api/auth/forgot-password');
+export { observedPOST as POST };
