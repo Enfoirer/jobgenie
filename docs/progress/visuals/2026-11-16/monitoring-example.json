@@ -1,0 +1,10 @@
+{
+  "environment": "disposable local NextAuth/MongoDB/browser",
+  "reference": "JG-90a9eef0-c07d-4c16-9081-3c5bcf5ddf78",
+  "storedKind": "unhandled_error",
+  "storedRoute": "/dashboard/jobs",
+  "sensitiveFixtureValuesAbsent": true,
+  "ordinaryUserStatus": 403,
+  "adminReferenceLookup": true,
+  "revocationClearsView": true
+}

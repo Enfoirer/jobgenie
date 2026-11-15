@@ -984,6 +984,193 @@
       "sha256": "6c89163c362d6a8d2356498d02df1742e7bade74b94f130cfc28dcf590988d2c",
       "redactions": [],
       "association": "Local disposable NextAuth/MongoDB and isolated browser. No production user data."
+    },
+    {
+      "task": "JG-029",
+      "kind": "test_log",
+      "file": "tests/2026-11-16/monitor-regression.log",
+      "outcome": "passed",
+      "description": "Full backend and browser-state regression, 353 passed",
+      "collectedAt": "2026-11-15T16:28:11.210436+00:00",
+      "observedSourceMtime": "2026-11-15T16:19:40.740168+00:00",
+      "originalSha256": "fd9b4f9889fa6d70c4ed12c827e1f5ab98563c786df4113eda88ec11093b7bb7",
+      "sha256": "8cb9c342ae38f42d0778782eb1abe780c1bd595a2863ae96a370410b89e30355",
+      "redactions": [
+        "Repository/home paths and credential assignments"
+      ],
+      "association": "Actual local acceptance for JG-029; synthetic accounts and data. Linked to the delivered implementation revision."
+    },
+    {
+      "task": "JG-029",
+      "kind": "test_log",
+      "file": "tests/2026-11-16/monitor-targeted.log",
+      "outcome": "passed",
+      "description": "Final 11 monitoring tests passed after administrator projection assertions",
+      "collectedAt": "2026-11-15T16:28:11.210436+00:00",
+      "observedSourceMtime": "2026-11-15T16:24:44.364539+00:00",
+      "originalSha256": "ab2f20a045a576ed7c9a80c77959ede60be51651755a21e9f59ac8422347a4bb",
+      "sha256": "59d2c24501d2b9e71d2b16e8091dcd0148b5a837dd26853ad8683f4c75cf62f6",
+      "redactions": [
+        "Repository/home paths and credential assignments"
+      ],
+      "association": "Actual local acceptance for JG-029; synthetic accounts and data. Linked to the delivered implementation revision."
+    },
+    {
+      "task": "JG-029",
+      "kind": "test_log",
+      "file": "tests/2026-11-16/monitor-browser.log",
+      "outcome": "passed",
+      "description": "Actual isolated browser reference, privacy, administrator lookup and revocation acceptance",
+      "collectedAt": "2026-11-15T16:28:11.210436+00:00",
+      "observedSourceMtime": "2026-11-15T16:24:48.944292+00:00",
+      "originalSha256": "960d91027fa4ccd046e4a56438b7579225f95cb2a98ac5a67938d28bac16b316",
+      "sha256": "0c57f83943e987665c3c6e0c0ec2640893c0aad72e585261abd6a8eddd61cc48",
+      "redactions": [
+        "Repository/home paths and credential assignments"
+      ],
+      "association": "Actual local acceptance for JG-029; synthetic accounts and data. Linked to the delivered implementation revision."
+    },
+    {
+      "task": "JG-029",
+      "kind": "test_log",
+      "file": "tests/2026-11-16/monitor-web-build.log",
+      "outcome": "passed",
+      "description": "Final Next.js production build",
+      "collectedAt": "2026-11-15T16:28:11.210436+00:00",
+      "observedSourceMtime": "2026-11-15T16:21:18.519713+00:00",
+      "originalSha256": "5315664d4105f691e3981f23738f176b7cd5d4ddd229d7e63cc004cce0d5f046",
+      "sha256": "5315664d4105f691e3981f23738f176b7cd5d4ddd229d7e63cc004cce0d5f046",
+      "redactions": [
+        "Repository/home paths and credential assignments"
+      ],
+      "association": "Actual local acceptance for JG-029; synthetic accounts and data. Linked to the delivered implementation revision."
+    },
+    {
+      "task": "JG-029",
+      "kind": "test_log",
+      "file": "tests/2026-11-16/monitor-lint.log",
+      "outcome": "passed",
+      "description": "Scoped JavaScript and JSX lint, successful with no diagnostics",
+      "collectedAt": "2026-11-15T16:28:11.210436+00:00",
+      "observedSourceMtime": "2026-11-15T16:23:46.676395+00:00",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "redactions": [
+        "Repository/home paths and credential assignments"
+      ],
+      "association": "Actual local acceptance for JG-029; synthetic accounts and data. Linked to the delivered implementation revision."
+    },
+    {
+      "task": "JG-029",
+      "kind": "test_log",
+      "file": "tests/2026-11-16/monitor-native-tests.log",
+      "outcome": "passed",
+      "description": "Final native suite, 109 passed and three environment-dependent tests skipped",
+      "collectedAt": "2026-11-15T16:28:11.210436+00:00",
+      "observedSourceMtime": "2026-11-15T16:23:53.519585+00:00",
+      "originalSha256": "0c357bddeb4c02ddd191279b682c8ba93dddc65dd77b561b5d144cdc404e1125",
+      "sha256": "e3fc0528d33e30fb5b8662d0ffec0f62d821b83ae30dbe079bd66e2e8350d21e",
+      "redactions": [
+        "Repository/home paths and credential assignments"
+      ],
+      "association": "Actual local acceptance for JG-029; synthetic accounts and data. Linked to the delivered implementation revision."
+    },
+    {
+      "task": "JG-029",
+      "kind": "test_log",
+      "file": "tests/2026-11-16/monitor-native-release.log",
+      "outcome": "passed",
+      "description": "Unsigned arm64 iPhone Release build",
+      "collectedAt": "2026-11-15T16:28:11.210436+00:00",
+      "observedSourceMtime": "2026-11-15T16:23:49.257092+00:00",
+      "originalSha256": "41af9715fd8aed0fba7d1a5f692af1bc066fb41903281065457dc044a8f7bac6",
+      "sha256": "46c73d30bd3e184f26b2b608b0b26088fed580aec28f38e7fc777c846caac79c",
+      "redactions": [
+        "Repository/home paths and credential assignments"
+      ],
+      "association": "Actual local acceptance for JG-029; synthetic accounts and data. Linked to the delivered implementation revision."
+    },
+    {
+      "task": "JG-029",
+      "kind": "test_log",
+      "file": "tests/2026-11-16/monitor-workbook.log",
+      "outcome": "passed",
+      "description": "Original workbook recalculation and historical-value assertions",
+      "collectedAt": "2026-11-15T16:28:11.210436+00:00",
+      "observedSourceMtime": "2026-11-15T16:27:13.569378+00:00",
+      "originalSha256": "4e07fa822c9e2c3339f888539315de68b8b939b2d9894db1942a5ceade1ffcaa",
+      "sha256": "3a150b84f693f379e564aa5f13c57703c68b824a9a9b17b36744664fc20cc6b5",
+      "redactions": [
+        "Repository/home paths and credential assignments"
+      ],
+      "association": "Actual local acceptance for JG-029; synthetic accounts and data. Linked to the delivered implementation revision."
+    },
+    {
+      "task": "JG-029",
+      "kind": "test_log",
+      "file": "tests/2026-11-16/monitor-workbook-preservation.log",
+      "outcome": "passed",
+      "description": "Saved workbook values, formulas, panes, hyperlinks and conditional rules preserved",
+      "collectedAt": "2026-11-15T16:28:11.210436+00:00",
+      "observedSourceMtime": "2026-11-15T16:27:23.812590+00:00",
+      "originalSha256": "2b2d2fdac9f8881b0e1951aa3e29c772e9342a2bd320b342a8b1d0f5b84cfe82",
+      "sha256": "2b2d2fdac9f8881b0e1951aa3e29c772e9342a2bd320b342a8b1d0f5b84cfe82",
+      "redactions": [
+        "Repository/home paths and credential assignments"
+      ],
+      "association": "Actual local acceptance for JG-029; synthetic accounts and data. Linked to the delivered implementation revision."
+    },
+    {
+      "task": "JG-029",
+      "kind": "screenshot",
+      "file": "visuals/2026-11-16/error-review.png",
+      "outcome": "passed",
+      "description": "Reviewed local administrator reference lookup with synthetic data",
+      "collectedAt": "2026-11-15T16:28:11.210436+00:00",
+      "observedSourceMtime": "2026-11-15T16:24:48.787047+00:00",
+      "originalSha256": "783debc7435cc630205197649d16a02e63409c5bd62b4bb2da4175340acddadb",
+      "sha256": "783debc7435cc630205197649d16a02e63409c5bd62b4bb2da4175340acddadb",
+      "redactions": [],
+      "association": "Actual local acceptance for JG-029; synthetic accounts and data. Linked to the delivered implementation revision."
+    },
+    {
+      "task": "JG-029",
+      "kind": "api_example",
+      "file": "visuals/2026-11-16/monitoring-example.json",
+      "outcome": "passed",
+      "description": "Safe actual browser acceptance results and stored reference",
+      "collectedAt": "2026-11-15T16:28:11.210436+00:00",
+      "observedSourceMtime": "2026-11-15T16:24:48.944167+00:00",
+      "originalSha256": "b6d62d6347101c3f48001361ce6e4440e67615ee418bed82b0edd54bd7001d2f",
+      "sha256": "b6d62d6347101c3f48001361ce6e4440e67615ee418bed82b0edd54bd7001d2f",
+      "redactions": [],
+      "association": "Actual local acceptance for JG-029; synthetic accounts and data. Linked to the delivered implementation revision."
+    },
+    {
+      "task": "JG-029",
+      "kind": "screenshot",
+      "file": "visuals/2026-11-16/progress-row.png",
+      "outcome": "passed",
+      "description": "Reviewed original workbook JG-029 row",
+      "collectedAt": "2026-11-15T16:28:11.210436+00:00",
+      "observedSourceMtime": "2026-11-15T16:27:13.283571+00:00",
+      "originalSha256": "00cce50adf80cca5ff89b893a20e80586b4c579dda363a7bf4b7c35c9df76bcc",
+      "sha256": "00cce50adf80cca5ff89b893a20e80586b4c579dda363a7bf4b7c35c9df76bcc",
+      "redactions": [],
+      "association": "Actual local acceptance for JG-029; synthetic accounts and data. Linked to the delivered implementation revision."
+    },
+    {
+      "task": "JG-029",
+      "kind": "screenshot",
+      "file": "visuals/2026-11-16/progress-update-log.png",
+      "outcome": "passed",
+      "description": "Reviewed appended original-workbook Update Log entry",
+      "collectedAt": "2026-11-15T16:28:11.210436+00:00",
+      "observedSourceMtime": "2026-11-15T16:27:13.349175+00:00",
+      "originalSha256": "4533b36542c7bd9e711c6ccebd3b8366bd41159a9e477afb7497037549137311",
+      "sha256": "4533b36542c7bd9e711c6ccebd3b8366bd41159a9e477afb7497037549137311",
+      "redactions": [],
+      "association": "Actual local acceptance for JG-029; synthetic accounts and data. Linked to the delivered implementation revision."
     }
   ],
   "records": [
@@ -1746,6 +1933,45 @@
         }
       ],
       "deploymentObservation": "deployments/2026-11-13-admin-feedback-3d5c4e6.json"
+    },
+    {
+      "id": "JG-029",
+      "title": "Web and iOS: error monitoring",
+      "scope": "Safe server/web/native API diagnostics, user-visible references, authenticated reporting and administrator search.",
+      "tests": "353 backend/browser-state tests passed. Final 11 monitoring cases, actual browser privacy/access acceptance, 109 native tests (three skipped), web production/unsigned native Release builds, scoped lint and workbook checks passed.",
+      "boundary": "Best-effort diagnostic transport; 30-day retention and UTC-minute grouping. Native process crash stacks, offline diagnostic queues, signed devices and TestFlight remain outside this delivery. Production administrator awaits owner designation.",
+      "commit": "https://github.com/Enfoirer/jobgenie/commit/ab108deaaf5d1e3b9743bd08b2e21d1107d28e6a",
+      "document": "https://github.com/Enfoirer/jobgenie/blob/ab108deaaf5d1e3b9743bd08b2e21d1107d28e6a/docs/error-monitoring-acceptance.md",
+      "commitSha": "ab108deaaf5d1e3b9743bd08b2e21d1107d28e6a",
+      "commitAt": "2026-11-16T00:26:33+08:00",
+      "preparedAt": "2026-11-15T16:28:11.210436+00:00",
+      "record": "records/2026-11-16-JG-029.md",
+      "sourceDocumentExistsAtCommit": true,
+      "rawLogs": [
+        "tests/2026-11-16/monitor-regression.log",
+        "tests/2026-11-16/monitor-targeted.log",
+        "tests/2026-11-16/monitor-browser.log",
+        "tests/2026-11-16/monitor-web-build.log",
+        "tests/2026-11-16/monitor-lint.log",
+        "tests/2026-11-16/monitor-native-tests.log",
+        "tests/2026-11-16/monitor-native-release.log",
+        "tests/2026-11-16/monitor-workbook.log",
+        "tests/2026-11-16/monitor-workbook-preservation.log"
+      ],
+      "visuals": [
+        "visuals/2026-11-16/error-review.png",
+        "visuals/2026-11-16/monitoring-example.json",
+        "visuals/2026-11-16/progress-row.png",
+        "visuals/2026-11-16/progress-update-log.png"
+      ],
+      "observedChecks": [
+        {
+          "context": "Vercel",
+          "state": "success",
+          "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/EdQgkBcKgEuhYXaYNgC38vy2kozg"
+        }
+      ],
+      "deploymentObservation": "deployments/2026-11-16-error-monitoring-ab108de.json"
     }
   ],
   "translatedAt": "2026-11-04T15:15:24.093466+00:00",
@@ -1755,5 +1981,5 @@
     "historicalArtifacts": "Original-language test output and historical evidence remain unchanged; English descriptions explain their provenance.",
     "translation": "English records translated on the date in translatedAt. Existing dates, test results, artifact hashes and fixed historical commit links are preserved."
   },
-  "lastUpdatedAt": "2026-11-13T13:35:15.297Z"
+  "lastUpdatedAt": "2026-11-15T16:28:46.946380+00:00"
 }

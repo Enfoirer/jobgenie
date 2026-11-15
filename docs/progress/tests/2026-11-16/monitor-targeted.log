@@ -1,0 +1,27 @@
+(node:33440) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://[HOME]/Documents/study%20and%20work/find_job/jobgenie/tests/monitoring-browser.test.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to [REPOSITORY]/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ browser reports only safe metadata, deduplicates, and ignores reporting failures (33.405583ms)
+✔ report transport failure does not recursively generate incidents (10.52375ms)
+(node:33441) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://[HOME]/Documents/study%20and%20work/find_job/jobgenie/tests/monitoring.test.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to [REPOSITORY]/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ allowlist drops credentials, mail bodies, errors, URLs and identifiers (1133.507417ms)
+✔ matching concurrent reports share a durable reference/count and expire after 30 days (34.825584ms)
+✔ different accounts and time windows do not merge client reports (34.182875ms)
+✔ failed diagnostics leave a sanitized fallback log and preserve the original response (25.013459ms)
+✔ diagnostic storage cannot block an error response indefinitely (2027.471875ms)
+✔ handled API failures retain safe error classification and stable references (32.218ms)
+✔ expected business errors and framework redirects retain their behavior (17.170333ms)
+✔ client ingestion authenticates, bounds and validates reports and applies a rate limit (28.036417ms)
+✔ administrator lookup finds the user reference and filters version/platform/date; ordinary users and revoked admins cannot read (30.718834ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3817.947

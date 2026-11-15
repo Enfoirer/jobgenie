@@ -1,0 +1,34 @@
+{
+  "task": "JG-029",
+  "implementationCommit": "ab108deaaf5d1e3b9743bd08b2e21d1107d28e6a",
+  "observedAt": "2026-11-15T16:28:46.946380+00:00",
+  "timezone": "Asia/Shanghai",
+  "source": "GitHub combined commit status and verified git ls-remote",
+  "verifiedRemoteMain": "ab108deaaf5d1e3b9743bd08b2e21d1107d28e6a",
+  "statuses": [
+    {
+      "context": "Vercel",
+      "state": "success",
+      "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/EdQgkBcKgEuhYXaYNgC38vy2kozg"
+    }
+  ],
+  "productionAdministrator": "Awaiting owner designation",
+  "productionDataAccessed": false,
+  "productionRolesChanged": false,
+  "nativeDistribution": "Unsigned Release compilation only; signed-device and TestFlight acceptance remain pending",
+  "initialStatuses": [
+    {
+      "context": "Vercel",
+      "state": "pending",
+      "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/EdQgkBcKgEuhYXaYNgC38vy2kozg"
+    }
+  ],
+  "anonymousProductionProbe": {
+    "observedAt": "2026-11-15T16:28:46.946380+00:00",
+    "route": "/api/admin/errors",
+    "status": 401,
+    "response": {
+      "error": "Not authenticated"
+    }
+  }
+}
