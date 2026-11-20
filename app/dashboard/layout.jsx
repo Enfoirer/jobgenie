@@ -8,6 +8,7 @@ import { useSession, signOut } from 'next-auth/react';
 import ReminderProvider, { ReminderLink } from '@/components/ReminderProvider';
 import FeedbackProvider, { FeedbackButton } from '@/components/FeedbackProvider';
 import AdminFeedbackLink from '@/components/AdminFeedbackLink';
+import OnboardingGuide from '@/components/OnboardingGuide';
 
 export default function DashboardLayout({ children }) {
   const pathname = usePathname();
@@ -42,6 +43,7 @@ export default function DashboardLayout({ children }) {
   return (
     <FeedbackProvider key={session?.user?.id} userId={session?.user?.id}>
     <ReminderProvider>
+    {session?.user?.id && <OnboardingGuide key={session.user.id} userId={session.user.id} />}
     <div className="min-h-screen bg-gray-50">
       {/* Navigation Bar */}
       <nav className="bg-white shadow-sm">
