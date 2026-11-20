@@ -1,0 +1,33 @@
+{
+  "task": "JG-030",
+  "implementationCommit": "86189fd19d8f4c20437d435453acb7cf1d626e8b",
+  "observedAt": "2026-11-20T12:17:25.932479+00:00",
+  "timezone": "Asia/Shanghai",
+  "source": "GitHub combined commit status and verified git ls-remote",
+  "verifiedRemoteMain": "86189fd19d8f4c20437d435453acb7cf1d626e8b",
+  "statuses": [
+    {
+      "context": "Vercel",
+      "state": "success",
+      "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/BoaJ8fRB1xUgHUD6TSHEb1qbnqrX"
+    }
+  ],
+  "productionDataAccessed": false,
+  "productionUsersCreated": false,
+  "nativeDistribution": "Web-only delivery",
+  "initialStatuses": [
+    {
+      "context": "Vercel",
+      "state": "pending",
+      "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/BoaJ8fRB1xUgHUD6TSHEb1qbnqrX"
+    }
+  ],
+  "anonymousProductionProbe": {
+    "observedAt": "2026-11-20T12:17:25.932479+00:00",
+    "route": "/api/onboarding",
+    "status": 401,
+    "response": {
+      "error": "Not authenticated"
+    }
+  }
+}

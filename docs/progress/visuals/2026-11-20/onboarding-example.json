@@ -1,0 +1,14 @@
+{
+  "environment": "disposable local NextAuth/MongoDB/browser",
+  "existingApplicationsSuppressed": true,
+  "completedOutcome": "completed",
+  "skippedOutcome": "skipped",
+  "restartAndFreshStoragePersistence": true,
+  "accountIsolation": true,
+  "competingDialogDeferred": true,
+  "failedSaveRetry": true,
+  "escapeDismissal": true,
+  "mobileWidth": 390,
+  "keyboardFocusContained": true,
+  "anonymousStatus": 401
+}

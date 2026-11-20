@@ -1,0 +1,28 @@
+(node:57801) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://[HOME]/Documents/study%20and%20work/find_job/jobgenie/tests/onboarding-browser.test.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to [REPOSITORY]/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ failed dismissal saves locally, suppresses a relaunch and retries the account write (19.722917ms)
+✔ late eligibility and save replies cannot reopen a dismissed guide or update a stopped account (0.370542ms)
+✔ storage and terminal account state synchronize tabs without crossing accounts (0.360708ms)
+✔ another device completing onboarding closes an already open guide on refresh (0.258917ms)
+✔ unavailable storage and failed eligibility reads keep the dashboard usable (0.320084ms)
+(node:57802) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://[HOME]/Documents/study%20and%20work/find_job/jobgenie/tests/onboarding.test.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to [REPOSITORY]/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ new and legacy users without jobs are eligible; another account does not affect eligibility (1026.601ms)
+✔ existing applications including archived ones suppress automatic onboarding (22.794709ms)
+✔ completion and skip persist across fresh authenticated handlers without exposing private fields (31.805792ms)
+✔ concurrent retries preserve the first outcome and its original timestamp (33.359833ms)
+✔ anonymous/deleted sessions, cross-origin mutations and supplied account IDs cannot change preferences (22.214167ms)
+✔ invalid choices, oversized packets, malformed JSON and unsupported methods are rejected (17.129667ms)
+✔ rate limits and database failures return bounded safe errors (16.045041ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1732.9785

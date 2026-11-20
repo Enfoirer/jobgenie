@@ -54,3 +54,5 @@ The [deployment responses](deployments/2026-11-04-observed-statuses.json) retain
 [JG-028 Administrator feedback review](records/2026-11-13-JG-028.md) adds the English, administrator-only feedback page on 2026-11-13. The original workbook now contains 28 scoped milestones. Production administrator designation remains pending.
 
 [JG-029 Error monitoring and support references](records/2026-11-16-JG-029.md) adds safe server, browser and native API diagnostics and administrator search on 2026-11-16. The original workbook contains 29 scoped milestones. Native crash stacks and physical-device acceptance remain outstanding.
+
+[JG-030 Web first-use onboarding](records/2026-11-20-JG-030.md) adds the English three-step guide and account-persisted completion/skip on 2026-11-20. The original workbook contains 30 scoped milestones.

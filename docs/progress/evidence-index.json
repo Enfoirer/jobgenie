@@ -1171,6 +1171,221 @@
       "sha256": "4533b36542c7bd9e711c6ccebd3b8366bd41159a9e477afb7497037549137311",
       "redactions": [],
       "association": "Actual local acceptance for JG-029; synthetic accounts and data. Linked to the delivered implementation revision."
+    },
+    {
+      "task": "JG-030",
+      "kind": "test_log",
+      "file": "tests/2026-11-20/onboarding-targeted.log",
+      "outcome": "passed",
+      "description": "12 onboarding API/browser-state tests passed",
+      "collectedAt": "2026-11-20T12:16:58.298195+00:00",
+      "observedSourceMtime": "2026-11-20T12:10:40.133904+00:00",
+      "originalSha256": "2d0d763e02671eeecc98717da50388c5b64c0bb1691822585ca55d2a75818bcb",
+      "sha256": "6cede65b295386628adc5587b65a0722f54f3e2918b1df854b0cf884eda8fb88",
+      "redactions": [
+        "Repository/home paths and credential assignments"
+      ],
+      "association": "Actual JG-030 local checks linked to the implementation revision. Failed attempts precede the corrected successful runs. All accounts and data are synthetic."
+    },
+    {
+      "task": "JG-030",
+      "kind": "test_log",
+      "file": "tests/2026-11-20/onboarding-regression.log",
+      "outcome": "passed",
+      "description": "Full 365-test regression passed with zero failures/skips",
+      "collectedAt": "2026-11-20T12:16:58.298195+00:00",
+      "observedSourceMtime": "2026-11-20T12:12:37.461815+00:00",
+      "originalSha256": "1ab841ced3942346e7fb534bc4dd083b3d3383dab296eea2f72d3d015bbc0785",
+      "sha256": "d16d79bac3d0981f3b0da91893f93223e5381864a11db1a1d6be2292b5860fc4",
+      "redactions": [
+        "Repository/home paths and credential assignments"
+      ],
+      "association": "Actual JG-030 local checks linked to the implementation revision. Failed attempts precede the corrected successful runs. All accounts and data are synthetic."
+    },
+    {
+      "task": "JG-030",
+      "kind": "test_log",
+      "file": "tests/2026-11-20/onboarding-build-initial.log",
+      "outcome": "failed",
+      "description": "Initial build lacked compile-time MONGODB_URI; later supplied compile-only configuration",
+      "collectedAt": "2026-11-20T12:16:58.298195+00:00",
+      "observedSourceMtime": "2026-11-20T12:10:50.840325+00:00",
+      "originalSha256": "36e27e07a91d2500e9894c4acfea15b587346ea0053013b535ac7a1dc6515695",
+      "sha256": "36e27e07a91d2500e9894c4acfea15b587346ea0053013b535ac7a1dc6515695",
+      "redactions": [
+        "Repository/home paths and credential assignments"
+      ],
+      "association": "Actual JG-030 local checks linked to the implementation revision. Failed attempts precede the corrected successful runs. All accounts and data are synthetic."
+    },
+    {
+      "task": "JG-030",
+      "kind": "test_log",
+      "file": "tests/2026-11-20/onboarding-build-verified.log",
+      "outcome": "passed",
+      "description": "Final production build after focus-loop correction",
+      "collectedAt": "2026-11-20T12:16:58.298195+00:00",
+      "observedSourceMtime": "2026-11-20T12:12:58.287570+00:00",
+      "originalSha256": "78a7a9ea128cb4acf65b33283d227db98025699677b49dcc0d15dac2b87ade73",
+      "sha256": "78a7a9ea128cb4acf65b33283d227db98025699677b49dcc0d15dac2b87ade73",
+      "redactions": [
+        "Repository/home paths and credential assignments"
+      ],
+      "association": "Actual JG-030 local checks linked to the implementation revision. Failed attempts precede the corrected successful runs. All accounts and data are synthetic."
+    },
+    {
+      "task": "JG-030",
+      "kind": "test_log",
+      "file": "tests/2026-11-20/onboarding-browser-initial.log",
+      "outcome": "failed",
+      "description": "Actual browser acceptance found keyboard focus leaving the guide",
+      "collectedAt": "2026-11-20T12:16:58.298195+00:00",
+      "observedSourceMtime": "2026-11-20T12:12:24.321908+00:00",
+      "originalSha256": "a1ac2e2d74656979bb09c00f11b04ee91af4660ab5e366f7b1a87b21886831d4",
+      "sha256": "adc70b7b6e936685d2e625cb32466bba0a12a0c2e933e2c5fe16153f751bd8e0",
+      "redactions": [
+        "Repository/home paths and credential assignments"
+      ],
+      "association": "Actual JG-030 local checks linked to the implementation revision. Failed attempts precede the corrected successful runs. All accounts and data are synthetic."
+    },
+    {
+      "task": "JG-030",
+      "kind": "test_log",
+      "file": "tests/2026-11-20/onboarding-browser-selector.log",
+      "outcome": "failed",
+      "description": "Second browser run exposed a malformed selector in the test harness",
+      "collectedAt": "2026-11-20T12:16:58.298195+00:00",
+      "observedSourceMtime": "2026-11-20T12:14:29.577137+00:00",
+      "originalSha256": "32d60efe3e90aa942bd735837735a3e8308f287cf5f4fdc636b42bde98b2bbae",
+      "sha256": "d1eb57384b114814eb566579f1c3401e09cd4ac35e676c69eca33c4e0520440d",
+      "redactions": [
+        "Repository/home paths and credential assignments"
+      ],
+      "association": "Actual JG-030 local checks linked to the implementation revision. Failed attempts precede the corrected successful runs. All accounts and data are synthetic."
+    },
+    {
+      "task": "JG-030",
+      "kind": "test_log",
+      "file": "tests/2026-11-20/onboarding-browser-verified.log",
+      "outcome": "passed",
+      "description": "Final actual browser onboarding, persistence, retry, competing-dialog, keyboard and mobile acceptance",
+      "collectedAt": "2026-11-20T12:16:58.298195+00:00",
+      "observedSourceMtime": "2026-11-20T12:15:13.029902+00:00",
+      "originalSha256": "2b24fbed5bcbe01835bef5649cfcfd5fd19771350cccdad4a7b2be130815060d",
+      "sha256": "3d89b7a528d72f1dbaaf8039ac3db70810be26f07408a14771fafaac8497c844",
+      "redactions": [
+        "Repository/home paths and credential assignments"
+      ],
+      "association": "Actual JG-030 local checks linked to the implementation revision. Failed attempts precede the corrected successful runs. All accounts and data are synthetic."
+    },
+    {
+      "task": "JG-030",
+      "kind": "test_log",
+      "file": "tests/2026-11-20/onboarding-lint.log",
+      "outcome": "passed",
+      "description": "Final scoped JavaScript/JSX ESLint passed with no diagnostics",
+      "collectedAt": "2026-11-20T12:16:58.298195+00:00",
+      "observedSourceMtime": "2026-11-20T12:15:03.836966+00:00",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "redactions": [
+        "Repository/home paths and credential assignments"
+      ],
+      "association": "Actual JG-030 local checks linked to the implementation revision. Failed attempts precede the corrected successful runs. All accounts and data are synthetic."
+    },
+    {
+      "task": "JG-030",
+      "kind": "test_log",
+      "file": "tests/2026-11-20/onboarding-workbook.log",
+      "outcome": "passed",
+      "description": "Original workbook calculation and historical-row assertions",
+      "collectedAt": "2026-11-20T12:16:58.298195+00:00",
+      "observedSourceMtime": "2026-11-20T12:15:55.104470+00:00",
+      "originalSha256": "18ebab28b3488eb577f48b8d7d7813f609ebf4c4a75b19f11b037b660757ad5c",
+      "sha256": "4804829d369ac3111d2b40e4e68710b03db8f73938220e60a18cb6d8a68384c6",
+      "redactions": [
+        "Repository/home paths and credential assignments"
+      ],
+      "association": "Actual JG-030 local checks linked to the implementation revision. Failed attempts precede the corrected successful runs. All accounts and data are synthetic."
+    },
+    {
+      "task": "JG-030",
+      "kind": "test_log",
+      "file": "tests/2026-11-20/onboarding-workbook-preservation.log",
+      "outcome": "passed",
+      "description": "Saved workbook historical values/formulas and native features preserved",
+      "collectedAt": "2026-11-20T12:16:58.298195+00:00",
+      "observedSourceMtime": "2026-11-20T12:16:44.033218+00:00",
+      "originalSha256": "4dfb0b27776c820fffdf8401cb6e2846e2ff6f59bb68f2d19edfff04b8aba51b",
+      "sha256": "4dfb0b27776c820fffdf8401cb6e2846e2ff6f59bb68f2d19edfff04b8aba51b",
+      "redactions": [
+        "Repository/home paths and credential assignments"
+      ],
+      "association": "Actual JG-030 local checks linked to the implementation revision. Failed attempts precede the corrected successful runs. All accounts and data are synthetic."
+    },
+    {
+      "task": "JG-030",
+      "kind": "screenshot",
+      "file": "visuals/2026-11-20/onboarding-desktop.png",
+      "outcome": "passed",
+      "description": "Reviewed actual local onboarding acceptance with synthetic accounts",
+      "collectedAt": "2026-11-20T12:16:58.298195+00:00",
+      "observedSourceMtime": "2026-11-20T12:15:06.873970+00:00",
+      "originalSha256": "3cd80e9ee87814312b5a8e460d93880ad5a7d4615ef4a36b45354b1bce3d7bc0",
+      "sha256": "3cd80e9ee87814312b5a8e460d93880ad5a7d4615ef4a36b45354b1bce3d7bc0",
+      "redactions": [],
+      "association": "Actual JG-030 local checks linked to the implementation revision. Failed attempts precede the corrected successful runs. All accounts and data are synthetic."
+    },
+    {
+      "task": "JG-030",
+      "kind": "screenshot",
+      "file": "visuals/2026-11-20/onboarding-mobile.png",
+      "outcome": "passed",
+      "description": "Reviewed actual local onboarding acceptance with synthetic accounts",
+      "collectedAt": "2026-11-20T12:16:58.298195+00:00",
+      "observedSourceMtime": "2026-11-20T12:15:06.934216+00:00",
+      "originalSha256": "39ca63a6dac6d311387696a922bd09467d0c07b6687c4809c744f415e0edcf25",
+      "sha256": "39ca63a6dac6d311387696a922bd09467d0c07b6687c4809c744f415e0edcf25",
+      "redactions": [],
+      "association": "Actual JG-030 local checks linked to the implementation revision. Failed attempts precede the corrected successful runs. All accounts and data are synthetic."
+    },
+    {
+      "task": "JG-030",
+      "kind": "api_example",
+      "file": "visuals/2026-11-20/onboarding-example.json",
+      "outcome": "passed",
+      "description": "Reviewed actual local onboarding acceptance with synthetic accounts",
+      "collectedAt": "2026-11-20T12:16:58.298195+00:00",
+      "observedSourceMtime": "2026-11-20T12:15:13.029826+00:00",
+      "originalSha256": "8b9edacfb1d84b1f22f9cc148ecef28ec0278eec5b87edca216c6028e429ff85",
+      "sha256": "8b9edacfb1d84b1f22f9cc148ecef28ec0278eec5b87edca216c6028e429ff85",
+      "redactions": [],
+      "association": "Actual JG-030 local checks linked to the implementation revision. Failed attempts precede the corrected successful runs. All accounts and data are synthetic."
+    },
+    {
+      "task": "JG-030",
+      "kind": "screenshot",
+      "file": "visuals/2026-11-20/progress-after.png",
+      "outcome": "passed",
+      "description": "Reviewed original workbook JG-030 delivery/update row",
+      "collectedAt": "2026-11-20T12:16:58.298195+00:00",
+      "observedSourceMtime": "2026-11-20T12:15:54.784353+00:00",
+      "originalSha256": "6f7e502c092d0d740aff2c5a63b682ff0c27a585a0369aad36a575ea6553c9c6",
+      "sha256": "6f7e502c092d0d740aff2c5a63b682ff0c27a585a0369aad36a575ea6553c9c6",
+      "redactions": [],
+      "association": "Actual JG-030 local checks linked to the implementation revision. Failed attempts precede the corrected successful runs. All accounts and data are synthetic."
+    },
+    {
+      "task": "JG-030",
+      "kind": "screenshot",
+      "file": "visuals/2026-11-20/progress-log.png",
+      "outcome": "passed",
+      "description": "Reviewed original workbook JG-030 delivery/update row",
+      "collectedAt": "2026-11-20T12:16:58.298195+00:00",
+      "observedSourceMtime": "2026-11-20T12:15:54.855301+00:00",
+      "originalSha256": "f80106b9166da4d4ea3a81f35ce4e99045c5068649863add05d8aca8045ff4ba",
+      "sha256": "f80106b9166da4d4ea3a81f35ce4e99045c5068649863add05d8aca8045ff4ba",
+      "redactions": [],
+      "association": "Actual JG-030 local checks linked to the implementation revision. Failed attempts precede the corrected successful runs. All accounts and data are synthetic."
     }
   ],
   "records": [
@@ -1972,6 +2187,47 @@
         }
       ],
       "deploymentObservation": "deployments/2026-11-16-error-monitoring-ab108de.json"
+    },
+    {
+      "id": "JG-030",
+      "title": "Web: first-use onboarding",
+      "scope": "Optional three-step English guide, empty-account eligibility, durable completion/skip and non-blocking save recovery.",
+      "tests": "365 automated tests passed including 12 onboarding cases. Actual browser navigation, persistence, account isolation, failed-save retry, competing dialogs, Escape, keyboard and 390px layout passed. Production build, scoped lint and workbook checks passed.",
+      "boundary": "Web scope. Queued choices use account-scoped browser storage during outages. Cross-device suppression follows successful account persistence. Native onboarding and manual replay remain future work.",
+      "commit": "https://github.com/Enfoirer/jobgenie/commit/86189fd19d8f4c20437d435453acb7cf1d626e8b",
+      "document": "https://github.com/Enfoirer/jobgenie/blob/86189fd19d8f4c20437d435453acb7cf1d626e8b/docs/web-onboarding-acceptance.md",
+      "commitSha": "86189fd19d8f4c20437d435453acb7cf1d626e8b",
+      "commitAt": "2026-11-20T20:15:29+08:00",
+      "preparedAt": "2026-11-20T12:16:58.298195+00:00",
+      "record": "records/2026-11-20-JG-030.md",
+      "sourceDocumentExistsAtCommit": true,
+      "rawLogs": [
+        "tests/2026-11-20/onboarding-targeted.log",
+        "tests/2026-11-20/onboarding-regression.log",
+        "tests/2026-11-20/onboarding-build-initial.log",
+        "tests/2026-11-20/onboarding-build-verified.log",
+        "tests/2026-11-20/onboarding-browser-initial.log",
+        "tests/2026-11-20/onboarding-browser-selector.log",
+        "tests/2026-11-20/onboarding-browser-verified.log",
+        "tests/2026-11-20/onboarding-lint.log",
+        "tests/2026-11-20/onboarding-workbook.log",
+        "tests/2026-11-20/onboarding-workbook-preservation.log"
+      ],
+      "visuals": [
+        "visuals/2026-11-20/onboarding-desktop.png",
+        "visuals/2026-11-20/onboarding-mobile.png",
+        "visuals/2026-11-20/onboarding-example.json",
+        "visuals/2026-11-20/progress-after.png",
+        "visuals/2026-11-20/progress-log.png"
+      ],
+      "observedChecks": [
+        {
+          "context": "Vercel",
+          "state": "success",
+          "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/BoaJ8fRB1xUgHUD6TSHEb1qbnqrX"
+        }
+      ],
+      "deploymentObservation": "deployments/2026-11-20-web-onboarding-86189fd.json"
     }
   ],
   "translatedAt": "2026-11-04T15:15:24.093466+00:00",
@@ -1981,5 +2237,5 @@
     "historicalArtifacts": "Original-language test output and historical evidence remain unchanged; English descriptions explain their provenance.",
     "translation": "English records translated on the date in translatedAt. Existing dates, test results, artifact hashes and fixed historical commit links are preserved."
   },
-  "lastUpdatedAt": "2026-11-15T16:28:46.946380+00:00"
+  "lastUpdatedAt": "2026-11-20T12:17:25.932479+00:00"
 }

@@ -1,0 +1,31 @@
+(node:58404) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://[HOME]/Documents/study%20and%20work/find_job/jobgenie/lib/models/User.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to [REPOSITORY]/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Local app and disposable database ready.
+Fresh headless Chrome connected.
+PASS: real credential login and board load.
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+false !== true
+
+    at verifyOnboarding (file://[HOME]/Documents/study%20and%20work/find_job/jobgenie/scripts/verify-onboarding-ui.mjs:45:12)
+    at async file://[HOME]/Documents/study%20and%20work/find_job/jobgenie/scripts/verify-job-editing-ui.mjs:154:5 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+Browser state: {"page":"/dashboard/jobs","text":"JobTrack\nJob Board\nCalendar & To-do\nAdd Job\nUploads\nPending\nMail\nAnalytics\n0\nLogout\nJob Applications\n\nTrack your applications across different stages\n\nHide rejected applications\nShowing 0 of 0 applications\n Show archived applications\nArchive preserves history and analytics, and hides schedules and reminders until restored.\nSelect visible (up to 50)\nClear selection\n0 selected\nArchive applications\nSet status: Applied\nSet status: Interviewing\nSet status: Offer\nSet status: Rejected\nApply to selected\nApplied\n\n0 applications\n\nNo jobs in this column\nInterviewing\n\n0 applications\n\nNo jobs in this column\nOffer\n\n0 applications\n\nNo jobs in this column\nRejected\n\n0 applications\n\nNo jobs in this column\nWelcome to JobGenie\n✕\n\nStep 3 of 3\n\nKeep your documents together\n\nLink the resume, cover letter and portfolio you used to each application.\n\nOpen an application to find its documents and saved versions.\n\nSkip\nBack\nCreate your first application"}
+Local app output (tail):
+   ▲ Next.js 15.5.28
+   - Local:        http://127.0.0.1:63264
+   - Network:      http://127.0.0.1:63264
+
+ ✓ Starting...
+ ✓ Ready in 156ms
+MongoDB connected successfully
+New MongoDB connection established
+

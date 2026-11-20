@@ -1,6 +1,6 @@
 # Project progress and development evidence
 
-Updated: 2026-11-16 (Asia/Shanghai).
+Updated: 2026-11-20 (Asia/Shanghai).
 
 [Project progress and Gantt chart](project-progress.xlsx) is the single maintained workbook, with **Progress Gantt** and **Update Log** sheets. This is the original workbook translated and renamed in place, not a second tracker. Task IDs, historical dates, results and source references are retained. The language conversion is recorded separately. The iOS app continues to support Chinese and English.
 
@@ -68,3 +68,7 @@ The JG-024 implementation Vercel check was subsequently observed as **success**.
 ## Error monitoring and support references
 
 [JG-029](records/2026-11-16-JG-029.md) adds safe server/web/native API diagnostics, user-visible references and administrator filtering on 2026-11-16. The original workbook contains 29 scoped milestones. 353 backend/browser-state tests and 109 native tests passed, with three native skips. Actual browser privacy/access acceptance, production and unsigned Release builds, lint and workbook checks passed. Records expire after 30 days and matching reports group by UTC minute. Diagnostic transport is best effort. Native process crash stacks and signed-device/TestFlight acceptance remain outside this delivery. Administrator activation awaits owner designation. Vercel reported a successful deployment and an anonymous production diagnostics request returned 401. See the [implementation deployment observation](deployments/2026-11-16-error-monitoring-ab108de.json).
+
+## Web first-use onboarding
+
+[JG-030](records/2026-11-20-JG-030.md) adds an optional three-step English guide on 2026-11-20. Empty accounts receive it on the Job Board. Completion and skip persist per account, with a local retry queue during outages. Existing applications suppress automatic display. The original workbook contains 30 scoped milestones. All 365 automated tests, final browser persistence/access/retry/keyboard/mobile acceptance, production build, scoped lint and workbook checks passed. Native onboarding and manual replay remain future work. Vercel reported success and the anonymous production endpoint returned 401. See the [implementation deployment observation](deployments/2026-11-20-web-onboarding-86189fd.json).
