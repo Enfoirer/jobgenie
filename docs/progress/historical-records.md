@@ -56,3 +56,5 @@ The [deployment responses](deployments/2026-11-04-observed-statuses.json) retain
 [JG-029 Error monitoring and support references](records/2026-11-16-JG-029.md) adds safe server, browser and native API diagnostics and administrator search on 2026-11-16. The original workbook contains 29 scoped milestones. Native crash stacks and physical-device acceptance remain outstanding.
 
 [JG-030 Web first-use onboarding](records/2026-11-20-JG-030.md) adds the English three-step guide and account-persisted completion/skip on 2026-11-20. The original workbook contains 30 scoped milestones.
+
+[JG-031 Web empty-page guidance](records/2026-11-22-JG-031.md) adds actionable empty applications/calendar/uploads and contextual filter recovery on 2026-11-22. The original workbook contains 31 scoped milestones.

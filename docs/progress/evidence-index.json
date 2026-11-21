@@ -1386,6 +1386,228 @@
       "sha256": "f80106b9166da4d4ea3a81f35ce4e99045c5068649863add05d8aca8045ff4ba",
       "redactions": [],
       "association": "Actual JG-030 local checks linked to the implementation revision. Failed attempts precede the corrected successful runs. All accounts and data are synthetic."
+    },
+    {
+      "task": "JG-031",
+      "kind": "test_log",
+      "file": "tests/2026-11-22/empty-build.log",
+      "outcome": "passed",
+      "description": "Final Next.js production build",
+      "collectedAt": "2026-11-21T16:06:57.646084+00:00",
+      "observedSourceMtime": "2026-11-21T16:04:45.118770+00:00",
+      "originalSha256": "242b78c36d45faff7d594cfbec51c6c7b65be557c57c08fd7ce93cc96a8f744c",
+      "sha256": "242b78c36d45faff7d594cfbec51c6c7b65be557c57c08fd7ce93cc96a8f744c",
+      "redactions": [
+        "Repository/home paths and credential assignments"
+      ],
+      "association": "Actual local JG-031 acceptance using synthetic accounts and disposable data. Failed attempt precedes corrected successful runs."
+    },
+    {
+      "task": "JG-031",
+      "kind": "test_log",
+      "file": "tests/2026-11-22/empty-lint.log",
+      "outcome": "passed",
+      "description": "Final scoped JavaScript/JSX ESLint with no diagnostics",
+      "collectedAt": "2026-11-21T16:06:57.646084+00:00",
+      "observedSourceMtime": "2026-11-21T16:04:37.257322+00:00",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "redactions": [
+        "Repository/home paths and credential assignments"
+      ],
+      "association": "Actual local JG-031 acceptance using synthetic accounts and disposable data. Failed attempt precedes corrected successful runs."
+    },
+    {
+      "task": "JG-031",
+      "kind": "test_log",
+      "file": "tests/2026-11-22/empty-browser-initial.log",
+      "outcome": "failed",
+      "description": "First browser run required an explicit fileData projection in its test byte assertion",
+      "collectedAt": "2026-11-21T16:06:57.646084+00:00",
+      "observedSourceMtime": "2026-11-21T16:02:47.822873+00:00",
+      "originalSha256": "477971cc1e4fd63d8abe9f0958b46390a4c634700ced0691e0b69696d30665d7",
+      "sha256": "f0a33d81ea6e638442e0ab70cd58f27e06763186c4c145f13448689e765886e3",
+      "redactions": [
+        "Repository/home paths and credential assignments"
+      ],
+      "association": "Actual local JG-031 acceptance using synthetic accounts and disposable data. Failed attempt precedes corrected successful runs."
+    },
+    {
+      "task": "JG-031",
+      "kind": "test_log",
+      "file": "tests/2026-11-22/empty-browser-final.log",
+      "outcome": "passed",
+      "description": "Actual final empty/populated/filter/action/upload/error/mobile acceptance",
+      "collectedAt": "2026-11-21T16:06:57.646084+00:00",
+      "observedSourceMtime": "2026-11-21T16:05:29.599142+00:00",
+      "originalSha256": "75c7a0d73c63eae477e80052f318e0185a53efb9e97f26f64d4dae131833fac0",
+      "sha256": "a259d0214e8ecb7b5040c694b43b9d6ba5f91895efd821b20b7dc436e3ef606b",
+      "redactions": [
+        "Repository/home paths and credential assignments"
+      ],
+      "association": "Actual local JG-031 acceptance using synthetic accounts and disposable data. Failed attempt precedes corrected successful runs."
+    },
+    {
+      "task": "JG-031",
+      "kind": "test_log",
+      "file": "tests/2026-11-22/empty-onboarding-regression.log",
+      "outcome": "passed",
+      "description": "Existing three-step onboarding browser regression",
+      "collectedAt": "2026-11-21T16:06:57.646084+00:00",
+      "observedSourceMtime": "2026-11-21T16:03:35.412715+00:00",
+      "originalSha256": "2681f027ba702b6a41514697be6794dc33f8b206f1d357ee800659d7559446c8",
+      "sha256": "3fe358dc286c327dfeec3cf2dc3a5926ec39ce6a8212e8724dd0944f9fcf05ad",
+      "redactions": [
+        "Repository/home paths and credential assignments"
+      ],
+      "association": "Actual local JG-031 acceptance using synthetic accounts and disposable data. Failed attempt precedes corrected successful runs."
+    },
+    {
+      "task": "JG-031",
+      "kind": "test_log",
+      "file": "tests/2026-11-22/empty-workbook.log",
+      "outcome": "passed",
+      "description": "Original workbook calculation and historical-row assertions",
+      "collectedAt": "2026-11-21T16:06:57.646084+00:00",
+      "observedSourceMtime": "2026-11-21T16:06:02.171283+00:00",
+      "originalSha256": "b7576a1e01016bf1351df54122681af360313c2ed15f0ee53a180c375c868089",
+      "sha256": "2d67d583a2da45d556b7a6a2212d5adca2b421ab778c922503506b6c1f5967ea",
+      "redactions": [
+        "Repository/home paths and credential assignments"
+      ],
+      "association": "Actual local JG-031 acceptance using synthetic accounts and disposable data. Failed attempt precedes corrected successful runs."
+    },
+    {
+      "task": "JG-031",
+      "kind": "test_log",
+      "file": "tests/2026-11-22/empty-workbook-preservation.log",
+      "outcome": "passed",
+      "description": "Saved workbook cell/formula and native-feature preservation",
+      "collectedAt": "2026-11-21T16:06:57.646084+00:00",
+      "observedSourceMtime": "2026-11-21T16:06:50.399864+00:00",
+      "originalSha256": "1fda345432fb1be20838e309fc7b0c2414d6ae3b4450095a022cf2f1b2437d6e",
+      "sha256": "1fda345432fb1be20838e309fc7b0c2414d6ae3b4450095a022cf2f1b2437d6e",
+      "redactions": [
+        "Repository/home paths and credential assignments"
+      ],
+      "association": "Actual local JG-031 acceptance using synthetic accounts and disposable data. Failed attempt precedes corrected successful runs."
+    },
+    {
+      "task": "JG-031",
+      "kind": "screenshot",
+      "file": "visuals/2026-11-22/applications-empty-desktop.png",
+      "outcome": "passed",
+      "description": "Reviewed actual local empty-page acceptance with synthetic accounts",
+      "collectedAt": "2026-11-21T16:06:57.646084+00:00",
+      "observedSourceMtime": "2026-11-21T16:05:27.465717+00:00",
+      "originalSha256": "28d14429d6b77eb829064c61ba790b81c7a43ea82f67be17b6ae665379472722",
+      "sha256": "28d14429d6b77eb829064c61ba790b81c7a43ea82f67be17b6ae665379472722",
+      "redactions": [],
+      "association": "Actual local JG-031 acceptance using synthetic accounts and disposable data. Failed attempt precedes corrected successful runs."
+    },
+    {
+      "task": "JG-031",
+      "kind": "screenshot",
+      "file": "visuals/2026-11-22/applications-empty-mobile.png",
+      "outcome": "passed",
+      "description": "Reviewed actual local empty-page acceptance with synthetic accounts",
+      "collectedAt": "2026-11-21T16:06:57.646084+00:00",
+      "observedSourceMtime": "2026-11-21T16:05:27.509318+00:00",
+      "originalSha256": "3ccd3ca73a8e9d32dbf12a823f806afbdc9b339575909c8d7ecbc16666e6b87d",
+      "sha256": "3ccd3ca73a8e9d32dbf12a823f806afbdc9b339575909c8d7ecbc16666e6b87d",
+      "redactions": [],
+      "association": "Actual local JG-031 acceptance using synthetic accounts and disposable data. Failed attempt precedes corrected successful runs."
+    },
+    {
+      "task": "JG-031",
+      "kind": "screenshot",
+      "file": "visuals/2026-11-22/schedule-empty-desktop.png",
+      "outcome": "passed",
+      "description": "Reviewed actual local empty-page acceptance with synthetic accounts",
+      "collectedAt": "2026-11-21T16:06:57.646084+00:00",
+      "observedSourceMtime": "2026-11-21T16:05:27.905808+00:00",
+      "originalSha256": "fa850093a3b74dc6ad4e3b9559db0fa5be7fba24ba108610bd42eb04ed922ff5",
+      "sha256": "fa850093a3b74dc6ad4e3b9559db0fa5be7fba24ba108610bd42eb04ed922ff5",
+      "redactions": [],
+      "association": "Actual local JG-031 acceptance using synthetic accounts and disposable data. Failed attempt precedes corrected successful runs."
+    },
+    {
+      "task": "JG-031",
+      "kind": "screenshot",
+      "file": "visuals/2026-11-22/schedule-empty-mobile.png",
+      "outcome": "passed",
+      "description": "Reviewed actual local empty-page acceptance with synthetic accounts",
+      "collectedAt": "2026-11-21T16:06:57.646084+00:00",
+      "observedSourceMtime": "2026-11-21T16:05:27.945154+00:00",
+      "originalSha256": "4c24e021eac5efaf1b5ef8a7c5d459eace4bd53c207eeff1919e3f767fe68d5c",
+      "sha256": "4c24e021eac5efaf1b5ef8a7c5d459eace4bd53c207eeff1919e3f767fe68d5c",
+      "redactions": [],
+      "association": "Actual local JG-031 acceptance using synthetic accounts and disposable data. Failed attempt precedes corrected successful runs."
+    },
+    {
+      "task": "JG-031",
+      "kind": "screenshot",
+      "file": "visuals/2026-11-22/uploads-empty-desktop.png",
+      "outcome": "passed",
+      "description": "Reviewed actual local empty-page acceptance with synthetic accounts",
+      "collectedAt": "2026-11-21T16:06:57.646084+00:00",
+      "observedSourceMtime": "2026-11-21T16:05:28.868625+00:00",
+      "originalSha256": "f2a75ff84891d26b47899bd5b5ae4e9c0788528a6fb5c6b45a7993f799fc9440",
+      "sha256": "f2a75ff84891d26b47899bd5b5ae4e9c0788528a6fb5c6b45a7993f799fc9440",
+      "redactions": [],
+      "association": "Actual local JG-031 acceptance using synthetic accounts and disposable data. Failed attempt precedes corrected successful runs."
+    },
+    {
+      "task": "JG-031",
+      "kind": "screenshot",
+      "file": "visuals/2026-11-22/uploads-empty-mobile.png",
+      "outcome": "passed",
+      "description": "Reviewed actual local empty-page acceptance with synthetic accounts",
+      "collectedAt": "2026-11-21T16:06:57.646084+00:00",
+      "observedSourceMtime": "2026-11-21T16:05:28.910532+00:00",
+      "originalSha256": "e712a92eec03aeb99a70ca2e95ea3ef62158ff7f97fa50786a6897f8cbdddb67",
+      "sha256": "e712a92eec03aeb99a70ca2e95ea3ef62158ff7f97fa50786a6897f8cbdddb67",
+      "redactions": [],
+      "association": "Actual local JG-031 acceptance using synthetic accounts and disposable data. Failed attempt precedes corrected successful runs."
+    },
+    {
+      "task": "JG-031",
+      "kind": "api_example",
+      "file": "visuals/2026-11-22/empty-states-example.json",
+      "outcome": "passed",
+      "description": "Reviewed actual local empty-page acceptance with synthetic accounts",
+      "collectedAt": "2026-11-21T16:06:57.646084+00:00",
+      "observedSourceMtime": "2026-11-21T16:05:29.598735+00:00",
+      "originalSha256": "aa8266b2a7813fda054798b0d6f61e270de83de09372d5855c7dc28f47a780ab",
+      "sha256": "aa8266b2a7813fda054798b0d6f61e270de83de09372d5855c7dc28f47a780ab",
+      "redactions": [],
+      "association": "Actual local JG-031 acceptance using synthetic accounts and disposable data. Failed attempt precedes corrected successful runs."
+    },
+    {
+      "task": "JG-031",
+      "kind": "screenshot",
+      "file": "visuals/2026-11-22/progress-after.png",
+      "outcome": "passed",
+      "description": "Reviewed original workbook JG-031 delivery/update row",
+      "collectedAt": "2026-11-21T16:06:57.646084+00:00",
+      "observedSourceMtime": "2026-11-21T16:06:01.838291+00:00",
+      "originalSha256": "17304a0d1589d57617d1d9968c24b8b068c779a95f83dd7e854111e600729b46",
+      "sha256": "17304a0d1589d57617d1d9968c24b8b068c779a95f83dd7e854111e600729b46",
+      "redactions": [],
+      "association": "Actual local JG-031 acceptance using synthetic accounts and disposable data. Failed attempt precedes corrected successful runs."
+    },
+    {
+      "task": "JG-031",
+      "kind": "screenshot",
+      "file": "visuals/2026-11-22/progress-log.png",
+      "outcome": "passed",
+      "description": "Reviewed original workbook JG-031 delivery/update row",
+      "collectedAt": "2026-11-21T16:06:57.646084+00:00",
+      "observedSourceMtime": "2026-11-21T16:06:01.907133+00:00",
+      "originalSha256": "93a157dbdc13940b47b5736a6184543d662ab495d8cbb146b17a68444a2f8e25",
+      "sha256": "93a157dbdc13940b47b5736a6184543d662ab495d8cbb146b17a68444a2f8e25",
+      "redactions": [],
+      "association": "Actual local JG-031 acceptance using synthetic accounts and disposable data. Failed attempt precedes corrected successful runs."
     }
   ],
   "records": [
@@ -2228,6 +2450,48 @@
         }
       ],
       "deploymentObservation": "deployments/2026-11-20-web-onboarding-86189fd.json"
+    },
+    {
+      "id": "JG-031",
+      "title": "Web: empty-page guidance",
+      "scope": "First-application, calendar-to-board and first-resume actions with contextual archive/filter recovery and loading/error handling.",
+      "tests": "Actual isolated browser acceptance passed empty/populated views, filter recovery, application creation, picker/PDF byte checks, deletion, failed reads/retry and 1280/390px layouts. Onboarding browser regression, production build, scoped lint and workbook checks passed.",
+      "boundary": "Web UI delivery. Historical backend test counts belong to their original runs. Native onboarding and manual guide replay remain future work.",
+      "commit": "https://github.com/Enfoirer/jobgenie/commit/70d30addc6129fe351e906a2debc7ce3719e8bdd",
+      "document": "https://github.com/Enfoirer/jobgenie/blob/70d30addc6129fe351e906a2debc7ce3719e8bdd/docs/web-empty-states-acceptance.md",
+      "commitSha": "70d30addc6129fe351e906a2debc7ce3719e8bdd",
+      "commitAt": "2026-11-22T00:05:39+08:00",
+      "preparedAt": "2026-11-21T16:06:57.646084+00:00",
+      "record": "records/2026-11-22-JG-031.md",
+      "sourceDocumentExistsAtCommit": true,
+      "rawLogs": [
+        "tests/2026-11-22/empty-build.log",
+        "tests/2026-11-22/empty-lint.log",
+        "tests/2026-11-22/empty-browser-initial.log",
+        "tests/2026-11-22/empty-browser-final.log",
+        "tests/2026-11-22/empty-onboarding-regression.log",
+        "tests/2026-11-22/empty-workbook.log",
+        "tests/2026-11-22/empty-workbook-preservation.log"
+      ],
+      "visuals": [
+        "visuals/2026-11-22/applications-empty-desktop.png",
+        "visuals/2026-11-22/applications-empty-mobile.png",
+        "visuals/2026-11-22/schedule-empty-desktop.png",
+        "visuals/2026-11-22/schedule-empty-mobile.png",
+        "visuals/2026-11-22/uploads-empty-desktop.png",
+        "visuals/2026-11-22/uploads-empty-mobile.png",
+        "visuals/2026-11-22/empty-states-example.json",
+        "visuals/2026-11-22/progress-after.png",
+        "visuals/2026-11-22/progress-log.png"
+      ],
+      "observedChecks": [
+        {
+          "context": "Vercel",
+          "state": "success",
+          "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/C6PV71VJN1HggH2dn4zFMrd3jqJc"
+        }
+      ],
+      "deploymentObservation": "deployments/2026-11-22-web-empty-states-70d30ad.json"
     }
   ],
   "translatedAt": "2026-11-04T15:15:24.093466+00:00",
@@ -2237,5 +2501,5 @@
     "historicalArtifacts": "Original-language test output and historical evidence remain unchanged; English descriptions explain their provenance.",
     "translation": "English records translated on the date in translatedAt. Existing dates, test results, artifact hashes and fixed historical commit links are preserved."
   },
-  "lastUpdatedAt": "2026-11-20T12:17:25.932479+00:00"
+  "lastUpdatedAt": "2026-11-21T16:07:18.577942+00:00"
 }

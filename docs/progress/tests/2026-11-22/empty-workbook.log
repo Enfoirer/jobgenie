@@ -1,0 +1,5 @@
+MONO_WASM: WebAssembly resource does not have the expected content type "application/wasm", so falling back to slower ArrayBuffer instantiation.
+{"tasks":[["JG-028","Web: administrator feedback review","Completed",1,"2026-11-13T00:00:00.000Z","2026-11-13T00:00:00.000Z"],["JG-029","Web and iOS: error monitoring","Completed",1,"2026-11-16T00:00:00.000Z","2026-11-16T00:00:00.000Z"],["JG-030","Web: first-use onboarding","Completed",1,"2026-11-20T00:00:00.000Z","2026-11-20T00:00:00.000Z"]],"counts":[["Completed",30,"Tasks",30]]}
+{"kind":"notice","message":"Cell search matched 0 entries."}
+Inspect result written to file: [REPOSITORY]/docs/progress/project-progress.xlsx.inspect.ndjson
+PASS original workbook updated in place to 31 milestones. Historical rows retained. Status/date input changes recalculate counts and date bars. No scanned formula errors.

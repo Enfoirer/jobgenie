@@ -1,0 +1,19 @@
+{
+  "environment": "disposable local NextAuth/MongoDB/browser",
+  "firstApplicationEntry": true,
+  "populatedBoard": true,
+  "archivedOnlyRecovery": true,
+  "rejectedFilterRecovery": true,
+  "emptyArchiveRecovery": true,
+  "scheduleEntry": true,
+  "existingScheduleAndEmptyCategory": true,
+  "firstResumePickerAndUpload": true,
+  "lastFileDeletion": true,
+  "loadingAndErrorSuppression": true,
+  "failedReadRetry": true,
+  "widths": [
+    1280,
+    390
+  ],
+  "foreignDataExcluded": true
+}

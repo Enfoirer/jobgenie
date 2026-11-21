@@ -1,0 +1,25 @@
+{
+  "task": "JG-031",
+  "implementationCommit": "70d30addc6129fe351e906a2debc7ce3719e8bdd",
+  "observedAt": "2026-11-21T16:07:18.577942+00:00",
+  "timezone": "Asia/Shanghai",
+  "source": "GitHub combined commit status and verified git ls-remote",
+  "verifiedRemoteMain": "70d30addc6129fe351e906a2debc7ce3719e8bdd",
+  "statuses": [
+    {
+      "context": "Vercel",
+      "state": "success",
+      "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/C6PV71VJN1HggH2dn4zFMrd3jqJc"
+    }
+  ],
+  "productionDataAccessed": false,
+  "productionUsersCreated": false,
+  "nativeDistribution": "Web UI delivery",
+  "initialStatuses": [
+    {
+      "context": "Vercel",
+      "state": "pending",
+      "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/C6PV71VJN1HggH2dn4zFMrd3jqJc"
+    }
+  ]
+}

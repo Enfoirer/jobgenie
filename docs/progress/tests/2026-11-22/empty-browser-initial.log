@@ -1,0 +1,25 @@
+(node:8281) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://[HOME]/Documents/study%20and%20work/find_job/jobgenie/lib/models/User.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to [REPOSITORY]/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Local app and disposable database ready.
+Fresh headless Chrome connected.
+PASS: real credential login and board load.
+TypeError [ERR_INVALID_ARG_TYPE]: The first argument must be of type string or an instance of Buffer, ArrayBuffer, or Array or an Array-like Object. Received undefined
+    at Buffer.from (node:buffer:333:9)
+    at verifyEmptyStates (file://[HOME]/Documents/study%20and%20work/find_job/jobgenie/scripts/verify-empty-states-ui.mjs:121:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async file://[HOME]/Documents/study%20and%20work/find_job/jobgenie/scripts/verify-job-editing-ui.mjs:155:5 {
+  code: 'ERR_INVALID_ARG_TYPE'
+}
+Browser state: {"page":"/dashboard/upload","text":"JobTrack\nJob Board\nCalendar & To-do\nAdd Job\nUploads\nPending\nMail\nAnalytics\nFeedback\nReminders\n0\nUser\nLogout\nUploaded Files\n\nManage your resumes, cover letters and job-related documents.\n\nUpload file\n\nor drag and drop one file here\n\nPDF, DOCX, PNG, JPG/JPEG · up to 4 MB · one file at a time\n\nConvert older DOC files to PDF or DOCX before uploading. Files open through downloads.\n\nYour files\nRefresh files\n\nacceptance-resume.pdf\n\n1 KB · 11/22/2026\n\nDetails\nDownload\nDelete"}
+Local app output (tail):
+   ▲ Next.js 15.5.28
+   - Local:        http://127.0.0.1:57008
+   - Network:      http://127.0.0.1:57008
+
+ ✓ Starting...
+ ✓ Ready in 153ms
+MongoDB connected successfully
+New MongoDB connection established
+
