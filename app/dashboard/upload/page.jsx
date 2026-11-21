@@ -17,6 +17,7 @@ export default function UploadPage() {
   const [error, setError] = useState('');
   const fileInputRef = useRef(null);
   const uploadLock = useRef(false);
+  const empty = !loading && !error && files.length === 0;
 
   const loadFiles = useCallback(async () => {
     setLoading(true); setError('');
@@ -66,23 +67,27 @@ export default function UploadPage() {
       <p className="mt-1 text-sm text-gray-500">Manage your resumes, cover letters and job-related documents.</p>
     </header>
     {error && <p role="alert" className="rounded-md bg-red-50 p-4 text-sm text-red-800">{error}</p>}
-    <div className={`rounded-lg border-2 border-dashed p-6 text-center ${dragActive ? 'border-blue-400 bg-blue-50' : 'border-gray-300'}`}
+    <div data-empty-state={empty ? 'uploads' : undefined} className={`rounded-lg border-2 border-dashed p-6 text-center ${dragActive ? 'border-blue-400 bg-blue-50' : 'border-gray-300'}`}
       onDragOver={(event) => { event.preventDefault(); setDragActive(true); }}
       onDragLeave={() => setDragActive(false)}
       onDrop={(event) => { event.preventDefault(); setDragActive(false); handleFiles(event.dataTransfer.files); }}>
+      {empty && <div className="mx-auto mb-5 max-w-xl">
+        <h2 className="text-xl font-semibold text-gray-900">No files uploaded yet</h2>
+        <p className="mt-3 text-sm leading-relaxed text-gray-600">Upload a resume, cover letter or portfolio. Then open an application and use Application documents to save the version you submitted.</p>
+      </div>}
       <input ref={fileInputRef} type="file" accept={UPLOAD_ACCEPT} disabled={isUploading || loading} className="hidden" aria-label="Choose a document or image"
         onChange={(event) => handleFiles(event.target.files)} />
-      <button className={buttonClass} disabled={isUploading || loading} onClick={() => fileInputRef.current?.click()}>{isUploading ? 'Uploading…' : 'Upload file'}</button>
+      <button className={empty ? 'min-h-11 rounded bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50' : buttonClass} disabled={isUploading || loading} onClick={() => fileInputRef.current?.click()}>{isUploading ? 'Uploading…' : empty ? 'Upload your first resume' : 'Upload file'}</button>
       <p className="mt-2 text-sm text-gray-600">or drag and drop one file here</p>
       <p className="mt-2 text-xs text-gray-500">{UPLOAD_HELP}</p>
       <p className="mt-1 text-xs text-gray-500">Convert older DOC files to PDF or DOCX before uploading. Files open through downloads.</p>
       {isUploading && <p role="status" className="mt-3 text-sm text-blue-700">Checking and uploading your file…</p>}
     </div>
     <div className="flex items-center justify-between">
-      <h2 className="font-medium">Your files</h2>
-      <button className={buttonClass} disabled={loading || isUploading || !!deleting} onClick={loadFiles}>Refresh files</button>
+      {!empty && <h2 className="font-medium">Your files</h2>}
+      <button className={`${buttonClass} ml-auto`} disabled={loading || isUploading || !!deleting} onClick={loadFiles}>Refresh files</button>
     </div>
-    {loading ? <p role="status">Loading files…</p> : files.length === 0 ? <p className="rounded-lg border bg-white p-6 text-gray-500">No files uploaded yet.</p> : <ul className="divide-y rounded-lg border bg-white">
+    {loading ? <p role="status">Loading files…</p> : files.length > 0 && <ul className="divide-y rounded-lg border bg-white">
       {files.map((file) => <li key={file.id} data-upload-id={file.id} className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="min-w-0"><p className="break-words font-medium text-gray-900">{file.name}</p><p className="mt-1 text-sm text-gray-500">{file.size} · {new Date(file.uploadDate).toLocaleDateString()}</p></div>
         <div className="flex shrink-0 flex-wrap gap-2">

@@ -83,6 +83,11 @@ export default function TodoPage() {
         </div>
       </div>
       {error && <p role="alert" className="rounded bg-red-50 p-3 text-sm text-red-700">{error} Previously loaded items may be out of date.</p>}
+      {!loading && !error && events.length === 0 && <section aria-labelledby="schedule-empty-title" data-empty-state="schedule" className="rounded-lg border bg-white p-6 sm:p-8">
+        <h2 id="schedule-empty-title" className="text-xl font-semibold text-gray-900">Add your first interview or deadline</h2>
+        <p className="mt-3 max-w-xl text-sm leading-relaxed text-gray-600">On the Job Board, open an application or choose Update Status to add an interview time or assessment deadline. It will appear here, ready for reminders.</p>
+        <Link href="/dashboard/jobs" className="mt-5 inline-flex min-h-11 items-center rounded bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">Go to your applications</Link>
+      </section>}
       <div className="grid grid-cols-3 gap-2 sm:gap-4" aria-label="Schedule filters">
         {Object.entries(filters).map(([key, label]) => (
           <button key={key} data-filter={key} aria-pressed={!selectedDay && filter === key}
@@ -126,7 +131,7 @@ export default function TodoPage() {
           })}
         </div>
       </section>}
-      <section aria-label="Schedule list" aria-busy={loading} className="rounded-lg border bg-white p-4 sm:p-6">
+      {(loading || error || events.length > 0) && <section aria-label="Schedule list" aria-busy={loading} className="rounded-lg border bg-white p-4 sm:p-6">
         <div className="flex items-center justify-between gap-3">
           <h2 className="text-lg font-semibold">{selectedDay ? `Events on ${selectedDay}` : filters[filter]}</h2>
           {selectedDay && <button onClick={() => setSelectedDay(null)} className="text-sm text-blue-700">Clear day filter</button>}
@@ -134,7 +139,7 @@ export default function TodoPage() {
         <p className="mt-1 text-xs text-gray-500">Overdue / past means the time has passed; it does not indicate whether an interview or assessment was completed. Both times on one history entry appear separately.</p>
         <p className="mt-1 text-xs text-gray-500">Editing updates the shared history entry. Deleting it removes all of its calendar items.</p>
         {loading && events.length === 0 ? <p className="py-6 text-sm text-gray-500">Loading schedule...</p> : rows.length === 0 ?
-          <p className="py-6 text-sm text-gray-500">{error ? 'Schedule unavailable. Use Refresh to retry.' : selectedDay ? 'No scheduled events on this day.' : filter === 'unscheduled' ? 'No events need a time.' : 'No events in this list.'}</p> :
+          <p className="py-6 text-sm text-gray-500">{error ? 'Schedule unavailable. Use Refresh to retry.' : selectedDay ? 'No scheduled events on this day.' : filter === 'unscheduled' ? 'No events need a time.' : filter === 'upcoming' ? 'No upcoming events.' : 'No past events.'}</p> :
           <ul className="mt-4 divide-y">
             {rows.map((event) => <li key={event.id} data-event-id={event.id} className="flex flex-wrap items-start justify-between gap-3 py-4">
               <div className="min-w-0 flex-1 break-words">
@@ -147,7 +152,7 @@ export default function TodoPage() {
               <button onClick={() => setEditing(event)} className="rounded border px-3 py-2 text-sm text-blue-700">Edit / delete</button>
             </li>)}
           </ul>}
-      </section>
+      </section>}
       {editing && <EditStatusHistoryModal key={editing.historyId} jobId={editing.jobId} statusEntry={editing.history}
         onClose={() => setEditing(null)} onUpdate={reload} />}
     </div>

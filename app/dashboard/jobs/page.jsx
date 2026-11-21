@@ -2,6 +2,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import { COLUMNS, COLUMN_NAMES } from '@/lib/mockData';
 import StatusChangeModal from '@/components/StatusChangeModal';
@@ -139,17 +140,44 @@ export default function JobsPage() {
     ? viewJobs.filter(job => job.status !== COLUMNS.REJECTED).length
     : totalApplications;
 
+  let emptyState;
+  if (jobsData.jobs.length === 0) {
+    emptyState = {
+      title: 'No applications yet',
+      description: 'Add the company and role you applied for. You can then track progress, save interview times and link the documents you used.',
+      action: 'Create your first application',
+    };
+  } else if (viewJobs.length > 0) {
+    emptyState = {
+      title: 'No applications match this filter',
+      description: 'Rejected applications are hidden. Show them to see the applications in this view.',
+      action: 'Show rejected applications',
+    };
+  } else if (archived) {
+    emptyState = {
+      title: 'No archived applications',
+      description: 'Applications you archive will appear here. You can restore them to your active board at any time.',
+      action: 'View active applications',
+    };
+  } else {
+    emptyState = {
+      title: 'Your applications are archived',
+      description: 'Open the archived view to find your applications and restore any you want to keep tracking.',
+      action: 'View archived applications',
+    };
+  }
+
   return (
     <div className="space-y-6" data-feedback-busy={Boolean(selected.length || bulkBusy || deleting)}>
       <div className="border-b border-gray-200 pb-3">
-        <div className="flex justify-between items-center">
+        <div className="flex flex-wrap justify-between items-center gap-3">
           <div>
             <h1 className="text-2xl font-semibold text-gray-800">Job Applications</h1>
             <p className="mt-1 text-sm text-gray-500">
               Track your applications across different stages
             </p>
           </div>
-          <div className="flex items-center">
+          {jobsData.jobs.length > 0 && <div className="flex items-center">
             <label className="flex items-center space-x-2 text-sm text-gray-700">
               <input 
                 type="checkbox" 
@@ -159,7 +187,7 @@ export default function JobsPage() {
               />
               <span>Hide rejected applications</span>
             </label>
-          </div>
+          </div>}
         </div>
         <div className="mt-2">
           <span className="text-sm text-gray-500">
@@ -171,10 +199,19 @@ export default function JobsPage() {
         </div>
       </div>
       
-      <div className="flex items-center gap-3">
+      {jobsData.jobs.length > 0 && <div className="flex flex-wrap items-center gap-3">
         <label><input type="checkbox" checked={archived} disabled={bulkBusy} onChange={(event) => { setArchived(event.target.checked); setSelected([]); }} /> Show archived applications</label>
         <span className="text-sm text-gray-500">Archive preserves history and analytics, and hides schedules and reminders until restored.</span>
-      </div>
+      </div>}
+      {visibleApplications === 0 ? <section aria-labelledby="applications-empty-title" data-empty-state="applications" className="rounded-lg border bg-white px-6 py-10 sm:p-12">
+        <h2 id="applications-empty-title" className="text-xl font-semibold text-gray-900">{emptyState.title}</h2>
+        <p className="mt-3 max-w-xl text-sm leading-relaxed text-gray-600">{emptyState.description}</p>
+        {jobsData.jobs.length === 0 ? <Link href="/dashboard/add" className="mt-6 inline-flex min-h-11 items-center rounded bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">{emptyState.action}</Link>
+          : <button type="button" className="mt-6 min-h-11 rounded border px-4 py-2 text-sm font-medium text-blue-700 hover:bg-blue-50" onClick={() => {
+            if (viewJobs.length === 0) setArchived(!archived);
+            setHideRejected(false); setSelected([]);
+          }}>{emptyState.action}</button>}
+      </section> : <>
       <BulkActions records={selectable} selected={selected} onSelect={setSelected} busy={bulkBusy} onBusy={setBulkBusy}
         endpoint="/api/jobs/bulk" actions={[
           { value: archived ? 'restore' : 'archive', label: archived ? 'Restore applications' : 'Archive applications' },
@@ -297,6 +334,7 @@ export default function JobsPage() {
           ))}
         </div>
       </DragDropContext>
+      </>}
 
       {/* Status Change Modal */}
       {showStatusModal && selectedJob && (

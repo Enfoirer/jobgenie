@@ -27,6 +27,7 @@ import { verifyFeedback } from './verify-feedback-ui.mjs';
 import { verifyAdminFeedback } from './verify-admin-feedback-ui.mjs';
 import { verifyMonitoring } from './verify-monitoring-ui.mjs';
 import { verifyOnboarding } from './verify-onboarding-ui.mjs';
+import { verifyEmptyStates } from './verify-empty-states-ui.mjs';
 
 const chromePath = process.env.CHROME_BIN || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const freePort = async () => {
@@ -150,7 +151,10 @@ try {
   await wait(`!!${card}`, 'authenticated board');
   console.log('PASS: real credential login and board load.');
 
-  if (process.argv.includes('--onboarding-only')) {
+  if (process.argv.includes('--empty-states-only')) {
+    await verifyEmptyStates({ user, foreign, send, evaluate, wait, click, base, socket });
+    assert.deepEqual(exceptions, []);
+  } else if (process.argv.includes('--onboarding-only')) {
     await verifyOnboarding({ user, send, evaluate, wait, click, fill, escape, base, socket });
     assert.deepEqual(exceptions, []);
   } else if (process.argv.includes('--monitoring-only')) {
