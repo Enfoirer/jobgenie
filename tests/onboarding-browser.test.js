@@ -62,3 +62,49 @@ test('unavailable storage and failed eligibility reads keep the dashboard usable
   online = true; await client.refresh(); client.show(); assert.equal(client.state.open, true);
   await client.finish('completed'); assert.equal(client.state.notice, ''); client.stop();
 });
+
+test('manual replay preserves recorded completed/skipped choices and survives status refresh', async () => {
+  for (const outcome of ['completed', 'skipped']) {
+    let writes = 0;
+    const client = new OnboardingClient({ userId: 'owner', fetcher: async (_, init) => {
+      if (init.method) writes++;
+      return Response.json({ eligible: false, outcome });
+    } });
+    await client.start(); client.show(); assert.equal(client.state.open, false);
+    client.showManual(); assert.equal(client.state.open, true); assert.equal(client.state.manual, true);
+    await client.refresh(); assert.equal(client.state.open, true);
+    await client.finish(outcome === 'completed' ? 'skipped' : 'completed');
+    assert.equal(client.state.open, false); assert.equal(writes, 0);
+    client.show(); assert.equal(client.state.open, false);
+    client.showManual(); assert.equal(client.state.open, true); client.stop();
+  }
+});
+test('manual viewing during a late eligibility read remains open and can record a first choice', async () => {
+  const read = deferred(); let action;
+  const client = new OnboardingClient({ userId: 'owner', fetcher: async (_, init) => {
+    if (!init.method) return read.promise;
+    action = JSON.parse(init.body).action;
+    return Response.json({ eligible: false, outcome: action });
+  } });
+  const started = client.start(); client.showManual();
+  read.resolve(Response.json({ eligible: false, outcome: null })); await started;
+  assert.equal(client.state.open, true); assert.equal(client.state.manual, true);
+  await client.finish('skipped'); assert.equal(action, 'skipped');
+  client.show(); assert.equal(client.state.open, false); client.stop();
+});
+test('manual replay retains an unsaved choice from an earlier dismissal', async () => {
+  const local = storage(); const writes = [];
+  const client = new OnboardingClient({ userId: 'owner', storage: local, fetcher: async (_, init) => {
+    if (!init.method) return Response.json({ eligible: true, outcome: null });
+    writes.push(JSON.parse(init.body).action); return new Response(null, { status: 503 });
+  } });
+  await client.start(); await client.finish('skipped'); client.showManual();
+  await client.refresh(); assert.equal(client.state.open, true);
+  await client.finish('completed');
+  assert.equal(local.getItem(client.key), 'skipped'); assert.deepEqual(writes, ['skipped', 'skipped']);
+  assert.equal(client.state.open, false); client.stop();
+});
+test('stopped account clients cannot open a manual guide', async () => {
+  const client = new OnboardingClient({ userId: 'owner', fetcher: async () => Response.json({ eligible: false, outcome: 'completed' }) });
+  await client.start(); client.stop(); client.showManual(); assert.equal(client.state.open, false);
+});

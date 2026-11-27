@@ -10,7 +10,7 @@ Authenticated accounts with no applications and no terminal guide choice are eli
 
 The browser immediately dismisses the guide and queues an unsaved choice under an account-specific, origin-scoped local-storage key. It retries on reconnection, focus, visibility, a later dashboard mount or the visible retry action. A failed save leaves the dashboard usable. A successful write removes the local queue. Database choices suppress the guide after login or browser storage removal. Cross-tab storage updates and account refreshes close an open guide when a terminal choice is discovered. Old responses cannot reopen a dismissed guide or update a stopped account component.
 
-Local storage can be unavailable. In that case a failed account write can suppress the guide only for the current mounted session. Another device receives a choice after its account write succeeds and its next status read. Partial step navigation is kept in memory. A reload before dismissal starts again at the first step. Native onboarding and a manual replay entry remain future work.
+Local storage can be unavailable. In that case a failed account write can suppress the guide only for the current mounted session. Another device receives a choice after its account write succeeds and its next status read. Partial step navigation is kept in memory. A reload before dismissal starts again at the first step. [Manual replay](web-guide-replay-acceptance.md) was added on 2026-11-28. Native onboarding remains future work.
 
 ## Accessibility and acceptance
 

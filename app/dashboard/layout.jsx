@@ -43,7 +43,6 @@ export default function DashboardLayout({ children }) {
   return (
     <FeedbackProvider key={session?.user?.id} userId={session?.user?.id}>
     <ReminderProvider>
-    {session?.user?.id && <OnboardingGuide key={session.user.id} userId={session.user.id} />}
     <div className="min-h-screen bg-gray-50">
       {/* Navigation Bar */}
       <nav className="bg-white shadow-sm">
@@ -77,6 +76,7 @@ export default function DashboardLayout({ children }) {
             </div>
             <div className="flex shrink-0 items-center">
               <AdminFeedbackLink key={session?.user?.id} userId={session?.user?.id} />
+              {session?.user?.id && <OnboardingGuide key={session.user.id} userId={session.user.id} />}
               <FeedbackButton />
               <ReminderLink />
               <div className="hidden sm:flex-shrink-0 sm:flex">

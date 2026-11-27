@@ -14,6 +14,7 @@ const steps = [
 export default function OnboardingGuide({ userId }) {
   const pathname = usePathname();
   const router = useRouter();
+  const entry = useRef(null);
   const [client] = useState(() => new OnboardingClient({ userId }));
   const state = useSyncExternalStore(client.subscribe, client.getSnapshot, client.getSnapshot);
   useEffect(() => {
@@ -38,19 +39,31 @@ export default function OnboardingGuide({ userId }) {
     }, 500);
     return () => clearInterval(timer);
   }, [client, pathname, state.eligible, state.open]);
+  const finish = action => {
+    const restoreFocus = client.getSnapshot().manual;
+    void client.finish(action);
+    if (restoreFocus) requestAnimationFrame(() => entry.current?.focus());
+  };
   return <>
+    <button ref={entry} type="button" aria-label="Getting started" aria-haspopup="dialog" aria-expanded={state.open}
+      className="inline-flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center whitespace-nowrap rounded px-2 text-sm font-medium text-blue-700 hover:bg-blue-50"
+      onClick={() => {
+        if (!document.querySelector('dialog[open], [role="dialog"][aria-modal="true"]')) client.showManual();
+      }}>
+      <span className="sm:hidden">Guide</span><span className="hidden sm:inline">Getting started</span>
+    </button>
     {state.notice && <aside role="status" data-onboarding-notice className="fixed bottom-4 left-4 z-40 max-w-sm rounded-lg border bg-white p-4 text-sm shadow-lg">
       <p>{state.notice}</p>
       <button type="button" disabled={state.saving} onClick={() => { void client.save(); }} className="mt-2 min-h-11 rounded px-3 text-blue-700 hover:bg-blue-50 disabled:opacity-50">{state.saving ? 'Saving…' : 'Retry saving guide choice'}</button>
       <button type="button" onClick={() => client.update({ notice: '' })} className="min-h-11 rounded px-3 hover:bg-gray-100">Dismiss</button>
     </aside>}
-    {state.open && <Modal title="Welcome to JobGenie" onClose={() => { void client.finish('skipped'); }}>
-      <GuideSteps onSkip={() => { void client.finish('skipped'); }} onComplete={() => { void client.finish('completed'); router.push('/dashboard/add'); }} />
+    {state.open && <Modal title={state.manual ? 'Getting started' : 'Welcome to JobGenie'} onClose={() => finish('skipped')}>
+      <GuideSteps manual={state.manual} onSkip={() => finish('skipped')} onComplete={() => { finish('completed'); router.push('/dashboard/add'); }} />
     </Modal>}
   </>;
 }
 
-function GuideSteps({ onSkip, onComplete }) {
+function GuideSteps({ manual, onSkip, onComplete }) {
   const [step, setStep] = useState(0);
   const heading = useRef(null);
   useEffect(() => { heading.current?.focus(); }, [step]);
@@ -75,10 +88,12 @@ function GuideSteps({ onSkip, onComplete }) {
       <p className="text-sm leading-relaxed text-gray-600">{current.detail}</p>
     </div>
     <div className="flex flex-wrap items-center justify-between gap-3 border-t pt-4">
-      <button type="button" onClick={onSkip} className="min-h-11 rounded px-3 text-gray-600 hover:bg-gray-100">Skip</button>
+      <button type="button" onClick={onSkip} className="min-h-11 rounded px-3 text-gray-600 hover:bg-gray-100">{manual ? 'Close' : 'Skip'}</button>
       <div className="flex flex-wrap gap-2">
         {step > 0 && <button type="button" onClick={() => setStep(step - 1)} className="min-h-11 rounded border px-4 py-2 hover:bg-gray-50">Back</button>}
-        <button type="button" onClick={step === steps.length - 1 ? onComplete : () => setStep(step + 1)} className="min-h-11 rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700">{step === steps.length - 1 ? 'Create your first application' : 'Next'}</button>
+        {step === steps.length - 1
+          ? <button type="button" onClick={onComplete} className="min-h-11 rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700">{manual ? 'Add an application' : 'Create your first application'}</button>
+          : <button type="button" onClick={() => setStep(step + 1)} className="min-h-11 rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700">Next</button>}
       </div>
     </div>
   </section>;
