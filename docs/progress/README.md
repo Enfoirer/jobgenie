@@ -1,6 +1,6 @@
 # Project progress and development evidence
 
-Updated: 2026-11-22 (Asia/Shanghai).
+Updated: 2026-11-28 (Asia/Shanghai).
 
 [Project progress and Gantt chart](project-progress.xlsx) is the single maintained workbook, with **Progress Gantt** and **Update Log** sheets. This is the original workbook translated and renamed in place, not a second tracker. Task IDs, historical dates, results and source references are retained. The language conversion is recorded separately. The iOS app continues to support Chinese and English.
 
@@ -71,8 +71,12 @@ The JG-024 implementation Vercel check was subsequently observed as **success**.
 
 ## Web first-use onboarding
 
-[JG-030](records/2026-11-20-JG-030.md) adds an optional three-step English guide on 2026-11-20. Empty accounts receive it on the Job Board. Completion and skip persist per account, with a local retry queue during outages. Existing applications suppress automatic display. The original workbook contains 30 scoped milestones. All 365 automated tests, final browser persistence/access/retry/keyboard/mobile acceptance, production build, scoped lint and workbook checks passed. Native onboarding and manual replay remain future work. Vercel reported success and the anonymous production endpoint returned 401. See the [implementation deployment observation](deployments/2026-11-20-web-onboarding-86189fd.json).
+[JG-030](records/2026-11-20-JG-030.md) adds an optional three-step English guide on 2026-11-20. Empty accounts receive it on the Job Board. Completion and skip persist per account, with a local retry queue during outages. Existing applications suppress automatic display. The original workbook contains 30 scoped milestones. All 365 automated tests, final browser persistence/access/retry/keyboard/mobile acceptance, production build, scoped lint and workbook checks passed. Native onboarding remains future work. Manual replay was subsequently added in JG-032. Vercel reported success and the anonymous production endpoint returned 401. See the [implementation deployment observation](deployments/2026-11-20-web-onboarding-86189fd.json).
 
 ## Web empty-page guidance
 
 [JG-031](records/2026-11-22-JG-031.md) adds English empty-page actions on 2026-11-22 for applications, calendar and uploaded files. Archive/rejected filters provide recovery actions, and loading/errors retain explicit retry states. Actual isolated browser checks covered navigation, real application/PDF creation, deletion, filtering, failure/retry and 1280/390px layouts. Existing onboarding regression, production build, scoped lint and workbook checks passed. The original workbook contains 31 scoped milestones. The implementation Vercel check reported success. See the [implementation deployment observation](deployments/2026-11-22-web-empty-states-70d30ad.json).
+
+## Web getting-started replay
+
+[JG-032](records/2026-11-28-JG-032.md) adds Getting started in dashboard navigation on 2026-11-28, with a mobile Guide label. All authenticated accounts can replay the shared steps and add an application while retaining completed/skipped outcomes and timestamps. The targeted 16-case suite, actual manual browser acceptance, automatic onboarding and empty-page regressions, production build, scoped lint and workbook checks passed. The original workbook contains 32 scoped milestones. The implementation Vercel check reported success. See the [implementation deployment observation](deployments/2026-11-28-guide-replay-f943187.json).

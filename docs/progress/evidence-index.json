@@ -1608,6 +1608,221 @@
       "sha256": "93a157dbdc13940b47b5736a6184543d662ab495d8cbb146b17a68444a2f8e25",
       "redactions": [],
       "association": "Actual local JG-031 acceptance using synthetic accounts and disposable data. Failed attempt precedes corrected successful runs."
+    },
+    {
+      "task": "JG-032",
+      "kind": "test_log",
+      "file": "tests/2026-11-28/guide-targeted.log",
+      "outcome": "passed",
+      "description": "16 onboarding API/browser-state cases including four manual-replay regressions",
+      "collectedAt": "2026-11-27T17:28:20.923019+00:00",
+      "observedSourceMtime": "2026-11-27T17:21:31.448493+00:00",
+      "originalSha256": "18a5364512f0ebfc7c12e227ee1cc94fea2988496fe94f5b27ec9461108afdb7",
+      "sha256": "932633bff34665d91fdd87eb6edebd330ae8b1852401083078af3b2f8d8e9c6c",
+      "redactions": [
+        "Repository/home paths and credential assignments"
+      ],
+      "association": "Actual JG-032 local checks with disposable synthetic accounts/data. Failed attempts precede corrected successful acceptance."
+    },
+    {
+      "task": "JG-032",
+      "kind": "test_log",
+      "file": "tests/2026-11-28/guide-browser-touch-target.log",
+      "outcome": "failed",
+      "description": "Initial manual browser run found the navigation touch target below 44px",
+      "collectedAt": "2026-11-27T17:28:20.923019+00:00",
+      "observedSourceMtime": "2026-11-27T17:22:55.527214+00:00",
+      "originalSha256": "d8377d89e7cd905c3cc01b37596a03ce61d0b739ae775a25a42c35baf6321d3d",
+      "sha256": "79e59ea9ea4d9e9ad83824528cc5e855fc2d928b88980c3d3122efb9c7b65f52",
+      "redactions": [
+        "Repository/home paths and credential assignments"
+      ],
+      "association": "Actual JG-032 local checks with disposable synthetic accounts/data. Failed attempts precede corrected successful acceptance."
+    },
+    {
+      "task": "JG-032",
+      "kind": "test_log",
+      "file": "tests/2026-11-28/guide-browser-focus.log",
+      "outcome": "failed",
+      "description": "Second manual browser run found focus was not restored to the guide entry",
+      "collectedAt": "2026-11-27T17:28:20.923019+00:00",
+      "observedSourceMtime": "2026-11-27T17:24:23.739298+00:00",
+      "originalSha256": "db6cbfb6b2dda243693985f0962f166de989cf88b26189a4fda78e11539f1064",
+      "sha256": "f69a03f07ee55a03c7d6f6a34a486401a107c7c17e32b8d782ace9dee70afacf",
+      "redactions": [
+        "Repository/home paths and credential assignments"
+      ],
+      "association": "Actual JG-032 local checks with disposable synthetic accounts/data. Failed attempts precede corrected successful acceptance."
+    },
+    {
+      "task": "JG-032",
+      "kind": "test_log",
+      "file": "tests/2026-11-28/guide-browser-verified.log",
+      "outcome": "passed",
+      "description": "Final actual manual replay, saved timestamps, route/account/modal/mobile/keyboard acceptance",
+      "collectedAt": "2026-11-27T17:28:20.923019+00:00",
+      "observedSourceMtime": "2026-11-27T17:26:31.856604+00:00",
+      "originalSha256": "001e2f765753fc84fed4a975a68c979f14094e596ab2047ec734ac842a9091ff",
+      "sha256": "75bce1fde3ab6a9de17718f2bca7c93b3879994aa08dbae911777727b6837521",
+      "redactions": [
+        "Repository/home paths and credential assignments"
+      ],
+      "association": "Actual JG-032 local checks with disposable synthetic accounts/data. Failed attempts precede corrected successful acceptance."
+    },
+    {
+      "task": "JG-032",
+      "kind": "test_log",
+      "file": "tests/2026-11-28/guide-automatic-regression.log",
+      "outcome": "passed",
+      "description": "Existing automatic onboarding browser regression",
+      "collectedAt": "2026-11-27T17:28:20.923019+00:00",
+      "observedSourceMtime": "2026-11-27T17:23:02.535771+00:00",
+      "originalSha256": "0e9c97630a6a5ba6b5c8116250bff6c6358f65b581b635af38a27e6ae969b670",
+      "sha256": "14ef3ce52f106a3ca5421afb45617dc1a7f50c79153df0cc3acc61a270cccdb2",
+      "redactions": [
+        "Repository/home paths and credential assignments"
+      ],
+      "association": "Actual JG-032 local checks with disposable synthetic accounts/data. Failed attempts precede corrected successful acceptance."
+    },
+    {
+      "task": "JG-032",
+      "kind": "test_log",
+      "file": "tests/2026-11-28/guide-empty-regression.log",
+      "outcome": "passed",
+      "description": "Existing empty-page action and mobile-layout browser regression",
+      "collectedAt": "2026-11-27T17:28:20.923019+00:00",
+      "observedSourceMtime": "2026-11-27T17:22:57.954464+00:00",
+      "originalSha256": "077bd6a251f66b1c80ebe1f05ac99c3532e8a79037fa5069c1a8c50a2f04d5b2",
+      "sha256": "db24b8ff24e1c9ba123983a0b3c38dcaba3e0c2ca96b68ab601c8932a3d8a048",
+      "redactions": [
+        "Repository/home paths and credential assignments"
+      ],
+      "association": "Actual JG-032 local checks with disposable synthetic accounts/data. Failed attempts precede corrected successful acceptance."
+    },
+    {
+      "task": "JG-032",
+      "kind": "test_log",
+      "file": "tests/2026-11-28/guide-build.log",
+      "outcome": "passed",
+      "description": "Final Next.js production build after focus restoration",
+      "collectedAt": "2026-11-27T17:28:20.923019+00:00",
+      "observedSourceMtime": "2026-11-27T17:26:09.674873+00:00",
+      "originalSha256": "d533fd2b53160be1756ca97c5586c9ef0c4289f5c80c319b0762f9412746f153",
+      "sha256": "d533fd2b53160be1756ca97c5586c9ef0c4289f5c80c319b0762f9412746f153",
+      "redactions": [
+        "Repository/home paths and credential assignments"
+      ],
+      "association": "Actual JG-032 local checks with disposable synthetic accounts/data. Failed attempts precede corrected successful acceptance."
+    },
+    {
+      "task": "JG-032",
+      "kind": "test_log",
+      "file": "tests/2026-11-28/guide-lint.log",
+      "outcome": "passed",
+      "description": "Final scoped JavaScript/JSX ESLint with no diagnostics",
+      "collectedAt": "2026-11-27T17:28:20.923019+00:00",
+      "observedSourceMtime": "2026-11-27T17:26:02.376168+00:00",
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "redactions": [
+        "Repository/home paths and credential assignments"
+      ],
+      "association": "Actual JG-032 local checks with disposable synthetic accounts/data. Failed attempts precede corrected successful acceptance."
+    },
+    {
+      "task": "JG-032",
+      "kind": "test_log",
+      "file": "tests/2026-11-28/guide-workbook.log",
+      "outcome": "passed",
+      "description": "Original workbook recalculation and historical-row assertions",
+      "collectedAt": "2026-11-27T17:28:20.923019+00:00",
+      "observedSourceMtime": "2026-11-27T17:27:19.588409+00:00",
+      "originalSha256": "d25a056627d47b7a9e30a57940db25839cf6dcc5e0551b5ffc202beae6afddce",
+      "sha256": "c13d78473accfc69414d8c7470495447f9dc8c3f0b7f7534884deacdd00f7f0d",
+      "redactions": [
+        "Repository/home paths and credential assignments"
+      ],
+      "association": "Actual JG-032 local checks with disposable synthetic accounts/data. Failed attempts precede corrected successful acceptance."
+    },
+    {
+      "task": "JG-032",
+      "kind": "test_log",
+      "file": "tests/2026-11-28/guide-workbook-preservation.log",
+      "outcome": "passed",
+      "description": "Saved workbook native-feature and cell/formula preservation",
+      "collectedAt": "2026-11-27T17:28:20.923019+00:00",
+      "observedSourceMtime": "2026-11-27T17:27:34.299500+00:00",
+      "originalSha256": "36c919c55bc37b7c93e79e2c89e7106bea01419e1789f865b9dd5885db90a722",
+      "sha256": "36c919c55bc37b7c93e79e2c89e7106bea01419e1789f865b9dd5885db90a722",
+      "redactions": [
+        "Repository/home paths and credential assignments"
+      ],
+      "association": "Actual JG-032 local checks with disposable synthetic accounts/data. Failed attempts precede corrected successful acceptance."
+    },
+    {
+      "task": "JG-032",
+      "kind": "screenshot",
+      "file": "visuals/2026-11-28/getting-started-desktop.png",
+      "outcome": "passed",
+      "description": "Reviewed actual local manual-guide acceptance with synthetic accounts",
+      "collectedAt": "2026-11-27T17:28:20.923019+00:00",
+      "observedSourceMtime": "2026-11-27T17:26:27.832521+00:00",
+      "originalSha256": "6323ea4bc722d785e4a39a655a41b2a7f6030050233c5c34cc91af557e319d30",
+      "sha256": "6323ea4bc722d785e4a39a655a41b2a7f6030050233c5c34cc91af557e319d30",
+      "redactions": [],
+      "association": "Actual JG-032 local checks with disposable synthetic accounts/data. Failed attempts precede corrected successful acceptance."
+    },
+    {
+      "task": "JG-032",
+      "kind": "screenshot",
+      "file": "visuals/2026-11-28/getting-started-mobile.png",
+      "outcome": "passed",
+      "description": "Reviewed actual local manual-guide acceptance with synthetic accounts",
+      "collectedAt": "2026-11-27T17:28:20.923019+00:00",
+      "observedSourceMtime": "2026-11-27T17:26:30.674398+00:00",
+      "originalSha256": "ee1ff888629dbba695bf7bff00dcd3039f6f78fcfd45e8af76bbf91e62749c5d",
+      "sha256": "ee1ff888629dbba695bf7bff00dcd3039f6f78fcfd45e8af76bbf91e62749c5d",
+      "redactions": [],
+      "association": "Actual JG-032 local checks with disposable synthetic accounts/data. Failed attempts precede corrected successful acceptance."
+    },
+    {
+      "task": "JG-032",
+      "kind": "api_example",
+      "file": "visuals/2026-11-28/guide-replay-example.json",
+      "outcome": "passed",
+      "description": "Reviewed actual local manual-guide acceptance with synthetic accounts",
+      "collectedAt": "2026-11-27T17:28:20.923019+00:00",
+      "observedSourceMtime": "2026-11-27T17:26:31.856498+00:00",
+      "originalSha256": "d9002deafe8de7f71bce076f6a93f4d56caedc8d740aa6c6f293d2f08397ae6e",
+      "sha256": "d9002deafe8de7f71bce076f6a93f4d56caedc8d740aa6c6f293d2f08397ae6e",
+      "redactions": [],
+      "association": "Actual JG-032 local checks with disposable synthetic accounts/data. Failed attempts precede corrected successful acceptance."
+    },
+    {
+      "task": "JG-032",
+      "kind": "screenshot",
+      "file": "visuals/2026-11-28/progress-after.png",
+      "outcome": "passed",
+      "description": "Reviewed original workbook JG-032 delivery/update row",
+      "collectedAt": "2026-11-27T17:28:20.923019+00:00",
+      "observedSourceMtime": "2026-11-27T17:27:19.226300+00:00",
+      "originalSha256": "8bf86b293e4e6106c2b25d64eba7447c6c55f0de47f91ddeab99483f2c6f5fb9",
+      "sha256": "8bf86b293e4e6106c2b25d64eba7447c6c55f0de47f91ddeab99483f2c6f5fb9",
+      "redactions": [],
+      "association": "Actual JG-032 local checks with disposable synthetic accounts/data. Failed attempts precede corrected successful acceptance."
+    },
+    {
+      "task": "JG-032",
+      "kind": "screenshot",
+      "file": "visuals/2026-11-28/progress-log.png",
+      "outcome": "passed",
+      "description": "Reviewed original workbook JG-032 delivery/update row",
+      "collectedAt": "2026-11-27T17:28:20.923019+00:00",
+      "observedSourceMtime": "2026-11-27T17:27:19.295877+00:00",
+      "originalSha256": "5b38fa075979ce41c39b3bb597d6d3891188309a9806f1a60327dcaa8ad8b073",
+      "sha256": "5b38fa075979ce41c39b3bb597d6d3891188309a9806f1a60327dcaa8ad8b073",
+      "redactions": [],
+      "association": "Actual JG-032 local checks with disposable synthetic accounts/data. Failed attempts precede corrected successful acceptance."
     }
   ],
   "records": [
@@ -2492,6 +2707,47 @@
         }
       ],
       "deploymentObservation": "deployments/2026-11-22-web-empty-states-70d30ad.json"
+    },
+    {
+      "id": "JG-032",
+      "title": "Web: getting-started replay",
+      "scope": "Navigation entry for all dashboard accounts, shared three-step replay, preserved terminal choices and accessible mobile/focus behavior.",
+      "tests": "16 targeted API/browser-state tests passed. Final manual browser acceptance, automatic onboarding and empty-page regressions, production build, scoped lint and original-workbook checks passed.",
+      "boundary": "Web guide delivery. First manual choices use the existing authenticated endpoint and retry queue. Native onboarding and signed-device acceptance remain future work.",
+      "commit": "https://github.com/Enfoirer/jobgenie/commit/f943187e4c72eaf56e44b2069731d1d634a3440f",
+      "document": "https://github.com/Enfoirer/jobgenie/blob/f943187e4c72eaf56e44b2069731d1d634a3440f/docs/web-guide-replay-acceptance.md",
+      "commitSha": "f943187e4c72eaf56e44b2069731d1d634a3440f",
+      "commitAt": "2026-11-28T01:26:53+08:00",
+      "preparedAt": "2026-11-27T17:28:20.923019+00:00",
+      "record": "records/2026-11-28-JG-032.md",
+      "sourceDocumentExistsAtCommit": true,
+      "rawLogs": [
+        "tests/2026-11-28/guide-targeted.log",
+        "tests/2026-11-28/guide-browser-touch-target.log",
+        "tests/2026-11-28/guide-browser-focus.log",
+        "tests/2026-11-28/guide-browser-verified.log",
+        "tests/2026-11-28/guide-automatic-regression.log",
+        "tests/2026-11-28/guide-empty-regression.log",
+        "tests/2026-11-28/guide-build.log",
+        "tests/2026-11-28/guide-lint.log",
+        "tests/2026-11-28/guide-workbook.log",
+        "tests/2026-11-28/guide-workbook-preservation.log"
+      ],
+      "visuals": [
+        "visuals/2026-11-28/getting-started-desktop.png",
+        "visuals/2026-11-28/getting-started-mobile.png",
+        "visuals/2026-11-28/guide-replay-example.json",
+        "visuals/2026-11-28/progress-after.png",
+        "visuals/2026-11-28/progress-log.png"
+      ],
+      "observedChecks": [
+        {
+          "context": "Vercel",
+          "state": "success",
+          "target_url": "https://vercel.com/xaviers-projects-d5b3f0e3/jobgenie/HJFyRdJNh5pcj8HKbNHc4mLW4PgM"
+        }
+      ],
+      "deploymentObservation": "deployments/2026-11-28-guide-replay-f943187.json"
     }
   ],
   "translatedAt": "2026-11-04T15:15:24.093466+00:00",
@@ -2501,5 +2757,5 @@
     "historicalArtifacts": "Original-language test output and historical evidence remain unchanged; English descriptions explain their provenance.",
     "translation": "English records translated on the date in translatedAt. Existing dates, test results, artifact hashes and fixed historical commit links are preserved."
   },
-  "lastUpdatedAt": "2026-11-21T16:07:18.577942+00:00"
+  "lastUpdatedAt": "2026-11-27T17:28:44.272699+00:00"
 }

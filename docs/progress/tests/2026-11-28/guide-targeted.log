@@ -1,0 +1,32 @@
+(node:69070) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://[REPOSITORY]/tests/onboarding-browser.test.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to [REPOSITORY]/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ failed dismissal saves locally, suppresses a relaunch and retries the account write (18.718083ms)
+✔ late eligibility and save replies cannot reopen a dismissed guide or update a stopped account (0.317625ms)
+✔ storage and terminal account state synchronize tabs without crossing accounts (0.349542ms)
+✔ another device completing onboarding closes an already open guide on refresh (0.25625ms)
+✔ unavailable storage and failed eligibility reads keep the dashboard usable (0.316667ms)
+✔ manual replay preserves recorded completed/skipped choices and survives status refresh (0.405125ms)
+✔ manual viewing during a late eligibility read remains open and can record a first choice (0.1645ms)
+✔ manual replay retains an unsaved choice from an earlier dismissal (0.153417ms)
+✔ stopped account clients cannot open a manual guide (0.087209ms)
+(node:69071) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file://[REPOSITORY]/tests/onboarding.test.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to [REPOSITORY]/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ new and legacy users without jobs are eligible; another account does not affect eligibility (1045.256667ms)
+✔ existing applications including archived ones suppress automatic onboarding (25.686917ms)
+✔ completion and skip persist across fresh authenticated handlers without exposing private fields (38.917625ms)
+✔ concurrent retries preserve the first outcome and its original timestamp (32.94975ms)
+✔ anonymous/deleted sessions, cross-origin mutations and supplied account IDs cannot change preferences (23.387125ms)
+✔ invalid choices, oversized packets, malformed JSON and unsupported methods are rejected (20.366417ms)
+✔ rate limits and database failures return bounded safe errors (13.549209ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1678.974

@@ -58,3 +58,5 @@ The [deployment responses](deployments/2026-11-04-observed-statuses.json) retain
 [JG-030 Web first-use onboarding](records/2026-11-20-JG-030.md) adds the English three-step guide and account-persisted completion/skip on 2026-11-20. The original workbook contains 30 scoped milestones.
 
 [JG-031 Web empty-page guidance](records/2026-11-22-JG-031.md) adds actionable empty applications/calendar/uploads and contextual filter recovery on 2026-11-22. The original workbook contains 31 scoped milestones.
+
+[JG-032 Web getting-started replay](records/2026-11-28-JG-032.md) adds account-safe manual guide viewing from navigation on 2026-11-28. The original workbook contains 32 scoped milestones.

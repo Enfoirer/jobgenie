@@ -1,0 +1,16 @@
+{
+  "environment": "disposable local NextAuth/MongoDB/browser",
+  "existingApplicationsCanOpen": true,
+  "completedChoicePreserved": true,
+  "skippedChoicePreserved": true,
+  "originalTimestampsPreserved": true,
+  "firstManualChoiceSaved": true,
+  "freshLoginAndStorage": true,
+  "focusRefreshKeepsReplayOpen": true,
+  "otherDashboardEntry": true,
+  "accountSwitchIsolation": true,
+  "addApplicationDestination": true,
+  "modalOverlapPrevented": true,
+  "mobileEntryVisible": true,
+  "keyboardAndFocusRestoration": true
+}
